@@ -3,158 +3,614 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Polla del Mundial 2026</title>
+<title>Mundial 2026 — Polla & Bracket</title>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 <style>
 :root {
-  --font-sans: system-ui, -apple-system, sans-serif;
-  --color-background-primary: #ffffff;
-  --color-background-secondary: #f5f5f5;
-  --color-border-secondary: #d1d1d1;
-  --color-border-tertiary: #e5e5e5;
-  --color-text-primary: #1a1a1a;
-  --color-text-secondary: #666666;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --bg3: #21262d;
+  --gold: #FAC775;
+  --blue: #185FA5;
+  --blue2: #0C447C;
+  --green: #3B6D11;
+  --red: #993C1D;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --border: #30363d;
+  --radius: 10px;
+  --radius-sm: 6px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-sans); max-width: 1100px; margin: 0 auto; padding: 1rem; background: #f0f2f5; color: var(--color-text-primary); }
-.header { background: linear-gradient(135deg, #185FA5, #0C447C); color: white; border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
-.header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
-.header p { font-size: 0.875rem; opacity: 0.9; }
-.wrap { padding: 0; }
-h2.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; background: white; padding: 0.5rem; border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); }
-.tab { padding: 8px 20px; border-radius: var(--border-radius-md); border: none; background: transparent; color: var(--color-text-secondary); font-size: 0.875rem; cursor: pointer; font-weight: 500; transition: all 0.2s; }
-.tab:hover { background: var(--color-background-secondary); }
-.tab.active { background: #185FA5; color: white; }
-.acciones-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; padding: 0.75rem 1rem; background: white; border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); }
-.btn { padding: 7px 16px; border-radius: var(--border-radius-md); border: none; font-size: 0.8125rem; cursor: pointer; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-.btn-primary { background: #185FA5; color: white; }
-.btn-primary:hover { background: #0C447C; }
-.btn-success { background: #3B6D11; color: white; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ===== TOP NAV ===== */
+.top-nav {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.top-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 0;
+}
+.nav-brand {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  padding: 0.9rem 1rem 0.9rem 0;
+  border-right: 1px solid var(--border);
+  margin-right: 0.5rem;
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+}
+.nav-brand span { font-size: 0.75rem; opacity: 0.7; font-weight: 400; margin-left: 6px; }
+.nav-tabs { display: flex; gap: 2px; }
+.nav-tab {
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--text2);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+.sync-badge {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: var(--text2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  white-space: nowrap;
+}
+.sync-badge.ok { color: #3B6D11; border-color: #3B6D11; background: rgba(59,109,17,0.1); }
+
+/* ===== PAGE WRAPPER ===== */
+.page { display: none; max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem; }
+.page.active { display: block; }
+
+/* ===== HEADER BANDS ===== */
+.page-header {
+  background: linear-gradient(135deg, var(--blue2) 0%, #0a2d55 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.page-header h1 { font-size: 1.25rem; font-weight: 700; }
+.page-header p { font-size: 0.8125rem; opacity: 0.8; }
+
+/* ===== POLLA STYLES ===== */
+.acciones-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg2);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.btn {
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-primary { background: var(--blue); color: white; }
+.btn-primary:hover { background: var(--blue2); }
+.btn-success { background: var(--green); color: white; }
 .btn-success:hover { background: #2d540d; }
-.btn-outline { background: white; color: #185FA5; border: 1px solid #185FA5; }
-.btn-outline:hover { background: #f0f7ff; }
-.btn-warning { background: #F59E0B; color: white; }
+.btn-outline { background: transparent; color: var(--blue); border: 1px solid var(--blue); }
+.btn-outline:hover { background: rgba(24,95,165,0.1); }
+.btn-warning { background: #F59E0B; color: #1a0a00; }
 .btn-warning:hover { background: #d97706; }
+.btn-sync { background: rgba(59,109,17,0.15); color: #7dc542; border: 1px solid #3B6D11; }
+.btn-sync:hover { background: rgba(59,109,17,0.25); }
 .file-input { display: none; }
-.file-label { padding: 7px 16px; border-radius: var(--border-radius-md); border: 1px dashed #999; font-size: 0.8125rem; cursor: pointer; font-weight: 500; background: white; color: #666; transition: all 0.2s; }
-.file-label:hover { border-color: #185FA5; color: #185FA5; background: #f8fafc; }
-.status-msg { font-size: 0.75rem; color: var(--color-text-secondary); margin-left: auto; font-style: italic; }
-.grupo-label { font-size: 0.75rem; color: var(--color-text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.75rem; background: #f8fafc; padding: 0.5rem 0.75rem; border-radius: 6px; }
-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
-th { text-align: left; padding: 8px 10px; color: var(--color-text-secondary); font-weight: 600; border-bottom: 1px solid var(--color-border-tertiary); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
-td { padding: 8px 10px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: #f8fafc; }
-.pos-badge { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-size: 0.6875rem; font-weight: 600; margin-right: 4px; vertical-align: middle; }
-.p1 { background: #FAC775; color: #633806; }
-.p2 { background: #D3D1C7; color: #444441; }
-.pts-select { padding: 6px 10px; border: 1px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-primary); font-size: 0.8125rem; cursor: pointer; min-width: 100px; transition: all 0.2s; }
-.pts-select:focus { outline: none; border-color: #185FA5; box-shadow: 0 0 0 3px rgba(24,95,165,0.1); }
-.pts-select.points-0 { }
-.pts-select.points-1 { background: #FFF8E1; border-color: #FAC775; color: #633806; }
-.pts-select.points-3 { background: #F0F7E6; border-color: #86B34D; color: #3B6D11; }
-.pts-select.points-6 { background: #FDF0ED; border-color: #F5C4B3; color: #993C1D; }
-.ranking-card { background: white; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; transition: transform 0.2s, box-shadow 0.2s; }
-.ranking-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-.rank-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9375rem; font-weight: 700; flex-shrink: 0; }
-.r1 { background: #FAC775; color: #633806; }
-.r2 { background: #D3D1C7; color: #444441; }
-.r3 { background: #F5C4B3; color: #993C1D; }
-.rn { background: var(--color-background-secondary); color: var(--color-text-secondary); }
-.legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.8125rem; color: var(--color-text-secondary); margin-bottom: 1rem; background: white; padding: 0.75rem 1rem; border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); }
+.file-label {
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  font-weight: 500;
+  background: transparent;
+  color: var(--text2);
+  transition: all 0.18s;
+}
+.file-label:hover { border-color: var(--blue); color: var(--text); }
+.status-msg { font-size: 0.75rem; color: var(--text2); margin-left: auto; font-style: italic; }
+
+.inner-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 1rem; }
+.inner-tab {
+  padding: 7px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.18s;
+}
+.inner-tab:hover { border-color: var(--blue); color: var(--text); }
+.inner-tab.active { background: var(--blue); color: white; border-color: var(--blue); }
+
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.8125rem;
+  color: var(--text2);
+  margin-bottom: 1rem;
+  background: var(--bg2);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
 .leg-item { display: flex; align-items: center; gap: 8px; }
-.leg-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; font-weight: 600; }
-.points-total { font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); }
-.points-label { font-size: 0.7rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
-.leyenda-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 12px; margin-bottom: 1.5rem; }
-.leyenda-card { background: white; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.5rem; text-align: center; }
+.leg-dot {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.625rem; font-weight: 600;
+}
+
+.grupo-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  overflow-x: auto;
+}
+.grupo-label {
+  font-size: 0.75rem;
+  color: var(--text2);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+  background: var(--bg3);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+th {
+  text-align: left;
+  padding: 8px 10px;
+  color: var(--text2);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+td {
+  padding: 8px 10px;
+  border-bottom: 0.5px solid var(--border);
+  color: var(--text);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.03); }
+
+.pos-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  font-size: 0.6875rem; font-weight: 600; margin-right: 4px; vertical-align: middle;
+}
+.p1 { background: var(--gold); color: #633806; }
+.p2 { background: #D3D1C7; color: #444441; }
+
+.pts-select {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg3);
+  color: var(--text);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  min-width: 100px;
+  transition: all 0.18s;
+}
+.pts-select:focus { outline: none; border-color: var(--blue); }
+.pts-select.points-1 { background: rgba(250,199,117,0.12); border-color: var(--gold); color: var(--gold); }
+.pts-select.points-3 { background: rgba(59,109,17,0.15); border-color: var(--green); color: #7dc542; }
+.pts-select.points-6 { background: rgba(153,60,29,0.15); border-color: var(--red); color: #f07050; }
+
+.ranking-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.ranking-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.rank-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9375rem; font-weight: 700; flex-shrink: 0;
+}
+.r1 { background: var(--gold); color: #633806; }
+.r2 { background: #D3D1C7; color: #444441; }
+.r3 { background: #F5C4B3; color: var(--red); }
+.rn { background: var(--bg3); color: var(--text2); }
+
+.points-total { font-size: 1.5rem; font-weight: 700; }
+.points-label { font-size: 0.7rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.leyenda-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; margin-bottom: 1.5rem; }
+.leyenda-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+}
 .leyenda-points { font-size: 2.25rem; font-weight: 700; margin-bottom: 0.25rem; }
-.leyenda-desc { font-size: 0.8125rem; color: var(--color-text-secondary); line-height: 1.4; }
-.grupo-card { background: white; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem; margin-bottom: 0.75rem; }
-.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+.leyenda-desc { font-size: 0.8125rem; color: var(--text2); line-height: 1.4; }
+
+.excel-info {
+  background: rgba(250,199,117,0.08);
+  border: 1px solid rgba(250,199,117,0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+/* ===== BRACKET STYLES ===== */
+.bracket-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg2);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.bracket-controls .left-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.bracket-hint {
+  font-size: 0.75rem;
+  color: var(--text2);
+}
+.bracket-container {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 1rem 0;
+  min-height: 600px;
+}
+.ronda {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 175px;
+  justify-content: space-around;
+}
+.ronda-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text2);
+  padding: 8px;
+  background: var(--bg3);
+  border-radius: var(--radius-sm);
+  margin-bottom: 4px;
+  border: 1px solid var(--border);
+}
+.match {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.18s;
+  position: relative;
+}
+.match:hover { border-color: var(--blue); box-shadow: 0 0 12px rgba(24,95,165,0.25); }
+.team-slot {
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: background 0.18s;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.team-slot:last-of-type { border-bottom: none; }
+.team-slot:hover { background: rgba(255,255,255,0.05); }
+.team-slot.selected { background: rgba(24,95,165,0.25); border-left: 3px solid var(--blue); }
+.team-slot.winner { background: rgba(250,199,117,0.12); border-left: 3px solid var(--gold); }
+.team-slot.empty { color: var(--text2); font-style: italic; font-weight: 400; }
+.team-flag { font-size: 1.2rem; }
+.team-name { flex: 1; }
+.team-sigla { color: var(--text2); font-size: 0.6875rem; font-weight: 600; }
+.tooltip {
+  display: none;
+  position: absolute;
+  background: var(--bg);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.7rem;
+  z-index: 100;
+  white-space: nowrap;
+  top: -36px; left: 50%;
+  transform: translateX(-50%);
+  color: var(--text);
+}
+.team-slot:hover .tooltip { display: block; }
+.campeon-label {
+  text-align: center;
+  padding: 8px 4px 10px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--gold);
+  border-top: 2px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.campeon-trophy {
+  width: 50px; height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(250,199,117,0.7));
+  animation: trofeoBrillo 2s ease-in-out infinite alternate;
+}
+@keyframes trofeoBrillo {
+  from { filter: drop-shadow(0 0 5px rgba(250,199,117,0.4)); transform: scale(1); }
+  to   { filter: drop-shadow(0 0 16px rgba(250,199,117,1)); transform: scale(1.06); }
+}
+.fase-grupos { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; margin-bottom: 1rem; }
+.grupo-box-br {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+.grupo-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+  color: var(--gold);
+}
+.pos-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  transition: background 0.18s;
+}
+.pos-row:hover { background: rgba(255,255,255,0.05); }
+.pos-row.clasificado { background: rgba(59,109,17,0.18); border-left: 3px solid var(--green); }
+.pos-row.eliminado { opacity: 0.35; }
+.pos-number {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6875rem; font-weight: 700; flex-shrink: 0;
+}
+.pos-1 { background: var(--gold); color: #633806; }
+.pos-2 { background: #D3D1C7; color: #444441; }
+.pos-3, .pos-4 { background: #333; color: #888; }
+.propietario-badge {
+  font-size: 0.625rem;
+  background: var(--blue);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
 .modal-overlay.active { display: flex; }
-.modal { background: white; border-radius: var(--border-radius-lg); padding: 2rem; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
 .modal h3 { font-size: 1.125rem; margin-bottom: 0.5rem; }
-.modal p { font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: 1.5rem; }
+.modal p { font-size: 0.875rem; color: var(--text2); margin-bottom: 1.5rem; }
 .modal-buttons { display: flex; gap: 8px; justify-content: flex-end; }
-.excel-info { background: #FFF8E1; border: 1px solid #FAC775; border-radius: var(--border-radius-md); padding: 0.75rem 1rem; font-size: 0.8125rem; color: #633806; display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
-  body { padding: 0.5rem; }
-  .tab { padding: 8px 12px; font-size: 0.8125rem; }
+  .page { padding: 1rem 0.5rem; }
+  .nav-brand span { display: none; }
+  .nav-tab { padding: 0.75rem 0.75rem; font-size: 0.8rem; }
   td, th { padding: 6px 6px; }
   .pts-select { min-width: 80px; font-size: 0.75rem; }
   .acciones-bar { flex-direction: column; align-items: stretch; }
   .status-msg { margin-left: 0; text-align: center; }
+  .bracket-container { flex-direction: column; align-items: center; }
+  .ronda { min-width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .match { min-width: 155px; }
 }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>🏆 Polla del Mundial 2026</h1>
-  <p>México · USA · Canadá &nbsp;|&nbsp; 11 Jun – 19 Jul 2026</p>
-</div>
-
-<div class="wrap">
-
-<div class="tabs">
-  <button class="tab active" onclick="showView('grupos')">📋 Pronósticos</button>
-  <button class="tab" onclick="showView('ranking')">🏅 Ranking</button>
-  <button class="tab" onclick="showView('leyenda')">❓ Cómo funciona</button>
-</div>
-
-<div class="acciones-bar" id="accionesExcel">
-  <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls" onchange="cargarExcel(event)">
-  <label for="fileInput" class="file-label">📂 Cargar Excel</label>
-  <button class="btn btn-success" onclick="descargarExcel()">💾 Guardar a Excel</button>
-  <button class="btn btn-outline" onclick="mostrarModalReiniciar()">🔄 Reiniciar</button>
-  <span class="status-msg" id="statusMsg">Listo para trabajar</span>
-</div>
-
-<div class="excel-info">
-  <span>💡</span>
-  <span><strong>Consejo:</strong> Descarga el Excel como respaldo. Puedes volver a cargarlo para restaurar puntajes.</span>
-</div>
-
-<h2 class="sr-only">Polla del Mundial 2026 — pronósticos y ranking</h2>
-
-<div id="view-leyenda" style="display:none;">
-  <div class="leyenda-grid">
-    <div class="leyenda-card">
-      <div class="leyenda-points" style="color:#185FA5;">1 pt</div>
-      <div class="leyenda-desc">El equipo pasó a la siguiente ronda (cualquier posición)</div>
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <div class="nav-brand">🏆 Mundial 2026 <span>México · USA · Canadá</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchPage('polla')">📋 Polla</button>
+      <button class="nav-tab" onclick="switchPage('bracket')">🏟 Bracket</button>
     </div>
-    <div class="leyenda-card">
-      <div class="leyenda-points" style="color:#3B6D11;">3 pts</div>
-      <div class="leyenda-desc">Pasó y quedó en la posición exacta pronosticada</div>
+    <div class="sync-badge" id="syncBadge">⚡ Sincronizado</div>
+  </div>
+</nav>
+
+<!-- ============================================================ -->
+<!--  PÁGINA 1: POLLA                                             -->
+<!-- ============================================================ -->
+<div class="page active" id="page-polla">
+
+  <div class="page-header">
+    <div>
+      <h1>Polla del Mundial 2026</h1>
+      <p>Pronósticos de fase de grupos · Puntaje automático</p>
     </div>
-    <div class="leyenda-card">
-      <div class="leyenda-points" style="color:#993C1D;">6 pts</div>
-      <div class="leyenda-desc">Ambos equipos pasaron en las posiciones exactas</div>
+    <div class="acciones-bar" style="margin:0;border:none;background:transparent;padding:0;flex-wrap:wrap;">
+      <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls" onchange="cargarExcel(event)">
+      <label for="fileInput" class="file-label">📂 Cargar Excel</label>
+      <button class="btn btn-success" onclick="descargarExcel()">💾 Guardar Excel</button>
+      <button class="btn btn-outline" onclick="mostrarModalReiniciar()">🔄 Reiniciar</button>
     </div>
   </div>
-  <p style="font-size:0.875rem;color:var(--color-text-secondary);line-height:1.6;background:white;padding:1.25rem;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);">
-    Selecciona los puntos obtenidos por cada persona en cada grupo según los resultados reales. Los puntajes se auto-guardan en el navegador y también puedes descargarlos en <strong>Excel</strong>.
-  </p>
-</div>
 
-<div id="view-grupos">
-  <div class="legend">
-    <span class="leg-item"><span class="leg-dot p1">1°</span> 1er lugar pronosticado</span>
-    <span class="leg-item"><span class="leg-dot p2">2°</span> 2do lugar pronosticado</span>
+  <div class="excel-info">
+    <span>💡</span>
+    <span>Los puntajes se guardan en el navegador. Descarga Excel como respaldo. Los clasificados se sincronizan automáticamente con el Bracket.</span>
   </div>
-  <div id="grupos-container"></div>
+
+  <div class="inner-tabs">
+    <button class="inner-tab active" onclick="showView('grupos')">📋 Pronósticos</button>
+    <button class="inner-tab" onclick="showView('ranking')">🏅 Ranking</button>
+    <button class="inner-tab" onclick="showView('leyenda')">❓ Cómo funciona</button>
+  </div>
+  <span class="status-msg" id="statusMsg" style="display:block;margin-bottom:0.5rem;">Listo</span>
+
+  <!-- LEYENDA -->
+  <div id="view-leyenda" style="display:none;">
+    <div class="leyenda-grid">
+      <div class="leyenda-card">
+        <div class="leyenda-points" style="color:var(--blue);">1 pt</div>
+        <div class="leyenda-desc">El equipo pasó a la siguiente ronda (cualquier posición)</div>
+      </div>
+      <div class="leyenda-card">
+        <div class="leyenda-points" style="color:#7dc542;">3 pts</div>
+        <div class="leyenda-desc">Pasó y quedó en la posición exacta pronosticada</div>
+      </div>
+      <div class="leyenda-card">
+        <div class="leyenda-points" style="color:#f07050;">6 pts</div>
+        <div class="leyenda-desc">Ambos equipos pasaron en las posiciones exactas</div>
+      </div>
+    </div>
+    <p style="font-size:0.875rem;color:var(--text2);line-height:1.6;background:var(--bg2);padding:1.25rem;border-radius:var(--radius);border:1px solid var(--border);">
+      Selecciona los puntos obtenidos por cada persona en cada grupo según los resultados reales. Los puntajes se auto-guardan en el navegador y también puedes descargarlos en <strong>Excel</strong>. Los equipos clasificados en la pestaña Bracket se sincronizan automáticamente con los puntajes.
+    </p>
+  </div>
+
+  <!-- GRUPOS -->
+  <div id="view-grupos">
+    <div class="legend">
+      <span class="leg-item"><span class="leg-dot p1">1°</span> 1er lugar pronosticado</span>
+      <span class="leg-item"><span class="leg-dot p2">2°</span> 2do lugar pronosticado</span>
+    </div>
+    <div id="grupos-container"></div>
+  </div>
+
+  <!-- RANKING -->
+  <div id="view-ranking" style="display:none;">
+    <div id="ranking-container"></div>
+  </div>
+
 </div>
 
-<div id="view-ranking" style="display:none;">
-  <div id="ranking-container"></div>
-</div>
+<!-- ============================================================ -->
+<!--  PÁGINA 2: BRACKET                                           -->
+<!-- ============================================================ -->
+<div class="page" id="page-bracket">
+
+  <div class="page-header">
+    <div>
+      <h1>Bracket Eliminatorio</h1>
+      <p>Dieciseisavos · Octavos · Cuartos · Semis · Final</p>
+    </div>
+  </div>
+
+  <div class="bracket-controls">
+    <div class="left-btns">
+      <button class="btn btn-sync" onclick="autoLlenarBracket()">⚡ Auto-llenar desde grupos</button>
+      <button class="btn btn-outline" id="btnFaseGrupos" onclick="cambiarVistaBracket('grupos')">📋 Fase de Grupos</button>
+      <button class="btn btn-outline" id="btnElim" onclick="cambiarVistaBracket('bracket')">🏟 Eliminatorias</button>
+      <button class="btn btn-warning" onclick="resetBracket()">🔄 Reset Bracket</button>
+    </div>
+    <span class="bracket-hint">Click = mover · Doble click = editar nombre</span>
+  </div>
+
+  <div id="bracket-participantes" style="display:flex;gap:8px;flex-wrap:wrap;padding:8px;background:var(--bg2);border-radius:var(--radius);margin-bottom:1rem;border:1px solid var(--border);"></div>
+
+  <div id="vista-grupos-bracket" style="display:none;"></div>
+  <div id="vista-bracket-elim"></div>
 
 </div>
 
+<!-- MODAL REINICIAR -->
 <div class="modal-overlay" id="modalReiniciar">
   <div class="modal">
     <h3>⚠️ ¿Reiniciar todos los puntajes?</h3>
@@ -167,265 +623,42 @@ tr:hover td { background: #f8fafc; }
 </div>
 
 <script>
+// ================================================================
+//  DATOS COMPARTIDOS
+// ================================================================
 const PERSONAS = ['Duvan','Camila','Camilo','Mateo','Miguel','Doc Camilo','Kat','Sandra','Est','Diana'];
 
-// Grupos oficiales del Mundial 2026 con estructura de objetos
 const GRUPOS = {
-  'A': {
-    nombre: 'Grupo A',
-    equipos: [
-      {sigla:'MEX', nombre:'México', bandera:'🇲🇽'},
-      {sigla:'ZAF', nombre:'Sudáfrica', bandera:'🇿🇦'},
-      {sigla:'KOR', nombre:'Corea del Sur', bandera:'🇰🇷'},
-      {sigla:'CZE', nombre:'Chequia', bandera:'🇨🇿'}
-    ],
-    personas: {
-      'Camila':  [{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],
-      'Duvan':   [{sigla:'MEX',nombre:'México'},{sigla:'ZAF',nombre:'Sudáfrica'}],
-      'Camilo':  [{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],
-      'Mateo':   [{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],
-      'Miguel':  [{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],
-      'Doc Camilo':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],
-      'Kat':     [{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],
-      'Diana':   [{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}]
-    }
-  },
-  'B': {
-    nombre: 'Grupo B',
-    equipos: [
-      {sigla:'CAN', nombre:'Canadá', bandera:'🇨🇦'},
-      {sigla:'BIH', nombre:'Bosnia', bandera:'🇧🇦'},
-      {sigla:'QAT', nombre:'Qatar', bandera:'🇶🇦'},
-      {sigla:'SUI', nombre:'Suiza', bandera:'🇨🇭'}
-    ],
-    personas: {
-      'Camila':  [{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],
-      'Duvan':   [{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],
-      'Camilo':  [{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],
-      'Mateo':   [{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],
-      'Miguel':  [{sigla:'SUI',nombre:'Suiza'},{sigla:'QAT',nombre:'Qatar'}],
-      'Doc Camilo':[{sigla:'CAN',nombre:'Canadá'},{sigla:'QAT',nombre:'Qatar'}],
-      'Kat':     [{sigla:'CAN',nombre:'Canadá'},{sigla:'QAT',nombre:'Qatar'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],
-      'Diana':   [{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}]
-    }
-  },
-  'C': {
-    nombre: 'Grupo C',
-    equipos: [
-      {sigla:'BRA', nombre:'Brasil', bandera:'🇧🇷'},
-      {sigla:'MAR', nombre:'Marruecos', bandera:'🇲🇦'},
-      {sigla:'HTI', nombre:'Haití', bandera:'🇭🇹'},
-      {sigla:'SCO', nombre:'Escocia', bandera:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'}
-    ],
-    personas: {
-      'Camila':  [{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],
-      'Duvan':   [{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],
-      'Camilo':  [{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],
-      'Mateo':   [{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],
-      'Miguel':  [{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],
-      'Doc Camilo':[{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],
-      'Kat':     [{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],
-      'Diana':   [{sigla:'MAR',nombre:'Marruecos'},{sigla:'BRA',nombre:'Brasil'}]
-    }
-  },
-  'D': {
-    nombre: 'Grupo D',
-    equipos: [
-      {sigla:'USA', nombre:'EE.UU.', bandera:'🇺🇸'},
-      {sigla:'PAR', nombre:'Paraguay', bandera:'🇵🇾'},
-      {sigla:'AUS', nombre:'Australia', bandera:'🇦🇺'},
-      {sigla:'TUR', nombre:'Turquía', bandera:'🇹🇷'}
-    ],
-    personas: {
-      'Camila':  [{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],
-      'Duvan':   [{sigla:'TUR',nombre:'Turquía'},{sigla:'PAR',nombre:'Paraguay'}],
-      'Camilo':  [{sigla:'USA',nombre:'EE.UU.'},{sigla:'TUR',nombre:'Turquía'}],
-      'Mateo':   [{sigla:'USA',nombre:'EE.UU.'},{sigla:'PAR',nombre:'Paraguay'}],
-      'Miguel':  [{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],
-      'Doc Camilo':[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],
-      'Kat':     [{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],
-      'Diana':   [{sigla:'PAR',nombre:'Paraguay'},{sigla:'TUR',nombre:'Turquía'}]
-    }
-  },
-  'E': {
-    nombre: 'Grupo E',
-    equipos: [
-      {sigla:'GER', nombre:'Alemania', bandera:'🇩🇪'},
-      {sigla:'CIV', nombre:'Costa de Marfil', bandera:'🇨🇮'},
-      {sigla:'ECU', nombre:'Ecuador', bandera:'🇪🇨'},
-      {sigla:'CUW', nombre:'Curazao', bandera:'🇨🇼'}
-    ],
-    personas: {
-      'Camila':  [{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],
-      'Duvan':   [{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],
-      'Camilo':  [{sigla:'ECU',nombre:'Ecuador'},{sigla:'GER',nombre:'Alemania'}],
-      'Mateo':   [{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],
-      'Miguel':  [{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],
-      'Doc Camilo':[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],
-      'Kat':     [{sigla:'GER',nombre:'Alemania'},{sigla:'ECU',nombre:'Ecuador'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'GER',nombre:'Alemania'},{sigla:'ECU',nombre:'Ecuador'}],
-      'Diana':   [{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}]
-    }
-  },
-   'F': {
-    nombre: 'Grupo F',
-    equipos: [
-      {sigla:'NED', nombre:'Países Bajos', bandera:'🇳🇱'},
-      {sigla:'JPN', nombre:'Japón', bandera:'🇯🇵'},
-      {sigla:'SWE', nombre:'Suecia', bandera:'🇸🇪'},
-      {sigla:'TUN', nombre:'Túnez', bandera:'🇹🇳'}
-    ],
-    personas: {
-      'Duvan':   [{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],
-      'Camila':  [{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],
-      'Camilo':  [{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],
-      'Mateo':   [{sigla:'JPN',nombre:'Japón'},{sigla:'NED',nombre:'Países Bajos'}],
-      'Miguel':  [{sigla:'JPN',nombre:'Japón'},{sigla:'SWE',nombre:'Suecia'}],
-      'Doc Camilo':[{sigla:'NED',nombre:'Países Bajos'},{sigla:'SWE',nombre:'Suecia'}],
-      'Kat':     [{sigla:'JPN',nombre:'Japón'},{sigla:'NED',nombre:'Países Bajos'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],
-      'Diana':   [{sigla:'JPN',nombre:'Japón'},{sigla:'TUN',nombre:'Túnez'}]
-    }
-  },
-  'G': {
-    nombre: 'Grupo G',
-    equipos: [
-      {sigla:'BEL', nombre:'Bélgica', bandera:'🇧🇪'},
-      {sigla:'EGY', nombre:'Egipto', bandera:'🇪🇬'},
-      {sigla:'IRN', nombre:'Irán', bandera:'🇮🇷'},
-      {sigla:'NZL', nombre:'N. Zelanda', bandera:'🇳🇿'}
-    ],
-    personas: {
-      'Duvan':   [{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],
-      'Camila':  [{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],
-      'Camilo':  [{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],
-      'Mateo':   [{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],
-      'Miguel':  [{sigla:'EGY',nombre:'Egipto'},{sigla:'BEL',nombre:'Bélgica'}],
-      'Doc Camilo':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],
-      'Kat':     [{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],
-      'Diana':   [{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}]
-    }
-  },
-  'H': {
-    nombre: 'Grupo H',
-    equipos: [
-      {sigla:'ESP', nombre:'España', bandera:'🇪🇸'},
-      {sigla:'CPV', nombre:'Cabo Verde', bandera:'🇨🇻'},
-      {sigla:'KSA', nombre:'Arabia Saudí', bandera:'🇸🇦'},
-      {sigla:'URU', nombre:'Uruguay', bandera:'🇺🇾'}
-    ],
-    personas: {
-      'Duvan':   [{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],
-      'Camila':  [{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],
-      'Camilo':  [{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],
-      'Mateo':   [{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],
-      'Miguel':  [{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],
-      'Doc Camilo':[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],
-      'Kat':     [{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],
-      'Diana':   [{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}]
-    }
-  },
-  'I': {
-    nombre: 'Grupo I',
-    equipos: [
-      {sigla:'FRA', nombre:'Francia', bandera:'🇫🇷'},
-      {sigla:'SEN', nombre:'Senegal', bandera:'🇸🇳'},
-      {sigla:'IRQ', nombre:'Irak', bandera:'🇮🇶'},
-      {sigla:'NOR', nombre:'Noruega', bandera:'🇳🇴'}
-    ],
-    personas: {
-      'Duvan':   [{sigla:'NOR',nombre:'Noruega'},{sigla:'FRA',nombre:'Francia'}],
-      'Camila':  [{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],
-      'Camilo':  [{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],
-      'Mateo':   [{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],
-      'Miguel':  [{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],
-      'Doc Camilo':[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],
-      'Kat':     [{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],
-      'Diana':   [{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}]
-    }
-  },
-  'J': {
-    nombre: 'Grupo J',
-    equipos: [
-      {sigla:'ARG', nombre:'Argentina', bandera:'🇦🇷'},
-      {sigla:'ALG', nombre:'Argelia', bandera:'🇩🇿'},
-      {sigla:'AUT', nombre:'Austria', bandera:'🇦🇹'},
-      {sigla:'JOR', nombre:'Jordania', bandera:'🇯🇴'}
-    ],
-    personas: {
-      'Duvan':   [{sigla:'ARG',nombre:'Argentina'},{sigla:'ALG',nombre:'Argelia'}],
-      'Camila':  [{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],
-      'Camilo':  [{sigla:'ARG',nombre:'Argentina'},{sigla:'ALG',nombre:'Argelia'}],
-      'Mateo':   [{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],
-      'Miguel':  [{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],
-      'Doc Camilo':[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],
-      'Kat':     [{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],
-      'Diana':   [{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}]
-    }
-  },
-  'K': {
-    nombre: 'Grupo K',
-    equipos: [
-      {sigla:'POR', nombre:'Portugal', bandera:'🇵🇹'},
-      {sigla:'COD', nombre:'RD Congo', bandera:'🇨🇩'},
-      {sigla:'UZB', nombre:'Uzbekistán', bandera:'🇺🇿'},
-      {sigla:'COL', nombre:'Colombia', bandera:'🇨🇴'}
-    ],
-    personas: {
-      'Duvan':   [{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],
-      'Camila':  [{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],
-      'Camilo':  [{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}],
-      'Mateo':   [{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],
-      'Miguel':  [{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],
-      'Doc Camilo':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],
-      'Kat':     [{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}],
-      'Diana':   [{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}]
-    }
-  },
-  'L': {
-    nombre: 'Grupo L',
-    equipos: [
-      {sigla:'ENG', nombre:'Inglaterra', bandera:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},
-      {sigla:'CRO', nombre:'Croacia', bandera:'🇭🇷'},
-      {sigla:'GHA', nombre:'Ghana', bandera:'🇬🇭'},
-      {sigla:'PAN', nombre:'Panamá', bandera:'🇵🇦'}
-    ],
-    personas: {
-      'Duvan':   [{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],
-      'Camila':  [{sigla:'ENG',nombre:'Inglaterra'},{sigla:'GHA',nombre:'Ghana'}],
-      'Camilo':  [{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],
-      'Mateo':   [{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],
-      'Miguel':  [{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],
-      'Doc Camilo':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],
-      'Kat':     [{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],
-      'Sandra':  [],
-      'Est':     [{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],
-      'Diana':   [{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}]
-    }
-  }
-}; // ← SOLO UNA LLAVE DE CIERRE
+  'A':{ nombre:'Grupo A', equipos:[{sigla:'MEX',nombre:'México',bandera:'🇲🇽'},{sigla:'ZAF',nombre:'Sudáfrica',bandera:'🇿🇦'},{sigla:'KOR',nombre:'Corea del Sur',bandera:'🇰🇷'},{sigla:'CZE',nombre:'Chequia',bandera:'🇨🇿'}], personas:{'Camila':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],'Duvan':[{sigla:'MEX',nombre:'México'},{sigla:'ZAF',nombre:'Sudáfrica'}],'Camilo':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],'Mateo':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],'Miguel':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],'Doc Camilo':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],'Kat':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],'Sandra':[],'Est':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],'Diana':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}]}},
+  'B':{ nombre:'Grupo B', equipos:[{sigla:'CAN',nombre:'Canadá',bandera:'🇨🇦'},{sigla:'BIH',nombre:'Bosnia',bandera:'🇧🇦'},{sigla:'QAT',nombre:'Qatar',bandera:'🇶🇦'},{sigla:'SUI',nombre:'Suiza',bandera:'🇨🇭'}], personas:{'Camila':[{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],'Duvan':[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],'Camilo':[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],'Mateo':[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],'Miguel':[{sigla:'SUI',nombre:'Suiza'},{sigla:'QAT',nombre:'Qatar'}],'Doc Camilo':[{sigla:'CAN',nombre:'Canadá'},{sigla:'QAT',nombre:'Qatar'}],'Kat':[{sigla:'CAN',nombre:'Canadá'},{sigla:'QAT',nombre:'Qatar'}],'Sandra':[],'Est':[{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],'Diana':[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}]}},
+  'C':{ nombre:'Grupo C', equipos:[{sigla:'BRA',nombre:'Brasil',bandera:'🇧🇷'},{sigla:'MAR',nombre:'Marruecos',bandera:'🇲🇦'},{sigla:'HTI',nombre:'Haití',bandera:'🇭🇹'},{sigla:'SCO',nombre:'Escocia',bandera:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'}], personas:{'Camila':[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],'Duvan':[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],'Camilo':[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],'Mateo':[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],'Miguel':[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],'Doc Camilo':[{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],'Kat':[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],'Sandra':[],'Est':[{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],'Diana':[{sigla:'MAR',nombre:'Marruecos'},{sigla:'BRA',nombre:'Brasil'}]}},
+  'D':{ nombre:'Grupo D', equipos:[{sigla:'USA',nombre:'EE.UU.',bandera:'🇺🇸'},{sigla:'PAR',nombre:'Paraguay',bandera:'🇵🇾'},{sigla:'AUS',nombre:'Australia',bandera:'🇦🇺'},{sigla:'TUR',nombre:'Turquía',bandera:'🇹🇷'}], personas:{'Camila':[{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],'Duvan':[{sigla:'TUR',nombre:'Turquía'},{sigla:'PAR',nombre:'Paraguay'}],'Camilo':[{sigla:'USA',nombre:'EE.UU.'},{sigla:'TUR',nombre:'Turquía'}],'Mateo':[{sigla:'USA',nombre:'EE.UU.'},{sigla:'PAR',nombre:'Paraguay'}],'Miguel':[{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],'Doc Camilo':[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],'Kat':[{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],'Sandra':[],'Est':[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],'Diana':[{sigla:'PAR',nombre:'Paraguay'},{sigla:'TUR',nombre:'Turquía'}]}},
+  'E':{ nombre:'Grupo E', equipos:[{sigla:'GER',nombre:'Alemania',bandera:'🇩🇪'},{sigla:'CIV',nombre:'Costa de Marfil',bandera:'🇨🇮'},{sigla:'ECU',nombre:'Ecuador',bandera:'🇪🇨'},{sigla:'CUW',nombre:'Curazao',bandera:'🇨🇼'}], personas:{'Camila':[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],'Duvan':[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],'Camilo':[{sigla:'ECU',nombre:'Ecuador'},{sigla:'GER',nombre:'Alemania'}],'Mateo':[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],'Miguel':[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],'Doc Camilo':[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],'Kat':[{sigla:'GER',nombre:'Alemania'},{sigla:'ECU',nombre:'Ecuador'}],'Sandra':[],'Est':[{sigla:'GER',nombre:'Alemania'},{sigla:'ECU',nombre:'Ecuador'}],'Diana':[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}]}},
+  'F':{ nombre:'Grupo F', equipos:[{sigla:'NED',nombre:'Países Bajos',bandera:'🇳🇱'},{sigla:'JPN',nombre:'Japón',bandera:'🇯🇵'},{sigla:'SWE',nombre:'Suecia',bandera:'🇸🇪'},{sigla:'TUN',nombre:'Túnez',bandera:'🇹🇳'}], personas:{'Duvan':[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],'Camila':[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],'Camilo':[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],'Mateo':[{sigla:'JPN',nombre:'Japón'},{sigla:'NED',nombre:'Países Bajos'}],'Miguel':[{sigla:'JPN',nombre:'Japón'},{sigla:'SWE',nombre:'Suecia'}],'Doc Camilo':[{sigla:'NED',nombre:'Países Bajos'},{sigla:'SWE',nombre:'Suecia'}],'Kat':[{sigla:'JPN',nombre:'Japón'},{sigla:'NED',nombre:'Países Bajos'}],'Sandra':[],'Est':[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],'Diana':[{sigla:'JPN',nombre:'Japón'},{sigla:'TUN',nombre:'Túnez'}]}},
+  'G':{ nombre:'Grupo G', equipos:[{sigla:'BEL',nombre:'Bélgica',bandera:'🇧🇪'},{sigla:'EGY',nombre:'Egipto',bandera:'🇪🇬'},{sigla:'IRN',nombre:'Irán',bandera:'🇮🇷'},{sigla:'NZL',nombre:'N. Zelanda',bandera:'🇳🇿'}], personas:{'Duvan':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],'Camila':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],'Camilo':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],'Mateo':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],'Miguel':[{sigla:'EGY',nombre:'Egipto'},{sigla:'BEL',nombre:'Bélgica'}],'Doc Camilo':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],'Kat':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],'Sandra':[],'Est':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],'Diana':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}]}},
+  'H':{ nombre:'Grupo H', equipos:[{sigla:'ESP',nombre:'España',bandera:'🇪🇸'},{sigla:'CPV',nombre:'Cabo Verde',bandera:'🇨🇻'},{sigla:'KSA',nombre:'Arabia Saudí',bandera:'🇸🇦'},{sigla:'URU',nombre:'Uruguay',bandera:'🇺🇾'}], personas:{'Duvan':[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],'Camila':[{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],'Camilo':[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],'Mateo':[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],'Miguel':[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],'Doc Camilo':[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],'Kat':[{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],'Sandra':[],'Est':[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],'Diana':[{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}]}},
+  'I':{ nombre:'Grupo I', equipos:[{sigla:'FRA',nombre:'Francia',bandera:'🇫🇷'},{sigla:'SEN',nombre:'Senegal',bandera:'🇸🇳'},{sigla:'IRQ',nombre:'Irak',bandera:'🇮🇶'},{sigla:'NOR',nombre:'Noruega',bandera:'🇳🇴'}], personas:{'Duvan':[{sigla:'NOR',nombre:'Noruega'},{sigla:'FRA',nombre:'Francia'}],'Camila':[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],'Camilo':[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],'Mateo':[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],'Miguel':[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],'Doc Camilo':[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],'Kat':[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],'Sandra':[],'Est':[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],'Diana':[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}]}},
+  'J':{ nombre:'Grupo J', equipos:[{sigla:'ARG',nombre:'Argentina',bandera:'🇦🇷'},{sigla:'ALG',nombre:'Argelia',bandera:'🇩🇿'},{sigla:'AUT',nombre:'Austria',bandera:'🇦🇹'},{sigla:'JOR',nombre:'Jordania',bandera:'🇯🇴'}], personas:{'Duvan':[{sigla:'ARG',nombre:'Argentina'},{sigla:'ALG',nombre:'Argelia'}],'Camila':[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],'Camilo':[{sigla:'ARG',nombre:'Argentina'},{sigla:'ALG',nombre:'Argelia'}],'Mateo':[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],'Miguel':[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],'Doc Camilo':[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],'Kat':[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],'Sandra':[],'Est':[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],'Diana':[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}]}},
+  'K':{ nombre:'Grupo K', equipos:[{sigla:'POR',nombre:'Portugal',bandera:'🇵🇹'},{sigla:'COD',nombre:'RD Congo',bandera:'🇨🇩'},{sigla:'UZB',nombre:'Uzbekistán',bandera:'🇺🇿'},{sigla:'COL',nombre:'Colombia',bandera:'🇨🇴'}], personas:{'Duvan':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],'Camila':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],'Camilo':[{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}],'Mateo':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],'Miguel':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],'Doc Camilo':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],'Kat':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],'Sandra':[],'Est':[{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}],'Diana':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}]}},
+  'L':{ nombre:'Grupo L', equipos:[{sigla:'ENG',nombre:'Inglaterra',bandera:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},{sigla:'CRO',nombre:'Croacia',bandera:'🇭🇷'},{sigla:'GHA',nombre:'Ghana',bandera:'🇬🇭'},{sigla:'PAN',nombre:'Panamá',bandera:'🇵🇦'}], personas:{'Duvan':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],'Camila':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'GHA',nombre:'Ghana'}],'Camilo':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],'Mateo':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],'Miguel':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],'Doc Camilo':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],'Kat':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],'Sandra':[],'Est':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],'Diana':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}]}}
+};
 
-// ==================== PUNTAJES ====================
+// ================================================================
+//  NAVEGACIÓN ENTRE PÁGINAS
+// ================================================================
+function switchPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach((t, i) => {
+    t.classList.toggle('active', ['polla','bracket'][i] === page);
+  });
+  if (page === 'bracket') { renderParticipantes(); renderVistaBracket(); }
+  if (page === 'polla' && document.getElementById('view-ranking').style.display !== 'none') renderRanking();
+}
+
+// ================================================================
+//  POLLA — PUNTAJES
+// ================================================================
 let puntajes = {};
 inicializarPuntajes();
 cargarDesdeLocalStorage();
@@ -443,16 +676,12 @@ function cargarDesdeLocalStorage() {
     try {
       const data = JSON.parse(saved);
       PERSONAS.forEach(p => {
-        if (data[p]) {
-          Object.keys(GRUPOS).forEach(g => {
-            if (typeof data[p][g] === 'number' && [0,1,3,6].includes(data[p][g])) {
-              puntajes[p][g] = data[p][g];
-            }
-          });
-        }
+        if (data[p]) Object.keys(GRUPOS).forEach(g => {
+          if (typeof data[p][g] === 'number' && [0,1,3,6].includes(data[p][g])) puntajes[p][g] = data[p][g];
+        });
       });
-      actualizarStatus('Puntajes cargados del navegador');
-    } catch(e) { console.error('Error cargando localStorage:', e); }
+      actualizarStatus('Puntajes restaurados');
+    } catch(e) {}
   }
 }
 
@@ -466,66 +695,45 @@ function actualizarStatus(msg) {
   setTimeout(() => { el.textContent = 'Listo'; }, 3000);
 }
 
-// ==================== EXCEL ====================
+// ================================================================
+//  POLLA — EXCEL
+// ================================================================
 function descargarExcel() {
   try {
     const wb = XLSX.utils.book_new();
-
-    // Hoja 1: Puntajes
     const dataPuntajes = [['Persona', ...Object.keys(GRUPOS), 'TOTAL']];
     PERSONAS.forEach(p => {
-      const fila = [p];
-      let total = 0;
+      const fila = [p]; let total = 0;
       Object.keys(GRUPOS).forEach(g => { const v = puntajes[p][g]||0; fila.push(v); total+=v; });
-      fila.push(total);
-      dataPuntajes.push(fila);
+      fila.push(total); dataPuntajes.push(fila);
     });
     const ws1 = XLSX.utils.aoa_to_sheet(dataPuntajes);
     ws1['!cols'] = [{wch:14}, ...Object.keys(GRUPOS).map(()=>({wch:6})), {wch:8}];
     XLSX.utils.book_append_sheet(wb, ws1, 'Puntajes');
-
-    // Hoja 2: Detalle
-    const dataDet = [['Grupo','Equipos del grupo','Persona','1° Pronóstico','2° Pronóstico','Puntos']];
+    const dataDet = [['Grupo','Equipos','Persona','1° Pronóstico','2° Pronóstico','Puntos']];
     Object.entries(GRUPOS).forEach(([gid,gdata]) => {
-      const equiposStr = gdata.equipos.map(e=>`${e.nombre} (${e.sigla})`).join(', ');
+      const eq = gdata.equipos.map(e=>`${e.nombre} (${e.sigla})`).join(', ');
       PERSONAS.forEach(p => {
         const pr = gdata.personas[p]||[];
-        dataDet.push([
-          `Grupo ${gid}`,
-          equiposStr,
-          p,
-          pr[0] ? `${pr[0].nombre} (${pr[0].sigla})` : '—',
-          pr[1] ? `${pr[1].nombre} (${pr[1].sigla})` : '—',
-          puntajes[p][gid]||0
-        ]);
+        dataDet.push([`Grupo ${gid}`,eq,p,pr[0]?`${pr[0].nombre} (${pr[0].sigla})`:'—',pr[1]?`${pr[1].nombre} (${pr[1].sigla})`:'—',puntajes[p][gid]||0]);
       });
     });
     const ws2 = XLSX.utils.aoa_to_sheet(dataDet);
-    ws2['!cols'] = [{wch:8},{wch:40},{wch:14},{wch:22},{wch:22},{wch:8}];
     XLSX.utils.book_append_sheet(wb, ws2, 'Detalle');
-
-    // Hoja 3: Ranking
     const sorted = [...PERSONAS].sort((a,b)=>calcTotal(b)-calcTotal(a));
-    const dataRk = [['Pos','Persona','Total','Grupos con puntos']];
-    sorted.forEach((p,i) => {
-      const t = calcTotal(p);
-      const det = Object.entries(puntajes[p]||{}).filter(([,v])=>v>0).map(([g,v])=>`${g}:${v}`).join(', ')||'—';
-      dataRk.push([i+1,p,t,det]);
-    });
+    const dataRk = [['Pos','Persona','Total','Detalle']];
+    sorted.forEach((p,i)=>{ dataRk.push([i+1,p,calcTotal(p),Object.entries(puntajes[p]||{}).filter(([,v])=>v>0).map(([g,v])=>`${g}:${v}`).join(', ')||'—']); });
     const ws3 = XLSX.utils.aoa_to_sheet(dataRk);
-    ws3['!cols'] = [{wch:5},{wch:14},{wch:8},{wch:50}];
     XLSX.utils.book_append_sheet(wb, ws3, 'Ranking');
-
     const fecha = new Date().toISOString().slice(0,10).replace(/-/g,'');
     XLSX.writeFile(wb, `Polla_Mundial2026_${fecha}.xlsx`);
     guardarEnLocalStorage();
     actualizarStatus('✅ Excel descargado');
-  } catch(e) { console.error(e); alert('Error al generar Excel.'); }
+  } catch(e) { alert('Error al generar Excel.'); }
 }
 
 function cargarExcel(event) {
-  const file = event.target.files[0];
-  if (!file) return;
+  const file = event.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
@@ -533,54 +741,40 @@ function cargarExcel(event) {
       const ws = wb.Sheets[wb.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(ws, {header:1});
       if (!rows[0] || rows[0][0] !== 'Persona') { alert('Formato incorrecto. Usa la hoja "Puntajes".'); return; }
-      const gKeys = Object.keys(GRUPOS);
-      let n = 0;
+      const gKeys = Object.keys(GRUPOS); let n = 0;
       for (let i=1;i<rows.length;i++) {
         const row=rows[i]; if(!row||!row[0]) continue;
-        const p=String(row[0]).trim();
-        if(!PERSONAS.includes(p)) continue;
-        gKeys.forEach((g,j)=>{
-          const v=parseInt(row[j+1]);
-          if(!isNaN(v)&&[0,1,3,6].includes(v)){puntajes[p][g]=v;n++;}
-        });
+        const p=String(row[0]).trim(); if(!PERSONAS.includes(p)) continue;
+        gKeys.forEach((g,j)=>{ const v=parseInt(row[j+1]); if(!isNaN(v)&&[0,1,3,6].includes(v)){puntajes[p][g]=v;n++;} });
       }
-      guardarEnLocalStorage();
-      renderGrupos();
-      actualizarStatus(`✅ ${n} puntajes cargados`);
-    } catch(e) { console.error(e); alert('Error al leer el Excel.'); }
+      guardarEnLocalStorage(); renderGrupos(); actualizarStatus(`✅ ${n} puntajes cargados`);
+    } catch(e) { alert('Error al leer el Excel.'); }
   };
-  reader.readAsArrayBuffer(file);
-  event.target.value='';
+  reader.readAsArrayBuffer(file); event.target.value='';
 }
 
-// ==================== INTERFAZ ====================
+// ================================================================
+//  POLLA — INTERFAZ
+// ================================================================
 function showView(v) {
   ['grupos','ranking','leyenda'].forEach(x => {
     document.getElementById('view-'+x).style.display = x===v?'':'none';
   });
-  document.querySelectorAll('.tab').forEach((t,i) => {
+  document.querySelectorAll('.inner-tab').forEach((t,i) => {
     t.classList.toggle('active', ['grupos','ranking','leyenda'][i]===v);
   });
-  const bar = document.getElementById('accionesExcel');
-  bar.style.opacity = v==='leyenda'?'0.5':'1';
-  bar.style.pointerEvents = v==='leyenda'?'none':'auto';
   if(v==='ranking') renderRanking();
 }
 
-function getPuntosClass(p) {
-  return p===0?'':'points-'+p;
-}
+function getPuntosClass(p) { return p===0?'':'points-'+p; }
 
 function renderGrupos() {
-  const c = document.getElementById('grupos-container');
-  c.innerHTML = '';
+  const c = document.getElementById('grupos-container'); c.innerHTML = '';
   Object.entries(GRUPOS).forEach(([gid,gdata]) => {
-    const sec = document.createElement('div');
-    sec.className = 'grupo-card';
-    const equiposStr = gdata.equipos.map(e=>`${e.bandera} ${e.nombre} <small style="color:#999;">(${e.sigla})</small>`).join(' &nbsp;·&nbsp; ');
-    const lbl = document.createElement('div');
-    lbl.className = 'grupo-label';
-    lbl.innerHTML = `🏟 ${gdata.nombre} &nbsp;—&nbsp; <span style="font-weight:400;text-transform:none;letter-spacing:0;">${equiposStr}</span>`;
+    const sec = document.createElement('div'); sec.className = 'grupo-card';
+    const equiposStr = gdata.equipos.map(e=>`${e.bandera} ${e.nombre} <small style="color:#666;">(${e.sigla})</small>`).join(' &nbsp;·&nbsp; ');
+    const lbl = document.createElement('div'); lbl.className = 'grupo-label';
+    lbl.innerHTML = `🏟 ${gdata.nombre} &nbsp;— <span style="font-weight:400;text-transform:none;letter-spacing:0;">${equiposStr}</span>`;
     sec.appendChild(lbl);
     const tbl = document.createElement('table');
     tbl.innerHTML = `<thead><tr><th>Persona</th><th>1° Pronóstico</th><th>2° Pronóstico</th><th>Puntos</th></tr></thead>`;
@@ -588,9 +782,9 @@ function renderGrupos() {
     PERSONAS.forEach(p => {
       const prono = gdata.personas[p]||[];
       const tr = document.createElement('tr');
-      const b1 = prono[0] ? `<span class="pos-badge p1">1°</span> ${prono[0].bandera||''} ${prono[0].nombre} <small style="color:#999;">(${prono[0].sigla})</small>` : '<span style="color:#ccc;font-style:italic;">—</span>';
-      const b2 = prono[1] ? `<span class="pos-badge p2">2°</span> ${prono[1].bandera||''} ${prono[1].nombre} <small style="color:#999;">(${prono[1].sigla})</small>` : '<span style="color:#ccc;font-style:italic;">—</span>';
-      const pts = (puntajes[p] && puntajes[p][gid]) ? puntajes[p][gid] : 0;
+      const b1 = prono[0]?`<span class="pos-badge p1">1°</span> ${prono[0].bandera||''} ${prono[0].nombre} <small style="color:#666;">(${prono[0].sigla})</small>`:'<span style="color:#555;font-style:italic;">—</span>';
+      const b2 = prono[1]?`<span class="pos-badge p2">2°</span> ${prono[1].bandera||''} ${prono[1].nombre} <small style="color:#666;">(${prono[1].sigla})</small>`:'<span style="color:#555;font-style:italic;">—</span>';
+      const pts = (puntajes[p]&&puntajes[p][gid])?puntajes[p][gid]:0;
       const sel = `<select class="pts-select ${getPuntosClass(pts)}" data-p="${p}" data-g="${gid}" onchange="setPuntos(this)">
         <option value="0" ${pts===0?'selected':''}>— 0 pts</option>
         <option value="1" ${pts===1?'selected':''}>🟡 1 pt</option>
@@ -600,9 +794,7 @@ function renderGrupos() {
       tr.innerHTML = `<td style="font-weight:500;">${p}</td><td>${b1}</td><td>${b2}</td><td>${sel}</td>`;
       tbody.appendChild(tr);
     });
-    tbl.appendChild(tbody);
-    sec.appendChild(tbl);
-    c.appendChild(sec);
+    tbl.appendChild(tbody); sec.appendChild(tbl); c.appendChild(sec);
   });
 }
 
@@ -621,18 +813,17 @@ function calcTotal(p) {
 
 function renderRanking() {
   const sorted = [...PERSONAS].sort((a,b)=>calcTotal(b)-calcTotal(a));
-  const c = document.getElementById('ranking-container');
-  c.innerHTML = '';
+  const c = document.getElementById('ranking-container'); c.innerHTML = '';
   const totalPts = PERSONAS.reduce((s,p)=>s+calcTotal(p),0);
   const conPts = PERSONAS.filter(p=>calcTotal(p)>0).length;
   c.innerHTML = `<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1.5rem;">
-    <div style="flex:1;min-width:140px;background:white;border-radius:12px;padding:1rem;text-align:center;border:0.5px solid var(--color-border-tertiary);">
-      <div style="font-size:2rem;font-weight:700;color:#185FA5;">${totalPts}</div>
-      <div style="font-size:0.75rem;color:#666;">Puntos repartidos</div>
+    <div style="flex:1;min-width:140px;background:var(--bg2);border-radius:var(--radius);padding:1rem;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:2rem;font-weight:700;color:var(--blue);">${totalPts}</div>
+      <div style="font-size:0.75rem;color:var(--text2);">Puntos repartidos</div>
     </div>
-    <div style="flex:1;min-width:140px;background:white;border-radius:12px;padding:1rem;text-align:center;border:0.5px solid var(--color-border-tertiary);">
-      <div style="font-size:2rem;font-weight:700;color:#3B6D11;">${conPts}</div>
-      <div style="font-size:0.75rem;color:#666;">Personas con puntos</div>
+    <div style="flex:1;min-width:140px;background:var(--bg2);border-radius:var(--radius);padding:1rem;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:2rem;font-weight:700;color:#7dc542;">${conPts}</div>
+      <div style="font-size:0.75rem;color:var(--text2);">Personas con puntos</div>
     </div>
   </div>`;
   sorted.forEach((p,i) => {
@@ -640,9 +831,8 @@ function renderRanking() {
     const rClass = i===0?'r1':i===1?'r2':i===2?'r3':'rn';
     const med = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
     const det = Object.entries(puntajes[p]||{}).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a)
-      .map(([g,v])=>`<span style="display:inline-block;background:#f0f7ff;color:#185FA5;padding:2px 8px;border-radius:12px;font-size:0.7rem;margin:2px;">Gr.${g}: ${v}pts</span>`).join('')||'<span style="color:#ccc;font-style:italic;">Sin puntos</span>';
-    const card = document.createElement('div');
-    card.className = 'ranking-card';
+      .map(([g,v])=>`<span style="display:inline-block;background:rgba(24,95,165,0.15);color:#5b9dd9;padding:2px 8px;border-radius:12px;font-size:0.7rem;margin:2px;">Gr.${g}: ${v}pts</span>`).join('')||'<span style="color:#555;font-style:italic;">Sin puntos</span>';
+    const card = document.createElement('div'); card.className = 'ranking-card';
     card.innerHTML = `
       <div class="rank-num ${rClass}">${i+1}</div>
       <div style="flex:1">
@@ -660,20 +850,300 @@ function renderRanking() {
 function mostrarModalReiniciar() { document.getElementById('modalReiniciar').classList.add('active'); }
 function cerrarModal() { document.getElementById('modalReiniciar').classList.remove('active'); }
 function reiniciarPuntajes() {
-  inicializarPuntajes();
-  guardarEnLocalStorage();
-  renderGrupos();
+  inicializarPuntajes(); guardarEnLocalStorage(); renderGrupos();
   if(document.getElementById('view-ranking').style.display!=='none') renderRanking();
-  cerrarModal();
-  actualizarStatus('🔄 Reiniciado a cero');
+  cerrarModal(); actualizarStatus('🔄 Reiniciado a cero');
 }
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') cerrarModal(); });
 document.getElementById('modalReiniciar').addEventListener('click', function(e){ if(e.target===this) cerrarModal(); });
 window.addEventListener('beforeunload', guardarEnLocalStorage);
 
-// ==================== INICIO ====================
+// ================================================================
+//  BRACKET — ESTADO
+// ================================================================
+const TROPHY_URI = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'%3E%3Cpath d='M35 5 h30 v40 c0 20-15 30-15 30s-15-10-15-30z' fill='%23FAC775'/%3E%3Crect x='42' y='75' width='16' height='30' fill='%23FAC775'/%3E%3Crect x='30' y='105' width='40' height='10' rx='4' fill='%23FAC775'/%3E%3Cpath d='M35 10 c-10 0-20 10-20 25 c0 10 6 18 15 22' fill='none' stroke='%23FAC775' stroke-width='5'/%3E%3Cpath d='M65 10 c10 0 20 10 20 25 c0 10-6 18-15 22' fill='none' stroke='%23FAC775' stroke-width='5'/%3E%3C/svg%3E";
+
+let gruposState = {};
+let bracketState = {};
+let seleccionado = null;
+let personaSeleccionada = null;
+
+function initBracketState() {
+  gruposState = {};
+  Object.entries(GRUPOS).forEach(([gid, gdata]) => {
+    gruposState[gid] = {
+      equipos: gdata.equipos.map(e => ({...e})),
+      clasificados: [null, null]
+    };
+  });
+  bracketState = {
+    dieciseisavos: Array(16).fill(null).map(()=>({equipo1:null,equipo2:null})),
+    octavos:       Array(8).fill(null).map(()=>({equipo1:null,equipo2:null})),
+    cuartos:       Array(4).fill(null).map(()=>({equipo1:null,equipo2:null})),
+    semis:         Array(2).fill(null).map(()=>({equipo1:null,equipo2:null})),
+    final:         {equipo1:null,equipo2:null},
+    tercerPuesto:  {equipo1:null,equipo2:null}
+  };
+}
+
+function cargarStateBracket() {
+  initBracketState();
+  const s = localStorage.getItem('bracket_mundial_2026');
+  if (s) {
+    try {
+      const d = JSON.parse(s);
+      if (d.gruposState) gruposState = d.gruposState;
+      if (d.bracketState) bracketState = d.bracketState;
+    } catch(e) {}
+  }
+}
+
+function guardarStateBracket() {
+  localStorage.setItem('bracket_mundial_2026', JSON.stringify({ gruposState, bracketState }));
+  // Actualizar badge de sincronización
+  const cl = Object.values(gruposState).filter(g=>g.clasificados[0]||g.clasificados[1]).length;
+  const badge = document.getElementById('syncBadge');
+  if (cl > 0) {
+    badge.textContent = `⚡ ${cl} grupos con clasificados`;
+    badge.className = 'sync-badge ok';
+  } else {
+    badge.textContent = '⚡ Sincronizado';
+    badge.className = 'sync-badge';
+  }
+}
+
+// ================================================================
+//  BRACKET — VISTA GRUPOS
+// ================================================================
+let vistaBracketActual = 'grupos';
+
+function cambiarVistaBracket(vista) {
+  vistaBracketActual = vista;
+  document.getElementById('vista-grupos-bracket').style.display = vista==='grupos'?'':'none';
+  document.getElementById('vista-bracket-elim').style.display = vista==='bracket'?'':'none';
+  document.getElementById('btnFaseGrupos').className = 'btn ' + (vista==='grupos'?'btn-primary':'btn-outline');
+  document.getElementById('btnElim').className = 'btn ' + (vista==='bracket'?'btn-primary':'btn-outline');
+  if(vista==='bracket') renderVistaBracket();
+  else renderVistaGrupos();
+}
+
+function renderParticipantes() {
+  const bar = document.getElementById('bracket-participantes'); bar.innerHTML = '';
+  const chip0 = document.createElement('span');
+  chip0.style.cssText = 'padding:4px 10px;border-radius:12px;font-size:0.75rem;background:transparent;border:1px solid var(--border);cursor:pointer;color:var(--text2);';
+  chip0.textContent = 'Todos';
+  chip0.onclick = () => { personaSeleccionada=null; document.querySelectorAll('.part-chip').forEach(c=>c.classList.remove('active')); chip0.style.background='var(--blue)'; chip0.style.color='white'; renderVistaGrupos(); };
+  bar.appendChild(chip0);
+  PERSONAS.forEach(p => {
+    const chip = document.createElement('span');
+    chip.className = 'part-chip';
+    chip.style.cssText = 'padding:4px 10px;border-radius:12px;font-size:0.75rem;background:var(--bg3);border:1px solid var(--border);cursor:pointer;color:var(--text2);transition:all 0.18s;';
+    chip.textContent = p;
+    chip.onclick = () => {
+      personaSeleccionada = p;
+      document.querySelectorAll('.part-chip').forEach(c=>{c.style.background='var(--bg3)';c.style.color='var(--text2)';});
+      chip0.style.background='transparent'; chip0.style.color='var(--text2)';
+      chip.style.background = 'var(--blue)'; chip.style.color = 'white';
+      renderVistaGrupos();
+    };
+    bar.appendChild(chip);
+  });
+}
+
+function renderVistaGrupos() {
+  const grid = document.getElementById('vista-grupos-bracket'); grid.innerHTML = '';
+  const div = document.createElement('div'); div.className = 'fase-grupos';
+  Object.entries(gruposState).forEach(([gid, gdata]) => {
+    const box = document.createElement('div'); box.className = 'grupo-box-br';
+    const title = document.createElement('div'); title.className = 'grupo-title';
+    title.textContent = GRUPOS[gid].nombre;
+    box.appendChild(title);
+    const positions = document.createElement('div'); positions.style.display='flex';positions.style.flexDirection='column';positions.style.gap='4px';
+    gdata.equipos.forEach((eq, idx) => {
+      const posRow = document.createElement('div'); posRow.className = 'pos-row';
+      const esClas = gdata.clasificados[0]?.sigla===eq.sigla || gdata.clasificados[1]?.sigla===eq.sigla;
+      if (esClas) posRow.classList.add('clasificado');
+      const posNum = document.createElement('span');
+      posNum.className = `pos-number ${idx===0?'pos-1':idx===1?'pos-2':'pos-3'}`;
+      posNum.textContent = idx+1;
+      const flag = document.createElement('span'); flag.style.fontSize='1.1rem'; flag.textContent = eq.bandera;
+      const name = document.createElement('span'); name.style.flex='1'; name.textContent = eq.nombre;
+      const sigla = document.createElement('span'); sigla.style.cssText='color:var(--text2);font-size:0.6875rem;';
+      sigla.textContent = eq.sigla;
+      if (personaSeleccionada) {
+        const prono = GRUPOS[gid].personas[personaSeleccionada]||[];
+        const posIdx = prono.findIndex(p=>p.sigla===eq.sigla);
+        if (posIdx>=0) { const badge=document.createElement('span'); badge.className='propietario-badge'; badge.textContent=personaSeleccionada+' ('+(posIdx+1)+'°)'; sigla.appendChild(document.createTextNode(' ')); sigla.appendChild(badge); }
+      }
+      posRow.appendChild(posNum); posRow.appendChild(flag); posRow.appendChild(name); posRow.appendChild(sigla);
+      posRow.onclick = () => toggleClasificado(gid, eq, idx);
+      posRow.ondblclick = () => editarEquipo(gid, idx);
+      positions.appendChild(posRow);
+    });
+    box.appendChild(positions); div.appendChild(box);
+  });
+  grid.appendChild(div);
+}
+
+function toggleClasificado(gid, eq, idx) {
+  const g = gruposState[gid];
+  if (g.clasificados[0]?.sigla===eq.sigla) g.clasificados[0]=null;
+  else if (g.clasificados[1]?.sigla===eq.sigla) g.clasificados[1]=null;
+  else if (!g.clasificados[0]) g.clasificados[0]={...eq};
+  else if (!g.clasificados[1]) g.clasificados[1]={...eq};
+  else { g.clasificados[0]=g.clasificados[1]; g.clasificados[1]={...eq}; }
+  guardarStateBracket(); renderVistaGrupos();
+}
+
+function editarEquipo(gid, idx) {
+  const nuevo = prompt('Editar nombre del equipo:', gruposState[gid].equipos[idx].nombre);
+  if (nuevo&&nuevo.trim()) { gruposState[gid].equipos[idx].nombre=nuevo.trim(); guardarStateBracket(); renderVistaGrupos(); }
+}
+
+// ================================================================
+//  BRACKET — VISTA ELIMINATORIA
+// ================================================================
+function renderVistaBracket() {
+  const container = document.getElementById('vista-bracket-elim'); container.innerHTML = '';
+  const bracketDiv = document.createElement('div'); bracketDiv.className = 'bracket-container';
+  const rondas = [
+    {nombre:'Dieciseisavos',key:'dieciseisavos',partidos:16},
+    {nombre:'Octavos',key:'octavos',partidos:8},
+    {nombre:'Cuartos',key:'cuartos',partidos:4},
+    {nombre:'Semis',key:'semis',partidos:2},
+    {nombre:'Final',key:'final',partidos:1,especial:true}
+  ];
+  rondas.forEach(ronda => {
+    const rondaDiv = document.createElement('div'); rondaDiv.className = 'ronda';
+    rondaDiv.innerHTML = `<div class="ronda-header">${ronda.nombre}</div>`;
+    const num = ronda.especial?1:ronda.partidos;
+    for (let i=0;i<num;i++) {
+      const match = document.createElement('div'); match.className = 'match';
+      match.dataset.ronda = ronda.key; match.dataset.index = i;
+      match.appendChild(crearSlot(ronda.key,i,0));
+      match.appendChild(crearSlot(ronda.key,i,1));
+      if (ronda.especial) {
+        const ganador = document.createElement('div'); ganador.className = 'campeon-label';
+        const tr = document.createElement('img'); tr.src=TROPHY_URI; tr.className='campeon-trophy'; tr.alt='Copa';
+        const lbl = document.createElement('span'); lbl.textContent='CAMPEÓN';
+        ganador.appendChild(tr); ganador.appendChild(lbl); match.appendChild(ganador);
+      }
+      rondaDiv.appendChild(match);
+    }
+    if (ronda.especial) {
+      const m3 = document.createElement('div'); m3.className='match'; m3.style.marginTop='16px';
+      m3.dataset.ronda='tercerPuesto'; m3.dataset.index='0';
+      m3.appendChild(crearSlot('tercerPuesto',0,0));
+      m3.appendChild(crearSlot('tercerPuesto',0,1));
+      const t3 = document.createElement('div'); t3.style.cssText='text-align:center;padding:4px;font-size:0.6875rem;color:#D3D1C7;border-top:2px solid #D3D1C7;';
+      t3.textContent='🥉 3er PUESTO'; m3.appendChild(t3); rondaDiv.appendChild(m3);
+    }
+    bracketDiv.appendChild(rondaDiv);
+  });
+  container.appendChild(bracketDiv);
+}
+
+function crearSlot(ronda, matchIdx, slotIdx) {
+  const slot = document.createElement('div');
+  slot.className = 'team-slot empty';
+  slot.dataset.ronda=ronda; slot.dataset.match=matchIdx; slot.dataset.slot=slotIdx;
+  const key = ronda==='final'?'final':ronda==='tercerPuesto'?'tercerPuesto':ronda;
+  let match = key==='final'?bracketState.final:key==='tercerPuesto'?bracketState.tercerPuesto:(bracketState[key]?.[matchIdx]);
+  const equipo = match?(slotIdx===0?match.equipo1:match.equipo2):null;
+  if (equipo) {
+    slot.classList.remove('empty');
+    slot.innerHTML = `<span class="team-flag">${equipo.bandera||''}</span><span class="team-name">${equipo.nombre}</span><span class="team-sigla">${equipo.sigla}</span><div class="tooltip">Click para mover · Doble click editar</div>`;
+  } else {
+    slot.innerHTML = `<span style="color:var(--text2);">Por definir</span>`;
+  }
+  slot.onclick = (e)=>handleSlotClick(slot,ronda,matchIdx,slotIdx,e);
+  slot.ondblclick = ()=>handleSlotDblClick(ronda,matchIdx,slotIdx);
+  return slot;
+}
+
+function getMatch(ronda, matchIdx) {
+  const key = ronda==='final'?'final':ronda==='tercerPuesto'?'tercerPuesto':ronda;
+  if (key==='final') return bracketState.final;
+  if (key==='tercerPuesto') return bracketState.tercerPuesto;
+  return bracketState[key]?.[matchIdx];
+}
+
+function handleSlotClick(slot, ronda, matchIdx, slotIdx, e) {
+  e.stopPropagation();
+  const match = getMatch(ronda, matchIdx);
+  const equipoActual = match?(slotIdx===0?match.equipo1:match.equipo2):null;
+  if (seleccionado && seleccionado!==slot) {
+    const orSlot=seleccionado;
+    const orMatch = getMatch(orSlot.dataset.ronda, parseInt(orSlot.dataset.match));
+    const orSlotIdx = parseInt(orSlot.dataset.slot);
+    const orEq = orMatch?(orSlotIdx===0?orMatch.equipo1:orMatch.equipo2):null;
+    if (orMatch && match) {
+      if (orSlotIdx===0) orMatch.equipo1=equipoActual; else orMatch.equipo2=equipoActual;
+      if (slotIdx===0) match.equipo1=orEq; else match.equipo2=orEq;
+    }
+    document.querySelectorAll('.team-slot.selected').forEach(s=>s.classList.remove('selected'));
+    seleccionado=null; guardarStateBracket(); renderVistaBracket();
+  } else if (equipoActual) {
+    document.querySelectorAll('.team-slot.selected').forEach(s=>s.classList.remove('selected'));
+    slot.classList.add('selected'); seleccionado=slot;
+  }
+}
+
+function handleSlotDblClick(ronda, matchIdx, slotIdx) {
+  const match = getMatch(ronda, matchIdx); if (!match) return;
+  const equipo = slotIdx===0?match.equipo1:match.equipo2;
+  if (equipo) {
+    const nuevo = prompt('Editar equipo:', equipo.nombre);
+    if (nuevo&&nuevo.trim()) { equipo.nombre=nuevo.trim(); guardarStateBracket(); renderVistaBracket(); }
+  } else {
+    const sigla = prompt('Sigla (ej: ARG):'); if (!sigla) return;
+    const nombre = prompt('Nombre del equipo:'); if (!nombre) return;
+    const eq = {sigla:sigla.toUpperCase(),nombre,bandera:''};
+    if (slotIdx===0) match.equipo1=eq; else match.equipo2=eq;
+    guardarStateBracket(); renderVistaBracket();
+  }
+}
+
+function autoLlenarBracket() {
+  const clasificados = [];
+  Object.values(gruposState).forEach(g => {
+    if (g.clasificados[0]) clasificados.push(g.clasificados[0]);
+    if (g.clasificados[1]) clasificados.push(g.clasificados[1]);
+  });
+  bracketState.dieciseisavos.forEach((m,i) => {
+    if (i*2 < clasificados.length) m.equipo1=clasificados[i*2];
+    if (i*2+1 < clasificados.length) m.equipo2=clasificados[i*2+1];
+  });
+  guardarStateBracket(); cambiarVistaBracket('bracket');
+}
+
+function resetBracket() {
+  if (confirm('¿Reiniciar todo el bracket? Los clasificados de grupos se mantendrán.')) {
+    initBracketState();
+    // Restaurar clasificados
+    const s = localStorage.getItem('bracket_mundial_2026');
+    if (s) { try { const d=JSON.parse(s); if(d.gruposState) gruposState=d.gruposState; } catch(e){} }
+    guardarStateBracket(); renderVistaGrupos(); renderVistaBracket();
+  }
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.team-slot')) {
+    document.querySelectorAll('.team-slot.selected').forEach(s=>s.classList.remove('selected'));
+    seleccionado=null;
+  }
+});
+
+// ================================================================
+//  INICIO
+// ================================================================
+cargarStateBracket();
 renderGrupos();
 guardarEnLocalStorage();
+renderVistaGrupos();
+cambiarVistaBracket('grupos');
+guardarStateBracket();
 </script>
 </body>
 </html>
+HTMLEOF
