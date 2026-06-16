@@ -251,6 +251,14 @@ tr:hover td { background: rgba(255,255,255,0.03); }
 .pts-select.points-1 { background: rgba(250,199,117,0.12); border-color: var(--gold); color: var(--gold); }
 .pts-select.points-3 { background: rgba(59,109,17,0.15); border-color: var(--green); color: #7dc542; }
 .pts-select.points-6 { background: rgba(153,60,29,0.15); border-color: var(--red); color: #f07050; }
+.pts-select.auto-locked { opacity: 0.85; cursor: not-allowed; }
+
+.pts-auto-tag {
+  font-size: 0.625rem;
+  color: var(--gold);
+  margin-left: 6px;
+  font-style: italic;
+}
 
 .ranking-card {
   background: var(--bg2);
@@ -534,7 +542,7 @@ tr:hover td { background: rgba(255,255,255,0.03); }
 
   <div class="excel-info">
     <span>💡</span>
-    <span>Los puntajes se guardan en el navegador. Descarga Excel como respaldo. Los clasificados se sincronizan automáticamente con el Bracket.</span>
+    <span>Los puntajes se calculan automáticamente según los equipos que marques como clasificados en la pestaña Bracket. Descarga Excel como respaldo. Si necesitas un ajuste manual, puedes editar el puntaje y quedará fijado (no se sobrescribirá).</span>
   </div>
 
   <div class="inner-tabs">
@@ -561,7 +569,7 @@ tr:hover td { background: rgba(255,255,255,0.03); }
       </div>
     </div>
     <p style="font-size:0.875rem;color:var(--text2);line-height:1.6;background:var(--bg2);padding:1.25rem;border-radius:var(--radius);border:1px solid var(--border);">
-      Selecciona los puntos obtenidos por cada persona en cada grupo según los resultados reales. Los puntajes se auto-guardan en el navegador y también puedes descargarlos en <strong>Excel</strong>. Los equipos clasificados en la pestaña Bracket se sincronizan automáticamente con los puntajes.
+      Marca en la pestaña <strong>Bracket → Fase de Grupos</strong> qué equipos clasificaron de cada grupo (1° y 2° lugar reales). Apenas marques un equipo como clasificado, esta pestaña <strong>Polla</strong> recalculará automáticamente los puntos de cada persona comparando su pronóstico contra los clasificados reales: <strong>1 pt</strong> si el equipo pronosticado pasó (en cualquier posición), <strong>3 pts</strong> si pasó exactamente en la posición pronosticada, y <strong>6 pts</strong> si ambos equipos pronosticados por la persona pasaron exactamente en las posiciones que indicó. Todo se guarda automáticamente en el navegador, así que si recargas la página no se pierde nada. También puedes forzar manualmente un puntaje desde el selector; ese valor quedará fijo y ya no se recalculará automáticamente para ese grupo/persona (puedes "Reiniciar" para volver a automático).
     </p>
   </div>
 
@@ -600,7 +608,7 @@ tr:hover td { background: rgba(255,255,255,0.03); }
       <button class="btn btn-outline" id="btnElim" onclick="cambiarVistaBracket('bracket')">🏟 Eliminatorias</button>
       <button class="btn btn-warning" onclick="resetBracket()">🔄 Reset Bracket</button>
     </div>
-    <span class="bracket-hint">Click = mover · Doble click = editar nombre</span>
+    <span class="bracket-hint">Click = marcar clasificado / mover · Doble click = editar nombre</span>
   </div>
 
   <div id="bracket-participantes" style="display:flex;gap:8px;flex-wrap:wrap;padding:8px;background:var(--bg2);border-radius:var(--radius);margin-bottom:1rem;border:1px solid var(--border);"></div>
@@ -614,7 +622,7 @@ tr:hover td { background: rgba(255,255,255,0.03); }
 <div class="modal-overlay" id="modalReiniciar">
   <div class="modal">
     <h3>⚠️ ¿Reiniciar todos los puntajes?</h3>
-    <p>Esta acción pondrá todos los puntajes en cero. Descarga el Excel antes si quieres un respaldo.</p>
+    <p>Esta acción pondrá todos los puntajes en cero, eliminará los ajustes manuales y volverá al cálculo automático según el Bracket. Descarga el Excel antes si quieres un respaldo.</p>
     <div class="modal-buttons">
       <button class="btn btn-outline" onclick="cerrarModal()">Cancelar</button>
       <button class="btn btn-warning" onclick="reiniciarPuntajes()">Sí, reiniciar</button>
@@ -659,14 +667,19 @@ function switchPage(page) {
 // ================================================================
 //  POLLA — PUNTAJES
 // ================================================================
+// puntajes[persona][grupo] = puntos (0,1,3,6)  -> calculado automáticamente
+// puntajesManual[persona][grupo] = true        -> si el usuario lo fijó a mano,
+//                                                  ya no se recalcula automático
 let puntajes = {};
+let puntajesManual = {};
 inicializarPuntajes();
 cargarDesdeLocalStorage();
 
 function inicializarPuntajes() {
   PERSONAS.forEach(p => {
     puntajes[p] = {};
-    Object.keys(GRUPOS).forEach(g => { puntajes[p][g] = 0; });
+    puntajesManual[p] = {};
+    Object.keys(GRUPOS).forEach(g => { puntajes[p][g] = 0; puntajesManual[p][g] = false; });
   });
 }
 
@@ -683,16 +696,85 @@ function cargarDesdeLocalStorage() {
       actualizarStatus('Puntajes restaurados');
     } catch(e) {}
   }
+  const savedManual = localStorage.getItem('polla_mundial_2026_manual');
+  if (savedManual) {
+    try {
+      const data = JSON.parse(savedManual);
+      PERSONAS.forEach(p => {
+        if (data[p]) Object.keys(GRUPOS).forEach(g => {
+          if (typeof data[p][g] === 'boolean') puntajesManual[p][g] = data[p][g];
+        });
+      });
+    } catch(e) {}
+  }
 }
 
 function guardarEnLocalStorage() {
-  try { localStorage.setItem('polla_mundial_2026_v3', JSON.stringify(puntajes)); } catch(e) {}
+  try {
+    localStorage.setItem('polla_mundial_2026_v3', JSON.stringify(puntajes));
+    localStorage.setItem('polla_mundial_2026_manual', JSON.stringify(puntajesManual));
+  } catch(e) {}
 }
 
 function actualizarStatus(msg) {
   const el = document.getElementById('statusMsg');
   el.textContent = msg;
   setTimeout(() => { el.textContent = 'Listo'; }, 3000);
+}
+
+// ================================================================
+//  CÁLCULO AUTOMÁTICO DE PUNTOS SEGÚN CLASIFICADOS DEL BRACKET
+// ================================================================
+// Para cada grupo:
+//   - "clasificados" = [equipoEnPos0, equipoEnPos1] marcados en gruposState (la
+//     posición del array es la posición pronosticable: índice 0 -> "1°", índice 1 -> "2°")
+//   - Para cada persona, su pronóstico es [pronostico1, pronostico2]
+//   - Reglas:
+//       6 pts -> AMBOS pronósticos coinciden exactamente en posición con los clasificados
+//       3 pts -> el equipo pronosticado en esa posición específica clasificó en esa misma posición
+//       1 pt  -> el equipo pronosticado clasificó (sin importar la posición)
+//       0 pts -> el equipo pronosticado no clasificó
+//   El puntaje del grupo es la suma por equipo pronosticado, salvo cuando aplica el
+//   bono de 6 (ambos exactos), en cuyo caso el total del grupo se fija en 6.
+function calcularPuntosAutomaticos(gid, persona) {
+  const gstate = gruposState[gid];
+  if (!gstate) return 0;
+  const clasificados = gstate.clasificados; // [eq0, eq1] o null
+  const pronostico = GRUPOS[gid].personas[persona] || [];
+  if (!pronostico.length) return 0;
+
+  const clasSiglas = clasificados.map(c => c ? c.sigla : null);
+
+  // ¿Ambos pronósticos coinciden EXACTO en posición?
+  const exacto0 = pronostico[0] && clasSiglas[0] === pronostico[0].sigla;
+  const exacto1 = pronostico[1] && clasSiglas[1] === pronostico[1].sigla;
+  if (pronostico[0] && pronostico[1] && exacto0 && exacto1) {
+    return 6;
+  }
+
+  // Si no hay bono de 6, se suma por cada pronóstico individual
+  let total = 0;
+  pronostico.forEach((pron, idx) => {
+    if (!pron) return;
+    const pasoExacto = clasSiglas[idx] === pron.sigla;
+    const pasoEnOtraPos = clasSiglas.includes(pron.sigla) && !pasoExacto;
+    if (pasoExacto) total += 3;
+    else if (pasoEnOtraPos) total += 1;
+  });
+  return total;
+}
+
+function recalcularPuntajesAutomaticos() {
+  let cambios = 0;
+  PERSONAS.forEach(p => {
+    Object.keys(GRUPOS).forEach(g => {
+      if (puntajesManual[p] && puntajesManual[p][g]) return; // respeta ajuste manual
+      const nuevo = calcularPuntosAutomaticos(g, p);
+      if (puntajes[p][g] !== nuevo) { puntajes[p][g] = nuevo; cambios++; }
+    });
+  });
+  guardarEnLocalStorage();
+  return cambios;
 }
 
 // ================================================================
@@ -745,9 +827,9 @@ function cargarExcel(event) {
       for (let i=1;i<rows.length;i++) {
         const row=rows[i]; if(!row||!row[0]) continue;
         const p=String(row[0]).trim(); if(!PERSONAS.includes(p)) continue;
-        gKeys.forEach((g,j)=>{ const v=parseInt(row[j+1]); if(!isNaN(v)&&[0,1,3,6].includes(v)){puntajes[p][g]=v;n++;} });
+        gKeys.forEach((g,j)=>{ const v=parseInt(row[j+1]); if(!isNaN(v)&&[0,1,3,6].includes(v)){puntajes[p][g]=v;puntajesManual[p][g]=true;n++;} });
       }
-      guardarEnLocalStorage(); renderGrupos(); actualizarStatus(`✅ ${n} puntajes cargados`);
+      guardarEnLocalStorage(); renderGrupos(); actualizarStatus(`✅ ${n} puntajes cargados (manual)`);
     } catch(e) { alert('Error al leer el Excel.'); }
   };
   reader.readAsArrayBuffer(file); event.target.value='';
@@ -763,6 +845,7 @@ function showView(v) {
   document.querySelectorAll('.inner-tab').forEach((t,i) => {
     t.classList.toggle('active', ['grupos','ranking','leyenda'][i]===v);
   });
+  if(v==='grupos') renderGrupos();
   if(v==='ranking') renderRanking();
 }
 
@@ -773,8 +856,11 @@ function renderGrupos() {
   Object.entries(GRUPOS).forEach(([gid,gdata]) => {
     const sec = document.createElement('div'); sec.className = 'grupo-card';
     const equiposStr = gdata.equipos.map(e=>`${e.bandera} ${e.nombre} <small style="color:#666;">(${e.sigla})</small>`).join(' &nbsp;·&nbsp; ');
+    const clasGrupo = gruposState[gid] ? gruposState[gid].clasificados : [null,null];
+    const clasStr = clasGrupo.some(c=>c) ?
+      ` &nbsp;|&nbsp; <span style="color:#7dc542;">Clasificados: ${clasGrupo.map((c,i)=>c?`${i+1}° ${c.bandera||''} ${c.nombre}`:null).filter(Boolean).join(', ')}</span>` : '';
     const lbl = document.createElement('div'); lbl.className = 'grupo-label';
-    lbl.innerHTML = `🏟 ${gdata.nombre} &nbsp;— <span style="font-weight:400;text-transform:none;letter-spacing:0;">${equiposStr}</span>`;
+    lbl.innerHTML = `🏟 ${gdata.nombre} &nbsp;— <span style="font-weight:400;text-transform:none;letter-spacing:0;">${equiposStr}</span>${clasStr}`;
     sec.appendChild(lbl);
     const tbl = document.createElement('table');
     tbl.innerHTML = `<thead><tr><th>Persona</th><th>1° Pronóstico</th><th>2° Pronóstico</th><th>Puntos</th></tr></thead>`;
@@ -785,12 +871,13 @@ function renderGrupos() {
       const b1 = prono[0]?`<span class="pos-badge p1">1°</span> ${prono[0].bandera||''} ${prono[0].nombre} <small style="color:#666;">(${prono[0].sigla})</small>`:'<span style="color:#555;font-style:italic;">—</span>';
       const b2 = prono[1]?`<span class="pos-badge p2">2°</span> ${prono[1].bandera||''} ${prono[1].nombre} <small style="color:#666;">(${prono[1].sigla})</small>`:'<span style="color:#555;font-style:italic;">—</span>';
       const pts = (puntajes[p]&&puntajes[p][gid])?puntajes[p][gid]:0;
+      const esManual = puntajesManual[p] && puntajesManual[p][gid];
       const sel = `<select class="pts-select ${getPuntosClass(pts)}" data-p="${p}" data-g="${gid}" onchange="setPuntos(this)">
         <option value="0" ${pts===0?'selected':''}>— 0 pts</option>
         <option value="1" ${pts===1?'selected':''}>🟡 1 pt</option>
         <option value="3" ${pts===3?'selected':''}>🟢 3 pts</option>
         <option value="6" ${pts===6?'selected':''}>🔴 6 pts</option>
-      </select>`;
+      </select>${esManual?'<span class="pts-auto-tag">✋ manual</span>':'<span class="pts-auto-tag">⚡ auto</span>'}`;
       tr.innerHTML = `<td style="font-weight:500;">${p}</td><td>${b1}</td><td>${b2}</td><td>${sel}</td>`;
       tbody.appendChild(tr);
     });
@@ -801,9 +888,12 @@ function renderGrupos() {
 function setPuntos(sel) {
   const p=sel.dataset.p, g=sel.dataset.g, v=parseInt(sel.value);
   if(!puntajes[p]) puntajes[p]={};
+  if(!puntajesManual[p]) puntajesManual[p]={};
   puntajes[p][g]=v;
+  puntajesManual[p][g]=true; // al tocarlo manualmente, queda fijo
   sel.className = 'pts-select '+getPuntosClass(v);
   guardarEnLocalStorage();
+  renderGrupos();
 }
 
 function calcTotal(p) {
@@ -850,9 +940,11 @@ function renderRanking() {
 function mostrarModalReiniciar() { document.getElementById('modalReiniciar').classList.add('active'); }
 function cerrarModal() { document.getElementById('modalReiniciar').classList.remove('active'); }
 function reiniciarPuntajes() {
-  inicializarPuntajes(); guardarEnLocalStorage(); renderGrupos();
+  inicializarPuntajes();
+  recalcularPuntajesAutomaticos();
+  guardarEnLocalStorage(); renderGrupos();
   if(document.getElementById('view-ranking').style.display!=='none') renderRanking();
-  cerrarModal(); actualizarStatus('🔄 Reiniciado a cero');
+  cerrarModal(); actualizarStatus('🔄 Reiniciado — vuelta a cálculo automático');
 }
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') cerrarModal(); });
 document.getElementById('modalReiniciar').addEventListener('click', function(e){ if(e.target===this) cerrarModal(); });
@@ -892,7 +984,15 @@ function cargarStateBracket() {
   if (s) {
     try {
       const d = JSON.parse(s);
-      if (d.gruposState) gruposState = d.gruposState;
+      if (d.gruposState) {
+        // merge cuidadoso para no perder estructura si cambia el modelo de datos
+        Object.keys(gruposState).forEach(gid => {
+          if (d.gruposState[gid]) {
+            if (Array.isArray(d.gruposState[gid].equipos)) gruposState[gid].equipos = d.gruposState[gid].equipos;
+            if (Array.isArray(d.gruposState[gid].clasificados)) gruposState[gid].clasificados = d.gruposState[gid].clasificados;
+          }
+        });
+      }
       if (d.bracketState) bracketState = d.bracketState;
     } catch(e) {}
   }
@@ -900,6 +1000,13 @@ function cargarStateBracket() {
 
 function guardarStateBracket() {
   localStorage.setItem('bracket_mundial_2026', JSON.stringify({ gruposState, bracketState }));
+  // Recalcular puntajes automáticos de la Polla cada vez que cambian los clasificados
+  recalcularPuntajesAutomaticos();
+  // Refrescar vistas de Polla si están visibles
+  const grupoView = document.getElementById('view-grupos');
+  const rankingView = document.getElementById('view-ranking');
+  if (grupoView && grupoView.style.display !== 'none') renderGrupos();
+  if (rankingView && rankingView.style.display !== 'none') renderRanking();
   // Actualizar badge de sincronización
   const cl = Object.values(gruposState).filter(g=>g.clasificados[0]||g.clasificados[1]).length;
   const badge = document.getElementById('syncBadge');
@@ -1119,10 +1226,12 @@ function autoLlenarBracket() {
 
 function resetBracket() {
   if (confirm('¿Reiniciar todo el bracket? Los clasificados de grupos se mantendrán.')) {
+    const clasificadosBackup = {};
+    Object.keys(gruposState).forEach(gid => { clasificadosBackup[gid] = gruposState[gid].clasificados; });
     initBracketState();
-    // Restaurar clasificados
-    const s = localStorage.getItem('bracket_mundial_2026');
-    if (s) { try { const d=JSON.parse(s); if(d.gruposState) gruposState=d.gruposState; } catch(e){} }
+    Object.keys(gruposState).forEach(gid => {
+      if (clasificadosBackup[gid]) gruposState[gid].clasificados = clasificadosBackup[gid];
+    });
     guardarStateBracket(); renderVistaGrupos(); renderVistaBracket();
   }
 }
@@ -1138,6 +1247,7 @@ document.addEventListener('click', (e) => {
 //  INICIO
 // ================================================================
 cargarStateBracket();
+recalcularPuntajesAutomaticos();
 renderGrupos();
 guardarEnLocalStorage();
 renderVistaGrupos();
@@ -1146,4 +1256,3 @@ guardarStateBracket();
 </script>
 </body>
 </html>
-HTMLEOF
