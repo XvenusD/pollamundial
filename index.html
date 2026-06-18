@@ -16,25 +16,20 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:v
 .nav-tabs{display:flex;gap:2px}
 .nav-tab{padding:.75rem 1.25rem;background:transparent;border:none;color:var(--text2);font-size:.875rem;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;white-space:nowrap}
 .nav-tab:hover{color:var(--text)}.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
-.sync-badge{margin-left:auto;font-size:.7rem;color:var(--text2);padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:var(--bg3)}
-.sync-badge.ok{color:#3B6D11;border-color:#3B6D11;background:rgba(59,109,17,.1)}
-.page{display:none;max-width:1200px;margin:0 auto;padding:1.5rem 1rem}.page.active{display:block}
+.sync-badge{margin-left:auto;font-size:.7rem;color:#7dc542;padding:4px 10px;border-radius:20px;border:1px solid #3B6D11;background:rgba(59,109,17,.1)}
+.page{display:none;max-width:1300px;margin:0 auto;padding:1.5rem 1rem}.page.active{display:block}
 .page-header{background:linear-gradient(135deg,var(--blue2),#0a2d55);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
 .page-header h1{font-size:1.25rem;font-weight:700}
-.acciones-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:1rem;padding:.75rem 1rem;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border)}
 .btn{padding:7px 16px;border-radius:var(--radius-sm);border:none;font-size:.8125rem;cursor:pointer;font-weight:500;transition:all .18s;display:inline-flex;align-items:center;gap:6px}
 .btn-primary{background:var(--blue);color:#fff}.btn-success{background:var(--green);color:#fff}
 .btn-outline{background:transparent;color:var(--blue);border:1px solid var(--blue)}
-.btn-warning{background:#F59E0B;color:#1a0a00}.btn-sync{background:rgba(59,109,17,.15);color:#7dc542;border:1px solid #3B6D11}
+.btn-warning{background:#F59E0B;color:#1a0a00}
 .file-input{display:none}
 .file-label{padding:7px 16px;border-radius:var(--radius-sm);border:1px dashed var(--border);font-size:.8125rem;cursor:pointer;background:transparent;color:var(--text2)}
 .file-label:hover{border-color:var(--blue);color:var(--text)}
-.status-msg{font-size:.75rem;color:var(--text2);margin-left:auto;font-style:italic}
 .inner-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1rem}
 .inner-tab{padding:7px 18px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text2);font-size:.8125rem;cursor:pointer;font-weight:500}
 .inner-tab:hover{border-color:var(--blue);color:var(--text)}.inner-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.8125rem;color:var(--text2);margin-bottom:1rem;background:var(--bg2);padding:.75rem 1rem;border-radius:var(--radius);border:1px solid var(--border)}
-.leg-item{display:flex;align-items:center;gap:8px}.leg-dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.625rem;font-weight:600}
 .grupo-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:.75rem;overflow-x:auto}
 .grupo-label{font-size:.75rem;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.75rem;background:var(--bg3);padding:.5rem .75rem;border-radius:var(--radius-sm)}
 table{width:100%;border-collapse:collapse;font-size:.8125rem}
@@ -56,49 +51,44 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.03)
 .leyenda-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:1.5rem}
 .leyenda-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center}
 .leyenda-points{font-size:2.25rem;font-weight:700;margin-bottom:.25rem}.leyenda-desc{font-size:.8125rem;color:var(--text2)}
-.excel-info{background:rgba(250,199,117,.08);border:1px solid rgba(250,199,117,.3);border-radius:var(--radius-sm);padding:.75rem 1rem;font-size:.8125rem;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:1rem}
-#matriz-table input{width:55px;padding:6px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:.8125rem;text-align:center}
-#matriz-table input:focus{outline:none;border-color:var(--gold)}#matriz-table td{text-align:center}
-@media(max-width:640px){.page{padding:1rem .5rem}.nav-brand span{display:none}.nav-tab{padding:.75rem;font-size:.8rem}td,th{padding:6px}.acciones-bar{flex-direction:column}}
 
-/* ===== BRACKET ===== */
+/* ===== BRACKET EDITABLE + DRAG ===== */
 .bracket-wrap{overflow-x:auto;padding-bottom:1rem}
-.bracket-grid{display:grid;grid-template-columns:200px 200px 200px 200px 220px 200px 200px 200px 200px;gap:0;min-width:1700px;align-items:center;padding:1rem 0}
+.bracket-grid{display:grid;grid-template-columns:210px 200px 200px 200px 230px 200px 200px 200px 210px;gap:6px;min-width:1800px;align-items:center;padding:1rem 0}
 .bracket-col{display:flex;flex-direction:column;height:100%}
 .bracket-col-header{text-align:center;font-weight:700;font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);padding:8px;background:var(--bg3);border-radius:var(--radius-sm);margin-bottom:10px;border:1px solid var(--border)}
-.bracket-half{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:8px}
-.match-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);margin:4px 8px;font-size:.75rem;position:relative;transition:border-color .15s}
-.match-box:hover{border-color:var(--blue)}
-.match-code{position:absolute;top:-9px;left:8px;background:var(--bg);color:var(--text2);font-size:.55rem;padding:0 5px;border:1px solid var(--border);border-radius:6px}
-.match-date{position:absolute;top:-9px;right:8px;background:var(--bg);color:var(--gold);font-size:.55rem;padding:0 5px;border:1px solid var(--border);border-radius:6px;white-space:nowrap}
-.team-drop{padding:9px 8px 7px;min-height:32px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s}
-.team-drop:last-child{border-bottom:none}
-.team-drop.dragover{background:rgba(24,95,165,.3);outline:2px dashed var(--blue);outline-offset:-2px}
-.team-drop.filled{font-weight:600}
-.team-drop.filled .team-flag-sm{cursor:grab}
-.team-drop .slot-tag{font-size:.625rem;color:var(--text2);background:var(--bg3);border-radius:4px;padding:1px 5px;flex-shrink:0;min-width:30px;text-align:center}
-.team-drop .slot-empty-txt{color:var(--text2);font-style:italic;font-size:.7rem}
-.team-flag-sm{font-size:.95rem}
-.team-name-sm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.team-drop.winner-slot{background:rgba(250,199,117,.06)}
-.clear-x{font-size:.65rem;color:var(--text2);opacity:0;transition:opacity .12s;padding:0 3px}
-.team-drop.filled:hover .clear-x{opacity:1}
-.clear-x:hover{color:var(--red)}
-.final-box{margin:0 4px}
-.final-box .team-drop{padding:14px 10px}
-.campeon-final{text-align:center;margin-top:10px;padding:12px 8px;background:linear-gradient(135deg,rgba(250,199,117,.12),rgba(250,199,117,.03));border:1px solid var(--gold);border-radius:var(--radius-sm)}
-.campeon-final .trofeo-ico{font-size:1.8rem;display:block;margin-bottom:4px}
-.campeon-final .campeon-nombre{font-weight:700;color:var(--gold);font-size:.875rem}
-.tercer-box{margin-top:10px}
-.tercer-label{font-size:.6rem;text-align:center;color:var(--text2);margin-bottom:4px;text-transform:uppercase}
-.center-final-col{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;height:100%;padding:0 4px}
-.copa-icon{font-size:2.2rem;margin:6px 0;filter:drop-shadow(0 0 10px rgba(250,199,117,.5))}
+.bracket-half{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:6px}
+.match-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);margin:2px 4px;font-size:.73rem;position:relative;transition:all .15s;overflow:visible}
+.match-box:hover{border-color:var(--blue);box-shadow:0 0 12px rgba(24,95,165,.15)}
+.match-code{position:absolute;top:-8px;left:6px;background:var(--bg);color:var(--text2);font-size:.55rem;padding:0 5px;border:1px solid var(--border);border-radius:6px;z-index:2}
+.match-date{position:absolute;top:-8px;right:6px;background:var(--bg);color:var(--gold);font-size:.55rem;padding:0 5px;border:1px solid var(--border);border-radius:6px;z-index:2;white-space:nowrap}
+.editable-slot{padding:6px 6px;display:flex;align-items:center;gap:5px;border-bottom:1px solid var(--border);min-height:40px;cursor:pointer;transition:background .1s;position:relative}
+.editable-slot:last-child{border-bottom:none}
+.editable-slot:hover{background:rgba(255,255,255,.03)}
+.editable-slot.drag-over{background:rgba(24,95,165,.2);outline:2px dashed var(--blue);outline-offset:-2px}
+.editable-slot.drag-source{opacity:.5}
+.editable-slot .slot-tag{font-size:.6rem;color:var(--text2);background:var(--bg3);border-radius:4px;padding:1px 5px;flex-shrink:0;min-width:28px;text-align:center}
+.editable-slot select{flex:1;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px 5px;font-size:.72rem;cursor:pointer;min-width:0;pointer-events:auto}
+.editable-slot select:focus{outline:none;border-color:var(--gold)}
+.editable-slot select option{background:var(--bg2);color:var(--text)}
+.team-flag-drag{cursor:grab;font-size:1.1rem;flex-shrink:0;user-select:none;transition:transform .1s}
+.team-flag-drag:active{cursor:grabbing;transform:scale(1.2)}
+.btn-clear-slot{background:none;border:none;color:var(--text2);cursor:pointer;font-size:.9rem;padding:0 3px;flex-shrink:0;opacity:0;transition:opacity .12s}
+.editable-slot:hover .btn-clear-slot,.editable-slot select:not([value=""]):valid+.btn-clear-slot{opacity:1}
+.btn-clear-slot:hover{color:var(--red)}
+.final-box{margin:0 2px;border:2px solid var(--gold);box-shadow:0 0 15px rgba(250,199,117,.1)}
+.final-box .editable-slot{padding:10px 6px}
+.final-box .match-date{color:#fff}
+.center-final-col{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;height:100%;padding:0 4px}
+.copa-icon{font-size:2.5rem;margin:6px 0;filter:drop-shadow(0 0 15px rgba(250,199,117,.4))}
 .fecha-final-txt{font-size:.65rem;color:var(--text2);text-align:center}
+.tercer-box{margin-top:12px;border:1px solid #D3D1C7}
+.tercer-label{font-size:.6rem;text-align:center;color:var(--text2);margin-bottom:4px;text-transform:uppercase}
 .bracket-fase-toggle{display:flex;gap:6px}
 .fase-grupos-br{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin-bottom:1rem}
 .grupo-box-br{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
 .grupo-title{font-weight:600;font-size:.875rem;margin-bottom:8px;color:var(--gold)}
-.pos-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:var(--radius-sm);font-size:.8125rem;cursor:pointer;border:1px solid transparent;transition:all .15s}
+.pos-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--radius-sm);font-size:.8125rem;cursor:pointer;border:1px solid transparent;transition:all .15s}
 .pos-row:hover{background:rgba(255,255,255,.05);border-color:var(--border)}
 .pos-row.clasificado{background:rgba(59,109,17,.18);border-left:3px solid var(--green)}
 .pos-row.es-tercero{background:rgba(250,199,117,.1);border-left:3px solid var(--gold)}
@@ -111,62 +101,68 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.03)
 .tercero-chip:hover{border-color:var(--gold)}
 .tercero-chip.activo{border-color:var(--gold);background:rgba(250,199,117,.1);color:var(--gold)}
 .legend-bracket{font-size:.7rem;color:var(--text2);background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:10px}
-.resultado-real{display:inline-flex;align-items:center;gap:4px;font-size:.65rem;margin-left:8px;padding:2px 6px;border-radius:8px;background:var(--bg3)}
-.resultado-real.ok{background:rgba(59,109,17,.15);color:#7dc542}
-@media(max-width:900px){.bracket-grid{min-width:1500px}}
+.acciones-bar{margin-bottom:1rem;padding:.75rem 1rem;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.bench-equipos{display:flex;gap:6px;flex-wrap:wrap;padding:8px;background:var(--bg3);border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:1rem;min-height:40px;align-items:center}
+.bench-tag{font-size:.65rem;color:var(--text2);margin-right:4px}
+.bench-equipo{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:16px;font-size:.73rem;cursor:grab;background:var(--bg2);border:1px solid var(--border);transition:all .12s;user-select:none}
+.bench-equipo:hover{border-color:var(--gold);background:rgba(250,199,117,.08)}
+.bench-equipo:active{cursor:grabbing}
+.bench-equipo.dragging{opacity:.4}
+@media(max-width:900px){.bracket-grid{min-width:1600px}}
 </style>
 </head>
 <body>
 <nav class="top-nav"><div class="top-nav-inner">
 <div class="nav-brand">🏆 Mundial 2026 <span>México · USA · Canadá</span></div>
 <div class="nav-tabs"><button class="nav-tab active" onclick="switchPage('polla')">📋 Polla</button><button class="nav-tab" onclick="switchPage('bracket')">🏟 Bracket</button></div>
-<div class="sync-badge ok" id="syncBadge">⚡ Resultados J1+J2</div>
+<div class="sync-badge">⚡ Resultados J1-J2</div>
 </div></nav>
 
+<!-- PÁGINA POLLA -->
 <div class="page active" id="page-polla">
-<div class="page-header"><div><h1>Polla del Mundial 2026</h1><p>Puntajes automáticos según resultados reales</p></div>
+<div class="page-header">
+<div><h1>Polla del Mundial 2026</h1><p>Puntajes automáticos según resultados reales</p></div>
 <div class="acciones-bar" style="margin:0;border:none;background:transparent;padding:0">
 <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls" onchange="cargarExcel(event)"><label for="fileInput" class="file-label">📂 Excel</label>
 <button class="btn btn-success" onclick="descargarExcel()">💾 Excel</button>
 </div></div>
-<div class="excel-info"><span>🏟</span><span>Los puntajes se calculan automáticamente desde el Bracket → Grupos. Actualiza los resultados reales allí.</span></div>
 <div class="inner-tabs">
-<button class="inner-tab active" onclick="showView('grupos')">📋 Pronósticos</button>
-<button class="inner-tab" onclick="showView('ranking')">🏅 Ranking</button>
-<button class="inner-tab" onclick="showView('matriz')">🔢 Matriz</button>
-<button class="inner-tab" onclick="showView('leyenda')">❓ Cómo</button>
+<button class="inner-tab active" onclick="showPollaView('grupos')">📋 Pronósticos</button>
+<button class="inner-tab" onclick="showPollaView('ranking')">🏅 Ranking</button>
+<button class="inner-tab" onclick="showPollaView('leyenda')">❓ Cómo</button>
 </div>
-<span class="status-msg" id="statusMsg">Actualizado con resultados J1+J2</span>
-<div id="view-leyenda" style="display:none"><div class="leyenda-grid">
+<div id="polla-grupos"></div>
+<div id="polla-ranking" style="display:none"></div>
+<div id="polla-leyenda" style="display:none">
+<div class="leyenda-grid">
 <div class="leyenda-card"><div class="leyenda-points" style="color:#f07050">6 pts</div><div class="leyenda-desc">1° y 2° exactos</div></div>
 <div class="leyenda-card"><div class="leyenda-points" style="color:#7dc542">3 pts</div><div class="leyenda-desc">Uno exacto en su posición</div></div>
-<div class="leyenda-card"><div class="leyenda-points" style="color:var(--gold)">2 pts</div><div class="leyenda-desc">Cruzados (1°=2° real, 2°=1° real)</div></div>
+<div class="leyenda-card"><div class="leyenda-points" style="color:var(--gold)">2 pts</div><div class="leyenda-desc">Cruzados (1°↔2°)</div></div>
 <div class="leyenda-card"><div class="leyenda-points" style="color:var(--blue)">1 pt</div><div class="leyenda-desc">Uno cruzado</div></div>
 </div></div>
-<div id="view-grupos"><div class="legend"><span class="leg-item"><span class="leg-dot p1">1°</span> 1er lugar</span><span class="leg-item"><span class="leg-dot p2">2°</span> 2do lugar</span></div><div id="grupos-container"></div></div>
-<div id="view-ranking" style="display:none"><div id="ranking-container"></div></div>
-<div id="view-matriz" style="display:none"><div style="overflow-x:auto" id="matriz-container"></div></div>
 </div>
 
+<!-- PÁGINA BRACKET -->
 <div class="page" id="page-bracket">
-<div class="page-header"><div><h1>Bracket Oficial — Resultados Reales</h1><p>Actualiza aquí los clasificados según avance el Mundial</p></div></div>
-<div class="bracket-controls">
+<div class="page-header">
+<div><h1>🏟 Bracket — Arrastra las banderas 🎌</h1><p>Usa los dropdowns o arrastra las banderas 🇧🇷 entre slots</p></div>
+</div>
+<div class="acciones-bar">
 <div class="bracket-fase-toggle">
-<button class="btn btn-primary" id="btnFaseGrupos" onclick="cambiarVistaBracket('grupos')">📋 Grupos (resultados)</button>
+<button class="btn btn-primary" id="btnFaseGrupos" onclick="cambiarVistaBracket('grupos')">📋 Grupos</button>
 <button class="btn btn-outline" id="btnElim" onclick="cambiarVistaBracket('bracket')">🏟 Bracket</button>
 </div>
 <div style="display:flex;gap:8px">
-<button class="btn btn-sync" onclick="autoLlenarBracket()">⚡ Auto-llenar R32</button>
-<button class="btn btn-outline" onclick="generarCodigoBracket()">📋 Copiar código</button>
+<button class="btn btn-success" onclick="generarCodigoBracket()">📋 Copiar código</button>
+<button class="btn btn-warning" onclick="resetBracket()">🔄 Reset bracket</button>
 </div></div>
-<div class="legend-bracket" id="vista-grupos-hint">💡 <b>Click</b> en un equipo para marcarlo como 1° o 2°. <b>Click</b> en los chips de abajo para seleccionar los 8 mejores terceros.</div>
-<div class="legend-bracket" id="vista-bracket-hint" style="display:none">💡 Arrastra equipos al bracket o usa "Auto-llenar R32" para cargar los clasificados automáticamente.</div>
+<div class="legend-bracket" id="bracket-hint">💡 <b>Arrastra</b> la bandera 🇧🇷 de un slot a otro para mover el equipo. También puedes usar los dropdowns.</div>
 <div id="vista-grupos-bracket"></div>
 <div id="vista-bracket-elim" style="display:none"></div>
 </div>
 
 <script>
-// ===== DATOS DEL MUNDIAL =====
+// ===== DATOS REALES ACTUALIZADOS (Jornadas 1-2) =====
 const PERSONAS=['Duvan','Camila','Camilo','Mateo','Miguel','Doc Camilo','Katherine','Sandra','Estefania','Diana','Sofia'];
 
 const GRUPOS={
@@ -196,134 +192,125 @@ L:{nombre:'Grupo L',equipos:[{sigla:'ENG',nombre:'Inglaterra',bandera:'🏴󠁧�
    personas:{Duvan:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Camila:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'GHA',nombre:'Ghana'}],Camilo:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Mateo:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],Miguel:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],'Doc Camilo':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Katherine:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Sandra:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Estefania:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],Diana:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],Sofia:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}]}}
 };
 
-// ===== RESULTADOS REALES (Jornada 1 y 2) =====
-// Establecidos según las tablas de clasificación proporcionadas
-// Los equipos están ordenados: [1°, 2°, 3°, 4°] según su posición actual real
-const RESULTADOS_REALES_INICIALES = {
-  A: { clasificados: [{sigla:'KOR',nombre:'Corea del Sur',bandera:'🇰🇷'},{sigla:'MEX',nombre:'México',bandera:'🇲🇽'}] },
-  B: { clasificados: [null, null] }, // Todos empatados, sin 1° y 2° definidos aún
-  C: { clasificados: [{sigla:'SCO',nombre:'Escocia',bandera:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'},{sigla:'MAR',nombre:'Marruecos',bandera:'🇲🇦'}] },
-  D: { clasificados: [{sigla:'USA',nombre:'EE.UU.',bandera:'🇺🇸'},{sigla:'AUS',nombre:'Australia',bandera:'🇦🇺'}] },
-  E: { clasificados: [{sigla:'GER',nombre:'Alemania',bandera:'🇩🇪'},{sigla:'CIV',nombre:'Costa de Marfil',bandera:'🇨🇮'}] },
-  F: { clasificados: [{sigla:'SWE',nombre:'Suecia',bandera:'🇸🇪'},{sigla:'JPN',nombre:'Japón',bandera:'🇯🇵'}] },
-  G: { clasificados: [null, null] }, // Todos empatados
-  H: { clasificados: [null, null] }, // Empatados en puntos
-  I: { clasificados: [{sigla:'NOR',nombre:'Noruega',bandera:'🇳🇴'},{sigla:'FRA',nombre:'Francia',bandera:'🇫🇷'}] },
-  J: { clasificados: [{sigla:'ARG',nombre:'Argentina',bandera:'🇦🇷'},{sigla:'AUT',nombre:'Austria',bandera:'🇦🇹'}] },
-  K: { clasificados: [{sigla:'COL',nombre:'Colombia',bandera:'🇨🇴'},{sigla:'COD',nombre:'RD Congo',bandera:'🇨🇩'}] },
-  L: { clasificados: [{sigla:'ENG',nombre:'Inglaterra',bandera:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},{sigla:'GHA',nombre:'Ghana',bandera:'🇬🇭'}] }
-};
+// Lista completa de equipos
+const TODOS_LOS_EQUIPOS = [];
+Object.values(GRUPOS).forEach(g => {
+  g.equipos.forEach(e => TODOS_LOS_EQUIPOS.push({...e}));
+});
+
+// ===== ESTRUCTURA BRACKET FIFA 2026 =====
+const BRACKET_R32 = [
+  {id:'M73',fecha:'28 jun',slot1Tag:'2A',slot2Tag:'2B'},
+  {id:'M74',fecha:'29 jun',slot1Tag:'1E',slot2Tag:'3°ABCDF'},
+  {id:'M75',fecha:'30 jun',slot1Tag:'1F',slot2Tag:'2C'},
+  {id:'M76',fecha:'29 jun',slot1Tag:'1C',slot2Tag:'2F'},
+  {id:'M77',fecha:'30 jun',slot1Tag:'1I',slot2Tag:'3°CDFGH'},
+  {id:'M78',fecha:'30 jun',slot1Tag:'2E',slot2Tag:'2I'},
+  {id:'M79',fecha:'1 jul',slot1Tag:'1A',slot2Tag:'3°CEFHI'},
+  {id:'M80',fecha:'1 jul',slot1Tag:'1L',slot2Tag:'3°EHIJK'},
+  {id:'M81',fecha:'2 jul',slot1Tag:'1D',slot2Tag:'3°BEFIJ'},
+  {id:'M82',fecha:'1 jul',slot1Tag:'1G',slot2Tag:'3°AEHIJ'},
+  {id:'M83',fecha:'2 jul',slot1Tag:'2K',slot2Tag:'2L'},
+  {id:'M84',fecha:'2 jul',slot1Tag:'1H',slot2Tag:'2J'},
+  {id:'M85',fecha:'3 jul',slot1Tag:'1B',slot2Tag:'3°EFGIJ'},
+  {id:'M86',fecha:'3 jul',slot1Tag:'1J',slot2Tag:'2H'},
+  {id:'M87',fecha:'4 jul',slot1Tag:'1K',slot2Tag:'3°DEIJL'},
+  {id:'M88',fecha:'3 jul',slot1Tag:'2D',slot2Tag:'2G'},
+];
+const BRACKET_R16 = [
+  {id:'M89',fecha:'4 jul'},{id:'M90',fecha:'4 jul'},
+  {id:'M91',fecha:'5 jul'},{id:'M92',fecha:'5 jul'},
+  {id:'M93',fecha:'6 jul'},{id:'M94',fecha:'6 jul'},
+  {id:'M95',fecha:'7 jul'},{id:'M96',fecha:'7 jul'},
+];
+const BRACKET_QF = [
+  {id:'M97',fecha:'9 jul'},{id:'M98',fecha:'10 jul'},
+  {id:'M99',fecha:'11 jul'},{id:'M100',fecha:'11 jul'},
+];
+const BRACKET_SF = [
+  {id:'M101',fecha:'14 jul'},{id:'M102',fecha:'15 jul'},
+];
+const BRACKET_FINAL = {id:'M103',fecha:'19 jul'};
+const BRACKET_3ER = {id:'M3P',fecha:'18 jul'};
 
 // ===== ESTADO GLOBAL =====
 let gruposState = {};
-let bracketState = {terceros:[], matches:{}};
+let bracketMatches = {};
+let tercerosSeleccionados = [];
 let puntajes = {};
+let dragData = null; // {tipo:'slot'|'equipo', equipo, matchId, slotNum}
 
-// ===== BRACKET R32 =====
-const BRACKET_R32=[
- {id:'M73',fecha:'28 jun',slot1:{tag:'2A',tipo:'pos',grupo:'A',pos:2},slot2:{tag:'2B',tipo:'pos',grupo:'B',pos:2}},
- {id:'M74',fecha:'29 jun',slot1:{tag:'1E',tipo:'pos',grupo:'E',pos:1},slot2:{tag:'3°ABCDF',tipo:'tercero',candidatos:['A','B','C','D','F']}},
- {id:'M75',fecha:'30 jun',slot1:{tag:'1F',tipo:'pos',grupo:'F',pos:1},slot2:{tag:'2C',tipo:'pos',grupo:'C',pos:2}},
- {id:'M76',fecha:'29 jun',slot1:{tag:'1C',tipo:'pos',grupo:'C',pos:1},slot2:{tag:'2F',tipo:'pos',grupo:'F',pos:2}},
- {id:'M77',fecha:'30 jun',slot1:{tag:'1I',tipo:'pos',grupo:'I',pos:1},slot2:{tag:'3°CDFGH',tipo:'tercero',candidatos:['C','D','F','G','H']}},
- {id:'M78',fecha:'30 jun',slot1:{tag:'2E',tipo:'pos',grupo:'E',pos:2},slot2:{tag:'2I',tipo:'pos',grupo:'I',pos:2}},
- {id:'M79',fecha:'1 jul',slot1:{tag:'1A',tipo:'pos',grupo:'A',pos:1},slot2:{tag:'3°CEFHI',tipo:'tercero',candidatos:['C','E','F','H','I']}},
- {id:'M80',fecha:'1 jul',slot1:{tag:'1L',tipo:'pos',grupo:'L',pos:1},slot2:{tag:'3°EHIJK',tipo:'tercero',candidatos:['E','H','I','J','K']}},
- {id:'M81',fecha:'2 jul',slot1:{tag:'1D',tipo:'pos',grupo:'D',pos:1},slot2:{tag:'3°BEFIJ',tipo:'tercero',candidatos:['B','E','F','I','J']}},
- {id:'M82',fecha:'1 jul',slot1:{tag:'1G',tipo:'pos',grupo:'G',pos:1},slot2:{tag:'3°AEHIJ',tipo:'tercero',candidatos:['A','E','H','I','J']}},
- {id:'M83',fecha:'2 jul',slot1:{tag:'2K',tipo:'pos',grupo:'K',pos:2},slot2:{tag:'2L',tipo:'pos',grupo:'L',pos:2}},
- {id:'M84',fecha:'2 jul',slot1:{tag:'1H',tipo:'pos',grupo:'H',pos:1},slot2:{tag:'2J',tipo:'pos',grupo:'J',pos:2}},
- {id:'M85',fecha:'3 jul',slot1:{tag:'1B',tipo:'pos',grupo:'B',pos:1},slot2:{tag:'3°EFGIJ',tipo:'tercero',candidatos:['E','F','G','I','J']}},
- {id:'M86',fecha:'3 jul',slot1:{tag:'1J',tipo:'pos',grupo:'J',pos:1},slot2:{tag:'2H',tipo:'pos',grupo:'H',pos:2}},
- {id:'M87',fecha:'4 jul',slot1:{tag:'1K',tipo:'pos',grupo:'K',pos:1},slot2:{tag:'3°DEIJL',tipo:'tercero',candidatos:['D','E','I','J','L']}},
- {id:'M88',fecha:'3 jul',slot1:{tag:'2D',tipo:'pos',grupo:'D',pos:2},slot2:{tag:'2G',tipo:'pos',grupo:'G',pos:2}},
-];
-const BRACKET_R16=[
- {id:'M89',fecha:'4 jul',from:['M74','M77']},{id:'M90',fecha:'4 jul',from:['M73','M75']},
- {id:'M91',fecha:'5 jul',from:['M76','M78']},{id:'M92',fecha:'5 jul',from:['M79','M80']},
- {id:'M93',fecha:'6 jul',from:['M83','M84']},{id:'M94',fecha:'6 jul',from:['M81','M82']},
- {id:'M95',fecha:'7 jul',from:['M86','M88']},{id:'M96',fecha:'7 jul',from:['M85','M87']},
-];
-const BRACKET_QF=[
- {id:'M97',fecha:'9 jul',from:['M89','M90']},{id:'M98',fecha:'10 jul',from:['M93','M94']},
- {id:'M99',fecha:'11 jul',from:['M91','M92']},{id:'M100',fecha:'11 jul',from:['M95','M96']},
-];
-const BRACKET_SF=[
- {id:'M101',fecha:'14 jul',from:['M97','M98']},{id:'M102',fecha:'15 jul',from:['M99','M100']},
-];
-const BRACKET_FINAL={id:'M103',fecha:'19 jul',from:['M101','M102']};
-const BRACKET_3ER={id:'M3P',fecha:'18 jul',from:['M101','M102'],esPerdedores:!0};
-const TODOS_MATCH_IDS=[...BRACKET_R32.map(m=>m.id),...BRACKET_R16.map(m=>m.id),...BRACKET_QF.map(m=>m.id),...BRACKET_SF.map(m=>m.id),BRACKET_FINAL.id,BRACKET_3ER.id];
-
-// ===== INICIALIZACIÓN =====
-function init() {
-  // Inicializar gruposState con resultados reales
+function initEstado() {
+  // Grupos
   gruposState = {};
   Object.entries(GRUPOS).forEach(([gid, gd]) => {
-    const real = RESULTADOS_REALES_INICIALES[gid];
     gruposState[gid] = {
-      equipos: gd.equipos.map(e => ({...e})),
-      clasificados: real ? [...real.clasificados] : [null, null]
+      clasificados: [null, null],
+      equipos: gd.equipos.map(e => ({...e}))
     };
   });
   
-  // Inicializar bracketState
-  bracketState = {terceros: [], matches: {}};
-  TODOS_MATCH_IDS.forEach(id => { bracketState.matches[id] = {slot1: null, slot2: null}; });
+  // Resultados reales J1-J2
+  const reales = {
+    A: [{sigla:'KOR',nombre:'Corea del Sur',bandera:'🇰🇷'},{sigla:'MEX',nombre:'México',bandera:'🇲🇽'}],
+    C: [{sigla:'SCO',nombre:'Escocia',bandera:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'},{sigla:'MAR',nombre:'Marruecos',bandera:'🇲🇦'}],
+    D: [{sigla:'USA',nombre:'EE.UU.',bandera:'🇺🇸'},{sigla:'AUS',nombre:'Australia',bandera:'🇦🇺'}],
+    E: [{sigla:'GER',nombre:'Alemania',bandera:'🇩🇪'},{sigla:'CIV',nombre:'Costa de Marfil',bandera:'🇨🇮'}],
+    F: [{sigla:'SWE',nombre:'Suecia',bandera:'🇸🇪'},{sigla:'JPN',nombre:'Japón',bandera:'🇯🇵'}],
+    I: [{sigla:'NOR',nombre:'Noruega',bandera:'🇳🇴'},{sigla:'FRA',nombre:'Francia',bandera:'🇫🇷'}],
+    J: [{sigla:'ARG',nombre:'Argentina',bandera:'🇦🇷'},{sigla:'AUT',nombre:'Austria',bandera:'🇦🇹'}],
+    K: [{sigla:'COL',nombre:'Colombia',bandera:'🇨🇴'},{sigla:'COD',nombre:'RD Congo',bandera:'🇨🇩'}],
+    L: [{sigla:'ENG',nombre:'Inglaterra',bandera:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},{sigla:'GHA',nombre:'Ghana',bandera:'🇬🇭'}],
+  };
+  Object.entries(reales).forEach(([gid, cl]) => {
+    gruposState[gid].clasificados = [...cl];
+  });
   
-  // Inicializar puntajes
-  PERSONAS.forEach(p => { puntajes[p] = {}; });
+  // Bracket matches
+  bracketMatches = {};
+  [...BRACKET_R32, ...BRACKET_R16, ...BRACKET_QF, ...BRACKET_SF, BRACKET_FINAL, BRACKET_3ER].forEach(m => {
+    bracketMatches[m.id] = {slot1: null, slot2: null};
+  });
   
-  // Cargar desde localStorage si existe
-  cargarEstado();
+  tercerosSeleccionados = [];
+  dragData = null;
   
-  // Calcular puntajes iniciales
+  // Cargar localStorage
+  const saved = localStorage.getItem('mundial2026_v3');
+  if (saved) {
+    try {
+      const d = JSON.parse(saved);
+      if (d.gruposState) Object.keys(gruposState).forEach(g => {
+        if (d.gruposState[g]?.clasificados) gruposState[g].clasificados = d.gruposState[g].clasificados;
+      });
+      if (d.bracketMatches) Object.keys(bracketMatches).forEach(id => {
+        if (d.bracketMatches[id]) bracketMatches[id] = d.bracketMatches[id];
+      });
+      if (d.tercerosSeleccionados) tercerosSeleccionados = d.tercerosSeleccionados;
+      if (d.puntajes) puntajes = d.puntajes;
+    } catch(e) {}
+  }
+  
   calcularTodosPuntajes();
 }
 
-function cargarEstado() {
-  const s = localStorage.getItem('pm26_v2');
-  if (s) {
-    try {
-      const d = JSON.parse(s);
-      if (d.gs) Object.keys(gruposState).forEach(g => {
-        if (d.gs[g] && d.gs[g].cl) gruposState[g].clasificados = d.gs[g].cl;
-      });
-      if (d.bs) {
-        if (d.bs.terceros) bracketState.terceros = d.bs.terceros;
-        if (d.bs.matches) Object.keys(bracketState.matches).forEach(id => {
-          if (d.bs.matches[id]) bracketState.matches[id] = d.bs.matches[id];
-        });
-      }
-      if (d.pts) puntajes = d.pts;
-    } catch(e) { console.log('Error cargando estado:', e); }
-  }
-}
-
 function guardarEstado() {
-  localStorage.setItem('pm26_v2', JSON.stringify({
-    gs: gruposState,
-    bs: bracketState,
-    pts: puntajes
+  localStorage.setItem('mundial2026_v3', JSON.stringify({
+    gruposState, bracketMatches, tercerosSeleccionados, puntajes
   }));
 }
 
-// ===== CÁLCULO DE PUNTAJES =====
+// ===== PUNTAJES =====
 function calcularPuntos(gid, persona) {
   const g = gruposState[gid];
   if (!g) return 0;
-  
-  const c1 = g.clasificados[0] ? g.clasificados[0].sigla : null;
-  const c2 = g.clasificados[1] ? g.clasificados[1].sigla : null;
+  const c1 = g.clasificados[0]?.sigla || null;
+  const c2 = g.clasificados[1]?.sigla || null;
   const pron = GRUPOS[gid].personas[persona] || [];
-  if (!pron.length) return 0;
-  
-  const p1 = pron[0] ? pron[0].sigla : null;
-  const p2 = pron[1] ? pron[1].sigla : null;
-  
-  if (!c1 && !c2) return 0; // Sin resultados reales aún
+  if (!pron.length || (!c1 && !c2)) return 0;
+  const p1 = pron[0]?.sigla || null;
+  const p2 = pron[1]?.sigla || null;
   if (!p1 && !p2) return 0;
-  
   if (p1 === c1 && p2 === c2) return 6;
   if (p1 === c1 || p2 === c2) return 3;
   if (p1 === c2 && p2 === c1) return 2;
@@ -333,251 +320,132 @@ function calcularPuntos(gid, persona) {
 
 function calcularTodosPuntajes() {
   PERSONAS.forEach(p => {
-    Object.keys(GRUPOS).forEach(g => {
-      puntajes[p][g] = calcularPuntos(g, p);
-    });
+    puntajes[p] = {};
+    Object.keys(GRUPOS).forEach(g => puntajes[p][g] = calcularPuntos(g, p));
   });
   guardarEstado();
 }
 
-function calcTotal(p) {
-  return Object.values(puntajes[p] || {}).reduce((a, b) => a + b, 0);
-}
+function calcTotal(p) { return Object.values(puntajes[p] || {}).reduce((a,b) => a+b, 0); }
 
-// ===== RENDERIZADO =====
+// ===== NAVEGACIÓN =====
 function switchPage(p) {
   document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
   document.getElementById('page-' + p).classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach((t, i) => t.classList.toggle('active', ['polla', 'bracket'][i] === p));
-  if (p === 'bracket') {
-    renderVistaGrupos();
-    cambiarVistaBracket('grupos');
-  }
+  document.querySelectorAll('.nav-tab').forEach((t,i) => t.classList.toggle('active', ['polla','bracket'][i]===p));
+  if (p==='polla') renderPollaGrupos();
+  if (p==='bracket') { renderVistaGrupos(); cambiarVistaBracket('grupos'); }
 }
 
-function showView(v) {
-  ['grupos', 'ranking', 'matriz', 'leyenda'].forEach(x => {
-    document.getElementById('view-' + x).style.display = x === v ? '' : 'none';
-  });
-  document.querySelectorAll('.inner-tab').forEach((t, i) => {
-    t.classList.toggle('active', ['grupos', 'ranking', 'matriz', 'leyenda'][i] === v);
-  });
-  if (v === 'grupos') renderGrupos();
-  if (v === 'ranking') renderRanking();
-  if (v === 'matriz') renderMatriz();
+function showPollaView(v) {
+  ['grupos','ranking','leyenda'].forEach(x => document.getElementById('polla-'+x).style.display = x===v?'':'none');
+  document.querySelectorAll('#page-polla .inner-tab').forEach((t,i) => t.classList.toggle('active', ['grupos','ranking','leyenda'][i]===v));
+  if (v==='grupos') renderPollaGrupos();
+  if (v==='ranking') renderPollaRanking();
 }
 
+function cambiarVistaBracket(v) {
+  document.getElementById('vista-grupos-bracket').style.display = v==='grupos'?'':'none';
+  document.getElementById('vista-bracket-elim').style.display = v==='bracket'?'':'none';
+  document.getElementById('btnFaseGrupos').className = 'btn '+(v==='grupos'?'btn-primary':'btn-outline');
+  document.getElementById('btnElim').className = 'btn '+(v==='bracket'?'btn-primary':'btn-outline');
+  if (v==='bracket') renderBracket(); else renderVistaGrupos();
+}
+
+// ===== RENDER POLLA =====
 function getPuntosClass(pts) {
-  if (pts === 6) return 'puntos-6';
-  if (pts === 3) return 'puntos-3';
-  if (pts === 2) return 'puntos-2';
-  if (pts === 1) return 'puntos-1';
+  if (pts===6) return 'puntos-6';
+  if (pts===3) return 'puntos-3';
+  if (pts===2) return 'puntos-2';
+  if (pts===1) return 'puntos-1';
   return 'puntos-0';
 }
 
-function renderGrupos() {
-  const c = document.getElementById('grupos-container');
-  c.innerHTML = '';
-  
+function renderPollaGrupos() {
+  const c = document.getElementById('polla-grupos'); c.innerHTML = '';
   Object.entries(GRUPOS).forEach(([gid, gdata]) => {
-    const sec = document.createElement('div');
-    sec.className = 'grupo-card';
-    
-    const real = gruposState[gid];
-    const clas = real ? real.clasificados : [null, null];
-    const eqStr = gdata.equipos.map(e => e.bandera + ' ' + e.nombre).join(' · ');
-    const clasStr = clas[0] || clas[1] ? 
-      ' | ✅ Clasificados: ' + [clas[0] ? '1° ' + clas[0].bandera + ' ' + clas[0].nombre : '', 
-                               clas[1] ? '2° ' + clas[1].bandera + ' ' + clas[1].nombre : ''].filter(Boolean).join(', ') : 
-      ' | ⏳ Sin definir';
-    
-    const lbl = document.createElement('div');
-    lbl.className = 'grupo-label';
-    lbl.innerHTML = gdata.nombre + ' — ' + eqStr + clasStr;
-    sec.appendChild(lbl);
-    
+    const sec = document.createElement('div'); sec.className = 'grupo-card';
+    const gs = gruposState[gid]; const clas = gs?.clasificados || [null,null];
+    const eqStr = gdata.equipos.map(e => e.bandera+' '+e.nombre).join(' · ');
+    const clasStr = clas[0]||clas[1] ? ' | ✅ '+[clas[0]?'1° '+clas[0].bandera+' '+clas[0].nombre:'',clas[1]?'2° '+clas[1].bandera+' '+clas[1].nombre:''].filter(Boolean).join(', ') : ' | ⏳ Sin definir';
+    const lbl = document.createElement('div'); lbl.className = 'grupo-label';
+    lbl.innerHTML = gdata.nombre+' — '+eqStr+clasStr; sec.appendChild(lbl);
     const tbl = document.createElement('table');
     tbl.innerHTML = '<thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead>';
     const tb = document.createElement('tbody');
-    
     PERSONAS.forEach(p => {
       const pr = gdata.personas[p] || [];
       const tr = document.createElement('tr');
-      const b1 = pr[0] ? '<span class="pos-badge p1">1°</span> ' + pr[0].bandera + ' ' + pr[0].nombre : '—';
-      const b2 = pr[1] ? '<span class="pos-badge p2">2°</span> ' + pr[1].bandera + ' ' + pr[1].nombre : '—';
-      const pts = puntajes[p] ? (puntajes[p][gid] || 0) : 0;
-      
-      tr.innerHTML = '<td>' + p + '</td><td>' + b1 + '</td><td>' + b2 + 
-                     '</td><td><span class="puntos-auto ' + getPuntosClass(pts) + '">' + pts + ' pts</span></td>';
+      const b1 = pr[0] ? '<span class="pos-badge p1">1°</span> '+pr[0].bandera+' '+pr[0].nombre : '—';
+      const b2 = pr[1] ? '<span class="pos-badge p2">2°</span> '+pr[1].bandera+' '+pr[1].nombre : '—';
+      const pts = puntajes[p]?.[gid] || 0;
+      tr.innerHTML = '<td>'+p+'</td><td>'+b1+'</td><td>'+b2+'</td><td><span class="puntos-auto '+getPuntosClass(pts)+'">'+pts+' pts</span></td>';
       tb.appendChild(tr);
     });
-    
-    tbl.appendChild(tb);
-    sec.appendChild(tbl);
-    c.appendChild(sec);
+    tbl.appendChild(tb); sec.appendChild(tbl); c.appendChild(sec);
   });
 }
 
-function renderRanking() {
-  const sorted = [...PERSONAS].sort((a, b) => calcTotal(b) - calcTotal(a));
-  const c = document.getElementById('ranking-container');
+function renderPollaRanking() {
+  const sorted = [...PERSONAS].sort((a,b) => calcTotal(b)-calcTotal(a));
+  const c = document.getElementById('polla-ranking');
   c.innerHTML = '<div style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">🏅 Ranking</div>';
-  
-  sorted.forEach((p, i) => {
-    const t = calcTotal(p);
-    const rc = i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : 'rn';
-    const med = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
-    const det = Object.entries(puntajes[p] || {})
-      .filter(([, v]) => v > 0)
-      .sort(([, a], [, b]) => b - a)
-      .map(([g, v]) => '<span style="display:inline-block;background:rgba(24,95,165,.15);color:#5b9dd9;padding:2px 8px;border-radius:12px;font-size:.7rem;margin:2px">G' + g + ': ' + v + 'pt</span>')
-      .join('') || 'Sin puntos';
-    
-    const card = document.createElement('div');
-    card.className = 'ranking-card';
-    card.innerHTML = '<div class="rank-num ' + rc + '">' + (i + 1) + '</div>' +
-                     '<div style="flex:1"><div style="font-weight:600">' + p + ' ' + med + '</div>' +
-                     '<div style="margin-top:6px">' + det + '</div></div>' +
-                     '<div style="text-align:right"><div class="points-total">' + t + '</div>' +
-                     '<div class="points-label">pts</div></div>';
+  sorted.forEach((p,i) => {
+    const t = calcTotal(p); const rc = i===0?'r1':i===1?'r2':i===2?'r3':'rn';
+    const med = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    const det = Object.entries(puntajes[p]||{}).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a).map(([g,v])=>'<span style="display:inline-block;background:rgba(24,95,165,.15);color:#5b9dd9;padding:2px 8px;border-radius:12px;font-size:.7rem;margin:2px">G'+g+':'+v+'pt</span>').join('')||'Sin puntos';
+    const card = document.createElement('div'); card.className = 'ranking-card';
+    card.innerHTML = '<div class="rank-num '+rc+'">'+(i+1)+'</div><div style="flex:1"><div style="font-weight:600">'+p+' '+med+'</div><div style="margin-top:6px">'+det+'</div></div><div style="text-align:right"><div class="points-total">'+t+'</div><div class="points-label">pts</div></div>';
     c.appendChild(card);
   });
 }
 
-function renderMatriz() {
-  const c = document.getElementById('matriz-container');
-  const gk = Object.keys(GRUPOS);
-  let h = '<table id="matriz-table"><thead><tr><th>Persona</th>';
-  gk.forEach(g => h += '<th>' + g + '</th>');
-  h += '<th>TOTAL</th></tr></thead><tbody>';
-  
-  PERSONAS.forEach(p => {
-    h += '<tr><td style="font-weight:600">' + p + '</td>';
-    gk.forEach(g => {
-      const v = puntajes[p] ? (puntajes[p][g] || 0) : 0;
-      h += '<td><span class="puntos-auto ' + getPuntosClass(v) + '">' + v + '</span></td>';
-    });
-    h += '<td style="font-weight:700;color:var(--gold)">' + calcTotal(p) + '</td></tr>';
-  });
-  h += '</tbody></table>';
-  c.innerHTML = h;
-}
-
-// ===== VISTA BRACKET =====
-function cambiarVistaBracket(v) {
-  document.getElementById('vista-grupos-bracket').style.display = v === 'grupos' ? '' : 'none';
-  document.getElementById('vista-bracket-elim').style.display = v === 'bracket' ? '' : 'none';
-  document.getElementById('vista-grupos-hint').style.display = v === 'grupos' ? '' : 'none';
-  document.getElementById('vista-bracket-hint').style.display = v === 'bracket' ? '' : 'none';
-  document.getElementById('btnFaseGrupos').className = 'btn ' + (v === 'grupos' ? 'btn-primary' : 'btn-outline');
-  document.getElementById('btnElim').className = 'btn ' + (v === 'bracket' ? 'btn-primary' : 'btn-outline');
-  if (v === 'bracket') renderVistaBracket(); else renderVistaGrupos();
-}
-
-function toggleClasificado(gid, eq, idx) {
-  const g = gruposState[gid];
-  if (!g) return;
-  
-  // Si ya está como clasificado en esta posición, quitarlo
-  if (g.clasificados[idx] && g.clasificados[idx].sigla === eq.sigla) {
-    g.clasificados[idx] = null;
-  }
-  // Si está en la otra posición, intercambiar
-  else if (g.clasificados[1-idx] && g.clasificados[1-idx].sigla === eq.sigla) {
-    g.clasificados[1-idx] = null;
-    g.clasificados[idx] = {...eq};
-  }
-  // Si el slot está libre, asignar
-  else if (!g.clasificados[idx]) {
-    g.clasificados[idx] = {...eq};
-  }
-  // Si ambos slots ocupados, liberar el otro y asignar este
-  else {
-    g.clasificados[idx] = {...eq};
-  }
-  
-  calcularTodosPuntajes();
-  guardarEstado();
-  renderVistaGrupos();
-  renderGrupos();
-  if (document.getElementById('view-ranking').style.display !== 'none') renderRanking();
+// ===== VISTA GRUPOS =====
+function toggleClasificado(gid, equipo, pos) {
+  const g = gruposState[gid]; if (!g) return;
+  const idx = pos-1;
+  if (g.clasificados[idx]?.sigla === equipo.sigla) { g.clasificados[idx] = null; }
+  else if (g.clasificados[1-idx]?.sigla === equipo.sigla) { g.clasificados[1-idx] = null; g.clasificados[idx] = {...equipo}; }
+  else if (!g.clasificados[idx]) { g.clasificados[idx] = {...equipo}; }
+  else { g.clasificados[idx] = {...equipo}; }
+  calcularTodosPuntajes(); guardarEstado(); renderVistaGrupos(); renderPollaGrupos();
 }
 
 function toggleTercero(gid) {
-  const i = bracketState.terceros.indexOf(gid);
-  if (i >= 0) {
-    bracketState.terceros.splice(i, 1);
-  } else {
-    if (bracketState.terceros.length >= 8) {
-      document.getElementById('statusMsg').textContent = '⚠️ Ya hay 8 terceros seleccionados';
-      setTimeout(() => document.getElementById('statusMsg').textContent = 'Actualizado con resultados J1+J2', 3000);
-      return;
-    }
-    bracketState.terceros.push(gid);
-  }
-  guardarEstado();
-  renderVistaGrupos();
+  const i = tercerosSeleccionados.indexOf(gid);
+  if (i>=0) tercerosSeleccionados.splice(i,1);
+  else { if (tercerosSeleccionados.length>=8) return; tercerosSeleccionados.push(gid); }
+  guardarEstado(); renderVistaGrupos();
 }
 
 function renderVistaGrupos() {
-  const grid = document.getElementById('vista-grupos-bracket');
-  grid.innerHTML = '';
-  
-  // Panel de terceros
-  const candidatosTerceros = Object.entries(gruposState)
-    .filter(([, g]) => g.equipos.length >= 3)
-    .map(([gid, g]) => ({gid, equipo: g.equipos[2]}));
-  
-  const panel = document.createElement('div');
-  panel.className = 'terceros-panel';
-  panel.innerHTML = '<div class="terceros-panel-title">🥉 Terceros lugares clasificados (' + 
-                    bracketState.terceros.length + '/8) — click para activar/quitar</div>';
-  const tg = document.createElement('div');
-  tg.className = 'terceros-grid';
-  
-  candidatosTerceros.forEach(({gid, equipo}) => {
-    const activo = bracketState.terceros.includes(gid);
-    const chip = document.createElement('div');
-    chip.className = 'tercero-chip' + (activo ? ' activo' : '');
-    chip.draggable = true;
-    chip.innerHTML = '<span class="pos-number pos-3">3°</span> ' + equipo.bandera + ' ' + equipo.nombre + 
-                     ' <span style="opacity:.6;font-size:.65rem">(G' + gid + ')</span>';
-    chip.onclick = () => toggleTercero(gid);
-    chip.ondragstart = (e) => onDragStartTeam(e, {...equipo, origenGrupo: gid, origenPos: 3});
-    tg.appendChild(chip);
+  const grid = document.getElementById('vista-grupos-bracket'); grid.innerHTML = '';
+  const panel = document.createElement('div'); panel.className = 'terceros-panel';
+  panel.innerHTML = '<div class="terceros-panel-title">🥉 Terceros lugares ('+tercerosSeleccionados.length+'/8) — click para seleccionar</div>';
+  const tg = document.createElement('div'); tg.className = 'terceros-grid';
+  Object.entries(gruposState).forEach(([gid,g]) => {
+    if (g.equipos.length<3) return; const eq = g.equipos[2];
+    const activo = tercerosSeleccionados.includes(gid);
+    const chip = document.createElement('div'); chip.className = 'tercero-chip'+(activo?' activo':'');
+    chip.innerHTML = '<span class="pos-number pos-3">3°</span> '+eq.bandera+' '+eq.nombre+' <span style="opacity:.6;font-size:.65rem">(G'+gid+')</span>';
+    chip.onclick = () => toggleTercero(gid); tg.appendChild(chip);
   });
-  panel.appendChild(tg);
-  grid.appendChild(panel);
-  
-  // Grid de grupos
-  const div = document.createElement('div');
-  div.className = 'fase-grupos-br';
-  
-  Object.entries(gruposState).forEach(([gid, gd]) => {
-    const box = document.createElement('div');
-    box.className = 'grupo-box-br';
-    box.innerHTML = '<div class="grupo-title">' + GRUPOS[gid].nombre + '</div>';
-    
-    gd.equipos.forEach((eq, idx) => {
-      const row = document.createElement('div');
-      row.className = 'pos-row';
-      const esClas = gd.clasificados[0]?.sigla === eq.sigla || gd.clasificados[1]?.sigla === eq.sigla;
-      const esTerceroActivo = idx === 2 && bracketState.terceros.includes(gid);
+  panel.appendChild(tg); grid.appendChild(panel);
+  const div = document.createElement('div'); div.className = 'fase-grupos-br';
+  Object.entries(gruposState).forEach(([gid,gd]) => {
+    const box = document.createElement('div'); box.className = 'grupo-box-br';
+    box.innerHTML = '<div class="grupo-title">'+GRUPOS[gid].nombre+'</div>';
+    gd.equipos.forEach((eq,idx) => {
+      const row = document.createElement('div'); row.className = 'pos-row';
+      const esClas = gd.clasificados[0]?.sigla===eq.sigla||gd.clasificados[1]?.sigla===eq.sigla;
       if (esClas) row.classList.add('clasificado');
-      if (esTerceroActivo) row.classList.add('es-tercero');
-      row.draggable = true;
-      
+      if (idx===2 && tercerosSeleccionados.includes(gid)) row.classList.add('es-tercero');
       let posText = '';
-      if (gd.clasificados[0]?.sigla === eq.sigla) posText = ' ✅ 1°';
-      else if (gd.clasificados[1]?.sigla === eq.sigla) posText = ' ✅ 2°';
-      else if (idx < 2) posText = ' (click para clasificar)';
-      
-      row.innerHTML = '<span class="pos-number ' + (idx === 0 ? 'pos-1' : idx === 1 ? 'pos-2' : idx === 2 ? 'pos-3' : 'pos-4') + '">' + 
-                      (idx + 1) + '</span><span style="flex:1">' + eq.bandera + ' ' + eq.nombre + 
-                      '</span><span style="font-size:.65rem;color:var(--text2)">' + posText + '</span>';
-      
-      if (idx < 2) row.onclick = () => toggleClasificado(gid, eq, idx);
-      row.ondragstart = (e) => onDragStartTeam(e, {...eq, origenGrupo: gid, origenPos: idx + 1});
+      if (gd.clasificados[0]?.sigla===eq.sigla) posText = ' ✅ 1°';
+      else if (gd.clasificados[1]?.sigla===eq.sigla) posText = ' ✅ 2°';
+      else if (idx<2) posText = ' click para clasificar';
+      row.innerHTML = '<span class="pos-number '+(idx===0?'pos-1':idx===1?'pos-2':idx===2?'pos-3':'pos-4')+'">'+(idx+1)+'</span><span style="flex:1">'+eq.bandera+' '+eq.nombre+'</span><span style="font-size:.65rem;color:var(--text2)">'+posText+'</span>';
+      if (idx<2) row.onclick = () => toggleClasificado(gid, eq, idx+1);
       box.appendChild(row);
     });
     div.appendChild(box);
@@ -585,228 +453,180 @@ function renderVistaGrupos() {
   grid.appendChild(div);
 }
 
-// ===== DRAG AND DROP =====
-let dragPayload = null;
-
-function onDragStartTeam(e, equipo) {
-  dragPayload = {tipo: 'equipo', data: equipo};
-  e.dataTransfer.setData('text/plain', 'equipo');
-  e.dataTransfer.effectAllowed = 'move';
-}
-
-function onDragStartFromSlot(e, matchId, slotNum) {
-  const m = bracketState.matches[matchId];
-  const eq = slotNum === 1 ? m.slot1 : m.slot2;
-  if (!eq) return;
-  dragPayload = {tipo: 'fromSlot', data: eq, matchId, slotNum};
-  e.dataTransfer.setData('text/plain', 'fromSlot');
-  e.dataTransfer.effectAllowed = 'move';
-}
-
-function asignarASlot(matchId, slotNum, equipo, limpiarOrigen) {
-  bracketState.matches[matchId]['slot' + slotNum] = equipo ? {...equipo} : null;
-  if (limpiarOrigen && dragPayload && dragPayload.tipo === 'fromSlot') {
-    bracketState.matches[dragPayload.matchId]['slot' + dragPayload.slotNum] = null;
-  }
-}
-
-function onDropToSlot(e, matchId, slotNum) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('dragover');
-  if (!dragPayload) return;
-  asignarASlot(matchId, slotNum, dragPayload.data, true);
-  dragPayload = null;
-  guardarEstado();
-  renderVistaBracket();
-}
-
-function limpiarSlot(matchId, slotNum, ev) {
-  ev.stopPropagation();
-  bracketState.matches[matchId]['slot' + slotNum] = null;
-  guardarEstado();
-  renderVistaBracket();
-}
-
-// ===== RENDER BRACKET =====
-function etiquetaSlot(def) {
-  if (!def) return '';
-  if (def.tipo === 'pos') return (def.pos === 1 ? '1' : '2') + def.grupo;
-  if (def.tipo === 'tercero') return '3°' + def.candidatos.join('');
-  return '';
-}
-
-function crearMatchBox(matchDef, esR32) {
-  const m = bracketState.matches[matchDef.id] || {slot1: null, slot2: null};
-  const box = document.createElement('div');
-  box.className = 'match-box';
-  box.innerHTML = '<span class="match-code">' + matchDef.id + '</span><span class="match-date">' + matchDef.fecha + '</span>';
+// ===== BRACKET CON DRAG & DROP =====
+function crearSlotEditable(matchId, slotNum, tag) {
+  const container = document.createElement('div');
+  container.className = 'editable-slot';
+  container.dataset.matchId = matchId;
+  container.dataset.slotNum = slotNum;
   
-  [1, 2].forEach(num => {
-    const eq = num === 1 ? m.slot1 : m.slot2;
-    const slot = document.createElement('div');
-    slot.className = 'team-drop' + (eq ? ' filled' : '');
-    const tag = esR32 ? etiquetaSlot(num === 1 ? matchDef.slot1 : matchDef.slot2) : '';
+  if (tag) {
+    const tagSpan = document.createElement('span');
+    tagSpan.className = 'slot-tag';
+    tagSpan.textContent = tag;
+    container.appendChild(tagSpan);
+  }
+  
+  const eqActual = bracketMatches[matchId]?.['slot'+slotNum];
+  
+  // Bandera arrastrable
+  const flagSpan = document.createElement('span');
+  flagSpan.className = 'team-flag-drag';
+  flagSpan.textContent = eqActual ? eqActual.bandera : '⬜';
+  flagSpan.title = eqActual ? eqActual.nombre : 'Slot vacío';
+  flagSpan.draggable = !!eqActual;
+  
+  if (eqActual) {
+    flagSpan.addEventListener('dragstart', (e) => {
+      dragData = {tipo:'slot', equipo: eqActual, matchId, slotNum};
+      container.classList.add('drag-source');
+      e.dataTransfer.setData('text/plain', 'equipo');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    flagSpan.addEventListener('dragend', () => {
+      container.classList.remove('drag-source');
+      dragData = null;
+    });
+  }
+  container.appendChild(flagSpan);
+  
+  // Select dropdown
+  const select = document.createElement('select');
+  select.innerHTML = '<option value="">— Selecciona —</option>';
+  TODOS_LOS_EQUIPOS.forEach(eq => {
+    const sel = eqActual?.sigla === eq.sigla ? ' selected' : '';
+    select.innerHTML += '<option value="'+eq.sigla+'"'+sel+'>'+eq.bandera+' '+eq.nombre+'</option>';
+  });
+  select.onchange = function() {
+    const val = this.value;
+    const eq = val ? TODOS_LOS_EQUIPOS.find(e => e.sigla === val) : null;
+    bracketMatches[matchId]['slot'+slotNum] = eq ? {...eq} : null;
+    guardarEstado(); renderBracket();
+  };
+  container.appendChild(select);
+  
+  // Botón limpiar
+  const btnClear = document.createElement('button');
+  btnClear.className = 'btn-clear-slot';
+  btnClear.textContent = '✕';
+  btnClear.onclick = function(e) {
+    e.stopPropagation();
+    select.value = '';
+    bracketMatches[matchId]['slot'+slotNum] = null;
+    guardarEstado(); renderBracket();
+  };
+  container.appendChild(btnClear);
+  
+  // Eventos de drop
+  container.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    if (dragData && (dragData.matchId !== matchId || dragData.slotNum !== slotNum)) {
+      container.classList.add('drag-over');
+    }
+  });
+  container.addEventListener('dragleave', () => container.classList.remove('drag-over'));
+  container.addEventListener('drop', (e) => {
+    e.preventDefault();
+    container.classList.remove('drag-over');
+    if (!dragData) return;
     
-    if (eq) {
-      slot.draggable = true;
-      slot.ondragstart = (e) => onDragStartFromSlot(e, matchDef.id, num);
-      slot.innerHTML = '<span class="team-flag-sm">' + eq.bandera + '</span><span class="team-name-sm">' + eq.nombre + 
-                       '</span><span class="clear-x" onclick="limpiarSlot(\'' + matchDef.id + '\',' + num + ',event)">✕</span>';
-    } else {
-      slot.innerHTML = (tag ? '<span class="slot-tag">' + tag + '</span>' : '') + 
-                       '<span class="slot-empty-txt">' + (tag ? 'arrastra aquí' : '— vacío —') + '</span>';
+    const eqOrigen = dragData.equipo;
+    const eqDestino = bracketMatches[matchId]?.['slot'+slotNum];
+    
+    // Intercambiar
+    if (dragData.tipo === 'slot') {
+      bracketMatches[dragData.matchId]['slot'+dragData.slotNum] = eqDestino ? {...eqDestino} : null;
+      bracketMatches[matchId]['slot'+slotNum] = eqOrigen ? {...eqOrigen} : null;
     }
     
-    slot.ondragover = (e) => { e.preventDefault(); slot.classList.add('dragover'); };
-    slot.ondragleave = () => slot.classList.remove('dragover');
-    slot.ondrop = (e) => onDropToSlot(e, matchDef.id, num);
-    box.appendChild(slot);
+    dragData = null;
+    guardarEstado(); renderBracket();
   });
   
+  return container;
+}
+
+function crearMatchBox(matchDef, slot1Tag, slot2Tag) {
+  const box = document.createElement('div');
+  box.className = 'match-box';
+  box.innerHTML = '<span class="match-code">'+matchDef.id+'</span><span class="match-date">'+matchDef.fecha+'</span>';
+  box.appendChild(crearSlotEditable(matchDef.id, 1, slot1Tag || ''));
+  box.appendChild(crearSlotEditable(matchDef.id, 2, slot2Tag || ''));
   return box;
 }
 
-function renderVistaBracket() {
-  const c = document.getElementById('vista-bracket-elim');
-  c.innerHTML = '';
-  const wrap = document.createElement('div');
-  wrap.className = 'bracket-wrap';
-  const grid = document.createElement('div');
-  grid.className = 'bracket-grid';
+function renderBracket() {
+  const c = document.getElementById('vista-bracket-elim'); c.innerHTML = '';
+  const wrap = document.createElement('div'); wrap.className = 'bracket-wrap';
+  const grid = document.createElement('div'); grid.className = 'bracket-grid';
   
-  const izqR32 = BRACKET_R32.slice(0, 8), derR32 = BRACKET_R32.slice(8, 16);
-  const izqR16 = BRACKET_R16.slice(0, 4), derR16 = BRACKET_R16.slice(4, 8);
-  const izqQF = BRACKET_QF.slice(0, 2), derQF = BRACKET_QF.slice(2, 4);
-  const izqSF = [BRACKET_SF[0]], derSF = [BRACKET_SF[1]];
-  
-  function col(matches, label, esR32) {
-    const colDiv = document.createElement('div');
-    colDiv.className = 'bracket-col';
-    colDiv.innerHTML = '<div class="bracket-col-header">' + label + '</div>';
-    const half = document.createElement('div');
-    half.className = 'bracket-half';
-    matches.forEach(m => half.appendChild(crearMatchBox(m, esR32)));
-    colDiv.appendChild(half);
-    return colDiv;
+  function col(matches, label, tags) {
+    const colDiv = document.createElement('div'); colDiv.className = 'bracket-col';
+    colDiv.innerHTML = '<div class="bracket-col-header">'+label+'</div>';
+    const half = document.createElement('div'); half.className = 'bracket-half';
+    matches.forEach((m,i) => {
+      const t = tags ? tags[i] : [null,null];
+      half.appendChild(crearMatchBox(m, t[0], t[1]));
+    });
+    colDiv.appendChild(half); return colDiv;
   }
   
-  grid.appendChild(col(izqR32, 'R32', true));
-  grid.appendChild(col(izqR16, 'R16', false));
-  grid.appendChild(col(izqQF, 'Cuartos', false));
-  grid.appendChild(col(izqSF, 'Semis', false));
+  const izqR32 = BRACKET_R32.slice(0,8); const derR32 = BRACKET_R32.slice(8,16);
+  const izqR16 = BRACKET_R16.slice(0,4); const derR16 = BRACKET_R16.slice(4,8);
+  const izqQF = BRACKET_QF.slice(0,2); const derQF = BRACKET_QF.slice(2,4);
   
-  // Centro
-  const centro = document.createElement('div');
-  centro.className = 'bracket-col center-final-col';
+  const tagsR32 = BRACKET_R32.map(m => [m.slot1Tag, m.slot2Tag]);
+  
+  grid.appendChild(col(izqR32, 'R32', tagsR32.slice(0,8)));
+  grid.appendChild(col(izqR16, 'R16'));
+  grid.appendChild(col(izqQF, 'Cuartos'));
+  grid.appendChild(col([BRACKET_SF[0]], 'Semis'));
+  
+  const centro = document.createElement('div'); centro.className = 'bracket-col center-final-col';
   centro.innerHTML = '<div class="bracket-col-header">Final</div><div class="copa-icon">🏆</div><div class="fecha-final-txt">19 jul · NY/NJ</div>';
-  const finalBox = crearMatchBox(BRACKET_FINAL, false);
-  finalBox.classList.add('final-box');
-  centro.appendChild(finalBox);
-  
-  const tercerWrap = document.createElement('div');
-  tercerWrap.className = 'tercer-box';
+  const finalBox = crearMatchBox(BRACKET_FINAL); finalBox.classList.add('final-box'); centro.appendChild(finalBox);
+  const tercerWrap = document.createElement('div'); tercerWrap.className = 'tercer-box';
   tercerWrap.innerHTML = '<div class="tercer-label">🥉 3er puesto · 18 jul</div>';
-  tercerWrap.appendChild(crearMatchBox(BRACKET_3ER, false));
-  centro.appendChild(tercerWrap);
+  tercerWrap.appendChild(crearMatchBox(BRACKET_3ER)); centro.appendChild(tercerWrap);
   grid.appendChild(centro);
   
-  grid.appendChild(col(derSF, 'Semis', false));
-  grid.appendChild(col(derQF, 'Cuartos', false));
-  grid.appendChild(col(derR16, 'R16', false));
-  grid.appendChild(col(derR32, 'R32', true));
+  grid.appendChild(col([BRACKET_SF[1]], 'Semis'));
+  grid.appendChild(col(derQF, 'Cuartos'));
+  grid.appendChild(col(derR16, 'R16'));
+  grid.appendChild(col(derR32, 'R32', tagsR32.slice(8,16)));
   
-  wrap.appendChild(grid);
-  c.appendChild(wrap);
+  wrap.appendChild(grid); c.appendChild(wrap);
 }
 
-function autoLlenarBracket() {
-  BRACKET_R32.forEach(m => {
-    [['slot1', m.slot1], ['slot2', m.slot2]].forEach(([key, def]) => {
-      if (def.tipo === 'pos') {
-        const g = gruposState[def.grupo];
-        if (g) {
-          const eq = def.pos === 1 ? g.clasificados[0] : g.clasificados[1];
-          if (eq) bracketState.matches[m.id][key] = {...eq};
-        }
-      }
-    });
-  });
-  guardarEstado();
-  cambiarVistaBracket('bracket');
-  document.getElementById('statusMsg').textContent = '⚡ Posiciones 1°/2° ubicadas en el bracket';
-  setTimeout(() => document.getElementById('statusMsg').textContent = 'Actualizado con resultados J1+J2', 3000);
+// ===== ACCIONES =====
+function resetBracket() {
+  if (confirm('¿Reiniciar todo el bracket de eliminación? Los grupos no se modificarán.')) {
+    Object.keys(bracketMatches).forEach(id => bracketMatches[id] = {slot1:null, slot2:null});
+    guardarEstado(); renderBracket();
+  }
 }
 
 function generarCodigoBracket() {
-  const estado = {gs: gruposState, bs: bracketState};
-  const c = '// Pega esto en el HTML para restaurar el estado del bracket:\nconst BRACKET_SAVED_STATE = ' + 
-            JSON.stringify(estado, null, 2) + ';\n';
-  navigator.clipboard.writeText(c).then(() => {
-    document.getElementById('statusMsg').textContent = '📋 Código del bracket copiado';
-    setTimeout(() => document.getElementById('statusMsg').textContent = 'Actualizado con resultados J1+J2', 3000);
-  }).catch(() => {
-    console.log(c);
-    document.getElementById('statusMsg').textContent = '⚠️ Revisa la consola (F12)';
-  });
+  const estado = {gruposState, bracketMatches, tercerosSeleccionados};
+  const codigo = 'const BRACKET_SAVED_STATE = '+JSON.stringify(estado, null, 2)+';\n';
+  navigator.clipboard.writeText(codigo).then(() => alert('📋 Código copiado')).catch(() => { console.log(codigo); alert('⚠️ Código en consola (F12)'); });
 }
 
-// ===== EXCEL =====
 function descargarExcel() {
   try {
     const wb = XLSX.utils.book_new();
-    const dp = [['Persona', ...Object.keys(GRUPOS), 'TOTAL']];
-    PERSONAS.forEach(p => {
-      const f = [p];
-      let t = 0;
-      Object.keys(GRUPOS).forEach(g => {
-        const v = puntajes[p] ? (puntajes[p][g] || 0) : 0;
-        f.push(v);
-        t += v;
-      });
-      f.push(t);
-      dp.push(f);
-    });
+    const dp = [['Persona',...Object.keys(GRUPOS),'TOTAL']];
+    PERSONAS.forEach(p => { const f=[p]; let t=0; Object.keys(GRUPOS).forEach(g=>{const v=puntajes[p]?.[g]||0;f.push(v);t+=v}); f.push(t); dp.push(f); });
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dp), 'Puntajes');
-    XLSX.writeFile(wb, 'Polla_Mundial2026_' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '.xlsx');
-  } catch(e) {
-    console.log('Error descargando Excel:', e);
-  }
+    XLSX.writeFile(wb, 'Polla_2026.xlsx');
+  } catch(e) {}
 }
 
-function cargarExcel(e) {
-  const f = e.target.files[0];
-  if (!f) return;
-  const r = new FileReader();
-  r.onload = function(ev) {
-    try {
-      const wb = XLSX.read(new Uint8Array(ev.target.result), {type: 'array'});
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, {header: 1});
-      if (!rows[0] || rows[0][0] !== 'Persona') return;
-      const gk = Object.keys(GRUPOS);
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        if (!row || !row[0]) continue;
-        const p = String(row[0]).trim();
-        if (!PERSONAS.includes(p)) continue;
-        // Solo cargamos para referencia, los puntajes se recalculan automáticamente
-      }
-      calcularTodosPuntajes();
-      renderGrupos();
-      document.getElementById('statusMsg').textContent = '✅ Excel cargado (puntajes recalculados)';
-      setTimeout(() => document.getElementById('statusMsg').textContent = 'Actualizado con resultados J1+J2', 3000);
-    } catch(e) {
-      console.log('Error:', e);
-    }
-  };
-  r.readAsArrayBuffer(f);
-  e.target.value = '';
-}
+function cargarExcel(e) { e.target.value=''; alert('📂 Los puntajes se calculan automáticamente.'); }
 
 // ===== INICIO =====
-init();
-calcularTodosPuntajes();
-renderGrupos();
+initEstado();
+renderPollaGrupos();
 renderVistaGrupos();
 cambiarVistaBracket('grupos');
 </script>
