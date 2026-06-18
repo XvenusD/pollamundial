@@ -178,10 +178,14 @@
         .btn-sync:hover {
             background: rgba(59, 109, 17, 0.25);
         }
-        .btn-xs {
-            padding: 3px 8px;
-            font-size: 0.65rem;
-            border-radius: 4px;
+        .btn-copiar {
+            background: #FAC775;
+            color: #633806;
+            border-color: #FAC775;
+            font-weight: 700;
+        }
+        .btn-copiar:hover {
+            background: #e0b05a;
         }
         .card {
             background: #161b22;
@@ -189,14 +193,6 @@
             border-radius: 10px;
             padding: 16px;
             margin-bottom: 16px;
-        }
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 12px;
         }
         .grupo-grid {
             display: grid;
@@ -959,10 +955,8 @@
 </head>
 <body>
 
-    <!-- TOAST para notificaciones -->
     <div id="toast" style="display:none;position:fixed;bottom:20px;right:20px;background:#3B6D11;color:#fff;padding:10px 20px;border-radius:8px;font-size:0.8rem;font-weight:600;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.4);"></div>
 
-    <!-- NAV PRINCIPAL -->
     <div class="top-nav">
         <div class="nav-brand">🏆 Mundial 2026 <span>México · USA · Canadá</span></div>
         <div class="nav-tabs">
@@ -982,6 +976,7 @@
                 <p>Puntajes automáticos según clasificados reales</p>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES_INICIALES</button>
                 <button class="btn btn-success" onclick="descargarExcel()">💾 Descargar Excel</button>
             </div>
         </div>
@@ -994,34 +989,25 @@
         <div id="polla-ranking" style="display:none"></div>
         <div id="polla-leyenda" style="display:none">
             <div class="leyenda-grid">
-                <div class="leyenda-card">
-                    <div class="leyenda-points" style="color:#f07050">6 pts</div>
-                    <div class="leyenda-desc">1° y 2° exactos en su posición correcta</div>
-                </div>
-                <div class="leyenda-card">
-                    <div class="leyenda-points" style="color:#7dc542">3 pts</div>
-                    <div class="leyenda-desc">Un equipo exacto en su posición correcta</div>
-                </div>
-                <div class="leyenda-card">
-                    <div class="leyenda-points" style="color:#FAC775">2 pts</div>
-                    <div class="leyenda-desc">Cruzados perfectos (1°↔2°)</div>
-                </div>
-                <div class="leyenda-card">
-                    <div class="leyenda-points" style="color:#5b9dd9">1 pt</div>
-                    <div class="leyenda-desc">Un equipo cruzado (en la otra posición)</div>
-                </div>
+                <div class="leyenda-card"><div class="leyenda-points" style="color:#f07050">6 pts</div><div class="leyenda-desc">1° y 2° exactos en su posición correcta</div></div>
+                <div class="leyenda-card"><div class="leyenda-points" style="color:#7dc542">3 pts</div><div class="leyenda-desc">Un equipo exacto en su posición correcta</div></div>
+                <div class="leyenda-card"><div class="leyenda-points" style="color:#FAC775">2 pts</div><div class="leyenda-desc">Cruzados perfectos (1°↔2°)</div></div>
+                <div class="leyenda-card"><div class="leyenda-points" style="color:#5b9dd9">1 pt</div><div class="leyenda-desc">Un equipo cruzado (en la otra posición)</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ========== PÁGINA 2: MATRIX DE PUNTAJES ========== -->
+    <!-- ========== PÁGINA 2: MATRIX ========== -->
     <div class="page" id="page-matrix">
         <div class="page-header">
             <div>
                 <h1>🔢 Matrix de Puntajes: Persona vs Grupo</h1>
                 <p>Vista completa de todos los puntajes por grupo y totales</p>
             </div>
-            <button class="btn btn-success" onclick="descargarExcel()">💾 Exportar Excel</button>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES_INICIALES</button>
+                <button class="btn btn-success" onclick="descargarExcel()">💾 Exportar Excel</button>
+            </div>
         </div>
         <div class="card">
             <div class="matrix-wrap" id="matrix-container"></div>
@@ -1035,6 +1021,7 @@
                 <h1>🏟 Bracket FIFA 2026 — ¡Arrastra las banderas!</h1>
                 <p>Cambia clasificados arrastrando en los grupos · Intercambia equipos en el bracket</p>
             </div>
+            <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES_INICIALES</button>
         </div>
         <div class="acciones-bar">
             <div class="vista-toggle">
@@ -1074,335 +1061,59 @@
         'Estefania', 'Diana', 'Sofia'];
 
         const GRUPOS = {
-            A: {
-                nombre: 'Grupo A',
-                equipos: [
-                    { sigla: 'KOR', nombre: 'Corea del Sur', bandera: '🇰🇷' },
-                    { sigla: 'MEX', nombre: 'México', bandera: '🇲🇽' },
-                    { sigla: 'CZE', nombre: 'Chequia', bandera: '🇨🇿' },
-                    { sigla: 'ZAF', nombre: 'Sudáfrica', bandera: '🇿🇦' }
-                ],
-                personas: {
-                    Camila: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }],
-                    Duvan: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'ZAF', nombre: 'Sudáfrica' }],
-                    Camilo: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }],
-                    Mateo: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }],
-                    Miguel: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }],
-                    'Doc Camilo': [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }],
-                    Katherine: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }],
-                    Sandra: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'ZAF', nombre: 'Sudáfrica' }],
-                    Estefania: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }],
-                    Diana: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }],
-                    Sofia: [{ sigla: 'KOR', nombre: 'Corea del Sur' }, { sigla: 'MEX', nombre: 'México' }]
-                }
-            },
-            B: {
-                nombre: 'Grupo B',
-                equipos: [
-                    { sigla: 'SUI', nombre: 'Suiza', bandera: '🇨🇭' },
-                    { sigla: 'CAN', nombre: 'Canadá', bandera: '🇨🇦' },
-                    { sigla: 'QAT', nombre: 'Qatar', bandera: '🇶🇦' },
-                    { sigla: 'BIH', nombre: 'Bosnia', bandera: '🇧🇦' }
-                ],
-                personas: {
-                    Camila: [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'SUI', nombre: 'Suiza' }],
-                    Duvan: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'CAN', nombre: 'Canadá' }],
-                    Camilo: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'CAN', nombre: 'Canadá' }],
-                    Mateo: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'CAN', nombre: 'Canadá' }],
-                    Miguel: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'QAT', nombre: 'Qatar' }],
-                    'Doc Camilo': [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'QAT', nombre: 'Qatar' }],
-                    Katherine: [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'QAT', nombre: 'Qatar' }],
-                    Sandra: [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'SUI', nombre: 'Suiza' }],
-                    Estefania: [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'SUI', nombre: 'Suiza' }],
-                    Diana: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'CAN', nombre: 'Canadá' }],
-                    Sofia: [{ sigla: 'QAT', nombre: 'Qatar' }, { sigla: 'CAN', nombre: 'Canadá' }]
-                }
-            },
-            C: {
-                nombre: 'Grupo C',
-                equipos: [
-                    { sigla: 'SCO', nombre: 'Escocia', bandera: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
-                    { sigla: 'MAR', nombre: 'Marruecos', bandera: '🇲🇦' },
-                    { sigla: 'BRA', nombre: 'Brasil', bandera: '🇧🇷' },
-                    { sigla: 'HTI', nombre: 'Haití', bandera: '🇭🇹' }
-                ],
-                personas: {
-                    Camila: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }],
-                    Duvan: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }],
-                    Camilo: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }],
-                    Mateo: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }],
-                    Miguel: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }],
-                    'Doc Camilo': [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'SCO', nombre: 'Escocia' }],
-                    Katherine: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }],
-                    Sandra: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'SCO', nombre: 'Escocia' }],
-                    Estefania: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'SCO', nombre: 'Escocia' }],
-                    Diana: [{ sigla: 'MAR', nombre: 'Marruecos' }, { sigla: 'BRA', nombre: 'Brasil' }],
-                    Sofia: [{ sigla: 'MAR', nombre: 'Marruecos' }, { sigla: 'BRA', nombre: 'Brasil' }]
-                }
-            },
-            D: {
-                nombre: 'Grupo D',
-                equipos: [
-                    { sigla: 'USA', nombre: 'EE.UU.', bandera: '🇺🇸' },
-                    { sigla: 'AUS', nombre: 'Australia', bandera: '🇦🇺' },
-                    { sigla: 'TUR', nombre: 'Turquía', bandera: '🇹🇷' },
-                    { sigla: 'PAR', nombre: 'Paraguay', bandera: '🇵🇾' }
-                ],
-                personas: {
-                    Camila: [{ sigla: 'PAR', nombre: 'Paraguay' }, { sigla: 'USA', nombre: 'EE.UU.' }],
-                    Duvan: [{ sigla: 'TUR', nombre: 'Turquía' }, { sigla: 'PAR', nombre: 'Paraguay' }],
-                    Camilo: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'TUR', nombre: 'Turquía' }],
-                    Mateo: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'PAR', nombre: 'Paraguay' }],
-                    Miguel: [{ sigla: 'PAR', nombre: 'Paraguay' }, { sigla: 'USA', nombre: 'EE.UU.' }],
-                    'Doc Camilo': [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'AUS', nombre: 'Australia' }],
-                    Katherine: [{ sigla: 'PAR', nombre: 'Paraguay' }, { sigla: 'USA', nombre: 'EE.UU.' }],
-                    Sandra: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'AUS', nombre: 'Australia' }],
-                    Estefania: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'AUS', nombre: 'Australia' }],
-                    Diana: [{ sigla: 'PAR', nombre: 'Paraguay' }, { sigla: 'TUR', nombre: 'Turquía' }],
-                    Sofia: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'AUS', nombre: 'Australia' }]
-                }
-            },
-            E: {
-                nombre: 'Grupo E',
-                equipos: [
-                    { sigla: 'GER', nombre: 'Alemania', bandera: '🇩🇪' },
-                    { sigla: 'CIV', nombre: 'Costa de Marfil', bandera: '🇨🇮' },
-                    { sigla: 'ECU', nombre: 'Ecuador', bandera: '🇪🇨' },
-                    { sigla: 'CUW', nombre: 'Curazao', bandera: '🇨🇼' }
-                ],
-                personas: {
-                    Camila: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }],
-                    Duvan: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }],
-                    Camilo: [{ sigla: 'ECU', nombre: 'Ecuador' }, { sigla: 'GER', nombre: 'Alemania' }],
-                    Mateo: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }],
-                    Miguel: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }],
-                    'Doc Camilo': [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }],
-                    Katherine: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'ECU', nombre: 'Ecuador' }],
-                    Sandra: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }],
-                    Estefania: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'ECU', nombre: 'Ecuador' }],
-                    Diana: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }],
-                    Sofia: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }]
-                }
-            },
-            F: {
-                nombre: 'Grupo F',
-                equipos: [
-                    { sigla: 'SWE', nombre: 'Suecia', bandera: '🇸🇪' },
-                    { sigla: 'JPN', nombre: 'Japón', bandera: '🇯🇵' },
-                    { sigla: 'NED', nombre: 'Países Bajos', bandera: '🇳🇱' },
-                    { sigla: 'TUN', nombre: 'Túnez', bandera: '🇹🇳' }
-                ],
-                personas: {
-                    Duvan: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'JPN', nombre: 'Japón' }],
-                    Camila: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'JPN', nombre: 'Japón' }],
-                    Camilo: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'JPN', nombre: 'Japón' }],
-                    Mateo: [{ sigla: 'JPN', nombre: 'Japón' }, { sigla: 'NED', nombre: 'Países Bajos' }],
-                    Miguel: [{ sigla: 'JPN', nombre: 'Japón' }, { sigla: 'SWE', nombre: 'Suecia' }],
-                    'Doc Camilo': [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'SWE', nombre: 'Suecia' }],
-                    Katherine: [{ sigla: 'JPN', nombre: 'Japón' }, { sigla: 'NED', nombre: 'Países Bajos' }],
-                    Sandra: [{ sigla: 'SWE', nombre: 'Suecia' }, { sigla: 'NED', nombre: 'Países Bajos' }],
-                    Estefania: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'JPN', nombre: 'Japón' }],
-                    Diana: [{ sigla: 'JPN', nombre: 'Japón' }, { sigla: 'TUN', nombre: 'Túnez' }],
-                    Sofia: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'SWE', nombre: 'Suecia' }]
-                }
-            },
-            G: {
-                nombre: 'Grupo G',
-                equipos: [
-                    { sigla: 'NZL', nombre: 'N. Zelanda', bandera: '🇳🇿' },
-                    { sigla: 'IRN', nombre: 'Irán', bandera: '🇮🇷' },
-                    { sigla: 'BEL', nombre: 'Bélgica', bandera: '🇧🇪' },
-                    { sigla: 'EGY', nombre: 'Egipto', bandera: '🇪🇬' }
-                ],
-                personas: {
-                    Duvan: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }],
-                    Camila: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'NZL', nombre: 'N. Zelanda' }],
-                    Camilo: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }],
-                    Mateo: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'NZL', nombre: 'N. Zelanda' }],
-                    Miguel: [{ sigla: 'EGY', nombre: 'Egipto' }, { sigla: 'BEL', nombre: 'Bélgica' }],
-                    'Doc Camilo': [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }],
-                    Katherine: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }],
-                    Sandra: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'NZL', nombre: 'N. Zelanda' }],
-                    Estefania: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }],
-                    Diana: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'NZL', nombre: 'N. Zelanda' }],
-                    Sofia: [{ sigla: 'IRN', nombre: 'Irán' }, { sigla: 'EGY', nombre: 'Egipto' }]
-                }
-            },
-            H: {
-                nombre: 'Grupo H',
-                equipos: [
-                    { sigla: 'URU', nombre: 'Uruguay', bandera: '🇺🇾' },
-                    { sigla: 'KSA', nombre: 'Arabia Saudí', bandera: '🇸🇦' },
-                    { sigla: 'ESP', nombre: 'España', bandera: '🇪🇸' },
-                    { sigla: 'CPV', nombre: 'Cabo Verde', bandera: '🇨🇻' }
-                ],
-                personas: {
-                    Duvan: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }],
-                    Camila: [{ sigla: 'URU', nombre: 'Uruguay' }, { sigla: 'ESP', nombre: 'España' }],
-                    Camilo: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }],
-                    Mateo: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }],
-                    Miguel: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }],
-                    'Doc Camilo': [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }],
-                    Katherine: [{ sigla: 'URU', nombre: 'Uruguay' }, { sigla: 'ESP', nombre: 'España' }],
-                    Sandra: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }],
-                    Estefania: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }],
-                    Diana: [{ sigla: 'URU', nombre: 'Uruguay' }, { sigla: 'ESP', nombre: 'España' }],
-                    Sofia: [{ sigla: 'KSA', nombre: 'Arabia Saudí' }, { sigla: 'ESP', nombre: 'España' }]
-                }
-            },
-            I: {
-                nombre: 'Grupo I',
-                equipos: [
-                    { sigla: 'NOR', nombre: 'Noruega', bandera: '🇳🇴' },
-                    { sigla: 'FRA', nombre: 'Francia', bandera: '🇫🇷' },
-                    { sigla: 'SEN', nombre: 'Senegal', bandera: '🇸🇳' },
-                    { sigla: 'IRQ', nombre: 'Irak', bandera: '🇮🇶' }
-                ],
-                personas: {
-                    Duvan: [{ sigla: 'NOR', nombre: 'Noruega' }, { sigla: 'FRA', nombre: 'Francia' }],
-                    Camila: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'SEN', nombre: 'Senegal' }],
-                    Camilo: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'SEN', nombre: 'Senegal' }],
-                    Mateo: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }],
-                    Miguel: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'SEN', nombre: 'Senegal' }],
-                    'Doc Camilo': [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'SEN', nombre: 'Senegal' }],
-                    Katherine: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }],
-                    Sandra: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }],
-                    Estefania: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }],
-                    Diana: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }],
-                    Sofia: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'IRQ', nombre: 'Irak' }]
-                }
-            },
-            J: {
-                nombre: 'Grupo J',
-                equipos: [
-                    { sigla: 'ARG', nombre: 'Argentina', bandera: '🇦🇷' },
-                    { sigla: 'AUT', nombre: 'Austria', bandera: '🇦🇹' },
-                    { sigla: 'JOR', nombre: 'Jordania', bandera: '🇯🇴' },
-                    { sigla: 'ALG', nombre: 'Argelia', bandera: '🇩🇿' }
-                ],
-                personas: {
-                    Duvan: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'ALG', nombre: 'Argelia' }],
-                    Camila: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }],
-                    Camilo: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'ALG', nombre: 'Argelia' }],
-                    Mateo: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }],
-                    Miguel: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'JOR', nombre: 'Jordania' }],
-                    'Doc Camilo': [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'JOR', nombre: 'Jordania' }],
-                    Katherine: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'JOR', nombre: 'Jordania' }],
-                    Sandra: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }],
-                    Estefania: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }],
-                    Diana: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }],
-                    Sofia: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }]
-                }
-            },
-            K: {
-                nombre: 'Grupo K',
-                equipos: [
-                    { sigla: 'COL', nombre: 'Colombia', bandera: '🇨🇴' },
-                    { sigla: 'COD', nombre: 'RD Congo', bandera: '🇨🇩' },
-                    { sigla: 'POR', nombre: 'Portugal', bandera: '🇵🇹' },
-                    { sigla: 'UZB', nombre: 'Uzbekistán', bandera: '🇺🇿' }
-                ],
-                personas: {
-                    Duvan: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }],
-                    Camila: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }],
-                    Camilo: [{ sigla: 'COL', nombre: 'Colombia' }, { sigla: 'POR', nombre: 'Portugal' }],
-                    Mateo: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }],
-                    Miguel: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }],
-                    'Doc Camilo': [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }],
-                    Katherine: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }],
-                    Sandra: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }],
-                    Estefania: [{ sigla: 'COL', nombre: 'Colombia' }, { sigla: 'POR', nombre: 'Portugal' }],
-                    Diana: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }],
-                    Sofia: [{ sigla: 'COL', nombre: 'Colombia' }, { sigla: 'POR', nombre: 'Portugal' }]
-                }
-            },
-            L: {
-                nombre: 'Grupo L',
-                equipos: [
-                    { sigla: 'ENG', nombre: 'Inglaterra', bandera: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-                    { sigla: 'GHA', nombre: 'Ghana', bandera: '🇬🇭' },
-                    { sigla: 'CRO', nombre: 'Croacia', bandera: '🇭🇷' },
-                    { sigla: 'PAN', nombre: 'Panamá', bandera: '🇵🇦' }
-                ],
-                personas: {
-                    Duvan: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }],
-                    Camila: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'GHA', nombre: 'Ghana' }],
-                    Camilo: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }],
-                    Mateo: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'PAN', nombre: 'Panamá' }],
-                    Miguel: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }],
-                    'Doc Camilo': [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }],
-                    Katherine: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }],
-                    Sandra: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }],
-                    Estefania: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'PAN', nombre: 'Panamá' }],
-                    Diana: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'PAN', nombre: 'Panamá' }],
-                    Sofia: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }]
-                }
-            }
+            A: { nombre: 'Grupo A', equipos: [{ sigla: 'KOR', nombre: 'Corea del Sur', bandera: '🇰🇷' }, { sigla: 'MEX', nombre: 'México', bandera: '🇲🇽' }, { sigla: 'CZE', nombre: 'Chequia', bandera: '🇨🇿' }, { sigla: 'ZAF', nombre: 'Sudáfrica', bandera: '🇿🇦' }], personas: { Camila: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }], Duvan: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'ZAF', nombre: 'Sudáfrica' }], Camilo: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }], Mateo: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }], Miguel: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }], 'Doc Camilo': [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }], Katherine: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }], Sandra: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'ZAF', nombre: 'Sudáfrica' }], Estefania: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }], Diana: [{ sigla: 'MEX', nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }], Sofia: [{ sigla: 'KOR', nombre: 'Corea del Sur' }, { sigla: 'MEX', nombre: 'México' }] } },
+            B: { nombre: 'Grupo B', equipos: [{ sigla: 'SUI', nombre: 'Suiza', bandera: '🇨🇭' }, { sigla: 'CAN', nombre: 'Canadá', bandera: '🇨🇦' }, { sigla: 'QAT', nombre: 'Qatar', bandera: '🇶🇦' }, { sigla: 'BIH', nombre: 'Bosnia', bandera: '🇧🇦' }], personas: { Camila: [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'SUI', nombre: 'Suiza' }], Duvan: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'CAN', nombre: 'Canadá' }], Camilo: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'CAN', nombre: 'Canadá' }], Mateo: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'CAN', nombre: 'Canadá' }], Miguel: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'QAT', nombre: 'Qatar' }], 'Doc Camilo': [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'QAT', nombre: 'Qatar' }], Katherine: [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'QAT', nombre: 'Qatar' }], Sandra: [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'SUI', nombre: 'Suiza' }], Estefania: [{ sigla: 'CAN', nombre: 'Canadá' }, { sigla: 'SUI', nombre: 'Suiza' }], Diana: [{ sigla: 'SUI', nombre: 'Suiza' }, { sigla: 'CAN', nombre: 'Canadá' }], Sofia: [{ sigla: 'QAT', nombre: 'Qatar' }, { sigla: 'CAN', nombre: 'Canadá' }] } },
+            C: { nombre: 'Grupo C', equipos: [{ sigla: 'SCO', nombre: 'Escocia', bandera: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }, { sigla: 'MAR', nombre: 'Marruecos', bandera: '🇲🇦' }, { sigla: 'BRA', nombre: 'Brasil', bandera: '🇧🇷' }, { sigla: 'HTI', nombre: 'Haití', bandera: '🇭🇹' }], personas: { Camila: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }], Duvan: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }], Camilo: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }], Mateo: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }], Miguel: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }], 'Doc Camilo': [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'SCO', nombre: 'Escocia' }], Katherine: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'MAR', nombre: 'Marruecos' }], Sandra: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'SCO', nombre: 'Escocia' }], Estefania: [{ sigla: 'BRA', nombre: 'Brasil' }, { sigla: 'SCO', nombre: 'Escocia' }], Diana: [{ sigla: 'MAR', nombre: 'Marruecos' }, { sigla: 'BRA', nombre: 'Brasil' }], Sofia: [{ sigla: 'MAR', nombre: 'Marruecos' }, { sigla: 'BRA', nombre: 'Brasil' }] } },
+            D: { nombre: 'Grupo D', equipos: [{ sigla: 'USA', nombre: 'EE.UU.', bandera: '🇺🇸' }, { sigla: 'AUS', nombre: 'Australia', bandera: '🇦🇺' }, { sigla: 'TUR', nombre: 'Turquía', bandera: '🇹🇷' }, { sigla: 'PAR', nombre: 'Paraguay', bandera: '🇵🇾' }], personas: { Camila: [{ sigla: 'PAR', nombre: 'Paraguay' }, { sigla: 'USA', nombre: 'EE.UU.' }], Duvan: [{ sigla: 'TUR', nombre: 'Turquía' }, { sigla: 'PAR', nombre: 'Paraguay' }], Camilo: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'TUR', nombre: 'Turquía' }], Mateo: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'PAR', nombre: 'Paraguay' }], Miguel: [{ sigla: 'PAR', nombre: 'Paraguay' }, { sigla: 'USA', nombre: 'EE.UU.' }], 'Doc Camilo': [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'AUS', nombre: 'Australia' }], Katherine: [{ sigla: 'PAR', nombre: 'Paraguay' }, { sigla: 'USA', nombre: 'EE.UU.' }], Sandra: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'AUS', nombre: 'Australia' }], Estefania: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'AUS', nombre: 'Australia' }], Diana: [{ sigla: 'PAR', nombre: 'Paraguay' }, { sigla: 'TUR', nombre: 'Turquía' }], Sofia: [{ sigla: 'USA', nombre: 'EE.UU.' }, { sigla: 'AUS', nombre: 'Australia' }] } },
+            E: { nombre: 'Grupo E', equipos: [{ sigla: 'GER', nombre: 'Alemania', bandera: '🇩🇪' }, { sigla: 'CIV', nombre: 'Costa de Marfil', bandera: '🇨🇮' }, { sigla: 'ECU', nombre: 'Ecuador', bandera: '🇪🇨' }, { sigla: 'CUW', nombre: 'Curazao', bandera: '🇨🇼' }], personas: { Camila: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }], Duvan: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }], Camilo: [{ sigla: 'ECU', nombre: 'Ecuador' }, { sigla: 'GER', nombre: 'Alemania' }], Mateo: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }], Miguel: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }], 'Doc Camilo': [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }], Katherine: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'ECU', nombre: 'Ecuador' }], Sandra: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }], Estefania: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'ECU', nombre: 'Ecuador' }], Diana: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }], Sofia: [{ sigla: 'GER', nombre: 'Alemania' }, { sigla: 'CIV', nombre: 'C. de Marfil' }] } },
+            F: { nombre: 'Grupo F', equipos: [{ sigla: 'SWE', nombre: 'Suecia', bandera: '🇸🇪' }, { sigla: 'JPN', nombre: 'Japón', bandera: '🇯🇵' }, { sigla: 'NED', nombre: 'Países Bajos', bandera: '🇳🇱' }, { sigla: 'TUN', nombre: 'Túnez', bandera: '🇹🇳' }], personas: { Duvan: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'JPN', nombre: 'Japón' }], Camila: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'JPN', nombre: 'Japón' }], Camilo: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'JPN', nombre: 'Japón' }], Mateo: [{ sigla: 'JPN', nombre: 'Japón' }, { sigla: 'NED', nombre: 'Países Bajos' }], Miguel: [{ sigla: 'JPN', nombre: 'Japón' }, { sigla: 'SWE', nombre: 'Suecia' }], 'Doc Camilo': [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'SWE', nombre: 'Suecia' }], Katherine: [{ sigla: 'JPN', nombre: 'Japón' }, { sigla: 'NED', nombre: 'Países Bajos' }], Sandra: [{ sigla: 'SWE', nombre: 'Suecia' }, { sigla: 'NED', nombre: 'Países Bajos' }], Estefania: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'JPN', nombre: 'Japón' }], Diana: [{ sigla: 'JPN', nombre: 'Japón' }, { sigla: 'TUN', nombre: 'Túnez' }], Sofia: [{ sigla: 'NED', nombre: 'Países Bajos' }, { sigla: 'SWE', nombre: 'Suecia' }] } },
+            G: { nombre: 'Grupo G', equipos: [{ sigla: 'NZL', nombre: 'N. Zelanda', bandera: '🇳🇿' }, { sigla: 'IRN', nombre: 'Irán', bandera: '🇮🇷' }, { sigla: 'BEL', nombre: 'Bélgica', bandera: '🇧🇪' }, { sigla: 'EGY', nombre: 'Egipto', bandera: '🇪🇬' }], personas: { Duvan: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }], Camila: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'NZL', nombre: 'N. Zelanda' }], Camilo: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }], Mateo: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'NZL', nombre: 'N. Zelanda' }], Miguel: [{ sigla: 'EGY', nombre: 'Egipto' }, { sigla: 'BEL', nombre: 'Bélgica' }], 'Doc Camilo': [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }], Katherine: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }], Sandra: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'NZL', nombre: 'N. Zelanda' }], Estefania: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'EGY', nombre: 'Egipto' }], Diana: [{ sigla: 'BEL', nombre: 'Bélgica' }, { sigla: 'NZL', nombre: 'N. Zelanda' }], Sofia: [{ sigla: 'IRN', nombre: 'Irán' }, { sigla: 'EGY', nombre: 'Egipto' }] } },
+            H: { nombre: 'Grupo H', equipos: [{ sigla: 'URU', nombre: 'Uruguay', bandera: '🇺🇾' }, { sigla: 'KSA', nombre: 'Arabia Saudí', bandera: '🇸🇦' }, { sigla: 'ESP', nombre: 'España', bandera: '🇪🇸' }, { sigla: 'CPV', nombre: 'Cabo Verde', bandera: '🇨🇻' }], personas: { Duvan: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }], Camila: [{ sigla: 'URU', nombre: 'Uruguay' }, { sigla: 'ESP', nombre: 'España' }], Camilo: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }], Mateo: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }], Miguel: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }], 'Doc Camilo': [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }], Katherine: [{ sigla: 'URU', nombre: 'Uruguay' }, { sigla: 'ESP', nombre: 'España' }], Sandra: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }], Estefania: [{ sigla: 'ESP', nombre: 'España' }, { sigla: 'URU', nombre: 'Uruguay' }], Diana: [{ sigla: 'URU', nombre: 'Uruguay' }, { sigla: 'ESP', nombre: 'España' }], Sofia: [{ sigla: 'KSA', nombre: 'Arabia Saudí' }, { sigla: 'ESP', nombre: 'España' }] } },
+            I: { nombre: 'Grupo I', equipos: [{ sigla: 'NOR', nombre: 'Noruega', bandera: '🇳🇴' }, { sigla: 'FRA', nombre: 'Francia', bandera: '🇫🇷' }, { sigla: 'SEN', nombre: 'Senegal', bandera: '🇸🇳' }, { sigla: 'IRQ', nombre: 'Irak', bandera: '🇮🇶' }], personas: { Duvan: [{ sigla: 'NOR', nombre: 'Noruega' }, { sigla: 'FRA', nombre: 'Francia' }], Camila: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'SEN', nombre: 'Senegal' }], Camilo: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'SEN', nombre: 'Senegal' }], Mateo: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }], Miguel: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'SEN', nombre: 'Senegal' }], 'Doc Camilo': [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'SEN', nombre: 'Senegal' }], Katherine: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }], Sandra: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }], Estefania: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }], Diana: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'NOR', nombre: 'Noruega' }], Sofia: [{ sigla: 'FRA', nombre: 'Francia' }, { sigla: 'IRQ', nombre: 'Irak' }] } },
+            J: { nombre: 'Grupo J', equipos: [{ sigla: 'ARG', nombre: 'Argentina', bandera: '🇦🇷' }, { sigla: 'AUT', nombre: 'Austria', bandera: '🇦🇹' }, { sigla: 'JOR', nombre: 'Jordania', bandera: '🇯🇴' }, { sigla: 'ALG', nombre: 'Argelia', bandera: '🇩🇿' }], personas: { Duvan: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'ALG', nombre: 'Argelia' }], Camila: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }], Camilo: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'ALG', nombre: 'Argelia' }], Mateo: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }], Miguel: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'JOR', nombre: 'Jordania' }], 'Doc Camilo': [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'JOR', nombre: 'Jordania' }], Katherine: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'JOR', nombre: 'Jordania' }], Sandra: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }], Estefania: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }], Diana: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }], Sofia: [{ sigla: 'ARG', nombre: 'Argentina' }, { sigla: 'AUT', nombre: 'Austria' }] } },
+            K: { nombre: 'Grupo K', equipos: [{ sigla: 'COL', nombre: 'Colombia', bandera: '🇨🇴' }, { sigla: 'COD', nombre: 'RD Congo', bandera: '🇨🇩' }, { sigla: 'POR', nombre: 'Portugal', bandera: '🇵🇹' }, { sigla: 'UZB', nombre: 'Uzbekistán', bandera: '🇺🇿' }], personas: { Duvan: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }], Camila: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }], Camilo: [{ sigla: 'COL', nombre: 'Colombia' }, { sigla: 'POR', nombre: 'Portugal' }], Mateo: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }], Miguel: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }], 'Doc Camilo': [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }], Katherine: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }], Sandra: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }], Estefania: [{ sigla: 'COL', nombre: 'Colombia' }, { sigla: 'POR', nombre: 'Portugal' }], Diana: [{ sigla: 'POR', nombre: 'Portugal' }, { sigla: 'COL', nombre: 'Colombia' }], Sofia: [{ sigla: 'COL', nombre: 'Colombia' }, { sigla: 'POR', nombre: 'Portugal' }] } },
+            L: { nombre: 'Grupo L', equipos: [{ sigla: 'ENG', nombre: 'Inglaterra', bandera: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' }, { sigla: 'GHA', nombre: 'Ghana', bandera: '🇬🇭' }, { sigla: 'CRO', nombre: 'Croacia', bandera: '🇭🇷' }, { sigla: 'PAN', nombre: 'Panamá', bandera: '🇵🇦' }], personas: { Duvan: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }], Camila: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'GHA', nombre: 'Ghana' }], Camilo: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }], Mateo: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'PAN', nombre: 'Panamá' }], Miguel: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }], 'Doc Camilo': [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }], Katherine: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }], Sandra: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }], Estefania: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'PAN', nombre: 'Panamá' }], Diana: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'PAN', nombre: 'Panamá' }], Sofia: [{ sigla: 'ENG', nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }] } }
         };
 
         const CLASIFICADOS_INICIALES = {
-            A: [{ sigla: 'KOR', nombre: 'Corea del Sur', bandera: '🇰🇷' }, { sigla: 'MEX', nombre: 'México',
-            bandera: '🇲🇽' }],
+            A: [{ sigla: 'KOR', nombre: 'Corea del Sur', bandera: '🇰🇷' }, { sigla: 'MEX', nombre: 'México', bandera: '🇲🇽' }],
             B: [{ sigla: 'SUI', nombre: 'Suiza', bandera: '🇨🇭' }, { sigla: 'CAN', nombre: 'Canadá', bandera: '🇨🇦' }],
-            C: [{ sigla: 'SCO', nombre: 'Escocia', bandera: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }, { sigla: 'MAR', nombre: 'Marruecos',
-            bandera: '🇲🇦' }],
+            C: [{ sigla: 'SCO', nombre: 'Escocia', bandera: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }, { sigla: 'MAR', nombre: 'Marruecos', bandera: '🇲🇦' }],
             D: [{ sigla: 'USA', nombre: 'EE.UU.', bandera: '🇺🇸' }, { sigla: 'AUS', nombre: 'Australia', bandera: '🇦🇺' }],
-            E: [{ sigla: 'GER', nombre: 'Alemania', bandera: '🇩🇪' }, { sigla: 'CIV', nombre: 'Costa de Marfil',
-            bandera: '🇨🇮' }],
+            E: [{ sigla: 'GER', nombre: 'Alemania', bandera: '🇩🇪' }, { sigla: 'CIV', nombre: 'Costa de Marfil', bandera: '🇨🇮' }],
             F: [{ sigla: 'SWE', nombre: 'Suecia', bandera: '🇸🇪' }, { sigla: 'JPN', nombre: 'Japón', bandera: '🇯🇵' }],
             G: [{ sigla: 'NZL', nombre: 'N. Zelanda', bandera: '🇳🇿' }, { sigla: 'IRN', nombre: 'Irán', bandera: '🇮🇷' }],
-            H: [{ sigla: 'URU', nombre: 'Uruguay', bandera: '🇺🇾' }, { sigla: 'KSA', nombre: 'Arabia Saudí',
-            bandera: '🇸🇦' }],
+            H: [{ sigla: 'URU', nombre: 'Uruguay', bandera: '🇺🇾' }, { sigla: 'KSA', nombre: 'Arabia Saudí', bandera: '🇸🇦' }],
             I: [{ sigla: 'NOR', nombre: 'Noruega', bandera: '🇳🇴' }, { sigla: 'FRA', nombre: 'Francia', bandera: '🇫🇷' }],
             J: [{ sigla: 'ARG', nombre: 'Argentina', bandera: '🇦🇷' }, { sigla: 'AUT', nombre: 'Austria', bandera: '🇦🇹' }],
             K: [{ sigla: 'COL', nombre: 'Colombia', bandera: '🇨🇴' }, { sigla: 'COD', nombre: 'RD Congo', bandera: '🇨🇩' }],
-            L: [{ sigla: 'ENG', nombre: 'Inglaterra', bandera: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' }, { sigla: 'GHA', nombre: 'Ghana',
-            bandera: '🇬🇭' }]
+            L: [{ sigla: 'ENG', nombre: 'Inglaterra', bandera: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' }, { sigla: 'GHA', nombre: 'Ghana', bandera: '🇬🇭' }]
         };
 
         const BRACKET_R32 = [
-            { id: 'M73', fecha: '28 jun', slot1: { tag: '2A', tipo: 'pos', grupo: 'A', pos: 2 }, slot2: { tag: '2B',
-                    tipo: 'pos', grupo: 'B', pos: 2 } },
-            { id: 'M74', fecha: '29 jun', slot1: { tag: '1E', tipo: 'pos', grupo: 'E', pos: 1 }, slot2: { tag: '3°ABCDF',
-                    tipo: 'tercero' } },
-            { id: 'M75', fecha: '30 jun', slot1: { tag: '1F', tipo: 'pos', grupo: 'F', pos: 1 }, slot2: { tag: '2C',
-                    tipo: 'pos', grupo: 'C', pos: 2 } },
-            { id: 'M76', fecha: '29 jun', slot1: { tag: '1C', tipo: 'pos', grupo: 'C', pos: 1 }, slot2: { tag: '2F',
-                    tipo: 'pos', grupo: 'F', pos: 2 } },
-            { id: 'M77', fecha: '30 jun', slot1: { tag: '1I', tipo: 'pos', grupo: 'I', pos: 1 }, slot2: { tag: '3°CDFGH',
-                    tipo: 'tercero' } },
-            { id: 'M78', fecha: '30 jun', slot1: { tag: '2E', tipo: 'pos', grupo: 'E', pos: 2 }, slot2: { tag: '2I',
-                    tipo: 'pos', grupo: 'I', pos: 2 } },
-            { id: 'M79', fecha: '1 jul', slot1: { tag: '1A', tipo: 'pos', grupo: 'A', pos: 1 }, slot2: { tag: '3°CEFHI',
-                    tipo: 'tercero' } },
-            { id: 'M80', fecha: '1 jul', slot1: { tag: '1L', tipo: 'pos', grupo: 'L', pos: 1 }, slot2: { tag: '3°EHIJK',
-                    tipo: 'tercero' } },
-            { id: 'M81', fecha: '2 jul', slot1: { tag: '1D', tipo: 'pos', grupo: 'D', pos: 1 }, slot2: { tag: '3°BEFIJ',
-                    tipo: 'tercero' } },
-            { id: 'M82', fecha: '1 jul', slot1: { tag: '1G', tipo: 'pos', grupo: 'G', pos: 1 }, slot2: { tag: '3°AEHIJ',
-                    tipo: 'tercero' } },
-            { id: 'M83', fecha: '2 jul', slot1: { tag: '2K', tipo: 'pos', grupo: 'K', pos: 2 }, slot2: { tag: '2L',
-                    tipo: 'pos', grupo: 'L', pos: 2 } },
-            { id: 'M84', fecha: '2 jul', slot1: { tag: '1H', tipo: 'pos', grupo: 'H', pos: 1 }, slot2: { tag: '2J',
-                    tipo: 'pos', grupo: 'J', pos: 2 } },
-            { id: 'M85', fecha: '3 jul', slot1: { tag: '1B', tipo: 'pos', grupo: 'B', pos: 1 }, slot2: { tag: '3°EFGIJ',
-                    tipo: 'tercero' } },
-            { id: 'M86', fecha: '3 jul', slot1: { tag: '1J', tipo: 'pos', grupo: 'J', pos: 1 }, slot2: { tag: '2H',
-                    tipo: 'pos', grupo: 'H', pos: 2 } },
-            { id: 'M87', fecha: '4 jul', slot1: { tag: '1K', tipo: 'pos', grupo: 'K', pos: 1 }, slot2: { tag: '3°DEIJL',
-                    tipo: 'tercero' } },
-            { id: 'M88', fecha: '3 jul', slot1: { tag: '2D', tipo: 'pos', grupo: 'D', pos: 2 }, slot2: { tag: '2G',
-                    tipo: 'pos', grupo: 'G', pos: 2 } }
+            { id: 'M73', fecha: '28 jun', slot1: { tag: '2A', tipo: 'pos', grupo: 'A', pos: 2 }, slot2: { tag: '2B', tipo: 'pos', grupo: 'B', pos: 2 } },
+            { id: 'M74', fecha: '29 jun', slot1: { tag: '1E', tipo: 'pos', grupo: 'E', pos: 1 }, slot2: { tag: '3°ABCDF', tipo: 'tercero' } },
+            { id: 'M75', fecha: '30 jun', slot1: { tag: '1F', tipo: 'pos', grupo: 'F', pos: 1 }, slot2: { tag: '2C', tipo: 'pos', grupo: 'C', pos: 2 } },
+            { id: 'M76', fecha: '29 jun', slot1: { tag: '1C', tipo: 'pos', grupo: 'C', pos: 1 }, slot2: { tag: '2F', tipo: 'pos', grupo: 'F', pos: 2 } },
+            { id: 'M77', fecha: '30 jun', slot1: { tag: '1I', tipo: 'pos', grupo: 'I', pos: 1 }, slot2: { tag: '3°CDFGH', tipo: 'tercero' } },
+            { id: 'M78', fecha: '30 jun', slot1: { tag: '2E', tipo: 'pos', grupo: 'E', pos: 2 }, slot2: { tag: '2I', tipo: 'pos', grupo: 'I', pos: 2 } },
+            { id: 'M79', fecha: '1 jul', slot1: { tag: '1A', tipo: 'pos', grupo: 'A', pos: 1 }, slot2: { tag: '3°CEFHI', tipo: 'tercero' } },
+            { id: 'M80', fecha: '1 jul', slot1: { tag: '1L', tipo: 'pos', grupo: 'L', pos: 1 }, slot2: { tag: '3°EHIJK', tipo: 'tercero' } },
+            { id: 'M81', fecha: '2 jul', slot1: { tag: '1D', tipo: 'pos', grupo: 'D', pos: 1 }, slot2: { tag: '3°BEFIJ', tipo: 'tercero' } },
+            { id: 'M82', fecha: '1 jul', slot1: { tag: '1G', tipo: 'pos', grupo: 'G', pos: 1 }, slot2: { tag: '3°AEHIJ', tipo: 'tercero' } },
+            { id: 'M83', fecha: '2 jul', slot1: { tag: '2K', tipo: 'pos', grupo: 'K', pos: 2 }, slot2: { tag: '2L', tipo: 'pos', grupo: 'L', pos: 2 } },
+            { id: 'M84', fecha: '2 jul', slot1: { tag: '1H', tipo: 'pos', grupo: 'H', pos: 1 }, slot2: { tag: '2J', tipo: 'pos', grupo: 'J', pos: 2 } },
+            { id: 'M85', fecha: '3 jul', slot1: { tag: '1B', tipo: 'pos', grupo: 'B', pos: 1 }, slot2: { tag: '3°EFGIJ', tipo: 'tercero' } },
+            { id: 'M86', fecha: '3 jul', slot1: { tag: '1J', tipo: 'pos', grupo: 'J', pos: 1 }, slot2: { tag: '2H', tipo: 'pos', grupo: 'H', pos: 2 } },
+            { id: 'M87', fecha: '4 jul', slot1: { tag: '1K', tipo: 'pos', grupo: 'K', pos: 1 }, slot2: { tag: '3°DEIJL', tipo: 'tercero' } },
+            { id: 'M88', fecha: '3 jul', slot1: { tag: '2D', tipo: 'pos', grupo: 'D', pos: 2 }, slot2: { tag: '2G', tipo: 'pos', grupo: 'G', pos: 2 } }
         ];
         const BRACKET_R16 = [
-            { id: 'M89', fecha: '4 jul' }, { id: 'M90', fecha: '4 jul' },
-            { id: 'M91', fecha: '5 jul' }, { id: 'M92', fecha: '5 jul' },
-            { id: 'M93', fecha: '6 jul' }, { id: 'M94', fecha: '6 jul' },
-            { id: 'M95', fecha: '7 jul' }, { id: 'M96', fecha: '7 jul' }
+            { id: 'M89', fecha: '4 jul' }, { id: 'M90', fecha: '4 jul' }, { id: 'M91', fecha: '5 jul' }, { id: 'M92', fecha: '5 jul' },
+            { id: 'M93', fecha: '6 jul' }, { id: 'M94', fecha: '6 jul' }, { id: 'M95', fecha: '7 jul' }, { id: 'M96', fecha: '7 jul' }
         ];
         const BRACKET_QF = [
-            { id: 'M97', fecha: '9 jul' }, { id: 'M98', fecha: '10 jul' },
-            { id: 'M99', fecha: '11 jul' }, { id: 'M100', fecha: '11 jul' }
+            { id: 'M97', fecha: '9 jul' }, { id: 'M98', fecha: '10 jul' }, { id: 'M99', fecha: '11 jul' }, { id: 'M100', fecha: '11 jul' }
         ];
         const BRACKET_SF = [
             { id: 'M101', fecha: '14 jul' }, { id: 'M102', fecha: '15 jul' }
@@ -1441,8 +1152,7 @@
                 };
             });
 
-            const allMatches = [...BRACKET_R32, ...BRACKET_R16, ...BRACKET_QF, ...BRACKET_SF, BRACKET_FINAL,
-            BRACKET_3ER];
+            const allMatches = [...BRACKET_R32, ...BRACKET_R16, ...BRACKET_QF, ...BRACKET_SF, BRACKET_FINAL, BRACKET_3ER];
             bracketMatches = {};
             allMatches.forEach(m => { bracketMatches[m.id] = { slot1: null, slot2: null }; });
 
@@ -1463,8 +1173,7 @@
                     }
                     if (d.gruposState) {
                         Object.keys(gruposState).forEach(g => {
-                            if (d.gruposState[g]?.clasificados) gruposState[g].clasificados = d.gruposState[g]
-                                .clasificados;
+                            if (d.gruposState[g]?.clasificados) gruposState[g].clasificados = d.gruposState[g].clasificados;
                         });
                     }
                     if (d.puntajes) puntajes = d.puntajes;
@@ -1497,14 +1206,10 @@
 
         function guardarEstado() {
             localStorage.setItem('mundial2026_completo', JSON.stringify({
-                gruposState,
-                bracketMatches,
-                puntajes,
-                apuestasEliminatoria
+                gruposState, bracketMatches, puntajes, apuestasEliminatoria
             }));
             document.getElementById('syncBadge').textContent = '⚡ Actualizado';
-            setTimeout(() => { document.getElementById('syncBadge').textContent = '⚡ Datos sincronizados'; },
-            1500);
+            setTimeout(() => { document.getElementById('syncBadge').textContent = '⚡ Datos sincronizados'; }, 1500);
         }
 
         // ============================================================
@@ -1557,6 +1262,61 @@
         }
 
         // ============================================================
+        // GENERADOR DE CÓDIGO PUNTAJES_INICIALES
+        // ============================================================
+        function generarCodigoPuntajes() {
+            let codigo = 'const PUNTAJES_INICIALES={\n';
+            
+            PERSONAS.forEach((p, idx) => {
+                codigo += "  '" + p + "':{";
+                const partes = [];
+                Object.keys(GRUPOS).forEach(g => {
+                    const pts = puntajes[p]?.[g] || 0;
+                    partes.push(g + ':' + pts);
+                });
+                codigo += partes.join(',');
+                codigo += '}';
+                if (idx < PERSONAS.length - 1) codigo += ',';
+                codigo += '\n';
+            });
+            
+            codigo += '};';
+            
+            // Copiar al portapapeles
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(codigo).then(() => {
+                    showToast('✅ Código PUNTAJES_INICIALES copiado. ¡Pégalo en GitHub!');
+                }).catch(() => {
+                    console.log('📋 CÓDIGO PARA PEGAR EN index.html:');
+                    console.log(codigo);
+                    showToast('📋 Código en consola (F12). Cópialo manualmente.');
+                });
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = codigo;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('✅ Código copiado. ¡Pégalo en GitHub!');
+                } catch (err) {
+                    console.log('📋 CÓDIGO PARA PEGAR EN index.html:');
+                    console.log(codigo);
+                    showToast('📋 Código en consola (F12). Cópialo manualmente.');
+                }
+                document.body.removeChild(textarea);
+            }
+            
+            console.log('📋 CÓDIGO PUNTAJES_INICIALES ACTUALIZADO:');
+            console.log(codigo);
+            console.log('📝 Copia este código y reemplaza PUNTAJES_INICIALES en tu archivo index.html en GitHub');
+            
+            return codigo;
+        }
+
+        // ============================================================
         // PUNTAJES ELIMINATORIA
         // ============================================================
         function calcularPuntajesEliminatoria() {
@@ -1578,12 +1338,7 @@
         }
 
         function equipoEnRonda(ronda, sigla) {
-            const matches = {
-                'r16': BRACKET_R16,
-                'qf': BRACKET_QF,
-                'sf': BRACKET_SF,
-                'final': [BRACKET_FINAL]
-            };
+            const matches = { 'r16': BRACKET_R16, 'qf': BRACKET_QF, 'sf': BRACKET_SF, 'final': [BRACKET_FINAL] };
             const ms = matches[ronda] || [];
             return ms.some(m => {
                 const eq1 = bracketMatches[m.id]?.slot1?.sigla;
@@ -1594,12 +1349,7 @@
 
         function obtenerEquiposDisponibles(fase) {
             const equiposSet = new Map();
-            const matchesPrevios = {
-                'r16': BRACKET_R32,
-                'qf': BRACKET_R16,
-                'sf': BRACKET_QF,
-                'final': BRACKET_SF
-            };
+            const matchesPrevios = { 'r16': BRACKET_R32, 'qf': BRACKET_R16, 'sf': BRACKET_QF, 'final': BRACKET_SF };
             const ms = matchesPrevios[fase] || [];
             ms.forEach(m => {
                 const eq1 = bracketMatches[m.id]?.slot1;
@@ -1619,19 +1369,16 @@
         }
 
         // ============================================================
-        // ACTUALIZACIÓN GLOBAL DESPUÉS DE CAMBIOS EN GRUPOS
+        // ACTUALIZACIÓN GLOBAL
         // ============================================================
         function actualizarTodoDesdeGrupos(gidCambiado) {
-            // Re-llenar R32 silenciosamente
             autoLlenarR32Silencioso();
-            // Recalcular puntajes de grupos
             calcularTodosPuntajes();
-            // Recalcular puntajes de eliminatoria
             calcularPuntajesEliminatoria();
-            // Guardar
             guardarEstado();
-            // Re-renderizar todo lo visible
             refrescarVistasActivas(gidCambiado);
+            // Generar código automáticamente
+            generarCodigoPuntajes();
         }
 
         function refrescarVistasActivas(gidCambiado) {
@@ -1713,30 +1460,21 @@
                 sec.className = 'grupo-card';
                 const gs = gruposState[gid];
                 const clas = gs?.clasificados || [null, null];
-                const clasStr = clas[0] || clas[1] ?
-                    ' | <span style="color:#7dc542;font-size:.7rem;">✅ ' + [clas[0] ? '1° ' + clas[0].bandera +
-                        ' ' + clas[0].nombre : '', clas[1] ? '2° ' + clas[1].bandera + ' ' + clas[1].nombre :
-                        ''
-                    ].filter(Boolean).join(', ') + '</span>' : '';
+                const clasStr = clas[0] || clas[1] ? ' | <span style="color:#7dc542;font-size:.7rem;">✅ ' + [clas[0] ? '1° ' + clas[0].bandera + ' ' + clas[0].nombre : '', clas[1] ? '2° ' + clas[1].bandera + ' ' + clas[1].nombre : ''].filter(Boolean).join(', ') + '</span>' : '';
                 const lbl = document.createElement('div');
                 lbl.className = 'grupo-label';
                 lbl.innerHTML = gdata.nombre + clasStr;
                 sec.appendChild(lbl);
                 const tbl = document.createElement('table');
-                tbl.innerHTML =
-                    '<thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead><tbody></tbody>';
+                tbl.innerHTML = '<thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead><tbody></tbody>';
                 const tb = tbl.querySelector('tbody');
                 PERSONAS.forEach(p => {
                     const pr = gdata.personas[p] || [];
                     const tr = document.createElement('tr');
-                    const b1 = pr[0] ? '<span class="pos-badge p1">1°</span> ' + pr[0].bandera + ' ' + pr[
-                        0].nombre : '<span style="color:#8b949e">—</span>';
-                    const b2 = pr[1] ? '<span class="pos-badge p2">2°</span> ' + pr[1].bandera + ' ' + pr[
-                        1].nombre : '<span style="color:#8b949e">—</span>';
+                    const b1 = pr[0] ? '<span class="pos-badge p1">1°</span> ' + pr[0].bandera + ' ' + pr[0].nombre : '<span style="color:#8b949e">—</span>';
+                    const b2 = pr[1] ? '<span class="pos-badge p2">2°</span> ' + pr[1].bandera + ' ' + pr[1].nombre : '<span style="color:#8b949e">—</span>';
                     const pts = puntajes[p]?.[gid] || 0;
-                    tr.innerHTML = '<td>' + p + '</td><td>' + b1 + '</td><td>' + b2 +
-                        '</td><td><span class="puntos-auto ' + getPuntosClass(pts) + '">' + pts +
-                    ' pts</span></td>';
+                    tr.innerHTML = '<td>' + p + '</td><td>' + b1 + '</td><td>' + b2 + '</td><td><span class="puntos-auto ' + getPuntosClass(pts) + '">' + pts + ' pts</span></td>';
                     tb.appendChild(tr);
                 });
                 sec.appendChild(tbl);
@@ -1753,19 +1491,10 @@
                 const t = calcTotal(p);
                 const rc = i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : 'rn';
                 const med = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
-                const det = Object.entries(puntajes[p] || {}).filter(([, v]) => v > 0).sort(([, a], [, b]) => b -
-                    a).map(([g, v]) =>
-                    '<span style="display:inline-block;background:rgba(24,95,165,.15);color:#5b9dd9;padding:2px 8px;border-radius:12px;font-size:.65rem;margin:2px">G' +
-                    g + ':' + v + 'pt</span>').join('') ||
-                    '<span style="color:#8b949e;font-size:.7rem;">Sin puntos</span>';
+                const det = Object.entries(puntajes[p] || {}).filter(([, v]) => v > 0).sort(([, a], [, b]) => b - a).map(([g, v]) => '<span style="display:inline-block;background:rgba(24,95,165,.15);color:#5b9dd9;padding:2px 8px;border-radius:12px;font-size:.65rem;margin:2px">G' + g + ':' + v + 'pt</span>').join('') || '<span style="color:#8b949e;font-size:.7rem;">Sin puntos</span>';
                 const card = document.createElement('div');
                 card.className = 'ranking-card';
-                card.innerHTML =
-                    '<div class="rank-num ' + rc + '">' + (i + 1) +
-                    '</div><div style="flex:1"><div style="font-weight:600">' + p + ' ' + med +
-                    '</div><div style="margin-top:4px">' + det +
-                    '</div></div><div style="text-align:right"><div class="points-total">' + t +
-                    '</div><div class="points-label">pts grupos</div></div>';
+                card.innerHTML = '<div class="rank-num ' + rc + '">' + (i + 1) + '</div><div style="flex:1"><div style="font-weight:600">' + p + ' ' + med + '</div><div style="margin-top:4px">' + det + '</div></div><div style="text-align:right"><div class="points-total">' + t + '</div><div class="points-label">pts grupos</div></div>';
                 c.appendChild(card);
             });
         }
@@ -1823,8 +1552,7 @@
                 const box = document.createElement('div');
                 box.className = 'grupo-box-br';
                 box.dataset.grupo = gid;
-                box.innerHTML = '<div class="grupo-title">' + GRUPOS[gid].nombre +
-                    ' <span style="font-size:.6rem;color:#8b949e;">(arrastra para cambiar clasificados)</span></div>';
+                box.innerHTML = '<div class="grupo-title">' + GRUPOS[gid].nombre + ' <span style="font-size:.6rem;color:#8b949e;">(arrastra para cambiar clasificados)</span></div>';
 
                 gd.equipos.forEach((eq, idx) => {
                     const row = document.createElement('div');
@@ -1834,7 +1562,6 @@
                     row.dataset.sigla = eq.sigla;
                     row.dataset.esClasificado = 'false';
 
-                    // Verificar si está clasificado
                     if (gd.clasificados[0]?.sigla === eq.sigla) {
                         row.classList.add('clasificado');
                         row.dataset.esClasificado = '1';
@@ -1871,15 +1598,10 @@
             });
             container.appendChild(div);
 
-            // Agregar event listeners de drag & drop a los equipos
+            // Drag & Drop listeners
             document.querySelectorAll('.equipo-drag').forEach(el => {
                 el.addEventListener('dragstart', function(e) {
-                    dragData = {
-                        tipo: 'grupo',
-                        grupo: this.dataset.grupo,
-                        pos: parseInt(this.dataset.pos),
-                        sigla: this.dataset.sigla
-                    };
+                    dragData = { tipo: 'grupo', grupo: this.dataset.grupo, pos: parseInt(this.dataset.pos), sigla: this.dataset.sigla };
                     this.closest('.pos-row').classList.add('drag-source');
                     e.dataTransfer.setData('text/plain', 'grupo');
                     e.dataTransfer.effectAllowed = 'move';
@@ -1887,17 +1609,14 @@
                 el.addEventListener('dragend', function(e) {
                     this.closest('.pos-row').classList.remove('drag-source');
                     dragData = null;
-                    document.querySelectorAll('.pos-row.drag-hover').forEach(r => r.classList.remove(
-                        'drag-hover'));
+                    document.querySelectorAll('.pos-row.drag-hover').forEach(r => r.classList.remove('drag-hover'));
                 });
             });
 
-            // Agregar event listeners a las filas
             document.querySelectorAll('.pos-row').forEach(row => {
                 row.addEventListener('dragover', function(e) {
                     e.preventDefault();
-                    if (dragData && dragData.tipo === 'grupo' && (dragData.grupo === this.dataset
-                            .grupo || true)) {
+                    if (dragData && dragData.tipo === 'grupo') {
                         this.classList.add('drag-hover');
                     }
                 });
@@ -1914,33 +1633,25 @@
                     const grupoDestino = this.dataset.grupo;
                     const posDestino = parseInt(this.dataset.pos);
 
-                    // Solo permitir mover dentro del mismo grupo
                     if (grupoOrigen !== grupoDestino) {
                         showToast('⚠️ Solo puedes intercambiar equipos dentro del mismo grupo');
                         return;
                     }
 
-                    // Intercambiar posiciones en el array de equipos
                     const equipos = gruposState[grupoOrigen].equipos;
                     const temp = equipos[posOrigen];
                     equipos[posOrigen] = equipos[posDestino];
                     equipos[posDestino] = temp;
 
-                    // Recalcular clasificados (los 2 primeros son los clasificados)
-                    gruposState[grupoOrigen].clasificados = [
-                        { ...equipos[0] },
-                        { ...equipos[1] }
-                    ];
+                    gruposState[grupoOrigen].clasificados = [{ ...equipos[0] }, { ...equipos[1] }];
 
                     dragData = null;
                     actualizarTodoDesdeGrupos(grupoOrigen);
                 });
             });
 
-            // También permitir soltar directamente en las posiciones 0 y 1 para marcar como clasificado
             document.querySelectorAll('.pos-row').forEach(row => {
                 row.addEventListener('click', function(e) {
-                    // Solo si no se hizo drag
                     if (dragData) return;
                     const grupo = this.dataset.grupo;
                     const pos = parseInt(this.dataset.pos);
@@ -1948,12 +1659,10 @@
                     const gd = gruposState[grupo];
                     if (!gd) return;
 
-                    // Si hace clic en posición 0 o 1, y el equipo no está clasificado, intercambiar
                     if (pos <= 1) {
                         const equipos = gd.equipos;
                         const idxActual = equipos.findIndex(e => e.sigla === sigla);
                         if (idxActual > 1) {
-                            // Mover este equipo a la posición clickeada
                             const temp = equipos[pos];
                             equipos[pos] = equipos[idxActual];
                             equipos[idxActual] = temp;
@@ -1971,8 +1680,7 @@
         function cambiarVistaBracket(v) {
             document.getElementById('vista-grupos-bracket').style.display = v === 'grupos' ? '' : 'none';
             document.getElementById('vista-bracket-elim').style.display = v === 'bracket' ? '' : 'none';
-            document.getElementById('btnFaseGrupos').className = 'btn ' + (v === 'grupos' ? 'btn-primary' :
-            'btn-outline');
+            document.getElementById('btnFaseGrupos').className = 'btn ' + (v === 'grupos' ? 'btn-primary' : 'btn-outline');
             document.getElementById('btnElim').className = 'btn ' + (v === 'bracket' ? 'btn-primary' : 'btn-outline');
             if (v === 'bracket') renderBracket();
             if (v === 'grupos') renderVistaGruposBracket();
@@ -2005,8 +1713,7 @@
                 flagSpan.addEventListener('dragend', () => {
                     container.classList.remove('drag-source');
                     dragData = null;
-                    document.querySelectorAll('.flag-slot.drag-over').forEach(el => el.classList
-                        .remove('drag-over'));
+                    document.querySelectorAll('.flag-slot.drag-over').forEach(el => el.classList.remove('drag-over'));
                 });
             }
             container.appendChild(flagSpan);
@@ -2043,8 +1750,7 @@
                 if (!dragData) return;
                 const eqDestino = bracketMatches[matchId]?.['slot' + slotNum] || null;
                 if (dragData.tipo === 'slot') {
-                    bracketMatches[dragData.matchId]['slot' + dragData.slotNum] = eqDestino ? { ...eqDestino } :
-                        null;
+                    bracketMatches[dragData.matchId]['slot' + dragData.slotNum] = eqDestino ? { ...eqDestino } : null;
                     bracketMatches[matchId]['slot' + slotNum] = dragData.equipo ? { ...dragData.equipo } : null;
                 }
                 dragData = null;
@@ -2065,8 +1771,7 @@
             const slot1Eq = bracketMatches[matchDef.id]?.slot1;
             const slot2Eq = bracketMatches[matchDef.id]?.slot2;
             if (slot1Eq || slot2Eq) box.classList.add('filled');
-            box.innerHTML =
-                `<span class="match-code">${matchDef.id}</span><span class="match-date">${matchDef.fecha}</span>`;
+            box.innerHTML = `<span class="match-code">${matchDef.id}</span><span class="match-date">${matchDef.fecha}</span>`;
             const tag1 = isR32 && matchDef.slot1 ? matchDef.slot1.tag : '';
             const tag2 = isR32 && matchDef.slot2 ? matchDef.slot2.tag : '';
             box.appendChild(crearFlagSlot(matchDef.id, 1, tag1));
@@ -2101,11 +1806,7 @@
 
             const centro = document.createElement('div');
             centro.className = 'bracket-col center-final-col';
-            centro.innerHTML = `
-                <div class="bracket-col-header">Final</div>
-                <div class="copa-icon">🏆</div>
-                <div class="fecha-final-txt">19 jul · NY/NJ</div>
-            `;
+            centro.innerHTML = `<div class="bracket-col-header">Final</div><div class="copa-icon">🏆</div><div class="fecha-final-txt">19 jul · NY/NJ</div>`;
             centro.appendChild(crearMatchBox(BRACKET_FINAL, false));
             const tercerWrap = document.createElement('div');
             tercerWrap.className = 'tercer-box';
@@ -2132,10 +1833,7 @@
                         const g = gruposState[def.grupo];
                         if (g) {
                             const eq = def.pos === 1 ? g.clasificados[0] : g.clasificados[1];
-                            if (eq) {
-                                bracketMatches[m.id]['slot' + num] = { ...eq };
-                                contador++;
-                            }
+                            if (eq) { bracketMatches[m.id]['slot' + num] = { ...eq }; contador++; }
                         }
                     }
                 });
@@ -2161,9 +1859,7 @@
             if (confirm('⚠️ ¿Reiniciar TODOS los datos (grupos, bracket y apuestas)?')) {
                 localStorage.removeItem('mundial2026_completo');
                 apuestasEliminatoria = {};
-                PERSONAS.forEach(p => {
-                    apuestasEliminatoria[p] = { r16: [], qf: [], sf: [], campeon: null };
-                });
+                PERSONAS.forEach(p => { apuestasEliminatoria[p] = { r16: [], qf: [], sf: [], campeon: null }; });
                 initEstado();
                 renderPollaGrupos();
                 renderMatrix();
@@ -2187,11 +1883,7 @@
                 const btn = document.createElement('button');
                 btn.className = 'persona-btn' + (p === personaActivaElim ? ' active' : '');
                 btn.textContent = p;
-                btn.onclick = () => {
-                    personaActivaElim = p;
-                    renderPersonaSelector();
-                    renderApuestaEliminatoria();
-                };
+                btn.onclick = () => { personaActivaElim = p; renderPersonaSelector(); renderApuestaEliminatoria(); };
                 container.appendChild(btn);
             });
         }
@@ -2201,8 +1893,7 @@
             if (!container) return;
             const persona = personaActivaElim;
             const ap = apuestasEliminatoria[persona] || { r16: [], qf: [], sf: [], campeon: null };
-            let html = '<h3 style="margin-bottom:12px;">Apuestas de <span style="color:#FAC775">' + persona +
-                '</span></h3>';
+            let html = '<h3 style="margin-bottom:12px;">Apuestas de <span style="color:#FAC775">' + persona + '</span></h3>';
 
             const fases = [
                 { id: 'r16', nombre: 'Octavos de Final (R16)', pts: 2, equipos: obtenerEquiposDisponibles('r16') },
@@ -2212,19 +1903,14 @@
 
             fases.forEach(fase => {
                 html += '<div class="fase-apuesta">';
-                html += '<h4>' + fase.nombre + ' <span style="color:#8b949e;font-weight:400;">(' + fase.pts +
-                    ' pts cada acierto)</span></h4>';
+                html += '<h4>' + fase.nombre + ' <span style="color:#8b949e;font-weight:400;">(' + fase.pts + ' pts cada acierto)</span></h4>';
                 html += '<div class="equipos-grid">';
                 if (fase.equipos.length === 0) {
-                    html +=
-                        '<span style="color:#8b949e;font-size:.75rem;">Completa el bracket para ver equipos disponibles</span>';
+                    html += '<span style="color:#8b949e;font-size:.75rem;">Completa el bracket para ver equipos disponibles</span>';
                 } else {
                     fase.equipos.forEach(eq => {
                         const seleccionado = (ap[fase.id] || []).some(s => s.sigla === eq.sigla);
-                        html += '<button class="equipo-chip' + (seleccionado ? ' selected' : '') +
-                            '" onclick="toggleApuestaElim(\'' + persona + '\', \'' + fase.id +
-                            '\', \'' + eq.sigla + '\')">' + eq.bandera + ' ' + eq.nombre +
-                            (seleccionado ? ' ✅' : '') + '</button>';
+                        html += '<button class="equipo-chip' + (seleccionado ? ' selected' : '') + '" onclick="toggleApuestaElim(\'' + persona + '\', \'' + fase.id + '\', \'' + eq.sigla + '\')">' + eq.bandera + ' ' + eq.nombre + (seleccionado ? ' ✅' : '') + '</button>';
                     });
                 }
                 html += '</div></div>';
@@ -2235,13 +1921,11 @@
             html += '<select class="campeon-select" onchange="setCampeonElim(\'' + persona + '\', this.value)">';
             html += '<option value="">— Seleccionar campeón —</option>';
             todosLosEquipos().forEach(eq => {
-                html += '<option value="' + eq.sigla + '"' + (ap.campeon?.sigla === eq.sigla ? ' selected' :
-                    '') + '>' + eq.bandera + ' ' + eq.nombre + '</option>';
+                html += '<option value="' + eq.sigla + '"' + (ap.campeon?.sigla === eq.sigla ? ' selected' : '') + '>' + eq.bandera + ' ' + eq.nombre + '</option>';
             });
             html += '</select>';
             if (ap.campeon) {
-                html += '<div style="margin-top:8px;color:#7dc542;">✅ Seleccionado: ' + ap.campeon.bandera +
-                    ' ' + ap.campeon.nombre + '</div>';
+                html += '<div style="margin-top:8px;color:#7dc542;">✅ Seleccionado: ' + ap.campeon.bandera + ' ' + ap.campeon.nombre + '</div>';
             }
             html += '</div>';
 
@@ -2257,8 +1941,7 @@
                 arr.splice(idx, 1);
             } else {
                 const equipoCompleto = todosLosEquipos().find(e => e.sigla === sigla);
-                if (equipoCompleto) arr.push({ sigla: equipoCompleto.sigla, nombre: equipoCompleto.nombre,
-                    bandera: equipoCompleto.bandera });
+                if (equipoCompleto) arr.push({ sigla: equipoCompleto.sigla, nombre: equipoCompleto.nombre, bandera: equipoCompleto.bandera });
             }
             guardarEstado();
             calcularPuntajesEliminatoria();
@@ -2270,8 +1953,7 @@
             if (!apuestasEliminatoria[persona]) apuestasEliminatoria[persona] = { r16: [], qf: [], sf: [], campeon: null };
             if (sigla) {
                 const eq = todosLosEquipos().find(e => e.sigla === sigla);
-                apuestasEliminatoria[persona].campeon = eq ? { sigla: eq.sigla, nombre: eq.nombre, bandera: eq
-                        .bandera } : null;
+                apuestasEliminatoria[persona].campeon = eq ? { sigla: eq.sigla, nombre: eq.nombre, bandera: eq.bandera } : null;
             } else {
                 apuestasEliminatoria[persona].campeon = null;
             }
@@ -2284,24 +1966,16 @@
         function renderPuntajesEliminatoria() {
             const container = document.getElementById('elim-puntajes');
             if (!container) return;
-            const sorted = [...PERSONAS].sort((a, b) => (puntajesEliminatoria[b] || 0) - (puntajesEliminatoria[a] ||
-            0));
+            const sorted = [...PERSONAS].sort((a, b) => (puntajesEliminatoria[b] || 0) - (puntajesEliminatoria[a] || 0));
             let html = '<h3>🏆 Ranking Eliminatoria</h3>';
             html += '<table style="width:100%;font-size:0.8rem;">';
-            html +=
-                '<thead><tr><th>Pos</th><th>Persona</th><th>Pts Eliminatoria</th><th>Pts Grupos</th><th>Total</th></tr></thead><tbody>';
+            html += '<thead><tr><th>Pos</th><th>Persona</th><th>Pts Eliminatoria</th><th>Pts Grupos</th><th>Total</th></tr></thead><tbody>';
             sorted.forEach((p, i) => {
                 const ptsElim = puntajesEliminatoria[p] || 0;
                 const ptsGrupo = calcTotal(p);
                 const total = ptsElim + ptsGrupo;
                 const med = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
-                html += '<tr>';
-                html += '<td>' + (i + 1) + ' ' + med + '</td>';
-                html += '<td><strong>' + p + '</strong></td>';
-                html += '<td style="color:#FAC775;">' + ptsElim + '</td>';
-                html += '<td>' + ptsGrupo + '</td>';
-                html += '<td style="font-weight:700;color:#7dc542;">' + total + '</td>';
-                html += '</tr>';
+                html += '<tr><td>' + (i + 1) + ' ' + med + '</td><td><strong>' + p + '</strong></td><td style="color:#FAC775;">' + ptsElim + '</td><td>' + ptsGrupo + '</td><td style="font-weight:700;color:#7dc542;">' + total + '</td></tr>';
             });
             html += '</tbody></table>';
             container.innerHTML = html;
@@ -2313,26 +1987,18 @@
         function descargarExcel() {
             try {
                 const wb = XLSX.utils.book_new();
-                const dp = [
-                    ['Persona', ...Object.keys(GRUPOS).map(g => GRUPOS[g].nombre), 'TOTAL']
-                ];
+                const dp = [['Persona', ...Object.keys(GRUPOS).map(g => GRUPOS[g].nombre), 'TOTAL']];
                 PERSONAS.forEach(p => {
                     const f = [p];
                     let t = 0;
-                    Object.keys(GRUPOS).forEach(g => {
-                        const v = puntajes[p]?.[g] || 0;
-                        f.push(v);
-                        t += v;
-                    });
+                    Object.keys(GRUPOS).forEach(g => { const v = puntajes[p]?.[g] || 0; f.push(v); t += v; });
                     f.push(t);
                     dp.push(f);
                 });
                 XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dp), 'Puntajes Grupos');
                 XLSX.writeFile(wb, 'Polla_Mundial2026.xlsx');
                 showToast('💾 Excel descargado');
-            } catch (e) {
-                alert('Error al exportar: ' + e.message);
-            }
+            } catch (e) { alert('Error al exportar: ' + e.message); }
         }
 
         // ============================================================
@@ -2350,9 +2016,9 @@
         showPollaView('grupos');
 
         console.log('✅ Mundial 2026 - Plataforma completa inicializada');
-        console.log('📋 Grupos editables | 🔢 Matrix | 🏟 Bracket | 🏆 Eliminatoria');
-        console.log('💡 Arrastra equipos en los grupos para cambiar clasificados');
-        console.log('💡 Arrastra banderas en el bracket para avanzar el torneo');
+        console.log('💡 Arrastra equipos en Bracket → Grupos para cambiar clasificados');
+        console.log('💡 El código PUNTAJES_INICIALES se genera automáticamente');
+        console.log('💡 Usa el botón 📋 Copiar PUNTAJES_INICIALES para pegarlo en GitHub');
     </script>
 </body>
 </html>
