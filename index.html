@@ -43,12 +43,12 @@ td{padding:8px 10px;border-bottom:.5px solid var(--border);color:var(--text)}
 tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.03)}
 .pos-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.6875rem;font-weight:600;margin-right:4px}
 .p1{background:var(--gold);color:#633806}.p2{background:#D3D1C7;color:#444441}
-.pts-select{padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg3);color:var(--text);font-size:.8125rem;cursor:pointer;min-width:100px}
-.pts-select.points-1{background:rgba(250,199,117,.12);border-color:var(--gold);color:var(--gold)}
-.pts-select.points-2{background:rgba(250,199,117,.18);border-color:var(--gold);color:var(--gold)}
-.pts-select.points-3{background:rgba(59,109,17,.15);border-color:var(--green);color:#7dc542}
-.pts-select.points-6{background:rgba(153,60,29,.15);border-color:var(--red);color:#f07050}
-.pts-auto-tag{font-size:.625rem;color:var(--gold);margin-left:6px}
+.puntos-auto{font-size:.8125rem;font-weight:600;padding:4px 10px;border-radius:12px}
+.puntos-6{background:rgba(153,60,29,.15);color:#f07050}
+.puntos-3{background:rgba(59,109,17,.15);color:#7dc542}
+.puntos-2{background:rgba(250,199,117,.15);color:var(--gold)}
+.puntos-1{background:rgba(24,95,165,.15);color:#5b9dd9}
+.puntos-0{color:var(--text2)}
 .ranking-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:8px;display:flex;align-items:center;gap:12px}
 .rank-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9375rem;font-weight:700}
 .r1{background:var(--gold);color:#633806}.r2{background:#D3D1C7;color:#444441}.r3{background:#F5C4B3;color:var(--red)}.rn{background:var(--bg3);color:var(--text2)}
@@ -57,12 +57,11 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.03)
 .leyenda-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center}
 .leyenda-points{font-size:2.25rem;font-weight:700;margin-bottom:.25rem}.leyenda-desc{font-size:.8125rem;color:var(--text2)}
 .excel-info{background:rgba(250,199,117,.08);border:1px solid rgba(250,199,117,.3);border-radius:var(--radius-sm);padding:.75rem 1rem;font-size:.8125rem;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:1rem}
-.bracket-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:1.25rem;padding:.75rem 1rem;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border)}
 #matriz-table input{width:55px;padding:6px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:.8125rem;text-align:center}
 #matriz-table input:focus{outline:none;border-color:var(--gold)}#matriz-table td{text-align:center}
 @media(max-width:640px){.page{padding:1rem .5rem}.nav-brand span{display:none}.nav-tab{padding:.75rem;font-size:.8rem}td,th{padding:6px}.acciones-bar{flex-direction:column}}
 
-/* ===== BRACKET REALISTA FIFA 2026 ===== */
+/* ===== BRACKET ===== */
 .bracket-wrap{overflow-x:auto;padding-bottom:1rem}
 .bracket-grid{display:grid;grid-template-columns:200px 200px 200px 200px 220px 200px 200px 200px 200px;gap:0;min-width:1700px;align-items:center;padding:1rem 0}
 .bracket-col{display:flex;flex-direction:column;height:100%}
@@ -95,17 +94,11 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.03)
 .center-final-col{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;height:100%;padding:0 4px}
 .copa-icon{font-size:2.2rem;margin:6px 0;filter:drop-shadow(0 0 10px rgba(250,199,117,.5))}
 .fecha-final-txt{font-size:.65rem;color:var(--text2);text-align:center}
-.bench-bar{display:flex;gap:8px;flex-wrap:wrap;padding:10px;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:1rem;min-height:48px;align-items:center}
-.bench-hint{font-size:.7rem;color:var(--text2);margin-right:6px}
-.bench-team{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:5px 12px 5px 8px;font-size:.78rem;cursor:grab;transition:all .12s}
-.bench-team:hover{border-color:var(--gold);background:rgba(250,199,117,.08)}
-.bench-team:active{cursor:grabbing}
-.bench-team.dragging-src{opacity:.4}
 .bracket-fase-toggle{display:flex;gap:6px}
 .fase-grupos-br{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin-bottom:1rem}
 .grupo-box-br{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
 .grupo-title{font-weight:600;font-size:.875rem;margin-bottom:8px;color:var(--gold)}
-.pos-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:var(--radius-sm);font-size:.8125rem;cursor:grab;border:1px solid transparent}
+.pos-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:var(--radius-sm);font-size:.8125rem;cursor:pointer;border:1px solid transparent;transition:all .15s}
 .pos-row:hover{background:rgba(255,255,255,.05);border-color:var(--border)}
 .pos-row.clasificado{background:rgba(59,109,17,.18);border-left:3px solid var(--green)}
 .pos-row.es-tercero{background:rgba(250,199,117,.1);border-left:3px solid var(--gold)}
@@ -114,9 +107,12 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.03)
 .terceros-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:1rem}
 .terceros-panel-title{font-size:.8125rem;font-weight:600;color:var(--gold);margin-bottom:8px}
 .terceros-grid{display:flex;flex-wrap:wrap;gap:8px}
-.tercero-chip{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:18px;font-size:.78rem;cursor:grab;border:1px solid var(--border);background:var(--bg3)}
+.tercero-chip{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:18px;font-size:.78rem;cursor:pointer;border:1px solid var(--border);background:var(--bg3);transition:all .15s}
+.tercero-chip:hover{border-color:var(--gold)}
 .tercero-chip.activo{border-color:var(--gold);background:rgba(250,199,117,.1);color:var(--gold)}
 .legend-bracket{font-size:.7rem;color:var(--text2);background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:10px}
+.resultado-real{display:inline-flex;align-items:center;gap:4px;font-size:.65rem;margin-left:8px;padding:2px 6px;border-radius:8px;background:var(--bg3)}
+.resultado-real.ok{background:rgba(59,109,17,.15);color:#7dc542}
 @media(max-width:900px){.bracket-grid{min-width:1500px}}
 </style>
 </head>
@@ -124,113 +120,106 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.03)
 <nav class="top-nav"><div class="top-nav-inner">
 <div class="nav-brand">🏆 Mundial 2026 <span>México · USA · Canadá</span></div>
 <div class="nav-tabs"><button class="nav-tab active" onclick="switchPage('polla')">📋 Polla</button><button class="nav-tab" onclick="switchPage('bracket')">🏟 Bracket</button></div>
-<div class="sync-badge" id="syncBadge">⚡ Listo</div>
+<div class="sync-badge ok" id="syncBadge">⚡ Resultados J1+J2</div>
 </div></nav>
 
 <div class="page active" id="page-polla">
-<div class="page-header"><div><h1>Polla del Mundial 2026</h1><p>Pronósticos · Puntaje automático</p></div>
+<div class="page-header"><div><h1>Polla del Mundial 2026</h1><p>Puntajes automáticos según resultados reales</p></div>
 <div class="acciones-bar" style="margin:0;border:none;background:transparent;padding:0">
 <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls" onchange="cargarExcel(event)"><label for="fileInput" class="file-label">📂 Excel</label>
 <button class="btn btn-success" onclick="descargarExcel()">💾 Excel</button>
-<button class="btn btn-outline" onclick="mostrarModalReiniciar()">🔄 Reiniciar</button>
 </div></div>
-<div class="excel-info"><span>💡</span><span>Marca los clasificados en Bracket → Grupos. Los puntajes se calculan automáticamente.</span></div>
+<div class="excel-info"><span>🏟</span><span>Los puntajes se calculan automáticamente desde el Bracket → Grupos. Actualiza los resultados reales allí.</span></div>
 <div class="inner-tabs">
 <button class="inner-tab active" onclick="showView('grupos')">📋 Pronósticos</button>
 <button class="inner-tab" onclick="showView('ranking')">🏅 Ranking</button>
 <button class="inner-tab" onclick="showView('matriz')">🔢 Matriz</button>
 <button class="inner-tab" onclick="showView('leyenda')">❓ Cómo</button>
 </div>
-<span class="status-msg" id="statusMsg">Listo</span>
+<span class="status-msg" id="statusMsg">Actualizado con resultados J1+J2</span>
 <div id="view-leyenda" style="display:none"><div class="leyenda-grid">
 <div class="leyenda-card"><div class="leyenda-points" style="color:#f07050">6 pts</div><div class="leyenda-desc">1° y 2° exactos</div></div>
 <div class="leyenda-card"><div class="leyenda-points" style="color:#7dc542">3 pts</div><div class="leyenda-desc">Uno exacto en su posición</div></div>
 <div class="leyenda-card"><div class="leyenda-points" style="color:var(--gold)">2 pts</div><div class="leyenda-desc">Cruzados (1°=2° real, 2°=1° real)</div></div>
 <div class="leyenda-card"><div class="leyenda-points" style="color:var(--blue)">1 pt</div><div class="leyenda-desc">Uno cruzado</div></div>
 </div></div>
-<div id="view-grupos"><div class="legend"><span class="leg-item"><span class="leg-dot p1">1°</span></span><span class="leg-item"><span class="leg-dot p2">2°</span></span></div><div id="grupos-container"></div></div>
+<div id="view-grupos"><div class="legend"><span class="leg-item"><span class="leg-dot p1">1°</span> 1er lugar</span><span class="leg-item"><span class="leg-dot p2">2°</span> 2do lugar</span></div><div id="grupos-container"></div></div>
 <div id="view-ranking" style="display:none"><div id="ranking-container"></div></div>
-<div id="view-matriz" style="display:none"><div class="acciones-bar">
-<button class="btn btn-sync" onclick="aplicarMatriz()">✅ Aplicar</button>
-<button class="btn btn-outline" onclick="descargarMatrizCSV()">📥 CSV</button>
-<button class="btn btn-outline" onclick="generarCodigoPuntajes()">📋 Copiar código</button>
-<span style="font-size:.75rem;color:var(--text2)">Edita → Aplica → Copia → Push a GitHub</span>
-</div><div style="overflow-x:auto" id="matriz-container"></div></div>
+<div id="view-matriz" style="display:none"><div style="overflow-x:auto" id="matriz-container"></div></div>
 </div>
 
 <div class="page" id="page-bracket">
-<div class="page-header"><div><h1>Bracket Oficial</h1><p>Round of 32 · Final — formato real FIFA 2026</p></div></div>
-<div class="bracket-controls"><div class="bracket-fase-toggle">
-<button class="btn btn-outline" id="btnFaseGrupos" onclick="cambiarVistaBracket('grupos')">📋 Grupos</button>
+<div class="page-header"><div><h1>Bracket Oficial — Resultados Reales</h1><p>Actualiza aquí los clasificados según avance el Mundial</p></div></div>
+<div class="bracket-controls">
+<div class="bracket-fase-toggle">
+<button class="btn btn-primary" id="btnFaseGrupos" onclick="cambiarVistaBracket('grupos')">📋 Grupos (resultados)</button>
 <button class="btn btn-outline" id="btnElim" onclick="cambiarVistaBracket('bracket')">🏟 Bracket</button>
 </div>
 <div style="display:flex;gap:8px">
 <button class="btn btn-sync" onclick="autoLlenarBracket()">⚡ Auto-llenar R32</button>
 <button class="btn btn-outline" onclick="generarCodigoBracket()">📋 Copiar código</button>
-<button class="btn btn-warning" onclick="resetBracket()">🔄 Reset</button>
 </div></div>
-<div class="legend-bracket" id="vista-grupos-hint">💡 Marca 1°, 2° y arrastra los terceros que clasifiquen al panel de abajo. Arrastra cualquier bandera al Bracket para ubicarla en su cupo.</div>
-<div class="legend-bracket" id="vista-bracket-hint" style="display:none">💡 Arrastra una bandera a un cupo del bracket, o arrastra el ganador de un partido al siguiente. El ❌ en cada cupo lo limpia.</div>
-<div id="vista-grupos-bracket" style="display:none"></div>
-<div id="vista-bracket-elim"></div>
+<div class="legend-bracket" id="vista-grupos-hint">💡 <b>Click</b> en un equipo para marcarlo como 1° o 2°. <b>Click</b> en los chips de abajo para seleccionar los 8 mejores terceros.</div>
+<div class="legend-bracket" id="vista-bracket-hint" style="display:none">💡 Arrastra equipos al bracket o usa "Auto-llenar R32" para cargar los clasificados automáticamente.</div>
+<div id="vista-grupos-bracket"></div>
+<div id="vista-bracket-elim" style="display:none"></div>
 </div>
 
-<div class="modal-overlay" id="modalReiniciar"><div class="modal"><h3>⚠️ Reiniciar</h3><p>Pone puntajes en modo automático.</p><div class="modal-buttons"><button class="btn btn-outline" onclick="cerrarModal()">Cancelar</button><button class="btn btn-warning" onclick="reiniciarPuntajes()">Reiniciar</button></div></div></div>
-
-<style>
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:1000;justify-content:center;align-items:center}
-.modal-overlay.active{display:flex}.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;max-width:480px;width:90%}
-.modal h3{font-size:1.125rem;margin-bottom:.5rem}.modal p{font-size:.875rem;color:var(--text2);margin-bottom:1.5rem}
-.modal-buttons{display:flex;gap:8px;justify-content:flex-end}
-</style>
-
 <script>
+// ===== DATOS DEL MUNDIAL =====
 const PERSONAS=['Duvan','Camila','Camilo','Mateo','Miguel','Doc Camilo','Katherine','Sandra','Estefania','Diana','Sofia'];
-const GRUPOS={A:{nombre:'Grupo A',equipos:[{sigla:'MEX',nombre:'México',bandera:'🇲🇽'},{sigla:'ZAF',nombre:'Sudáfrica',bandera:'🇿🇦'},{sigla:'KOR',nombre:'Corea del Sur',bandera:'🇰🇷'},{sigla:'CZE',nombre:'Chequia',bandera:'🇨🇿'}],personas:{Camila:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Duvan:[{sigla:'MEX',nombre:'México'},{sigla:'ZAF',nombre:'Sudáfrica'}],Camilo:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Mateo:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Miguel:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],'Doc Camilo':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Katherine:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Sandra:[{sigla:'MEX',nombre:'México'},{sigla:'ZAF',nombre:'Sudáfrica'}],Estefania:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Diana:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Sofia:[{sigla:'KOR',nombre:'Corea del Sur'},{sigla:'MEX',nombre:'México'}]}},B:{nombre:'Grupo B',equipos:[{sigla:'CAN',nombre:'Canadá',bandera:'🇨🇦'},{sigla:'BIH',nombre:'Bosnia',bandera:'🇧🇦'},{sigla:'QAT',nombre:'Qatar',bandera:'🇶🇦'},{sigla:'SUI',nombre:'Suiza',bandera:'🇨🇭'}],personas:{Camila:[{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],Duvan:[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],Camilo:[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],Mateo:[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],Miguel:[{sigla:'SUI',nombre:'Suiza'},{sigla:'QAT',nombre:'Qatar'}],'Doc Camilo':[{sigla:'CAN',nombre:'Canadá'},{sigla:'QAT',nombre:'Qatar'}],Katherine:[{sigla:'CAN',nombre:'Canadá'},{sigla:'QAT',nombre:'Qatar'}],Sandra:[{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],Estefania:[{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],Diana:[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],Sofia:[{sigla:'QAT',nombre:'Qatar'},{sigla:'CAN',nombre:'Canadá'}]}},C:{nombre:'Grupo C',equipos:[{sigla:'BRA',nombre:'Brasil',bandera:'🇧🇷'},{sigla:'MAR',nombre:'Marruecos',bandera:'🇲🇦'},{sigla:'HTI',nombre:'Haití',bandera:'🇭🇹'},{sigla:'SCO',nombre:'Escocia',bandera:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'}],personas:{Camila:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Duvan:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Camilo:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Mateo:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Miguel:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],'Doc Camilo':[{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],Katherine:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Sandra:[{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],Estefania:[{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],Diana:[{sigla:'MAR',nombre:'Marruecos'},{sigla:'BRA',nombre:'Brasil'}],Sofia:[{sigla:'MAR',nombre:'Marruecos'},{sigla:'BRA',nombre:'Brasil'}]}},D:{nombre:'Grupo D',equipos:[{sigla:'USA',nombre:'EE.UU.',bandera:'🇺🇸'},{sigla:'PAR',nombre:'Paraguay',bandera:'🇵🇾'},{sigla:'AUS',nombre:'Australia',bandera:'🇦🇺'},{sigla:'TUR',nombre:'Turquía',bandera:'🇹🇷'}],personas:{Camila:[{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],Duvan:[{sigla:'TUR',nombre:'Turquía'},{sigla:'PAR',nombre:'Paraguay'}],Camilo:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'TUR',nombre:'Turquía'}],Mateo:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'PAR',nombre:'Paraguay'}],Miguel:[{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],'Doc Camilo':[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],Katherine:[{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],Sandra:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],Estefania:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],Diana:[{sigla:'PAR',nombre:'Paraguay'},{sigla:'TUR',nombre:'Turquía'}],Sofia:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}]}},E:{nombre:'Grupo E',equipos:[{sigla:'GER',nombre:'Alemania',bandera:'🇩🇪'},{sigla:'CIV',nombre:'Costa de Marfil',bandera:'🇨🇮'},{sigla:'ECU',nombre:'Ecuador',bandera:'🇪🇨'},{sigla:'CUW',nombre:'Curazao',bandera:'🇨🇼'}],personas:{Camila:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Duvan:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Camilo:[{sigla:'ECU',nombre:'Ecuador'},{sigla:'GER',nombre:'Alemania'}],Mateo:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Miguel:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],'Doc Camilo':[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Katherine:[{sigla:'GER',nombre:'Alemania'},{sigla:'ECU',nombre:'Ecuador'}],Sandra:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Estefania:[{sigla:'GER',nombre:'Alemania'},{sigla:'ECU',nombre:'Ecuador'}],Diana:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Sofia:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}]}},F:{nombre:'Grupo F',equipos:[{sigla:'NED',nombre:'Países Bajos',bandera:'🇳🇱'},{sigla:'JPN',nombre:'Japón',bandera:'🇯🇵'},{sigla:'SWE',nombre:'Suecia',bandera:'🇸🇪'},{sigla:'TUN',nombre:'Túnez',bandera:'🇹🇳'}],personas:{Duvan:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],Camila:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],Camilo:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],Mateo:[{sigla:'JPN',nombre:'Japón'},{sigla:'NED',nombre:'Países Bajos'}],Miguel:[{sigla:'JPN',nombre:'Japón'},{sigla:'SWE',nombre:'Suecia'}],'Doc Camilo':[{sigla:'NED',nombre:'Países Bajos'},{sigla:'SWE',nombre:'Suecia'}],Katherine:[{sigla:'JPN',nombre:'Japón'},{sigla:'NED',nombre:'Países Bajos'}],Sandra:[{sigla:'SWE',nombre:'Suecia'},{sigla:'NED',nombre:'Países Bajos'}],Estefania:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],Diana:[{sigla:'JPN',nombre:'Japón'},{sigla:'TUN',nombre:'Túnez'}],Sofia:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'SWE',nombre:'Suecia'}]}},G:{nombre:'Grupo G',equipos:[{sigla:'BEL',nombre:'Bélgica',bandera:'🇧🇪'},{sigla:'EGY',nombre:'Egipto',bandera:'🇪🇬'},{sigla:'IRN',nombre:'Irán',bandera:'🇮🇷'},{sigla:'NZL',nombre:'N. Zelanda',bandera:'🇳🇿'}],personas:{Duvan:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Camila:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],Camilo:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Mateo:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],Miguel:[{sigla:'EGY',nombre:'Egipto'},{sigla:'BEL',nombre:'Bélgica'}],'Doc Camilo':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Katherine:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Sandra:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],Estefania:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Diana:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],Sofia:[{sigla:'IRN',nombre:'Irán'},{sigla:'EGY',nombre:'Egipto'}]}},H:{nombre:'Grupo H',equipos:[{sigla:'ESP',nombre:'España',bandera:'🇪🇸'},{sigla:'CPV',nombre:'Cabo Verde',bandera:'🇨🇻'},{sigla:'KSA',nombre:'Arabia Saudí',bandera:'🇸🇦'},{sigla:'URU',nombre:'Uruguay',bandera:'🇺🇾'}],personas:{Duvan:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Camila:[{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],Camilo:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Mateo:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Miguel:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],'Doc Camilo':[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Katherine:[{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],Sandra:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Estefania:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Diana:[{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],Sofia:[{sigla:'KSA',nombre:'Arabia Saudí'},{sigla:'ESP',nombre:'España'}]}},I:{nombre:'Grupo I',equipos:[{sigla:'FRA',nombre:'Francia',bandera:'🇫🇷'},{sigla:'SEN',nombre:'Senegal',bandera:'🇸🇳'},{sigla:'IRQ',nombre:'Irak',bandera:'🇮🇶'},{sigla:'NOR',nombre:'Noruega',bandera:'🇳🇴'}],personas:{Duvan:[{sigla:'NOR',nombre:'Noruega'},{sigla:'FRA',nombre:'Francia'}],Camila:[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],Camilo:[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],Mateo:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Miguel:[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],'Doc Camilo':[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],Katherine:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Sandra:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Estefania:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Diana:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Sofia:[{sigla:'FRA',nombre:'Francia'},{sigla:'IRQ',nombre:'Irak'}]}},J:{nombre:'Grupo J',equipos:[{sigla:'ARG',nombre:'Argentina',bandera:'🇦🇷'},{sigla:'ALG',nombre:'Argelia',bandera:'🇩🇿'},{sigla:'AUT',nombre:'Austria',bandera:'🇦🇹'},{sigla:'JOR',nombre:'Jordania',bandera:'🇯🇴'}],personas:{Duvan:[{sigla:'ARG',nombre:'Argentina'},{sigla:'ALG',nombre:'Argelia'}],Camila:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Camilo:[{sigla:'ARG',nombre:'Argentina'},{sigla:'ALG',nombre:'Argelia'}],Mateo:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Miguel:[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],'Doc Camilo':[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],Katherine:[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],Sandra:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Estefania:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Diana:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Sofia:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}]}},K:{nombre:'Grupo K',equipos:[{sigla:'POR',nombre:'Portugal',bandera:'🇵🇹'},{sigla:'COD',nombre:'RD Congo',bandera:'🇨🇩'},{sigla:'UZB',nombre:'Uzbekistán',bandera:'🇺🇿'},{sigla:'COL',nombre:'Colombia',bandera:'🇨🇴'}],personas:{Duvan:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Camila:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Camilo:[{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}],Mateo:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Miguel:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],'Doc Camilo':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Katherine:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Sandra:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Estefania:[{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}],Diana:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Sofia:[{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}]}},L:{nombre:'Grupo L',equipos:[{sigla:'ENG',nombre:'Inglaterra',bandera:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},{sigla:'CRO',nombre:'Croacia',bandera:'🇭🇷'},{sigla:'GHA',nombre:'Ghana',bandera:'🇬🇭'},{sigla:'PAN',nombre:'Panamá',bandera:'🇵🇦'}],personas:{Duvan:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Camila:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'GHA',nombre:'Ghana'}],Camilo:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Mateo:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],Miguel:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],'Doc Camilo':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Katherine:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Sandra:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Estefania:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],Diana:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],Sofia:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}]}}};
-const PUNTAJES_INICIALES={
-  'Duvan':{A:3,B:3,C:2,D:1,E:2,F:2,G:2,H:1,I:1,J:6,K:3,L:6},
-  'Camila':{A:6,B:1,C:2,D:6,E:2,F:2,G:1,H:3,I:6,J:3,K:3,L:3},
-  'Camilo':{A:6,B:3,C:2,D:1,E:3,F:2,G:2,H:1,I:6,J:6,K:1,L:6},
-  'Mateo':{A:6,B:3,C:2,D:2,E:2,F:6,G:1,H:1,I:3,J:3,K:3,L:3},
-  'Miguel':{A:6,B:3,C:2,D:6,E:2,F:3,G:6,H:1,I:6,J:3,K:3,L:6},
-  'Doc Camilo':{A:6,B:1,C:1,D:1,E:2,F:1,G:2,H:1,I:6,J:3,K:3,L:6},
-  'Katherine':{A:6,B:1,C:2,D:6,E:1,F:6,G:2,H:3,I:3,J:3,K:3,L:6},
-  'Sandra':{A:3,B:1,C:1,D:1,E:2,F:3,G:1,H:1,I:3,J:3,K:3,L:6},
-  'Estefania':{A:6,B:1,C:1,D:1,E:1,F:2,G:2,H:1,I:3,J:3,K:1,L:3},
-  'Diana':{A:6,B:3,C:6,D:3,E:2,F:3,G:1,H:3,I:3,J:3,K:3,L:3},
-  'Sofia':{A:1,B:3,C:6,D:1,E:2,F:1,G:1,H:3,I:3,J:3,K:1,L:6},
-};
-let puntajes={},puntajesManual={};  
-function init(){PERSONAS.forEach(p=>{puntajes[p]={};puntajesManual[p]={};Object.keys(GRUPOS).forEach(g=>{puntajes[p][g]=PUNTAJES_INICIALES[p]?.[g]||0;puntajesManual[p][g]=!1})});guardar()}
-function guardar(){localStorage.setItem('pm26',JSON.stringify(puntajes))}
-function actualizarStatus(m){document.getElementById('statusMsg').textContent=m;setTimeout(()=>document.getElementById('statusMsg').textContent='Listo',3000)}
-function calcTotal(p){return Object.values(puntajes[p]||{}).reduce((a,b)=>a+b,0)}
-function getPuntosClass(p){if(p===1||p===2)return'points-1';if(p===3)return'points-3';if(p>=6)return'points-6';return''}
-function switchPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',['polla','bracket'][i]===p));if(p==='bracket'){renderVistaGrupos();renderVistaBracket()}}
-function showView(v){['grupos','ranking','matriz','leyenda'].forEach(x=>document.getElementById('view-'+x).style.display=x===v?'':'none');document.querySelectorAll('.inner-tab').forEach((t,i)=>t.classList.toggle('active',['grupos','ranking','matriz','leyenda'][i]===v));if(v==='grupos')renderGrupos();if(v==='ranking')renderRanking();if(v==='matriz')renderMatriz()}
-function renderGrupos(){const c=document.getElementById('grupos-container');c.innerHTML='';Object.entries(GRUPOS).forEach(([gid,gdata])=>{const sec=document.createElement('div');sec.className='grupo-card';const eqStr=gdata.equipos.map(e=>e.bandera+' '+e.nombre).join(' · ');const clas=gruposState[gid]?gruposState[gid].clasificados:[null,null];const clasStr=clas[0]||clas[1]?' | Clasificados: '+[clas[0]?'1° '+clas[0].nombre:'',clas[1]?'2° '+clas[1].nombre:''].filter(Boolean).join(', '):'';const lbl=document.createElement('div');lbl.className='grupo-label';lbl.innerHTML=gdata.nombre+' — '+eqStr+clasStr;sec.appendChild(lbl);const tbl=document.createElement('table');tbl.innerHTML='<thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead>';const tb=document.createElement('tbody');PERSONAS.forEach(p=>{const pr=gdata.personas[p]||[];const tr=document.createElement('tr');const b1=pr[0]?'<span class="pos-badge p1">1°</span> '+pr[0].bandera+' '+pr[0].nombre:'—';const b2=pr[1]?'<span class="pos-badge p2">2°</span> '+pr[1].bandera+' '+pr[1].nombre:'—';const pts=puntajes[p]?.[gid]||0;const auto=calcularPuntos(gid,p);const esManual=puntajesManual[p]?.[gid];const sel='<select class="pts-select '+getPuntosClass(pts)+'" data-p="'+p+'" data-g="'+gid+'" onchange="setPuntos(this)"><option value="0" '+(pts===0?'selected':'')+'>0</option><option value="1" '+(pts===1?'selected':'')+'>1</option><option value="2" '+(pts===2?'selected':'')+'>2</option><option value="3" '+(pts===3?'selected':'')+'>3</option><option value="6" '+(pts===6?'selected':'')+'>6</option></select>';const tag=esManual?'<span class="pts-auto-tag">✋ manual</span>':'<span class="pts-auto-tag">⚡ auto ('+auto+')</span>';tr.innerHTML='<td>'+p+'</td><td>'+b1+'</td><td>'+b2+'</td><td>'+sel+tag+'</td>';tb.appendChild(tr)});tbl.appendChild(tb);sec.appendChild(tbl);c.appendChild(sec)})}
-function setPuntos(s){const p=s.dataset.p,g=s.dataset.g,v=parseInt(s.value);puntajes[p][g]=v;puntajesManual[p][g]=(v!==calcularPuntos(g,p));s.className='pts-select '+getPuntosClass(v);guardar();renderGrupos()}
-function calcularPuntos(gid,persona){const g=gruposState[gid];if(!g)return 0;const c1=g.clasificados[0]?g.clasificados[0].sigla:null;const c2=g.clasificados[1]?g.clasificados[1].sigla:null;const pron=GRUPOS[gid].personas[persona]||[];if(!pron.length)return 0;const p1=pron[0]?pron[0].sigla:null;const p2=pron[1]?pron[1].sigla:null;if(!p1&&!p2)return 0;if(p1===c1&&p2===c2)return 6;if(p1===c1)return 3;if(p2===c2)return 3;if(p1===c2&&p2===c1)return 2;if(p1===c2||p2===c1)return 1;return 0}
-function renderRanking(){const sorted=[...PERSONAS].sort((a,b)=>calcTotal(b)-calcTotal(a));const c=document.getElementById('ranking-container');c.innerHTML='<div style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">🏅 Ranking</div>';sorted.forEach((p,i)=>{const t=calcTotal(p);const rc=i===0?'r1':i===1?'r2':i===2?'r3':'rn';const med=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';const det=Object.entries(puntajes[p]||{}).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a).map(([g,v])=>'<span style="display:inline-block;background:rgba(24,95,165,.15);color:#5b9dd9;padding:2px 8px;border-radius:12px;font-size:.7rem;margin:2px">G'+g+':'+v+'pt</span>').join('')||'Sin puntos';const card=document.createElement('div');card.className='ranking-card';card.innerHTML='<div class="rank-num '+rc+'">'+(i+1)+'</div><div style="flex:1"><div style="font-weight:600">'+p+' '+med+'</div><div style="margin-top:6px">'+det+'</div></div><div style="text-align:right"><div class="points-total">'+t+'</div><div class="points-label">pts</div></div>';c.appendChild(card)})}
-function renderMatriz(){const c=document.getElementById('matriz-container');const gk=Object.keys(GRUPOS);let h='<table id="matriz-table"><thead><tr><th>Persona</th>';gk.forEach(g=>h+='<th>'+g+'</th>');h+='<th>TOTAL</th></tr></thead><tbody>';PERSONAS.forEach(p=>{h+='<tr><td style="font-weight:600">'+p+'</td>';gk.forEach(g=>{const v=puntajes[p]?.[g]||0;h+='<td><input type="number" min="0" max="6" value="'+v+'" data-p="'+p+'" data-g="'+g+'" onchange="validarInput(this)"></td>'});h+='<td style="font-weight:700;color:var(--gold)">'+calcTotal(p)+'</td></tr>'});h+='</tbody></table>';c.innerHTML=h}
-function validarInput(i){let v=parseInt(i.value);if(isNaN(v)||v<0)v=0;if(v>6)v=6;i.value=v}
-function aplicarMatriz(){document.querySelectorAll('#matriz-table input').forEach(i=>{const p=i.dataset.p,g=i.dataset.g,v=parseInt(i.value);if(!isNaN(v)&&v>=0&&v<=6){puntajes[p][g]=v;puntajesManual[p][g]=(v!==calcularPuntos(g,p))}});guardar();renderMatriz();renderGrupos();actualizarStatus('✅ Aplicado')}
-function descargarMatrizCSV(){const gk=Object.keys(GRUPOS);let csv='Persona,'+gk.join(',')+',TOTAL\n';PERSONAS.forEach(p=>{let t=0;const f=[p];gk.forEach(g=>{const v=puntajes[p]?.[g]||0;f.push(v);t+=v});f.push(t);csv+=f.join(',')+'\n'});const b=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Polla_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
-function generarCodigoPuntajes(){let c='const PUNTAJES_INICIALES={\n';PERSONAS.forEach(p=>{c+="  '"+p+"':{";c+=Object.keys(GRUPOS).map(g=>g+':'+(puntajes[p]?.[g]||0)).join(',')+'},\n'});c+='};';navigator.clipboard.writeText(c).then(()=>actualizarStatus('📋 Código copiado. Pégalo en index.html y haz push'));console.log(c)}
-function descargarExcel(){try{const wb=XLSX.utils.book_new();const dp=[['Persona',...Object.keys(GRUPOS),'TOTAL']];PERSONAS.forEach(p=>{const f=[p];let t=0;Object.keys(GRUPOS).forEach(g=>{const v=puntajes[p]?.[g]||0;f.push(v);t+=v});f.push(t);dp.push(f)});XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(dp),'Puntajes');XLSX.writeFile(wb,'Polla_'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'.xlsx')}catch(e){}}
-function cargarExcel(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=function(ev){try{const wb=XLSX.read(new Uint8Array(ev.target.result),{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws,{header:1});if(!rows[0]||rows[0][0]!=='Persona')return;const gk=Object.keys(GRUPOS);for(let i=1;i<rows.length;i++){const row=rows[i];if(!row||!row[0])continue;const p=String(row[0]).trim();if(!PERSONAS.includes(p))continue;gk.forEach((g,j)=>{const v=parseInt(row[j+1]);if(!isNaN(v)&&v>=0&&v<=6){puntajes[p][g]=v;puntajesManual[p][g]=!0}})}guardar();renderGrupos();actualizarStatus('✅ Excel cargado')}catch(e){alert('Error')}};r.readAsArrayBuffer(f);e.target.value=''}
-function mostrarModalReiniciar(){document.getElementById('modalReiniciar').classList.add('active')}
-function cerrarModal(){document.getElementById('modalReiniciar').classList.remove('active')}
-function reiniciarPuntajes(){PERSONAS.forEach(p=>{Object.keys(GRUPOS).forEach(g=>{puntajesManual[p][g]=!1;puntajes[p][g]=calcularPuntos(g,p)})});guardar();renderGrupos();if(document.getElementById('view-ranking').style.display!=='none')renderRanking();cerrarModal();actualizarStatus('🔄 Recalculado automático')}
 
-/* ============================================================
-   BRACKET REALISTA — FORMATO OFICIAL FIFA WORLD CUP 2026
-   16 grupos de 4 -> en realidad son 12 grupos (A-L) según este proyecto.
-   Se usa el cruce oficial real de los 32 partidos del Mundial 2026.
-   ============================================================ */
-let gruposState={},bracketState={};
-// Estructura de los 32 partidos de Octavos... en este formato real son "Round of 32" (R32).
-// Cada partido define quién llega ahí: posición de grupo (1X/2X) o tercero de una lista de grupos candidatos (3-XXXXX)
+const GRUPOS={
+A:{nombre:'Grupo A',equipos:[{sigla:'KOR',nombre:'Corea del Sur',bandera:'🇰🇷'},{sigla:'MEX',nombre:'México',bandera:'🇲🇽'},{sigla:'CZE',nombre:'Chequia',bandera:'🇨🇿'},{sigla:'ZAF',nombre:'Sudáfrica',bandera:'🇿🇦'}],
+   personas:{Camila:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Duvan:[{sigla:'MEX',nombre:'México'},{sigla:'ZAF',nombre:'Sudáfrica'}],Camilo:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Mateo:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Miguel:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],'Doc Camilo':[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Katherine:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Sandra:[{sigla:'MEX',nombre:'México'},{sigla:'ZAF',nombre:'Sudáfrica'}],Estefania:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Diana:[{sigla:'MEX',nombre:'México'},{sigla:'KOR',nombre:'Corea del Sur'}],Sofia:[{sigla:'KOR',nombre:'Corea del Sur'},{sigla:'MEX',nombre:'México'}]}},
+B:{nombre:'Grupo B',equipos:[{sigla:'SUI',nombre:'Suiza',bandera:'🇨🇭'},{sigla:'CAN',nombre:'Canadá',bandera:'🇨🇦'},{sigla:'QAT',nombre:'Qatar',bandera:'🇶🇦'},{sigla:'BIH',nombre:'Bosnia',bandera:'🇧🇦'}],
+   personas:{Camila:[{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],Duvan:[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],Camilo:[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],Mateo:[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],Miguel:[{sigla:'SUI',nombre:'Suiza'},{sigla:'QAT',nombre:'Qatar'}],'Doc Camilo':[{sigla:'CAN',nombre:'Canadá'},{sigla:'QAT',nombre:'Qatar'}],Katherine:[{sigla:'CAN',nombre:'Canadá'},{sigla:'QAT',nombre:'Qatar'}],Sandra:[{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],Estefania:[{sigla:'CAN',nombre:'Canadá'},{sigla:'SUI',nombre:'Suiza'}],Diana:[{sigla:'SUI',nombre:'Suiza'},{sigla:'CAN',nombre:'Canadá'}],Sofia:[{sigla:'QAT',nombre:'Qatar'},{sigla:'CAN',nombre:'Canadá'}]}},
+C:{nombre:'Grupo C',equipos:[{sigla:'SCO',nombre:'Escocia',bandera:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'},{sigla:'MAR',nombre:'Marruecos',bandera:'🇲🇦'},{sigla:'BRA',nombre:'Brasil',bandera:'🇧🇷'},{sigla:'HTI',nombre:'Haití',bandera:'🇭🇹'}],
+   personas:{Camila:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Duvan:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Camilo:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Mateo:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Miguel:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],'Doc Camilo':[{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],Katherine:[{sigla:'BRA',nombre:'Brasil'},{sigla:'MAR',nombre:'Marruecos'}],Sandra:[{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],Estefania:[{sigla:'BRA',nombre:'Brasil'},{sigla:'SCO',nombre:'Escocia'}],Diana:[{sigla:'MAR',nombre:'Marruecos'},{sigla:'BRA',nombre:'Brasil'}],Sofia:[{sigla:'MAR',nombre:'Marruecos'},{sigla:'BRA',nombre:'Brasil'}]}},
+D:{nombre:'Grupo D',equipos:[{sigla:'USA',nombre:'EE.UU.',bandera:'🇺🇸'},{sigla:'AUS',nombre:'Australia',bandera:'🇦🇺'},{sigla:'TUR',nombre:'Turquía',bandera:'🇹🇷'},{sigla:'PAR',nombre:'Paraguay',bandera:'🇵🇾'}],
+   personas:{Camila:[{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],Duvan:[{sigla:'TUR',nombre:'Turquía'},{sigla:'PAR',nombre:'Paraguay'}],Camilo:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'TUR',nombre:'Turquía'}],Mateo:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'PAR',nombre:'Paraguay'}],Miguel:[{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],'Doc Camilo':[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],Katherine:[{sigla:'PAR',nombre:'Paraguay'},{sigla:'USA',nombre:'EE.UU.'}],Sandra:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],Estefania:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}],Diana:[{sigla:'PAR',nombre:'Paraguay'},{sigla:'TUR',nombre:'Turquía'}],Sofia:[{sigla:'USA',nombre:'EE.UU.'},{sigla:'AUS',nombre:'Australia'}]}},
+E:{nombre:'Grupo E',equipos:[{sigla:'GER',nombre:'Alemania',bandera:'🇩🇪'},{sigla:'CIV',nombre:'Costa de Marfil',bandera:'🇨🇮'},{sigla:'ECU',nombre:'Ecuador',bandera:'🇪🇨'},{sigla:'CUW',nombre:'Curazao',bandera:'🇨🇼'}],
+   personas:{Camila:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Duvan:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Camilo:[{sigla:'ECU',nombre:'Ecuador'},{sigla:'GER',nombre:'Alemania'}],Mateo:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Miguel:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],'Doc Camilo':[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Katherine:[{sigla:'GER',nombre:'Alemania'},{sigla:'ECU',nombre:'Ecuador'}],Sandra:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Estefania:[{sigla:'GER',nombre:'Alemania'},{sigla:'ECU',nombre:'Ecuador'}],Diana:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}],Sofia:[{sigla:'GER',nombre:'Alemania'},{sigla:'CIV',nombre:'C. de Marfil'}]}},
+F:{nombre:'Grupo F',equipos:[{sigla:'SWE',nombre:'Suecia',bandera:'🇸🇪'},{sigla:'JPN',nombre:'Japón',bandera:'🇯🇵'},{sigla:'NED',nombre:'Países Bajos',bandera:'🇳🇱'},{sigla:'TUN',nombre:'Túnez',bandera:'🇹🇳'}],
+   personas:{Duvan:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],Camila:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],Camilo:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],Mateo:[{sigla:'JPN',nombre:'Japón'},{sigla:'NED',nombre:'Países Bajos'}],Miguel:[{sigla:'JPN',nombre:'Japón'},{sigla:'SWE',nombre:'Suecia'}],'Doc Camilo':[{sigla:'NED',nombre:'Países Bajos'},{sigla:'SWE',nombre:'Suecia'}],Katherine:[{sigla:'JPN',nombre:'Japón'},{sigla:'NED',nombre:'Países Bajos'}],Sandra:[{sigla:'SWE',nombre:'Suecia'},{sigla:'NED',nombre:'Países Bajos'}],Estefania:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'JPN',nombre:'Japón'}],Diana:[{sigla:'JPN',nombre:'Japón'},{sigla:'TUN',nombre:'Túnez'}],Sofia:[{sigla:'NED',nombre:'Países Bajos'},{sigla:'SWE',nombre:'Suecia'}]}},
+G:{nombre:'Grupo G',equipos:[{sigla:'NZL',nombre:'N. Zelanda',bandera:'🇳🇿'},{sigla:'IRN',nombre:'Irán',bandera:'🇮🇷'},{sigla:'BEL',nombre:'Bélgica',bandera:'🇧🇪'},{sigla:'EGY',nombre:'Egipto',bandera:'🇪🇬'}],
+   personas:{Duvan:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Camila:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],Camilo:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Mateo:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],Miguel:[{sigla:'EGY',nombre:'Egipto'},{sigla:'BEL',nombre:'Bélgica'}],'Doc Camilo':[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Katherine:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Sandra:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],Estefania:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'EGY',nombre:'Egipto'}],Diana:[{sigla:'BEL',nombre:'Bélgica'},{sigla:'NZL',nombre:'N. Zelanda'}],Sofia:[{sigla:'IRN',nombre:'Irán'},{sigla:'EGY',nombre:'Egipto'}]}},
+H:{nombre:'Grupo H',equipos:[{sigla:'URU',nombre:'Uruguay',bandera:'🇺🇾'},{sigla:'KSA',nombre:'Arabia Saudí',bandera:'🇸🇦'},{sigla:'ESP',nombre:'España',bandera:'🇪🇸'},{sigla:'CPV',nombre:'Cabo Verde',bandera:'🇨🇻'}],
+   personas:{Duvan:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Camila:[{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],Camilo:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Mateo:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Miguel:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],'Doc Camilo':[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Katherine:[{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],Sandra:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Estefania:[{sigla:'ESP',nombre:'España'},{sigla:'URU',nombre:'Uruguay'}],Diana:[{sigla:'URU',nombre:'Uruguay'},{sigla:'ESP',nombre:'España'}],Sofia:[{sigla:'KSA',nombre:'Arabia Saudí'},{sigla:'ESP',nombre:'España'}]}},
+I:{nombre:'Grupo I',equipos:[{sigla:'NOR',nombre:'Noruega',bandera:'🇳🇴'},{sigla:'FRA',nombre:'Francia',bandera:'🇫🇷'},{sigla:'SEN',nombre:'Senegal',bandera:'🇸🇳'},{sigla:'IRQ',nombre:'Irak',bandera:'🇮🇶'}],
+   personas:{Duvan:[{sigla:'NOR',nombre:'Noruega'},{sigla:'FRA',nombre:'Francia'}],Camila:[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],Camilo:[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],Mateo:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Miguel:[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],'Doc Camilo':[{sigla:'FRA',nombre:'Francia'},{sigla:'SEN',nombre:'Senegal'}],Katherine:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Sandra:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Estefania:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Diana:[{sigla:'FRA',nombre:'Francia'},{sigla:'NOR',nombre:'Noruega'}],Sofia:[{sigla:'FRA',nombre:'Francia'},{sigla:'IRQ',nombre:'Irak'}]}},
+J:{nombre:'Grupo J',equipos:[{sigla:'ARG',nombre:'Argentina',bandera:'🇦🇷'},{sigla:'AUT',nombre:'Austria',bandera:'🇦🇹'},{sigla:'JOR',nombre:'Jordania',bandera:'🇯🇴'},{sigla:'ALG',nombre:'Argelia',bandera:'🇩🇿'}],
+   personas:{Duvan:[{sigla:'ARG',nombre:'Argentina'},{sigla:'ALG',nombre:'Argelia'}],Camila:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Camilo:[{sigla:'ARG',nombre:'Argentina'},{sigla:'ALG',nombre:'Argelia'}],Mateo:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Miguel:[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],'Doc Camilo':[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],Katherine:[{sigla:'ARG',nombre:'Argentina'},{sigla:'JOR',nombre:'Jordania'}],Sandra:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Estefania:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Diana:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}],Sofia:[{sigla:'ARG',nombre:'Argentina'},{sigla:'AUT',nombre:'Austria'}]}},
+K:{nombre:'Grupo K',equipos:[{sigla:'COL',nombre:'Colombia',bandera:'🇨🇴'},{sigla:'COD',nombre:'RD Congo',bandera:'🇨🇩'},{sigla:'POR',nombre:'Portugal',bandera:'🇵🇹'},{sigla:'UZB',nombre:'Uzbekistán',bandera:'🇺🇿'}],
+   personas:{Duvan:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Camila:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Camilo:[{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}],Mateo:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Miguel:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],'Doc Camilo':[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Katherine:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Sandra:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Estefania:[{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}],Diana:[{sigla:'POR',nombre:'Portugal'},{sigla:'COL',nombre:'Colombia'}],Sofia:[{sigla:'COL',nombre:'Colombia'},{sigla:'POR',nombre:'Portugal'}]}},
+L:{nombre:'Grupo L',equipos:[{sigla:'ENG',nombre:'Inglaterra',bandera:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},{sigla:'GHA',nombre:'Ghana',bandera:'🇬🇭'},{sigla:'CRO',nombre:'Croacia',bandera:'🇭🇷'},{sigla:'PAN',nombre:'Panamá',bandera:'🇵🇦'}],
+   personas:{Duvan:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Camila:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'GHA',nombre:'Ghana'}],Camilo:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Mateo:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],Miguel:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],'Doc Camilo':[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Katherine:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Sandra:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}],Estefania:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],Diana:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'PAN',nombre:'Panamá'}],Sofia:[{sigla:'ENG',nombre:'Inglaterra'},{sigla:'CRO',nombre:'Croacia'}]}}
+};
+
+// ===== RESULTADOS REALES (Jornada 1 y 2) =====
+// Establecidos según las tablas de clasificación proporcionadas
+// Los equipos están ordenados: [1°, 2°, 3°, 4°] según su posición actual real
+const RESULTADOS_REALES_INICIALES = {
+  A: { clasificados: [{sigla:'KOR',nombre:'Corea del Sur',bandera:'🇰🇷'},{sigla:'MEX',nombre:'México',bandera:'🇲🇽'}] },
+  B: { clasificados: [null, null] }, // Todos empatados, sin 1° y 2° definidos aún
+  C: { clasificados: [{sigla:'SCO',nombre:'Escocia',bandera:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'},{sigla:'MAR',nombre:'Marruecos',bandera:'🇲🇦'}] },
+  D: { clasificados: [{sigla:'USA',nombre:'EE.UU.',bandera:'🇺🇸'},{sigla:'AUS',nombre:'Australia',bandera:'🇦🇺'}] },
+  E: { clasificados: [{sigla:'GER',nombre:'Alemania',bandera:'🇩🇪'},{sigla:'CIV',nombre:'Costa de Marfil',bandera:'🇨🇮'}] },
+  F: { clasificados: [{sigla:'SWE',nombre:'Suecia',bandera:'🇸🇪'},{sigla:'JPN',nombre:'Japón',bandera:'🇯🇵'}] },
+  G: { clasificados: [null, null] }, // Todos empatados
+  H: { clasificados: [null, null] }, // Empatados en puntos
+  I: { clasificados: [{sigla:'NOR',nombre:'Noruega',bandera:'🇳🇴'},{sigla:'FRA',nombre:'Francia',bandera:'🇫🇷'}] },
+  J: { clasificados: [{sigla:'ARG',nombre:'Argentina',bandera:'🇦🇷'},{sigla:'AUT',nombre:'Austria',bandera:'🇦🇹'}] },
+  K: { clasificados: [{sigla:'COL',nombre:'Colombia',bandera:'🇨🇴'},{sigla:'COD',nombre:'RD Congo',bandera:'🇨🇩'}] },
+  L: { clasificados: [{sigla:'ENG',nombre:'Inglaterra',bandera:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},{sigla:'GHA',nombre:'Ghana',bandera:'🇬🇭'}] }
+};
+
+// ===== ESTADO GLOBAL =====
+let gruposState = {};
+let bracketState = {terceros:[], matches:{}};
+let puntajes = {};
+
+// ===== BRACKET R32 =====
 const BRACKET_R32=[
  {id:'M73',fecha:'28 jun',slot1:{tag:'2A',tipo:'pos',grupo:'A',pos:2},slot2:{tag:'2B',tipo:'pos',grupo:'B',pos:2}},
  {id:'M74',fecha:'29 jun',slot1:{tag:'1E',tipo:'pos',grupo:'E',pos:1},slot2:{tag:'3°ABCDF',tipo:'tercero',candidatos:['A','B','C','D','F']}},
@@ -249,274 +238,574 @@ const BRACKET_R32=[
  {id:'M87',fecha:'4 jul',slot1:{tag:'1K',tipo:'pos',grupo:'K',pos:1},slot2:{tag:'3°DEIJL',tipo:'tercero',candidatos:['D','E','I','J','L']}},
  {id:'M88',fecha:'3 jul',slot1:{tag:'2D',tipo:'pos',grupo:'D',pos:2},slot2:{tag:'2G',tipo:'pos',grupo:'G',pos:2}},
 ];
-// Conexiones de octavos en adelante (oficiales FIFA): ganador de cada M va al siguiente
 const BRACKET_R16=[
- {id:'M89',fecha:'4 jul',from:['M74','M77']},
- {id:'M90',fecha:'4 jul',from:['M73','M75']},
- {id:'M91',fecha:'5 jul',from:['M76','M78']},
- {id:'M92',fecha:'5 jul',from:['M79','M80']},
- {id:'M93',fecha:'6 jul',from:['M83','M84']},
- {id:'M94',fecha:'6 jul',from:['M81','M82']},
- {id:'M95',fecha:'7 jul',from:['M86','M88']},
- {id:'M96',fecha:'7 jul',from:['M85','M87']},
+ {id:'M89',fecha:'4 jul',from:['M74','M77']},{id:'M90',fecha:'4 jul',from:['M73','M75']},
+ {id:'M91',fecha:'5 jul',from:['M76','M78']},{id:'M92',fecha:'5 jul',from:['M79','M80']},
+ {id:'M93',fecha:'6 jul',from:['M83','M84']},{id:'M94',fecha:'6 jul',from:['M81','M82']},
+ {id:'M95',fecha:'7 jul',from:['M86','M88']},{id:'M96',fecha:'7 jul',from:['M85','M87']},
 ];
 const BRACKET_QF=[
- {id:'M97',fecha:'9 jul',from:['M89','M90']},
- {id:'M98',fecha:'10 jul',from:['M93','M94']},
- {id:'M99',fecha:'11 jul',from:['M91','M92']},
- {id:'M100',fecha:'11 jul',from:['M95','M96']},
+ {id:'M97',fecha:'9 jul',from:['M89','M90']},{id:'M98',fecha:'10 jul',from:['M93','M94']},
+ {id:'M99',fecha:'11 jul',from:['M91','M92']},{id:'M100',fecha:'11 jul',from:['M95','M96']},
 ];
 const BRACKET_SF=[
- {id:'M101',fecha:'14 jul',from:['M97','M98']},
- {id:'M102',fecha:'15 jul',from:['M99','M100']},
+ {id:'M101',fecha:'14 jul',from:['M97','M98']},{id:'M102',fecha:'15 jul',from:['M99','M100']},
 ];
 const BRACKET_FINAL={id:'M103',fecha:'19 jul',from:['M101','M102']};
 const BRACKET_3ER={id:'M3P',fecha:'18 jul',from:['M101','M102'],esPerdedores:!0};
 const TODOS_MATCH_IDS=[...BRACKET_R32.map(m=>m.id),...BRACKET_R16.map(m=>m.id),...BRACKET_QF.map(m=>m.id),...BRACKET_SF.map(m=>m.id),BRACKET_FINAL.id,BRACKET_3ER.id];
 
-function initBS(){
-  gruposState={};
-  Object.entries(GRUPOS).forEach(([gid,gd])=>{gruposState[gid]={equipos:gd.equipos.map(e=>({...e})),clasificados:[null,null]}});
-  bracketState={terceros:[],matches:{}};
-  TODOS_MATCH_IDS.forEach(id=>{bracketState.matches[id]={slot1:null,slot2:null}});
-}
-function cargarBS(){
-  initBS();
-  const s=localStorage.getItem('bm26v2');
-  if(s){try{
-    const d=JSON.parse(s);
-    if(d.gs)Object.keys(gruposState).forEach(g=>{if(d.gs[g]){if(d.gs[g].eq)gruposState[g].equipos=d.gs[g].eq;if(d.gs[g].cl)gruposState[g].clasificados=d.gs[g].cl}});
-    if(d.bs){if(d.bs.terceros)bracketState.terceros=d.bs.terceros;if(d.bs.matches)Object.keys(bracketState.matches).forEach(id=>{if(d.bs.matches[id])bracketState.matches[id]=d.bs.matches[id]})}
-  }catch(e){}}
-}
-function guardarBS(){
-  localStorage.setItem('bm26v2',JSON.stringify({gs:gruposState,bs:bracketState}));
-  PERSONAS.forEach(p=>{Object.keys(GRUPOS).forEach(g=>{if(puntajesManual[p]&&puntajesManual[p][g])return;puntajes[p][g]=calcularPuntos(g,p)})});
-  guardar();renderGrupos();
-  if(document.getElementById('view-ranking') && document.getElementById('view-ranking').style.display!=='none')renderRanking();
-  const cl=Object.values(gruposState).filter(g=>g.clasificados[0]||g.clasificados[1]).length;
-  document.getElementById('syncBadge').textContent=cl>0?'⚡ '+cl+' grupos clasificados':'⚡ Listo';
-}
-function cambiarVistaBracket(v){
-  document.getElementById('vista-grupos-bracket').style.display=v==='grupos'?'':'none';
-  document.getElementById('vista-bracket-elim').style.display=v==='bracket'?'':'none';
-  document.getElementById('vista-grupos-hint').style.display=v==='grupos'?'':'none';
-  document.getElementById('vista-bracket-hint').style.display=v==='bracket'?'':'none';
-  document.getElementById('btnFaseGrupos').className='btn '+(v==='grupos'?'btn-primary':'btn-outline');
-  document.getElementById('btnElim').className='btn '+(v==='bracket'?'btn-primary':'btn-outline');
-  if(v==='bracket')renderVistaBracket();else renderVistaGrupos();
+// ===== INICIALIZACIÓN =====
+function init() {
+  // Inicializar gruposState con resultados reales
+  gruposState = {};
+  Object.entries(GRUPOS).forEach(([gid, gd]) => {
+    const real = RESULTADOS_REALES_INICIALES[gid];
+    gruposState[gid] = {
+      equipos: gd.equipos.map(e => ({...e})),
+      clasificados: real ? [...real.clasificados] : [null, null]
+    };
+  });
+  
+  // Inicializar bracketState
+  bracketState = {terceros: [], matches: {}};
+  TODOS_MATCH_IDS.forEach(id => { bracketState.matches[id] = {slot1: null, slot2: null}; });
+  
+  // Inicializar puntajes
+  PERSONAS.forEach(p => { puntajes[p] = {}; });
+  
+  // Cargar desde localStorage si existe
+  cargarEstado();
+  
+  // Calcular puntajes iniciales
+  calcularTodosPuntajes();
 }
 
-/* ---------- VISTA GRUPOS + selección de terceros ---------- */
-function renderVistaGrupos(){
-  const grid=document.getElementById('vista-grupos-bracket');grid.innerHTML='';
+function cargarEstado() {
+  const s = localStorage.getItem('pm26_v2');
+  if (s) {
+    try {
+      const d = JSON.parse(s);
+      if (d.gs) Object.keys(gruposState).forEach(g => {
+        if (d.gs[g] && d.gs[g].cl) gruposState[g].clasificados = d.gs[g].cl;
+      });
+      if (d.bs) {
+        if (d.bs.terceros) bracketState.terceros = d.bs.terceros;
+        if (d.bs.matches) Object.keys(bracketState.matches).forEach(id => {
+          if (d.bs.matches[id]) bracketState.matches[id] = d.bs.matches[id];
+        });
+      }
+      if (d.pts) puntajes = d.pts;
+    } catch(e) { console.log('Error cargando estado:', e); }
+  }
+}
 
-  // Panel de terceros clasificados (hasta 8)
-  const candidatosTerceros=Object.entries(gruposState).filter(([gid,g])=>g.equipos.length>=3).map(([gid,g])=>({gid,equipo:g.equipos[2]}));
-  const panel=document.createElement('div');panel.className='terceros-panel';
-  panel.innerHTML='<div class="terceros-panel-title">🥉 Terceros lugares clasificados ('+bracketState.terceros.length+'/8) — click para activar/quitar</div>';
-  const tg=document.createElement('div');tg.className='terceros-grid';
-  candidatosTerceros.forEach(({gid,equipo})=>{
-    const activo=bracketState.terceros.includes(gid);
-    const chip=document.createElement('div');
-    chip.className='tercero-chip'+(activo?' activo':'');
-    chip.draggable=true;
-    chip.innerHTML='<span class="pos-number pos-3">3°</span> '+equipo.bandera+' '+equipo.nombre+' <span style="opacity:.6;font-size:.65rem">(G'+gid+')</span>';
-    chip.onclick=()=>toggleTercero(gid);
-    chip.ondragstart=(e)=>onDragStartTeam(e,{...equipo,origenGrupo:gid,origenPos:3});
+function guardarEstado() {
+  localStorage.setItem('pm26_v2', JSON.stringify({
+    gs: gruposState,
+    bs: bracketState,
+    pts: puntajes
+  }));
+}
+
+// ===== CÁLCULO DE PUNTAJES =====
+function calcularPuntos(gid, persona) {
+  const g = gruposState[gid];
+  if (!g) return 0;
+  
+  const c1 = g.clasificados[0] ? g.clasificados[0].sigla : null;
+  const c2 = g.clasificados[1] ? g.clasificados[1].sigla : null;
+  const pron = GRUPOS[gid].personas[persona] || [];
+  if (!pron.length) return 0;
+  
+  const p1 = pron[0] ? pron[0].sigla : null;
+  const p2 = pron[1] ? pron[1].sigla : null;
+  
+  if (!c1 && !c2) return 0; // Sin resultados reales aún
+  if (!p1 && !p2) return 0;
+  
+  if (p1 === c1 && p2 === c2) return 6;
+  if (p1 === c1 || p2 === c2) return 3;
+  if (p1 === c2 && p2 === c1) return 2;
+  if (p1 === c2 || p2 === c1) return 1;
+  return 0;
+}
+
+function calcularTodosPuntajes() {
+  PERSONAS.forEach(p => {
+    Object.keys(GRUPOS).forEach(g => {
+      puntajes[p][g] = calcularPuntos(g, p);
+    });
+  });
+  guardarEstado();
+}
+
+function calcTotal(p) {
+  return Object.values(puntajes[p] || {}).reduce((a, b) => a + b, 0);
+}
+
+// ===== RENDERIZADO =====
+function switchPage(p) {
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-' + p).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach((t, i) => t.classList.toggle('active', ['polla', 'bracket'][i] === p));
+  if (p === 'bracket') {
+    renderVistaGrupos();
+    cambiarVistaBracket('grupos');
+  }
+}
+
+function showView(v) {
+  ['grupos', 'ranking', 'matriz', 'leyenda'].forEach(x => {
+    document.getElementById('view-' + x).style.display = x === v ? '' : 'none';
+  });
+  document.querySelectorAll('.inner-tab').forEach((t, i) => {
+    t.classList.toggle('active', ['grupos', 'ranking', 'matriz', 'leyenda'][i] === v);
+  });
+  if (v === 'grupos') renderGrupos();
+  if (v === 'ranking') renderRanking();
+  if (v === 'matriz') renderMatriz();
+}
+
+function getPuntosClass(pts) {
+  if (pts === 6) return 'puntos-6';
+  if (pts === 3) return 'puntos-3';
+  if (pts === 2) return 'puntos-2';
+  if (pts === 1) return 'puntos-1';
+  return 'puntos-0';
+}
+
+function renderGrupos() {
+  const c = document.getElementById('grupos-container');
+  c.innerHTML = '';
+  
+  Object.entries(GRUPOS).forEach(([gid, gdata]) => {
+    const sec = document.createElement('div');
+    sec.className = 'grupo-card';
+    
+    const real = gruposState[gid];
+    const clas = real ? real.clasificados : [null, null];
+    const eqStr = gdata.equipos.map(e => e.bandera + ' ' + e.nombre).join(' · ');
+    const clasStr = clas[0] || clas[1] ? 
+      ' | ✅ Clasificados: ' + [clas[0] ? '1° ' + clas[0].bandera + ' ' + clas[0].nombre : '', 
+                               clas[1] ? '2° ' + clas[1].bandera + ' ' + clas[1].nombre : ''].filter(Boolean).join(', ') : 
+      ' | ⏳ Sin definir';
+    
+    const lbl = document.createElement('div');
+    lbl.className = 'grupo-label';
+    lbl.innerHTML = gdata.nombre + ' — ' + eqStr + clasStr;
+    sec.appendChild(lbl);
+    
+    const tbl = document.createElement('table');
+    tbl.innerHTML = '<thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead>';
+    const tb = document.createElement('tbody');
+    
+    PERSONAS.forEach(p => {
+      const pr = gdata.personas[p] || [];
+      const tr = document.createElement('tr');
+      const b1 = pr[0] ? '<span class="pos-badge p1">1°</span> ' + pr[0].bandera + ' ' + pr[0].nombre : '—';
+      const b2 = pr[1] ? '<span class="pos-badge p2">2°</span> ' + pr[1].bandera + ' ' + pr[1].nombre : '—';
+      const pts = puntajes[p] ? (puntajes[p][gid] || 0) : 0;
+      
+      tr.innerHTML = '<td>' + p + '</td><td>' + b1 + '</td><td>' + b2 + 
+                     '</td><td><span class="puntos-auto ' + getPuntosClass(pts) + '">' + pts + ' pts</span></td>';
+      tb.appendChild(tr);
+    });
+    
+    tbl.appendChild(tb);
+    sec.appendChild(tbl);
+    c.appendChild(sec);
+  });
+}
+
+function renderRanking() {
+  const sorted = [...PERSONAS].sort((a, b) => calcTotal(b) - calcTotal(a));
+  const c = document.getElementById('ranking-container');
+  c.innerHTML = '<div style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">🏅 Ranking</div>';
+  
+  sorted.forEach((p, i) => {
+    const t = calcTotal(p);
+    const rc = i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : 'rn';
+    const med = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
+    const det = Object.entries(puntajes[p] || {})
+      .filter(([, v]) => v > 0)
+      .sort(([, a], [, b]) => b - a)
+      .map(([g, v]) => '<span style="display:inline-block;background:rgba(24,95,165,.15);color:#5b9dd9;padding:2px 8px;border-radius:12px;font-size:.7rem;margin:2px">G' + g + ': ' + v + 'pt</span>')
+      .join('') || 'Sin puntos';
+    
+    const card = document.createElement('div');
+    card.className = 'ranking-card';
+    card.innerHTML = '<div class="rank-num ' + rc + '">' + (i + 1) + '</div>' +
+                     '<div style="flex:1"><div style="font-weight:600">' + p + ' ' + med + '</div>' +
+                     '<div style="margin-top:6px">' + det + '</div></div>' +
+                     '<div style="text-align:right"><div class="points-total">' + t + '</div>' +
+                     '<div class="points-label">pts</div></div>';
+    c.appendChild(card);
+  });
+}
+
+function renderMatriz() {
+  const c = document.getElementById('matriz-container');
+  const gk = Object.keys(GRUPOS);
+  let h = '<table id="matriz-table"><thead><tr><th>Persona</th>';
+  gk.forEach(g => h += '<th>' + g + '</th>');
+  h += '<th>TOTAL</th></tr></thead><tbody>';
+  
+  PERSONAS.forEach(p => {
+    h += '<tr><td style="font-weight:600">' + p + '</td>';
+    gk.forEach(g => {
+      const v = puntajes[p] ? (puntajes[p][g] || 0) : 0;
+      h += '<td><span class="puntos-auto ' + getPuntosClass(v) + '">' + v + '</span></td>';
+    });
+    h += '<td style="font-weight:700;color:var(--gold)">' + calcTotal(p) + '</td></tr>';
+  });
+  h += '</tbody></table>';
+  c.innerHTML = h;
+}
+
+// ===== VISTA BRACKET =====
+function cambiarVistaBracket(v) {
+  document.getElementById('vista-grupos-bracket').style.display = v === 'grupos' ? '' : 'none';
+  document.getElementById('vista-bracket-elim').style.display = v === 'bracket' ? '' : 'none';
+  document.getElementById('vista-grupos-hint').style.display = v === 'grupos' ? '' : 'none';
+  document.getElementById('vista-bracket-hint').style.display = v === 'bracket' ? '' : 'none';
+  document.getElementById('btnFaseGrupos').className = 'btn ' + (v === 'grupos' ? 'btn-primary' : 'btn-outline');
+  document.getElementById('btnElim').className = 'btn ' + (v === 'bracket' ? 'btn-primary' : 'btn-outline');
+  if (v === 'bracket') renderVistaBracket(); else renderVistaGrupos();
+}
+
+function toggleClasificado(gid, eq, idx) {
+  const g = gruposState[gid];
+  if (!g) return;
+  
+  // Si ya está como clasificado en esta posición, quitarlo
+  if (g.clasificados[idx] && g.clasificados[idx].sigla === eq.sigla) {
+    g.clasificados[idx] = null;
+  }
+  // Si está en la otra posición, intercambiar
+  else if (g.clasificados[1-idx] && g.clasificados[1-idx].sigla === eq.sigla) {
+    g.clasificados[1-idx] = null;
+    g.clasificados[idx] = {...eq};
+  }
+  // Si el slot está libre, asignar
+  else if (!g.clasificados[idx]) {
+    g.clasificados[idx] = {...eq};
+  }
+  // Si ambos slots ocupados, liberar el otro y asignar este
+  else {
+    g.clasificados[idx] = {...eq};
+  }
+  
+  calcularTodosPuntajes();
+  guardarEstado();
+  renderVistaGrupos();
+  renderGrupos();
+  if (document.getElementById('view-ranking').style.display !== 'none') renderRanking();
+}
+
+function toggleTercero(gid) {
+  const i = bracketState.terceros.indexOf(gid);
+  if (i >= 0) {
+    bracketState.terceros.splice(i, 1);
+  } else {
+    if (bracketState.terceros.length >= 8) {
+      document.getElementById('statusMsg').textContent = '⚠️ Ya hay 8 terceros seleccionados';
+      setTimeout(() => document.getElementById('statusMsg').textContent = 'Actualizado con resultados J1+J2', 3000);
+      return;
+    }
+    bracketState.terceros.push(gid);
+  }
+  guardarEstado();
+  renderVistaGrupos();
+}
+
+function renderVistaGrupos() {
+  const grid = document.getElementById('vista-grupos-bracket');
+  grid.innerHTML = '';
+  
+  // Panel de terceros
+  const candidatosTerceros = Object.entries(gruposState)
+    .filter(([, g]) => g.equipos.length >= 3)
+    .map(([gid, g]) => ({gid, equipo: g.equipos[2]}));
+  
+  const panel = document.createElement('div');
+  panel.className = 'terceros-panel';
+  panel.innerHTML = '<div class="terceros-panel-title">🥉 Terceros lugares clasificados (' + 
+                    bracketState.terceros.length + '/8) — click para activar/quitar</div>';
+  const tg = document.createElement('div');
+  tg.className = 'terceros-grid';
+  
+  candidatosTerceros.forEach(({gid, equipo}) => {
+    const activo = bracketState.terceros.includes(gid);
+    const chip = document.createElement('div');
+    chip.className = 'tercero-chip' + (activo ? ' activo' : '');
+    chip.draggable = true;
+    chip.innerHTML = '<span class="pos-number pos-3">3°</span> ' + equipo.bandera + ' ' + equipo.nombre + 
+                     ' <span style="opacity:.6;font-size:.65rem">(G' + gid + ')</span>';
+    chip.onclick = () => toggleTercero(gid);
+    chip.ondragstart = (e) => onDragStartTeam(e, {...equipo, origenGrupo: gid, origenPos: 3});
     tg.appendChild(chip);
   });
   panel.appendChild(tg);
   grid.appendChild(panel);
-
-  const div=document.createElement('div');div.className='fase-grupos-br';
-  Object.entries(gruposState).forEach(([gid,gd])=>{
-    const box=document.createElement('div');box.className='grupo-box-br';
-    box.innerHTML='<div class="grupo-title">'+GRUPOS[gid].nombre+'</div>';
-    gd.equipos.forEach((eq,idx)=>{
-      const row=document.createElement('div');row.className='pos-row';
-      const esClas=gd.clasificados[0]?.sigla===eq.sigla||gd.clasificados[1]?.sigla===eq.sigla;
-      const esTerceroActivo=idx===2&&bracketState.terceros.includes(gid);
-      if(esClas)row.classList.add('clasificado');
-      if(esTerceroActivo)row.classList.add('es-tercero');
-      row.draggable=true;
-      row.innerHTML='<span class="pos-number '+(idx===0?'pos-1':idx===1?'pos-2':idx===2?'pos-3':'pos-4')+'">'+(idx+1)+'</span><span style="flex:1">'+eq.bandera+' '+eq.nombre+'</span>'+(idx<2?'<span style="font-size:.65rem;color:var(--text2)">click=clasificar</span>':'');
-      if(idx<2)row.onclick=()=>toggleClasificado(gid,eq,idx);
-      row.ondragstart=(e)=>onDragStartTeam(e,{...eq,origenGrupo:gid,origenPos:idx+1});
+  
+  // Grid de grupos
+  const div = document.createElement('div');
+  div.className = 'fase-grupos-br';
+  
+  Object.entries(gruposState).forEach(([gid, gd]) => {
+    const box = document.createElement('div');
+    box.className = 'grupo-box-br';
+    box.innerHTML = '<div class="grupo-title">' + GRUPOS[gid].nombre + '</div>';
+    
+    gd.equipos.forEach((eq, idx) => {
+      const row = document.createElement('div');
+      row.className = 'pos-row';
+      const esClas = gd.clasificados[0]?.sigla === eq.sigla || gd.clasificados[1]?.sigla === eq.sigla;
+      const esTerceroActivo = idx === 2 && bracketState.terceros.includes(gid);
+      if (esClas) row.classList.add('clasificado');
+      if (esTerceroActivo) row.classList.add('es-tercero');
+      row.draggable = true;
+      
+      let posText = '';
+      if (gd.clasificados[0]?.sigla === eq.sigla) posText = ' ✅ 1°';
+      else if (gd.clasificados[1]?.sigla === eq.sigla) posText = ' ✅ 2°';
+      else if (idx < 2) posText = ' (click para clasificar)';
+      
+      row.innerHTML = '<span class="pos-number ' + (idx === 0 ? 'pos-1' : idx === 1 ? 'pos-2' : idx === 2 ? 'pos-3' : 'pos-4') + '">' + 
+                      (idx + 1) + '</span><span style="flex:1">' + eq.bandera + ' ' + eq.nombre + 
+                      '</span><span style="font-size:.65rem;color:var(--text2)">' + posText + '</span>';
+      
+      if (idx < 2) row.onclick = () => toggleClasificado(gid, eq, idx);
+      row.ondragstart = (e) => onDragStartTeam(e, {...eq, origenGrupo: gid, origenPos: idx + 1});
       box.appendChild(row);
     });
     div.appendChild(box);
   });
   grid.appendChild(div);
 }
-function toggleTercero(gid){
-  const i=bracketState.terceros.indexOf(gid);
-  if(i>=0)bracketState.terceros.splice(i,1);
-  else{if(bracketState.terceros.length>=8){actualizarStatus('⚠️ Ya hay 8 terceros seleccionados');return}bracketState.terceros.push(gid)}
-  guardarBS();renderVistaGrupos();
-}
-function toggleClasificado(gid,eq,idx){
-  const g=gruposState[gid];
-  if(g.clasificados[0]?.sigla===eq.sigla)g.clasificados[0]=null;
-  else if(g.clasificados[1]?.sigla===eq.sigla)g.clasificados[1]=null;
-  else if(!g.clasificados[0])g.clasificados[0]={...eq};
-  else if(!g.clasificados[1])g.clasificados[1]={...eq};
-  else{g.clasificados[0]=g.clasificados[1];g.clasificados[1]={...eq}}
-  guardarBS();renderVistaGrupos();
+
+// ===== DRAG AND DROP =====
+let dragPayload = null;
+
+function onDragStartTeam(e, equipo) {
+  dragPayload = {tipo: 'equipo', data: equipo};
+  e.dataTransfer.setData('text/plain', 'equipo');
+  e.dataTransfer.effectAllowed = 'move';
 }
 
-/* ---------- DRAG AND DROP genérico ---------- */
-let dragPayload=null;
-function onDragStartTeam(e,equipo){
-  dragPayload={tipo:'equipo',data:equipo};
-  e.dataTransfer.setData('text/plain','equipo');
-  e.dataTransfer.effectAllowed='move';
+function onDragStartFromSlot(e, matchId, slotNum) {
+  const m = bracketState.matches[matchId];
+  const eq = slotNum === 1 ? m.slot1 : m.slot2;
+  if (!eq) return;
+  dragPayload = {tipo: 'fromSlot', data: eq, matchId, slotNum};
+  e.dataTransfer.setData('text/plain', 'fromSlot');
+  e.dataTransfer.effectAllowed = 'move';
 }
-function onDragStartFromSlot(e,matchId,slotNum){
-  const m=bracketState.matches[matchId];const eq=slotNum===1?m.slot1:m.slot2;
-  if(!eq)return;
-  dragPayload={tipo:'fromSlot',data:eq,matchId,slotNum};
-  e.dataTransfer.setData('text/plain','fromSlot');
-  e.dataTransfer.effectAllowed='move';
-}
-function asignarASlot(matchId,slotNum,equipo,limpiarOrigen){
-  bracketState.matches[matchId]['slot'+slotNum]=equipo?{...equipo}:null;
-  if(limpiarOrigen&&dragPayload&&dragPayload.tipo==='fromSlot'){
-    bracketState.matches[dragPayload.matchId]['slot'+dragPayload.slotNum]=null;
+
+function asignarASlot(matchId, slotNum, equipo, limpiarOrigen) {
+  bracketState.matches[matchId]['slot' + slotNum] = equipo ? {...equipo} : null;
+  if (limpiarOrigen && dragPayload && dragPayload.tipo === 'fromSlot') {
+    bracketState.matches[dragPayload.matchId]['slot' + dragPayload.slotNum] = null;
   }
 }
-function onDropToSlot(e,matchId,slotNum){
-  e.preventDefault();e.currentTarget.classList.remove('dragover');
-  if(!dragPayload)return;
-  asignarASlot(matchId,slotNum,dragPayload.data,true);
-  dragPayload=null;guardarBS();renderVistaBracket();
-}
-function limpiarSlot(matchId,slotNum,ev){
-  ev.stopPropagation();
-  bracketState.matches[matchId]['slot'+slotNum]=null;
-  guardarBS();renderVistaBracket();
+
+function onDropToSlot(e, matchId, slotNum) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('dragover');
+  if (!dragPayload) return;
+  asignarASlot(matchId, slotNum, dragPayload.data, true);
+  dragPayload = null;
+  guardarEstado();
+  renderVistaBracket();
 }
 
-/* ---------- RENDER BRACKET ---------- */
-function etiquetaSlot(def){
-  if(!def)return'';
-  if(def.tipo==='pos')return(def.pos===1?'1':'2')+def.grupo;
-  if(def.tipo==='tercero')return'3°'+def.candidatos.join('');
-  return'';
+function limpiarSlot(matchId, slotNum, ev) {
+  ev.stopPropagation();
+  bracketState.matches[matchId]['slot' + slotNum] = null;
+  guardarEstado();
+  renderVistaBracket();
 }
-function crearMatchBox(matchDef,esR32){
-  const m=bracketState.matches[matchDef.id]||{slot1:null,slot2:null};
-  const box=document.createElement('div');box.className='match-box';
-  box.innerHTML='<span class="match-code">'+matchDef.id+'</span><span class="match-date">'+matchDef.fecha+'</span>';
-  [1,2].forEach(num=>{
-    const eq=num===1?m.slot1:m.slot2;
-    const slot=document.createElement('div');
-    slot.className='team-drop'+(eq?' filled':'');
-    const tag=esR32?etiquetaSlot(num===1?matchDef.slot1:matchDef.slot2):'';
-    if(eq){
-      slot.draggable=true;
-      slot.ondragstart=(e)=>onDragStartFromSlot(e,matchDef.id,num);
-      slot.innerHTML='<span class="team-flag-sm">'+eq.bandera+'</span><span class="team-name-sm">'+eq.nombre+'</span><span class="clear-x" onclick="limpiarSlot(\''+matchDef.id+'\','+num+',event)">✕</span>';
-    }else{
-      slot.innerHTML=(tag?'<span class="slot-tag">'+tag+'</span>':'')+'<span class="slot-empty-txt">'+(tag?'arrastra aquí':'— vacío —')+'</span>';
+
+// ===== RENDER BRACKET =====
+function etiquetaSlot(def) {
+  if (!def) return '';
+  if (def.tipo === 'pos') return (def.pos === 1 ? '1' : '2') + def.grupo;
+  if (def.tipo === 'tercero') return '3°' + def.candidatos.join('');
+  return '';
+}
+
+function crearMatchBox(matchDef, esR32) {
+  const m = bracketState.matches[matchDef.id] || {slot1: null, slot2: null};
+  const box = document.createElement('div');
+  box.className = 'match-box';
+  box.innerHTML = '<span class="match-code">' + matchDef.id + '</span><span class="match-date">' + matchDef.fecha + '</span>';
+  
+  [1, 2].forEach(num => {
+    const eq = num === 1 ? m.slot1 : m.slot2;
+    const slot = document.createElement('div');
+    slot.className = 'team-drop' + (eq ? ' filled' : '');
+    const tag = esR32 ? etiquetaSlot(num === 1 ? matchDef.slot1 : matchDef.slot2) : '';
+    
+    if (eq) {
+      slot.draggable = true;
+      slot.ondragstart = (e) => onDragStartFromSlot(e, matchDef.id, num);
+      slot.innerHTML = '<span class="team-flag-sm">' + eq.bandera + '</span><span class="team-name-sm">' + eq.nombre + 
+                       '</span><span class="clear-x" onclick="limpiarSlot(\'' + matchDef.id + '\',' + num + ',event)">✕</span>';
+    } else {
+      slot.innerHTML = (tag ? '<span class="slot-tag">' + tag + '</span>' : '') + 
+                       '<span class="slot-empty-txt">' + (tag ? 'arrastra aquí' : '— vacío —') + '</span>';
     }
-    slot.ondragover=(e)=>{e.preventDefault();slot.classList.add('dragover')};
-    slot.ondragleave=()=>slot.classList.remove('dragover');
-    slot.ondrop=(e)=>onDropToSlot(e,matchDef.id,num);
+    
+    slot.ondragover = (e) => { e.preventDefault(); slot.classList.add('dragover'); };
+    slot.ondragleave = () => slot.classList.remove('dragover');
+    slot.ondrop = (e) => onDropToSlot(e, matchDef.id, num);
     box.appendChild(slot);
   });
+  
   return box;
 }
-function renderVistaBracket(){
-  const c=document.getElementById('vista-bracket-elim');c.innerHTML='';
-  const wrap=document.createElement('div');wrap.className='bracket-wrap';
-  const grid=document.createElement('div');grid.className='bracket-grid';
 
-  // Mitad izquierda: R32(0-7) R16(0-3) QF(0-1) ... centro Final ... derecha QF(2-3) R16(4-7) R32(8-15)
-  const izqR32=BRACKET_R32.slice(0,8),derR32=BRACKET_R32.slice(8,16);
-  const izqR16=BRACKET_R16.slice(0,4),derR16=BRACKET_R16.slice(4,8);
-  const izqQF=BRACKET_QF.slice(0,2),derQF=BRACKET_QF.slice(2,4);
-  const izqSF=[BRACKET_SF[0]],derSF=[BRACKET_SF[1]];
-
-  function col(matches,label,esR32){
-    const c=document.createElement('div');c.className='bracket-col';
-    c.innerHTML='<div class="bracket-col-header">'+label+'</div>';
-    const half=document.createElement('div');half.className='bracket-half';
-    matches.forEach(m=>half.appendChild(crearMatchBox(m,esR32)));
-    c.appendChild(half);
-    return c;
+function renderVistaBracket() {
+  const c = document.getElementById('vista-bracket-elim');
+  c.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'bracket-wrap';
+  const grid = document.createElement('div');
+  grid.className = 'bracket-grid';
+  
+  const izqR32 = BRACKET_R32.slice(0, 8), derR32 = BRACKET_R32.slice(8, 16);
+  const izqR16 = BRACKET_R16.slice(0, 4), derR16 = BRACKET_R16.slice(4, 8);
+  const izqQF = BRACKET_QF.slice(0, 2), derQF = BRACKET_QF.slice(2, 4);
+  const izqSF = [BRACKET_SF[0]], derSF = [BRACKET_SF[1]];
+  
+  function col(matches, label, esR32) {
+    const colDiv = document.createElement('div');
+    colDiv.className = 'bracket-col';
+    colDiv.innerHTML = '<div class="bracket-col-header">' + label + '</div>';
+    const half = document.createElement('div');
+    half.className = 'bracket-half';
+    matches.forEach(m => half.appendChild(crearMatchBox(m, esR32)));
+    colDiv.appendChild(half);
+    return colDiv;
   }
-  grid.appendChild(col(izqR32,'R32',true));
-  grid.appendChild(col(izqR16,'R16',false));
-  grid.appendChild(col(izqQF,'Cuartos',false));
-  grid.appendChild(col(izqSF,'Semis',false));
-
-  // Columna central: Final + 3er puesto + copa
-  const centro=document.createElement('div');centro.className='bracket-col center-final-col';
-  centro.innerHTML='<div class="bracket-col-header">Final</div><div class="copa-icon">🏆</div><div class="fecha-final-txt">19 jul · NY/NJ</div>';
-  const finalBox=crearMatchBox(BRACKET_FINAL,false);finalBox.classList.add('final-box');
+  
+  grid.appendChild(col(izqR32, 'R32', true));
+  grid.appendChild(col(izqR16, 'R16', false));
+  grid.appendChild(col(izqQF, 'Cuartos', false));
+  grid.appendChild(col(izqSF, 'Semis', false));
+  
+  // Centro
+  const centro = document.createElement('div');
+  centro.className = 'bracket-col center-final-col';
+  centro.innerHTML = '<div class="bracket-col-header">Final</div><div class="copa-icon">🏆</div><div class="fecha-final-txt">19 jul · NY/NJ</div>';
+  const finalBox = crearMatchBox(BRACKET_FINAL, false);
+  finalBox.classList.add('final-box');
   centro.appendChild(finalBox);
-  const fm=bracketState.matches[BRACKET_FINAL.id];
-  const campeon=fm.slot1&&fm.slot2?null:null; // el campeón se marca manualmente abajo si se desea
-  const tercerWrap=document.createElement('div');tercerWrap.className='tercer-box';
-  tercerWrap.innerHTML='<div class="tercer-label">🥉 3er puesto · 18 jul</div>';
-  tercerWrap.appendChild(crearMatchBox(BRACKET_3ER,false));
+  
+  const tercerWrap = document.createElement('div');
+  tercerWrap.className = 'tercer-box';
+  tercerWrap.innerHTML = '<div class="tercer-label">🥉 3er puesto · 18 jul</div>';
+  tercerWrap.appendChild(crearMatchBox(BRACKET_3ER, false));
   centro.appendChild(tercerWrap);
   grid.appendChild(centro);
-
-  grid.appendChild(col(derSF,'Semis',false));
-  grid.appendChild(col(derQF,'Cuartos',false));
-  grid.appendChild(col(derR16,'R16',false));
-  grid.appendChild(col(derR32,'R32',true));
-
+  
+  grid.appendChild(col(derSF, 'Semis', false));
+  grid.appendChild(col(derQF, 'Cuartos', false));
+  grid.appendChild(col(derR16, 'R16', false));
+  grid.appendChild(col(derR32, 'R32', true));
+  
   wrap.appendChild(grid);
   c.appendChild(wrap);
 }
 
-function autoLlenarBracket(){
-  // Llena los slots de tipo "pos" (1er y 2do lugar) automáticamente según gruposState
-  BRACKET_R32.forEach(m=>{
-    [['slot1',m.slot1],['slot2',m.slot2]].forEach(([key,def])=>{
-      if(def.tipo==='pos'){
-        const g=gruposState[def.grupo];
-        if(g){
-          const eq=def.pos===1?g.clasificados[0]:g.clasificados[1];
-          if(eq)bracketState.matches[m.id][key]={...eq};
+function autoLlenarBracket() {
+  BRACKET_R32.forEach(m => {
+    [['slot1', m.slot1], ['slot2', m.slot2]].forEach(([key, def]) => {
+      if (def.tipo === 'pos') {
+        const g = gruposState[def.grupo];
+        if (g) {
+          const eq = def.pos === 1 ? g.clasificados[0] : g.clasificados[1];
+          if (eq) bracketState.matches[m.id][key] = {...eq};
         }
       }
     });
   });
-  guardarBS();cambiarVistaBracket('bracket');
-  actualizarStatus('⚡ Posiciones 1°/2° ubicadas. Arrastra los terceros manualmente.');
+  guardarEstado();
+  cambiarVistaBracket('bracket');
+  document.getElementById('statusMsg').textContent = '⚡ Posiciones 1°/2° ubicadas en el bracket';
+  setTimeout(() => document.getElementById('statusMsg').textContent = 'Actualizado con resultados J1+J2', 3000);
 }
-function resetBracket(){
-  if(confirm('¿Reiniciar todo el bracket (grupos clasificados y cuadro de eliminación)?')){
-    initBS();guardarBS();renderVistaGrupos();renderVistaBracket();
-  }
-}
-function generarCodigoBracket(){
-  let c='// ===== Pega esto reemplazando la sección equivalente en el HTML =====\n';
-  c+='// 1) Estado de grupos clasificados y terceros activos (pégalo como BRACKET_SAVED_STATE)\n';
-  c+='const BRACKET_SAVED_STATE='+JSON.stringify({gs:gruposState,bs:bracketState})+';\n';
-  navigator.clipboard.writeText(c).then(()=>actualizarStatus('📋 Código del bracket copiado. Pégalo en index.html y haz push')).catch(()=>{
-    console.log(c);actualizarStatus('⚠️ No se pudo copiar, revisa la consola');
+
+function generarCodigoBracket() {
+  const estado = {gs: gruposState, bs: bracketState};
+  const c = '// Pega esto en el HTML para restaurar el estado del bracket:\nconst BRACKET_SAVED_STATE = ' + 
+            JSON.stringify(estado, null, 2) + ';\n';
+  navigator.clipboard.writeText(c).then(() => {
+    document.getElementById('statusMsg').textContent = '📋 Código del bracket copiado';
+    setTimeout(() => document.getElementById('statusMsg').textContent = 'Actualizado con resultados J1+J2', 3000);
+  }).catch(() => {
+    console.log(c);
+    document.getElementById('statusMsg').textContent = '⚠️ Revisa la consola (F12)';
   });
 }
 
-// Si existe un estado guardado pegado en el código (BRACKET_SAVED_STATE), se usa como base inicial
-function aplicarEstadoGuardadoSiExiste(){
-  if(typeof BRACKET_SAVED_STATE!=='undefined'){
-    try{
-      if(BRACKET_SAVED_STATE.gs)Object.keys(gruposState).forEach(g=>{if(BRACKET_SAVED_STATE.gs[g]){if(BRACKET_SAVED_STATE.gs[g].eq)gruposState[g].equipos=BRACKET_SAVED_STATE.gs[g].eq;if(BRACKET_SAVED_STATE.gs[g].cl)gruposState[g].clasificados=BRACKET_SAVED_STATE.gs[g].cl}});
-      if(BRACKET_SAVED_STATE.bs){if(BRACKET_SAVED_STATE.bs.terceros)bracketState.terceros=BRACKET_SAVED_STATE.bs.terceros;if(BRACKET_SAVED_STATE.bs.matches)Object.keys(bracketState.matches).forEach(id=>{if(BRACKET_SAVED_STATE.bs.matches[id])bracketState.matches[id]=BRACKET_SAVED_STATE.bs.matches[id]})}
-    }catch(e){}
+// ===== EXCEL =====
+function descargarExcel() {
+  try {
+    const wb = XLSX.utils.book_new();
+    const dp = [['Persona', ...Object.keys(GRUPOS), 'TOTAL']];
+    PERSONAS.forEach(p => {
+      const f = [p];
+      let t = 0;
+      Object.keys(GRUPOS).forEach(g => {
+        const v = puntajes[p] ? (puntajes[p][g] || 0) : 0;
+        f.push(v);
+        t += v;
+      });
+      f.push(t);
+      dp.push(f);
+    });
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dp), 'Puntajes');
+    XLSX.writeFile(wb, 'Polla_Mundial2026_' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '.xlsx');
+  } catch(e) {
+    console.log('Error descargando Excel:', e);
   }
 }
 
+function cargarExcel(e) {
+  const f = e.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = function(ev) {
+    try {
+      const wb = XLSX.read(new Uint8Array(ev.target.result), {type: 'array'});
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, {header: 1});
+      if (!rows[0] || rows[0][0] !== 'Persona') return;
+      const gk = Object.keys(GRUPOS);
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (!row || !row[0]) continue;
+        const p = String(row[0]).trim();
+        if (!PERSONAS.includes(p)) continue;
+        // Solo cargamos para referencia, los puntajes se recalculan automáticamente
+      }
+      calcularTodosPuntajes();
+      renderGrupos();
+      document.getElementById('statusMsg').textContent = '✅ Excel cargado (puntajes recalculados)';
+      setTimeout(() => document.getElementById('statusMsg').textContent = 'Actualizado con resultados J1+J2', 3000);
+    } catch(e) {
+      console.log('Error:', e);
+    }
+  };
+  r.readAsArrayBuffer(f);
+  e.target.value = '';
+}
+
+// ===== INICIO =====
 init();
-initBS();
-aplicarEstadoGuardadoSiExiste();
-cargarBS();
+calcularTodosPuntajes();
 renderGrupos();
 renderVistaGrupos();
 cambiarVistaBracket('grupos');
