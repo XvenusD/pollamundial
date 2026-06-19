@@ -595,21 +595,21 @@
 
     <script>
         // ============================================================
-        // PUNTAJES INICIALES ACTUALIZADOS
+        // PUNTAJES INICIALES ACTUALIZADOS (CORREGIDOS)
         // ============================================================
         const PUNTAJES_INICIALES={
-            'Duvan':{A:3,B:2,C:3,D:0,E:6,F:3,G:0,H:1,I:6,J:3,K:1,L:3},
-            'Camila':{A:6,B:6,C:3,D:1,E:6,F:3,G:1,H:3,I:1,J:6,K:1,L:6},
-            'Camilo':{A:6,B:2,C:3,D:3,E:1,F:3,G:0,H:1,I:1,J:3,K:3,L:3},
-            'Mateo':{A:6,B:2,C:3,D:3,E:6,F:1,G:1,H:1,I:2,J:6,K:1,L:3},
-            'Miguel':{A:6,B:1,C:3,D:1,E:6,F:2,G:0,H:1,I:1,J:3,K:1,L:3},
-            'Doc Camilo':{A:6,B:3,C:1,D:6,E:6,F:1,G:0,H:1,I:1,J:3,K:1,L:3},
-            'Katherine':{A:6,B:3,C:3,D:1,E:3,F:1,G:0,H:3,I:2,J:3,K:1,L:3},
-            'Sandra':{A:3,B:6,C:1,D:6,E:6,F:3,G:1,H:1,I:2,J:6,K:1,L:3},
-            'Estefania':{A:6,B:6,C:1,D:6,E:3,F:3,G:0,H:1,I:2,J:6,K:3,L:3},
-            'Diana':{A:6,B:2,C:1,D:0,E:6,F:1,G:1,H:3,I:2,J:6,K:1,L:3},
-            'Sofia':{A:2,B:1,C:1,D:6,E:6,F:1,G:1,H:1,I:1,J:6,K:3,L:3}
-            };
+            'Duvan':{A:1,B:2,C:3,D:0,E:6,F:3,G:0,H:1,I:6,J:3,K:1,L:3},
+            'Camila':{A:2,B:6,C:3,D:1,E:6,F:3,G:1,H:3,I:1,J:6,K:1,L:6},
+            'Camilo':{A:2,B:2,C:3,D:3,E:1,F:3,G:0,H:1,I:1,J:3,K:3,L:3},
+            'Mateo':{A:2,B:2,C:3,D:3,E:6,F:1,G:1,H:1,I:2,J:6,K:1,L:3},
+            'Miguel':{A:2,B:1,C:3,D:1,E:6,F:2,G:0,H:1,I:1,J:3,K:1,L:3},
+            'Doc Camilo':{A:2,B:3,C:1,D:6,E:6,F:1,G:0,H:1,I:1,J:3,K:1,L:3},
+            'Katherine':{A:2,B:3,C:3,D:1,E:3,F:1,G:0,H:3,I:2,J:3,K:1,L:3},
+            'Sandra':{A:1,B:6,C:1,D:6,E:6,F:3,G:1,H:1,I:2,J:6,K:1,L:3},
+            'Estefania':{A:2,B:6,C:1,D:6,E:3,F:3,G:0,H:1,I:2,J:6,K:3,L:3},
+            'Diana':{A:2,B:2,C:1,D:0,E:6,F:1,G:1,H:3,I:2,J:6,K:1,L:3},
+            'Sofia':{A:6,B:1,C:1,D:6,E:6,F:1,G:1,H:1,I:1,J:6,K:3,L:3}
+        };
         // ============================================================
         // DATOS COMPLETOS
         // ============================================================
@@ -788,6 +788,7 @@
                         nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }] } }
         };
 
+        // CLASIFICADOS INICIALES - Estos son los REALES que determinan los puntajes
         const CLASIFICADOS_INICIALES = {
             A: [{ sigla: 'KOR', nombre: 'Corea del Sur', bandera: '🇰🇷' }, { sigla: 'MEX', nombre: 'México', bandera: '🇲🇽' }],
             B: [{ sigla: 'SUI', nombre: 'Suiza', bandera: '🇨🇭' }, { sigla: 'CAN', nombre: 'Canadá', bandera: '🇨🇦' }],
@@ -1005,14 +1006,14 @@
                 if (rankingVisible) renderPollaRanking();
             }
             if (pageMatrix.classList.contains('active')) {
-                calcularTodosPuntajes(); // Recalcular antes de mostrar
+                calcularTodosPuntajes();
                 renderMatrix();
             }
             if (pageBracket.classList.contains('active')) {
                 renderVistaGruposBracket();
                 const bracketVisible = document.getElementById('vista-bracket-elim').style.display !== 'none';
                 if (bracketVisible) {
-                    autoLlenarR32Silencioso(); // Asegurar que el bracket esté actualizado
+                    autoLlenarR32Silencioso();
                     renderBracket();
                 }
             }
@@ -1148,7 +1149,7 @@
 
             if (pageName === 'polla') showPollaView('grupos');
             if (pageName === 'matrix') {
-                calcularTodosPuntajes(); // Asegurar puntajes actualizados
+                calcularTodosPuntajes();
                 renderMatrix();
             }
             if (pageName === 'bracket') {
@@ -1236,7 +1237,7 @@
         // MATRIX
         // ============================================================
         function renderMatrix() {
-            calcularTodosPuntajes(); // Asegurar puntajes actualizados antes de pintar
+            calcularTodosPuntajes();
             const container = document.getElementById('matrix-container');
             if (!container) return;
             let html = '<table class="matrix-table"><thead><tr><th>Persona</th>';
@@ -1271,7 +1272,7 @@
         }
 
         // ============================================================
-        // VISTA GRUPOS BRACKET (EDITABLE CON DRAG & DROP - CORREGIDO)
+        // VISTA GRUPOS BRACKET (EDITABLE CON DRAG & DROP)
         // ============================================================
         function renderVistaGruposBracket() {
             const container = document.getElementById('vista-grupos-bracket');
@@ -1373,7 +1374,6 @@
                         return;
                     }
 
-                    // Intercambiar equipos en el array
                     const equipos = gruposState[grupoOrigen].equipos;
                     const temp = equipos[posOrigen];
                     equipos[posOrigen] = equipos[posDestino];
@@ -1381,15 +1381,14 @@
 
                     // ACTUALIZAR CLASIFICADOS basados en las nuevas posiciones
                     gruposState[grupoOrigen].clasificados = [
-                        { ...equipos[0] },  // 1er lugar
-                        { ...equipos[1] }   // 2do lugar
+                        { ...equipos[0] },
+                        { ...equipos[1] }
                     ];
 
                     dragData = null;
                     actualizarTodoDesdeGrupos(grupoOrigen);
                 });
 
-                // Click para mover equipos a posiciones 1-2
                 row.addEventListener('click', function(e) {
                     if (dragData) return;
                     const grupo = this.dataset.grupo;
@@ -1399,11 +1398,9 @@
                     if (!gd) return;
 
                     if (pos <= 1) {
-                        // Solo permitir si el equipo no está ya en posición 0-1
                         const equipos = gd.equipos;
                         const idxActual = equipos.findIndex(e => e.sigla === sigla);
                         if (idxActual > 1) {
-                            // Intercambiar con la posición clickeada
                             const temp = equipos[pos];
                             equipos[pos] = equipos[idxActual];
                             equipos[idxActual] = temp;
@@ -1424,7 +1421,7 @@
             document.getElementById('btnFaseGrupos').className = 'btn ' + (v === 'grupos' ? 'btn-primary' : 'btn-outline');
             document.getElementById('btnElim').className = 'btn ' + (v === 'bracket' ? 'btn-primary' : 'btn-outline');
             if (v === 'bracket') {
-                autoLlenarR32Silencioso(); // Asegurar que el bracket esté actualizado
+                autoLlenarR32Silencioso();
                 renderBracket();
             }
             if (v === 'grupos') renderVistaGruposBracket();
@@ -1759,13 +1756,10 @@
         cambiarVistaBracket('grupos');
         showPollaView('grupos');
 
-        console.log('✅ Mundial 2026 - Plataforma completa inicializada');
-        console.log('💡 Cambios corregidos:');
-        console.log('  - El bracket R32 ahora se actualiza automáticamente al arrastrar equipos en los grupos');
-        console.log('  - La Matrix siempre muestra puntajes actualizados desde gruposState');
-        console.log('  - Las vistas se refrescan correctamente al navegar entre pestañas');
-        console.log('💡 Arrastra equipos en Bracket → Grupos para cambiar clasificados');
-        console.log('💡 Usa el botón 📋 Copiar PUNTAJES_INICIALES para pegarlo en GitHub');
+        console.log('✅ Mundial 2026 - Plataforma completa inicializada con puntajes actualizados');
+        console.log('💡 Sofia ahora tiene 6pts en Grupo A (Corea 1°, México 2° = pronóstico correcto)');
+        console.log('💡 Todos los puntajes reflejan los clasificados reales actualizados');
+        console.log('💡 El bracket se actualiza automáticamente al cambiar clasificados');
     </script>
 </body>
 </html>
