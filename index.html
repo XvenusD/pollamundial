@@ -60,6 +60,8 @@
         .btn-warning:hover { background: #d48a0a; }
         .btn-copiar { background: #FAC775; color: #633806; border-color: #FAC775; font-weight: 700; }
         .btn-copiar:hover { background: #e0b05a; }
+        .btn-danger { background: #993C1D; color: #fff; border-color: #993C1D; }
+        .btn-danger:hover { background: #7a2e16; }
         .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
         
         /* Ranking TOP */
@@ -74,6 +76,7 @@
             transition: all 0.2s;
         }
         .ranking-card:hover { border-color: #FAC775; box-shadow: 0 0 15px rgba(250,199,117,0.1); }
+        .ranking-card.leader { border-color: #FAC775; box-shadow: 0 0 20px rgba(250,199,117,0.2); background: #1a1f2b; }
         .rank-num {
             width: 40px; height: 40px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
@@ -87,8 +90,8 @@
         .points-label { font-size: 0.65rem; color: #8b949e; }
         .rank-details { font-size: 0.7rem; color: #8b949e; margin-top: 4px; }
 
-        /* Grupos */
-        .grupo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+        /* Grupos - EDITABLES */
+        .grupo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 14px; }
         .grupo-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; overflow-x: auto; }
         .grupo-label {
             font-size: 0.75rem; color: #8b949e; font-weight: 600;
@@ -97,6 +100,43 @@
             padding: 6px 12px; border-radius: 6px;
             display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
         }
+        .clasificados-row {
+            display: flex; gap: 10px; margin-bottom: 12px;
+            padding: 8px; background: #0d1117; border-radius: 8px;
+            flex-wrap: wrap; align-items: center;
+        }
+        .clasificado-slot {
+            flex: 1; min-width: 140px;
+            padding: 8px 10px; border-radius: 6px;
+            border: 2px dashed #30363d;
+            text-align: center; cursor: pointer;
+            transition: all 0.2s; position: relative;
+            font-size: 0.8rem;
+        }
+        .clasificado-slot:hover { border-color: #FAC775; background: rgba(250,199,117,0.05); }
+        .clasificado-slot.puesto-1 { border-color: #FAC775; background: rgba(250,199,117,0.08); }
+        .clasificado-slot.puesto-2 { border-color: #D3D1C7; background: rgba(211,209,199,0.05); }
+        .clasificado-slot .puesto-badge {
+            position: absolute; top: -8px; left: 10px;
+            padding: 2px 8px; border-radius: 8px;
+            font-size: 0.6rem; font-weight: 700;
+        }
+        .puesto-1 .puesto-badge { background: #FAC775; color: #633806; }
+        .puesto-2 .puesto-badge { background: #D3D1C7; color: #444441; }
+        .equipo-selector {
+            display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
+        }
+        .equipo-option {
+            padding: 4px 10px; border-radius: 16px;
+            border: 1px solid #30363d; background: transparent;
+            color: #8b949e; font-size: 0.7rem; cursor: pointer;
+            transition: all 0.15s; display: flex; align-items: center; gap: 4px;
+        }
+        .equipo-option:hover { border-color: #185FA5; color: #e6edf3; background: rgba(24,95,165,0.1); }
+        .equipo-option.selected { background: #3B6D11; color: #fff; border-color: #3B6D11; }
+        .equipo-option.selected-p1 { background: #FAC775; color: #633806; border-color: #FAC775; font-weight: 700; }
+        .equipo-option.selected-p2 { background: #D3D1C7; color: #444441; border-color: #D3D1C7; font-weight: 700; }
+
         table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         th { text-align: left; padding: 6px 10px; color: #8b949e; font-weight: 600; border-bottom: 1px solid #30363d; font-size: 0.7rem; text-transform: uppercase; }
         td { padding: 6px 10px; border-bottom: 0.5px solid #30363d; color: #e6edf3; }
@@ -120,20 +160,12 @@
         .matrix-table tr:hover td { background: rgba(255,255,255,0.03); }
         .matrix-table .total-col { font-weight: 700; background: #21262d; font-size: 0.9rem; }
         .matrix-table .total-row { font-weight: 700; background: #21262d; }
-        .matrix-editable { cursor: pointer; transition: all 0.2s; }
-        .matrix-editable:hover { background: rgba(24,95,165,0.3) !important; outline: 2px solid #185FA5; outline-offset: -2px; }
-        .matrix-editable input { width: 40px; background: #0d1117; border: 1px solid #185FA5; color: #e6edf3; text-align: center; font-size: 0.75rem; font-weight: 600; padding: 2px; border-radius: 4px; }
         .matrix-puntos-6 { background: rgba(153,60,29,0.3); color: #f07050; font-weight: 700; }
         .matrix-puntos-3 { background: rgba(59,109,17,0.3); color: #7dc542; font-weight: 700; }
         .matrix-puntos-2 { background: rgba(250,199,117,0.3); color: #FAC775; font-weight: 700; }
         .matrix-puntos-1 { background: rgba(24,95,165,0.3); color: #5b9dd9; font-weight: 700; }
 
         /* Bracket */
-        .acciones-bar {
-            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-            margin-bottom: 16px; padding: 10px 16px;
-            background: #161b22; border-radius: 10px; border: 1px solid #30363d;
-        }
         .bracket-wrap { overflow-x: auto; padding-bottom: 20px; }
         .bracket-grid {
             display: grid;
@@ -152,8 +184,8 @@
             background: #161b22; border: 1px solid #30363d; border-radius: 6px;
             margin: 2px 4px; font-size: 0.7rem; position: relative; transition: all 0.15s;
         }
-        .match-box:hover { border-color: #185FA5; box-shadow: 0 0 12px rgba(24,95,165,0.15); }
-        .match-box.filled { border-color: #3B6D11; box-shadow: 0 0 8px rgba(59,109,17,0.2); }
+        .match-box:hover { border-color: #185FA5; }
+        .match-box.filled { border-color: #3B6D11; }
         .match-code {
             position: absolute; top: -8px; left: 6px; background: #0d1117;
             color: #8b949e; font-size: 0.5rem; padding: 0 5px;
@@ -189,10 +221,10 @@
         @keyframes toastIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
         @keyframes toastOut { from{opacity:1;transform:translateY(0)} to{opacity:0;transform:translateY(20px)} }
 
-        .leyenda-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
-        .leyenda-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px; text-align: center; }
+        .leyenda-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+        .leyenda-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; text-align: center; }
         .leyenda-points { font-size: 2rem; font-weight: 700; margin-bottom: 4px; }
-        .leyenda-desc { font-size: 0.75rem; color: #8b949e; }
+        .leyenda-desc { font-size: 0.7rem; color: #8b949e; }
 
         @media (max-width: 900px) {
             .bracket-grid { min-width: 1650px; }
@@ -247,10 +279,11 @@
     <div class="page" id="page-grupos">
         <div class="page-header">
             <div>
-                <h1>📋 Pronósticos por Grupo</h1>
-                <p>Comparativa de pronósticos vs clasificados reales</p>
+                <h1>📋 Grupos — ¡Selecciona 1° y 2° lugar!</h1>
+                <p>Haz clic en los botones para elegir qué equipos clasifican 1° y 2°</p>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-danger" onclick="resetearClasificados()">🔄 Resetear clasificados</button>
                 <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES</button>
                 <button class="btn btn-success" onclick="descargarExcel()">💾 Descargar Excel</button>
             </div>
@@ -262,12 +295,12 @@
     <div class="page" id="page-matrix">
         <div class="page-header">
             <div>
-                <h1>🔢 Matrix de Puntajes — EDITABLE</h1>
-                <p>Haz clic en cualquier celda para cambiar el puntaje. Presiona "Aplicar cambios" para actualizar todo.</p>
+                <h1>🔢 Matrix de Puntajes</h1>
+                <p>Vista completa de todos los puntajes por grupo y totales</p>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button class="btn btn-warning" onclick="aplicarCambiosMatrix()">✅ Aplicar cambios</button>
                 <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES</button>
+                <button class="btn btn-success" onclick="descargarExcel()">💾 Descargar Excel</button>
             </div>
         </div>
         <div class="card">
@@ -280,7 +313,7 @@
         <div class="page-header">
             <div>
                 <h1>🏟 Bracket FIFA 2026</h1>
-                <p>Se actualiza automáticamente con los cambios de la matriz</p>
+                <p>Se actualiza automáticamente según los clasificados de cada grupo</p>
             </div>
         </div>
         <div class="bracket-wrap" id="bracket-container"></div>
@@ -293,18 +326,70 @@
         const PERSONAS = ['Duvan', 'Camila', 'Camilo', 'Mateo', 'Miguel', 'Doc Camilo', 'Katherine', 'Sandra', 'Estefania', 'Diana', 'Sofia'];
 
         const GRUPOS = {
-            A: { nombre: 'Grupo A', equipos: [{ sigla: 'MEX', nombre: 'México', bandera: '🇲🇽' }, { sigla: 'KOR', nombre: 'Corea del Sur', bandera: '🇰🇷' }, { sigla: 'CZE', nombre: 'Chequia', bandera: '🇨🇿' }, { sigla: 'ZAF', nombre: 'Sudáfrica', bandera: '🇿🇦' }] },
-            B: { nombre: 'Grupo B', equipos: [{ sigla: 'SUI', nombre: 'Suiza', bandera: '🇨🇭' }, { sigla: 'CAN', nombre: 'Canadá', bandera: '🇨🇦' }, { sigla: 'QAT', nombre: 'Qatar', bandera: '🇶🇦' }, { sigla: 'BIH', nombre: 'Bosnia', bandera: '🇧🇦' }] },
-            C: { nombre: 'Grupo C', equipos: [{ sigla: 'SCO', nombre: 'Escocia', bandera: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }, { sigla: 'MAR', nombre: 'Marruecos', bandera: '🇲🇦' }, { sigla: 'BRA', nombre: 'Brasil', bandera: '🇧🇷' }, { sigla: 'HTI', nombre: 'Haití', bandera: '🇭🇹' }] },
-            D: { nombre: 'Grupo D', equipos: [{ sigla: 'USA', nombre: 'EE.UU.', bandera: '🇺🇸' }, { sigla: 'AUS', nombre: 'Australia', bandera: '🇦🇺' }, { sigla: 'TUR', nombre: 'Turquía', bandera: '🇹🇷' }, { sigla: 'PAR', nombre: 'Paraguay', bandera: '🇵🇾' }] },
-            E: { nombre: 'Grupo E', equipos: [{ sigla: 'GER', nombre: 'Alemania', bandera: '🇩🇪' }, { sigla: 'CIV', nombre: 'Costa de Marfil', bandera: '🇨🇮' }, { sigla: 'ECU', nombre: 'Ecuador', bandera: '🇪🇨' }, { sigla: 'CUW', nombre: 'Curazao', bandera: '🇨🇼' }] },
-            F: { nombre: 'Grupo F', equipos: [{ sigla: 'SWE', nombre: 'Suecia', bandera: '🇸🇪' }, { sigla: 'JPN', nombre: 'Japón', bandera: '🇯🇵' }, { sigla: 'NED', nombre: 'Países Bajos', bandera: '🇳🇱' }, { sigla: 'TUN', nombre: 'Túnez', bandera: '🇹🇳' }] },
-            G: { nombre: 'Grupo G', equipos: [{ sigla: 'NZL', nombre: 'N. Zelanda', bandera: '🇳🇿' }, { sigla: 'IRN', nombre: 'Irán', bandera: '🇮🇷' }, { sigla: 'BEL', nombre: 'Bélgica', bandera: '🇧🇪' }, { sigla: 'EGY', nombre: 'Egipto', bandera: '🇪🇬' }] },
-            H: { nombre: 'Grupo H', equipos: [{ sigla: 'URU', nombre: 'Uruguay', bandera: '🇺🇾' }, { sigla: 'KSA', nombre: 'Arabia Saudí', bandera: '🇸🇦' }, { sigla: 'ESP', nombre: 'España', bandera: '🇪🇸' }, { sigla: 'CPV', nombre: 'Cabo Verde', bandera: '🇨🇻' }] },
-            I: { nombre: 'Grupo I', equipos: [{ sigla: 'NOR', nombre: 'Noruega', bandera: '🇳🇴' }, { sigla: 'FRA', nombre: 'Francia', bandera: '🇫🇷' }, { sigla: 'SEN', nombre: 'Senegal', bandera: '🇸🇳' }, { sigla: 'IRQ', nombre: 'Irak', bandera: '🇮🇶' }] },
-            J: { nombre: 'Grupo J', equipos: [{ sigla: 'ARG', nombre: 'Argentina', bandera: '🇦🇷' }, { sigla: 'AUT', nombre: 'Austria', bandera: '🇦🇹' }, { sigla: 'JOR', nombre: 'Jordania', bandera: '🇯🇴' }, { sigla: 'ALG', nombre: 'Argelia', bandera: '🇩🇿' }] },
-            K: { nombre: 'Grupo K', equipos: [{ sigla: 'COL', nombre: 'Colombia', bandera: '🇨🇴' }, { sigla: 'COD', nombre: 'RD Congo', bandera: '🇨🇩' }, { sigla: 'POR', nombre: 'Portugal', bandera: '🇵🇹' }, { sigla: 'UZB', nombre: 'Uzbekistán', bandera: '🇺🇿' }] },
-            L: { nombre: 'Grupo L', equipos: [{ sigla: 'ENG', nombre: 'Inglaterra', bandera: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' }, { sigla: 'GHA', nombre: 'Ghana', bandera: '🇬🇭' }, { sigla: 'CRO', nombre: 'Croacia', bandera: '🇭🇷' }, { sigla: 'PAN', nombre: 'Panamá', bandera: '🇵🇦' }] }
+            A: { nombre: 'Grupo A', equipos: ['MEX','KOR','CZE','ZAF'] },
+            B: { nombre: 'Grupo B', equipos: ['SUI','CAN','QAT','BIH'] },
+            C: { nombre: 'Grupo C', equipos: ['SCO','MAR','BRA','HTI'] },
+            D: { nombre: 'Grupo D', equipos: ['USA','AUS','TUR','PAR'] },
+            E: { nombre: 'Grupo E', equipos: ['GER','CIV','ECU','CUW'] },
+            F: { nombre: 'Grupo F', equipos: ['SWE','JPN','NED','TUN'] },
+            G: { nombre: 'Grupo G', equipos: ['NZL','IRN','BEL','EGY'] },
+            H: { nombre: 'Grupo H', equipos: ['URU','KSA','ESP','CPV'] },
+            I: { nombre: 'Grupo I', equipos: ['NOR','FRA','SEN','IRQ'] },
+            J: { nombre: 'Grupo J', equipos: ['ARG','AUT','JOR','ALG'] },
+            K: { nombre: 'Grupo K', equipos: ['COL','COD','POR','UZB'] },
+            L: { nombre: 'Grupo L', equipos: ['ENG','GHA','CRO','PAN'] }
+        };
+
+        // Datos completos de equipos (banderas y nombres)
+        const EQUIPOS_DATA = {
+            'MEX': { nombre: 'México', bandera: '🇲🇽' },
+            'KOR': { nombre: 'Corea del Sur', bandera: '🇰🇷' },
+            'CZE': { nombre: 'Chequia', bandera: '🇨🇿' },
+            'ZAF': { nombre: 'Sudáfrica', bandera: '🇿🇦' },
+            'SUI': { nombre: 'Suiza', bandera: '🇨🇭' },
+            'CAN': { nombre: 'Canadá', bandera: '🇨🇦' },
+            'QAT': { nombre: 'Qatar', bandera: '🇶🇦' },
+            'BIH': { nombre: 'Bosnia', bandera: '🇧🇦' },
+            'SCO': { nombre: 'Escocia', bandera: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
+            'MAR': { nombre: 'Marruecos', bandera: '🇲🇦' },
+            'BRA': { nombre: 'Brasil', bandera: '🇧🇷' },
+            'HTI': { nombre: 'Haití', bandera: '🇭🇹' },
+            'USA': { nombre: 'EE.UU.', bandera: '🇺🇸' },
+            'AUS': { nombre: 'Australia', bandera: '🇦🇺' },
+            'TUR': { nombre: 'Turquía', bandera: '🇹🇷' },
+            'PAR': { nombre: 'Paraguay', bandera: '🇵🇾' },
+            'GER': { nombre: 'Alemania', bandera: '🇩🇪' },
+            'CIV': { nombre: 'Costa de Marfil', bandera: '🇨🇮' },
+            'ECU': { nombre: 'Ecuador', bandera: '🇪🇨' },
+            'CUW': { nombre: 'Curazao', bandera: '🇨🇼' },
+            'SWE': { nombre: 'Suecia', bandera: '🇸🇪' },
+            'JPN': { nombre: 'Japón', bandera: '🇯🇵' },
+            'NED': { nombre: 'Países Bajos', bandera: '🇳🇱' },
+            'TUN': { nombre: 'Túnez', bandera: '🇹🇳' },
+            'NZL': { nombre: 'N. Zelanda', bandera: '🇳🇿' },
+            'IRN': { nombre: 'Irán', bandera: '🇮🇷' },
+            'BEL': { nombre: 'Bélgica', bandera: '🇧🇪' },
+            'EGY': { nombre: 'Egipto', bandera: '🇪🇬' },
+            'URU': { nombre: 'Uruguay', bandera: '🇺🇾' },
+            'KSA': { nombre: 'Arabia Saudí', bandera: '🇸🇦' },
+            'ESP': { nombre: 'España', bandera: '🇪🇸' },
+            'CPV': { nombre: 'Cabo Verde', bandera: '🇨🇻' },
+            'NOR': { nombre: 'Noruega', bandera: '🇳🇴' },
+            'FRA': { nombre: 'Francia', bandera: '🇫🇷' },
+            'SEN': { nombre: 'Senegal', bandera: '🇸🇳' },
+            'IRQ': { nombre: 'Irak', bandera: '🇮🇶' },
+            'ARG': { nombre: 'Argentina', bandera: '🇦🇷' },
+            'AUT': { nombre: 'Austria', bandera: '🇦🇹' },
+            'JOR': { nombre: 'Jordania', bandera: '🇯🇴' },
+            'ALG': { nombre: 'Argelia', bandera: '🇩🇿' },
+            'COL': { nombre: 'Colombia', bandera: '🇨🇴' },
+            'COD': { nombre: 'RD Congo', bandera: '🇨🇩' },
+            'POR': { nombre: 'Portugal', bandera: '🇵🇹' },
+            'UZB': { nombre: 'Uzbekistán', bandera: '🇺🇿' },
+            'ENG': { nombre: 'Inglaterra', bandera: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
+            'GHA': { nombre: 'Ghana', bandera: '🇬🇭' },
+            'CRO': { nombre: 'Croacia', bandera: '🇭🇷' },
+            'PAN': { nombre: 'Panamá', bandera: '🇵🇦' }
         };
 
         const PRONOSTICOS = {
@@ -321,7 +406,7 @@
             Sofia: {A:['KOR','MEX'],B:['QAT','CAN'],C:['MAR','BRA'],D:['USA','AUS'],E:['GER','CIV'],F:['NED','SWE'],G:['IRN','EGY'],H:['KSA','ESP'],I:['FRA','IRQ'],J:['ARG','AUT'],K:['COL','POR'],L:['ENG','CRO']}
         };
 
-        const CLASIFICADOS_REALES = {
+        const CLASIFICADOS_DEFAULT = {
             A: ['KOR', 'MEX'], B: ['SUI', 'CAN'], C: ['SCO', 'MAR'], D: ['USA', 'AUS'],
             E: ['GER', 'CIV'], F: ['SWE', 'JPN'], G: ['NZL', 'IRN'], H: ['URU', 'KSA'],
             I: ['NOR', 'FRA'], J: ['ARG', 'AUT'], K: ['COL', 'COD'], L: ['ENG', 'GHA']
@@ -346,18 +431,27 @@
             { id: 'M88', fecha: '3 jul', slot1: { tag: '2D', grupo: 'D', pos: 2 }, slot2: { tag: '2G', grupo: 'G', pos: 2 } }
         ];
 
-        let puntajesMatrix = {};
+        // Estado
         let clasificadosActuales = {};
+        let puntajesMatrix = {};
 
         function initEstado() {
-            clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_REALES));
-            PERSONAS.forEach(persona => {
-                puntajesMatrix[persona] = {};
-                Object.keys(GRUPOS).forEach(grupo => {
-                    puntajesMatrix[persona][grupo] = calcularPuntajeGrupo(persona, grupo);
-                });
-            });
-            cargarEstado();
+            const saved = localStorage.getItem('mundial2026_v3');
+            if (saved) {
+                try {
+                    const d = JSON.parse(saved);
+                    clasificadosActuales = d.clasificadosActuales || JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
+                } catch (e) {
+                    clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
+                }
+            } else {
+                clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
+            }
+            recalcularTodosPuntajes();
+        }
+
+        function getEquipo(sigla) {
+            return EQUIPOS_DATA[sigla] || { nombre: sigla || '—', bandera: '⬜' };
         }
 
         function calcularPuntajeGrupo(persona, grupo) {
@@ -373,20 +467,178 @@
             return 0;
         }
 
-        function getEquipoCompleto(sigla) {
-            for (let g of Object.values(GRUPOS)) {
-                const eq = g.equipos.find(e => e.sigla === sigla);
-                if (eq) return eq;
-            }
-            return { sigla, nombre: sigla || '—', bandera: '⬜' };
+        function recalcularTodosPuntajes() {
+            PERSONAS.forEach(persona => {
+                puntajesMatrix[persona] = {};
+                Object.keys(GRUPOS).forEach(grupo => {
+                    puntajesMatrix[persona][grupo] = calcularPuntajeGrupo(persona, grupo);
+                });
+            });
         }
 
         function calcTotal(persona) {
             return Object.values(puntajesMatrix[persona] || {}).reduce((a, b) => a + b, 0);
         }
 
+        function guardarEstado() {
+            localStorage.setItem('mundial2026_v3', JSON.stringify({ clasificadosActuales }));
+            document.getElementById('syncBadge').textContent = '⚡ Actualizado';
+            setTimeout(() => document.getElementById('syncBadge').textContent = '⚡ Datos sincronizados', 1500);
+        }
+
         // ============================================================
-        // RENDER TOP / RANKING
+        // CAMBIAR CLASIFICADOS DE UN GRUPO
+        // ============================================================
+        function setClasificado(grupo, posicion, sigla) {
+            if (!clasificadosActuales[grupo]) clasificadosActuales[grupo] = [null, null];
+            
+            // Si el equipo ya está en la otra posición, intercambiar
+            const otraPos = posicion === 1 ? 1 : 0; // índice 0 o 1
+            const posActual = posicion === 1 ? 0 : 1;
+            const otraPosActual = posicion === 1 ? 1 : 0;
+            
+            if (clasificadosActuales[grupo][otraPosActual] === sigla) {
+                // Intercambiar
+                const temp = clasificadosActuales[grupo][posActual];
+                clasificadosActuales[grupo][posActual] = clasificadosActuales[grupo][otraPosActual];
+                clasificadosActuales[grupo][otraPosActual] = temp;
+            } else {
+                clasificadosActuales[grupo][posActual] = sigla;
+            }
+            
+            recalcularTodosPuntajes();
+            refrescarTodo();
+            guardarEstado();
+        }
+
+        function resetearClasificados() {
+            if (confirm('¿Restablecer todos los clasificados a los valores originales?')) {
+                clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
+                recalcularTodosPuntajes();
+                refrescarTodo();
+                guardarEstado();
+                showToast('🔄 Clasificados restablecidos');
+            }
+        }
+
+        // ============================================================
+        // RENDER GRUPOS (CON SELECTOR DE 1° Y 2°)
+        // ============================================================
+        function renderGrupos() {
+            const container = document.getElementById('grupos-container');
+            if (!container) return;
+            
+            let html = '<div class="grupo-grid">';
+            
+            Object.entries(GRUPOS).forEach(([gid, gdata]) => {
+                const clas = clasificadosActuales[gid] || [null, null];
+                const eq1 = getEquipo(clas[0]);
+                const eq2 = getEquipo(clas[1]);
+                
+                html += '<div class="grupo-card">';
+                html += '<div class="grupo-label">' + gdata.nombre + '</div>';
+                
+                // Selector de clasificados
+                html += '<div style="font-size:0.7rem;color:#8b949e;margin-bottom:6px;">🎯 <b>Selecciona los clasificados reales:</b></div>';
+                html += '<div class="clasificados-row">';
+                
+                // Slot 1°
+                html += '<div class="clasificado-slot puesto-1">';
+                html += '<span class="puesto-badge">1°</span>';
+                html += '<div style="font-size:1.2rem;">' + eq1.bandera + '</div>';
+                html += '<div style="font-weight:600;">' + eq1.nombre + '</div>';
+                html += '</div>';
+                
+                // Flecha
+                html += '<div style="font-size:1.5rem;color:#FAC775;">→</div>';
+                
+                // Slot 2°
+                html += '<div class="clasificado-slot puesto-2">';
+                html += '<span class="puesto-badge">2°</span>';
+                html += '<div style="font-size:1.2rem;">' + eq2.bandera + '</div>';
+                html += '<div style="font-weight:600;">' + eq2.nombre + '</div>';
+                html += '</div>';
+                
+                html += '</div>';
+                
+                // Botones para seleccionar equipos
+                html += '<div style="font-size:0.65rem;color:#8b949e;margin-bottom:4px;">Clic para elegir <b>1°</b> o <b>2°</b> lugar:</div>';
+                html += '<div class="equipo-selector">';
+                gdata.equipos.forEach(sigla => {
+                    const eq = getEquipo(sigla);
+                    let extraClass = '';
+                    if (clas[0] === sigla) extraClass = ' selected-p1';
+                    else if (clas[1] === sigla) extraClass = ' selected-p2';
+                    
+                    html += '<button class="equipo-option' + extraClass + '" ';
+                    html += 'onclick="ciclarClasificado(event, \'' + gid + '\', \'' + sigla + '\')" ';
+                    html += 'title="Clic izquierdo: 1° | Clic derecho: 2°">';
+                    html += eq.bandera + ' ' + eq.nombre;
+                    if (clas[0] === sigla) html += ' <b>1°</b>';
+                    else if (clas[1] === sigla) html += ' <b>2°</b>';
+                    html += '</button>';
+                });
+                html += '</div>';
+                
+                // Tabla de pronósticos
+                html += '<table style="margin-top:8px;"><thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead><tbody>';
+                
+                PERSONAS.forEach(persona => {
+                    const pron = PRONOSTICOS[persona]?.[gid] || [];
+                    const ep1 = getEquipo(pron[0]);
+                    const ep2 = getEquipo(pron[1]);
+                    const pts = puntajesMatrix[persona]?.[gid] || 0;
+                    const pc = pts === 6 ? 'puntos-6' : pts === 3 ? 'puntos-3' : pts === 2 ? 'puntos-2' : pts === 1 ? 'puntos-1' : 'puntos-0';
+                    
+                    html += '<tr>';
+                    html += '<td>' + persona + '</td>';
+                    html += '<td>' + ep1.bandera + ' ' + ep1.nombre + '</td>';
+                    html += '<td>' + ep2.bandera + ' ' + ep2.nombre + '</td>';
+                    html += '<td><span class="puntos-auto ' + pc + '">' + pts + ' pts</span></td>';
+                    html += '</tr>';
+                });
+                
+                html += '</tbody></table></div>';
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function ciclarClasificado(event, grupo, sigla) {
+            event.preventDefault();
+            const clas = clasificadosActuales[grupo] || [null, null];
+            
+            if (event.button === 2 || event.ctrlKey) {
+                // Clic derecho o Ctrl+Clic = poner como 2°
+                if (clas[1] === sigla) {
+                    // Ya es 2°, quitar
+                    setClasificado(grupo, 2, null);
+                } else {
+                    setClasificado(grupo, 2, sigla);
+                }
+                showToast('🔄 ' + getEquipo(sigla).nombre + ' → 2° lugar del ' + GRUPOS[grupo].nombre);
+            } else {
+                // Clic normal = poner como 1°
+                if (clas[0] === sigla) {
+                    // Ya es 1°, quitar
+                    setClasificado(grupo, 1, null);
+                } else {
+                    setClasificado(grupo, 1, sigla);
+                }
+                showToast('🔄 ' + getEquipo(sigla).nombre + ' → 1° lugar del ' + GRUPOS[grupo].nombre);
+            }
+        }
+
+        // Prevenir menú contextual en botones de equipo
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.closest('.equipo-option')) {
+                e.preventDefault();
+            }
+        });
+
+        // ============================================================
+        // RENDER RANKING
         // ============================================================
         function renderRanking() {
             const container = document.getElementById('ranking-grid');
@@ -396,13 +648,14 @@
                 const total = calcTotal(p);
                 const rc = i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : 'rn';
                 const med = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
+                const leaderClass = i === 0 ? ' leader' : '';
                 const detalles = Object.entries(puntajesMatrix[p] || {})
                     .filter(([, v]) => v > 0)
                     .sort(([, a], [, b]) => b - a)
                     .map(([g, v]) => `<span style="display:inline-block;background:rgba(24,95,165,.15);color:#5b9dd9;padding:2px 6px;border-radius:10px;font-size:.65rem;margin:2px">G${g}:${v}pt</span>`)
                     .join('') || '<span style="color:#8b949e;font-size:.7rem;">Sin puntos aún</span>';
                 return `
-                <div class="ranking-card">
+                <div class="ranking-card${leaderClass}">
                     <div class="rank-num ${rc}">${i + 1}</div>
                     <div style="flex:1">
                         <div style="font-weight:600;font-size:1rem;">${p} ${med}</div>
@@ -417,37 +670,6 @@
         }
 
         // ============================================================
-        // RENDER GRUPOS
-        // ============================================================
-        function renderGrupos() {
-            const container = document.getElementById('grupos-container');
-            if (!container) return;
-            let html = '<div class="grupo-grid">';
-            Object.entries(GRUPOS).forEach(([gid, gdata]) => {
-                const clas = clasificadosActuales[gid] || [];
-                const eq1 = getEquipoCompleto(clas[0]);
-                const eq2 = getEquipoCompleto(clas[1]);
-                html += '<div class="grupo-card">';
-                html += '<div class="grupo-label">';
-                html += gdata.nombre;
-                html += ' | <span style="color:#7dc542;font-size:.7rem;">✅ 1° ' + eq1.bandera + ' ' + eq1.nombre;
-                html += ' | 2° ' + eq2.bandera + ' ' + eq2.nombre + '</span>';
-                html += '</div><table><thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead><tbody>';
-                PERSONAS.forEach(persona => {
-                    const pron = PRONOSTICOS[persona]?.[gid] || [];
-                    const ep1 = getEquipoCompleto(pron[0]);
-                    const ep2 = getEquipoCompleto(pron[1]);
-                    const pts = puntajesMatrix[persona]?.[gid] || 0;
-                    const pc = pts === 6 ? 'puntos-6' : pts === 3 ? 'puntos-3' : pts === 2 ? 'puntos-2' : pts === 1 ? 'puntos-1' : 'puntos-0';
-                    html += '<tr><td>' + persona + '</td><td>' + ep1.bandera + ' ' + ep1.nombre + '</td><td>' + ep2.bandera + ' ' + ep2.nombre + '</td><td><span class="puntos-auto ' + pc + '">' + pts + ' pts</span></td></tr>';
-                });
-                html += '</tbody></table></div>';
-            });
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        // ============================================================
         // RENDER MATRIX
         // ============================================================
         function renderMatrix() {
@@ -456,6 +678,7 @@
             let html = '<table class="matrix-table"><thead><tr><th>Persona</th>';
             Object.keys(GRUPOS).forEach(g => html += '<th>' + GRUPOS[g].nombre.replace('Grupo ', 'G') + '</th>');
             html += '<th class="total-col">Total</th></tr></thead><tbody>';
+            
             PERSONAS.forEach(persona => {
                 html += '<tr><td><strong>' + persona + '</strong></td>';
                 let total = 0;
@@ -463,10 +686,11 @@
                     const pts = puntajesMatrix[persona]?.[grupo] || 0;
                     total += pts;
                     const cls = pts === 6 ? 'matrix-puntos-6' : pts === 3 ? 'matrix-puntos-3' : pts === 2 ? 'matrix-puntos-2' : pts === 1 ? 'matrix-puntos-1' : '';
-                    html += '<td class="matrix-editable ' + cls + '" onclick="editarCelda(event,\'' + persona + '\',\'' + grupo + '\')" data-persona="' + persona + '" data-grupo="' + grupo + '" data-valor="' + pts + '"><span class="valor-mostrado">' + pts + '</span></td>';
+                    html += '<td class="' + cls + '">' + pts + '</td>';
                 });
                 html += '<td class="total-col">' + total + '</td></tr>';
             });
+            
             html += '<tr class="total-row"><td><strong>Total Grupo</strong></td>';
             let granTotal = 0;
             Object.keys(GRUPOS).forEach(grupo => {
@@ -476,129 +700,7 @@
                 html += '<td>' + tg + '</td>';
             });
             html += '<td class="total-col">' + granTotal + '</td></tr></tbody></table>';
-            html += '<div style="margin-top:12px;color:#8b949e;font-size:0.75rem;">💡 <b>Instrucciones:</b> Haz clic en cualquier celda para editarla. Presiona <b>"Aplicar cambios"</b> para actualizar grupos y bracket.</div>';
             container.innerHTML = html;
-        }
-
-        function editarCelda(event, persona, grupo) {
-            const td = event.currentTarget;
-            const valorActual = parseInt(td.dataset.valor);
-            const input = document.createElement('input');
-            input.type = 'number'; input.min = '0'; input.max = '6'; input.value = valorActual;
-            const span = td.querySelector('.valor-mostrado');
-            td.replaceChild(input, span);
-            input.focus(); input.select();
-            input.addEventListener('blur', () => finalizarEdicion(td, persona, grupo, input.value));
-            input.addEventListener('keypress', e => { if (e.key === 'Enter') finalizarEdicion(td, persona, grupo, input.value); });
-            input.addEventListener('keydown', e => { if (e.key === 'Escape') cancelarEdicion(td, valorActual); });
-        }
-
-        function finalizarEdicion(td, persona, grupo, nuevoValor) {
-            let valor = parseInt(nuevoValor);
-            if (isNaN(valor) || valor < 0) valor = 0;
-            if (valor > 6) valor = 6;
-            puntajesMatrix[persona][grupo] = valor;
-            td.dataset.valor = valor;
-            const span = document.createElement('span');
-            span.className = 'valor-mostrado'; span.textContent = valor;
-            td.className = 'matrix-editable';
-            if (valor === 6) td.classList.add('matrix-puntos-6');
-            else if (valor === 3) td.classList.add('matrix-puntos-3');
-            else if (valor === 2) td.classList.add('matrix-puntos-2');
-            else if (valor === 1) td.classList.add('matrix-puntos-1');
-            const input = td.querySelector('input');
-            if (input) td.replaceChild(span, input);
-            actualizarTotalesMatrix();
-        }
-
-        function cancelarEdicion(td, valorOriginal) {
-            const span = document.createElement('span');
-            span.className = 'valor-mostrado'; span.textContent = valorOriginal;
-            const input = td.querySelector('input');
-            if (input) td.replaceChild(span, input);
-        }
-
-        function actualizarTotalesMatrix() {
-            const rows = document.querySelectorAll('.matrix-table tbody tr');
-            rows.forEach(row => {
-                const celdas = row.querySelectorAll('td.matrix-editable');
-                let total = 0;
-                celdas.forEach(c => total += parseInt(c.dataset.valor) || 0);
-                const tc = row.querySelector('.total-col');
-                if (tc) tc.textContent = total;
-            });
-            const lastRow = rows[rows.length - 1];
-            if (lastRow?.classList.contains('total-row')) {
-                const grupos = Object.keys(GRUPOS);
-                let gt = 0;
-                for (let i = 0; i < grupos.length; i++) {
-                    let tg = 0;
-                    for (let j = 0; j < rows.length - 1; j++) {
-                        const c = rows[j].querySelectorAll('td.matrix-editable')[i];
-                        if (c) tg += parseInt(c.dataset.valor) || 0;
-                    }
-                    gt += tg;
-                    lastRow.querySelectorAll('td')[i + 1].textContent = tg;
-                }
-                const tc = lastRow.querySelector('.total-col');
-                if (tc) tc.textContent = gt;
-            }
-        }
-
-        // ============================================================
-        // APLICAR CAMBIOS DE MATRIX
-        // ============================================================
-        function aplicarCambiosMatrix() {
-            let cambios = false;
-            Object.keys(GRUPOS).forEach(grupo => {
-                const mejor = encontrarMejorCombinacion(grupo);
-                if (mejor) {
-                    const [n1, n2] = mejor;
-                    const [a1, a2] = clasificadosActuales[grupo] || ['', ''];
-                    if (n1 !== a1 || n2 !== a2) {
-                        clasificadosActuales[grupo] = [n1, n2];
-                        cambios = true;
-                        PERSONAS.forEach(p => puntajesMatrix[p][grupo] = calcularPuntajeGrupo(p, grupo));
-                    }
-                }
-            });
-            if (cambios) {
-                refrescarTodo();
-                showToast('✅ Cambios aplicados. Grupos y bracket actualizados.');
-            } else {
-                showToast('ℹ️ No se detectaron cambios necesarios.');
-            }
-        }
-
-        function encontrarMejorCombinacion(grupo) {
-            const equipos = GRUPOS[grupo].equipos;
-            let mejor = null, mejorDif = Infinity;
-            for (let i = 0; i < equipos.length; i++) {
-                for (let j = 0; j < equipos.length; j++) {
-                    if (i === j) continue;
-                    const tentativo = [equipos[i].sigla, equipos[j].sigla];
-                    let dif = 0;
-                    PERSONAS.forEach(p => {
-                        const pa = puntajesMatrix[p]?.[grupo] || 0;
-                        const pt = calcularPuntajeTeorico(p, grupo, tentativo);
-                        dif += Math.abs(pa - pt);
-                    });
-                    if (dif < mejorDif) { mejorDif = dif; mejor = tentativo; }
-                }
-            }
-            return mejor;
-        }
-
-        function calcularPuntajeTeorico(persona, grupo, clasTentativo) {
-            const pron = PRONOSTICOS[persona]?.[grupo] || [];
-            if (pron.length < 2 || clasTentativo.length < 2) return 0;
-            const [p1, p2] = pron;
-            const [c1, c2] = clasTentativo;
-            if (p1 === c1 && p2 === c2) return 6;
-            if (p1 === c1 || p2 === c2) return 3;
-            if (p1 === c2 && p2 === c1) return 2;
-            if (p1 === c2 || p2 === c1) return 1;
-            return 0;
         }
 
         // ============================================================
@@ -608,43 +710,44 @@
             const container = document.getElementById('bracket-container');
             if (!container) return;
             let html = '<div class="bracket-wrap"><div class="bracket-grid">';
-            // R32 izquierda
+            
             html += '<div class="bracket-col"><div class="bracket-col-header">R32</div><div class="bracket-half">';
             for (let i = 0; i < 8; i++) html += crearMatchBox(BRACKET_R32[i]);
             html += '</div></div>';
-            // R16 izquierda
+            
             html += '<div class="bracket-col"><div class="bracket-col-header">R16</div><div class="bracket-half">';
             for (let i = 0; i < 4; i++) html += crearMatchBoxVacio('M' + (89 + i), ['4 jul', '4 jul', '5 jul', '5 jul'][i]);
             html += '</div></div>';
-            // Cuartos izquierda
+            
             html += '<div class="bracket-col"><div class="bracket-col-header">Cuartos</div><div class="bracket-half">';
             html += crearMatchBoxVacio('M97', '9 jul') + crearMatchBoxVacio('M98', '10 jul');
             html += '</div></div>';
-            // Semis izquierda
+            
             html += '<div class="bracket-col"><div class="bracket-col-header">Semis</div><div class="bracket-half">';
             html += crearMatchBoxVacio('M101', '14 jul');
             html += '</div></div>';
-            // Centro
+            
             html += '<div class="bracket-col center-final-col"><div class="bracket-col-header">Final</div><div class="copa-icon">🏆</div><div class="fecha-final-txt">19 jul · NY/NJ</div>';
             html += crearMatchBoxVacio('M103', '19 jul');
             html += '<div class="tercer-box"><div class="tercer-label">🥉 3er puesto · 18 jul</div>';
             html += crearMatchBoxVacio('M3P', '18 jul') + '</div></div>';
-            // Semis derecha
+            
             html += '<div class="bracket-col"><div class="bracket-col-header">Semis</div><div class="bracket-half">';
             html += crearMatchBoxVacio('M102', '15 jul');
             html += '</div></div>';
-            // Cuartos derecha
+            
             html += '<div class="bracket-col"><div class="bracket-col-header">Cuartos</div><div class="bracket-half">';
             html += crearMatchBoxVacio('M99', '11 jul') + crearMatchBoxVacio('M100', '11 jul');
             html += '</div></div>';
-            // R16 derecha
+            
             html += '<div class="bracket-col"><div class="bracket-col-header">R16</div><div class="bracket-half">';
             for (let i = 4; i < 8; i++) html += crearMatchBoxVacio('M' + (89 + i), ['6 jul', '6 jul', '7 jul', '7 jul'][i - 4]);
             html += '</div></div>';
-            // R32 derecha
+            
             html += '<div class="bracket-col"><div class="bracket-col-header">R32</div><div class="bracket-half">';
             for (let i = 8; i < 16; i++) html += crearMatchBox(BRACKET_R32[i]);
             html += '</div></div>';
+            
             html += '</div></div>';
             container.innerHTML = html;
         }
@@ -652,7 +755,8 @@
         function crearMatchBox(match) {
             const eq1 = obtenerEquipoSlot(match.slot1);
             const eq2 = obtenerEquipoSlot(match.slot2);
-            return `<div class="match-box filled">
+            const filled = (eq1.nombre !== '—' || eq2.nombre !== '—') ? ' filled' : '';
+            return `<div class="match-box${filled}">
                 <span class="match-code">${match.id}</span><span class="match-date">${match.fecha}</span>
                 <div class="flag-slot"><span class="team-flag">${eq1.bandera}</span><span class="team-name">${eq1.nombre}</span></div>
                 <div class="flag-slot"><span class="team-flag">${eq2.bandera}</span><span class="team-name">${eq2.nombre}</span></div>
@@ -671,7 +775,7 @@
             if (!slot?.grupo || !slot?.pos) return { bandera: '⬜', nombre: '—' };
             const clas = clasificadosActuales[slot.grupo] || [];
             const sigla = slot.pos === 1 ? clas[0] : clas[1];
-            return sigla ? getEquipoCompleto(sigla) : { bandera: '⬜', nombre: '—' };
+            return sigla ? getEquipo(sigla) : { bandera: '⬜', nombre: '—' };
         }
 
         // ============================================================
@@ -685,29 +789,11 @@
             setTimeout(() => toast.style.display = 'none', 2100);
         }
 
-        function guardarEstado() {
-            localStorage.setItem('mundial2026_v2', JSON.stringify({ puntajesMatrix, clasificadosActuales }));
-            document.getElementById('syncBadge').textContent = '⚡ Actualizado';
-            setTimeout(() => document.getElementById('syncBadge').textContent = '⚡ Datos sincronizados', 1500);
-        }
-
-        function cargarEstado() {
-            const saved = localStorage.getItem('mundial2026_v2');
-            if (saved) {
-                try {
-                    const d = JSON.parse(saved);
-                    if (d.puntajesMatrix) puntajesMatrix = d.puntajesMatrix;
-                    if (d.clasificadosActuales) clasificadosActuales = d.clasificadosActuales;
-                } catch (e) {}
-            }
-        }
-
         function refrescarTodo() {
             renderRanking();
             renderGrupos();
             renderMatrix();
             renderBracket();
-            guardarEstado();
         }
 
         function generarCodigoPuntajes() {
@@ -745,7 +831,8 @@
         // ============================================================
         function switchPage(name) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + name).classList.add('active');
+            const pageEl = document.getElementById('page-' + name);
+            if (pageEl) pageEl.classList.add('active');
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.page === name));
             if (name === 'top') renderRanking();
             if (name === 'grupos') renderGrupos();
@@ -765,8 +852,10 @@
         renderGrupos();
         renderMatrix();
         renderBracket();
-        switchPage('top');
-        console.log('✅ Mundial 2026 - Completo con TOP, Grupos, Matrix y Bracket');
+        console.log('✅ Mundial 2026 - Grupos editables con selector de 1° y 2°');
+        console.log('💡 Ve a la pestaña GRUPOS para cambiar quién clasifica 1° y 2°');
+        console.log('💡 Clic normal = 1° lugar | Ctrl+Clic = 2° lugar');
+        console.log('💡 Los puntajes y el bracket se actualizan automáticamente');
     </script>
 </body>
 </html>
