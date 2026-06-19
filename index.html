@@ -6,111 +6,50 @@
     <title>Mundial 2026 — Polla Completa + Bracket Interactivo</title>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: #0d1117;
-            color: #e6edf3;
+            background: #0d1117; color: #e6edf3;
             font-family: system-ui, -apple-system, sans-serif;
-            padding: 20px;
-            line-height: 1.5;
+            padding: 20px; line-height: 1.5;
         }
         .top-nav {
-            background: #161b22;
-            border-bottom: 1px solid #30363d;
-            padding: 10px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            border-radius: 12px;
+            background: #161b22; border-bottom: 1px solid #30363d;
+            padding: 10px 20px; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 20px;
+            flex-wrap: wrap; border-radius: 12px;
         }
-        .nav-brand {
-            font-weight: 700;
-            color: #FAC775;
-            font-size: 1.1rem;
-            white-space: nowrap;
-        }
-        .nav-brand span {
-            font-weight: 400;
-            font-size: 0.75rem;
-            opacity: 0.7;
-        }
-        .nav-tabs {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
+        .nav-brand { font-weight: 700; color: #FAC775; font-size: 1.1rem; white-space: nowrap; }
+        .nav-brand span { font-weight: 400; font-size: 0.75rem; opacity: 0.7; }
+        .nav-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
         .nav-tab {
-            padding: 8px 16px;
-            background: transparent;
-            border: none;
-            color: #8b949e;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-            white-space: nowrap;
-            border-radius: 4px 4px 0 0;
+            padding: 8px 16px; background: transparent; border: none;
+            color: #8b949e; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; border-bottom: 2px solid transparent;
+            transition: all 0.2s; white-space: nowrap; border-radius: 4px 4px 0 0;
         }
-        .nav-tab:hover {
-            color: #e6edf3;
-            background: rgba(255, 255, 255, 0.03);
-        }
-        .nav-tab.active {
-            color: #FAC775;
-            border-bottom-color: #FAC775;
-            background: rgba(250, 199, 117, 0.05);
-        }
+        .nav-tab:hover { color: #e6edf3; background: rgba(255,255,255,0.03); }
+        .nav-tab.active { color: #FAC775; border-bottom-color: #FAC775; background: rgba(250,199,117,0.05); }
         .sync-badge {
-            margin-left: auto;
-            font-size: 0.7rem;
-            color: #7dc542;
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 1px solid #3B6D11;
-            background: rgba(59, 109, 17, 0.1);
-            white-space: nowrap;
+            margin-left: auto; font-size: 0.7rem; color: #7dc542;
+            padding: 4px 12px; border-radius: 20px; border: 1px solid #3B6D11;
+            background: rgba(59,109,17,0.1); white-space: nowrap;
         }
-        .page {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .page { display: none; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
         .page.active { display: block; }
         .page-header {
-            background: linear-gradient(135deg, #0C447C, #0a2d55);
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
+            background: linear-gradient(135deg,#0C447C,#0a2d55);
+            border: 1px solid #30363d; border-radius: 10px;
+            padding: 16px 20px; margin-bottom: 18px;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 10px;
         }
         .page-header h1 { font-size: 1.2rem; font-weight: 700; }
         .page-header p { font-size: 0.8rem; color: #8b949e; }
         .btn {
-            padding: 7px 16px;
-            border-radius: 6px;
-            border: 1px solid #30363d;
-            font-weight: 600;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: #21262d;
-            color: #c9d1d9;
-            white-space: nowrap;
+            padding: 7px 16px; border-radius: 6px; border: 1px solid #30363d;
+            font-weight: 600; font-size: 0.8rem; cursor: pointer;
+            transition: all 0.2s; background: #21262d; color: #c9d1d9; white-space: nowrap;
         }
         .btn:hover { background: #30363d; }
         .btn-primary { background: #185FA5; color: #fff; border-color: #185FA5; }
@@ -122,79 +61,54 @@
         .btn-copiar { background: #FAC775; color: #633806; border-color: #FAC775; font-weight: 700; }
         .btn-copiar:hover { background: #e0b05a; }
         .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+        
+        /* Ranking TOP */
+        .ranking-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px; margin-bottom: 20px;
+        }
+        .ranking-card {
+            background: #161b22; border: 1px solid #30363d;
+            border-radius: 10px; padding: 14px 18px;
+            display: flex; align-items: center; gap: 14px;
+            transition: all 0.2s;
+        }
+        .ranking-card:hover { border-color: #FAC775; box-shadow: 0 0 15px rgba(250,199,117,0.1); }
+        .rank-num {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; font-weight: 700; flex-shrink: 0;
+        }
+        .r1 { background: #FAC775; color: #633806; font-size: 1.3rem; }
+        .r2 { background: #D3D1C7; color: #444441; font-size: 1.2rem; }
+        .r3 { background: #F5C4B3; color: #993C1D; font-size: 1.1rem; }
+        .rn { background: #21262d; color: #8b949e; }
+        .points-total { font-size: 1.8rem; font-weight: 700; color: #FAC775; }
+        .points-label { font-size: 0.65rem; color: #8b949e; }
+        .rank-details { font-size: 0.7rem; color: #8b949e; margin-top: 4px; }
+
+        /* Grupos */
         .grupo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
         .grupo-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; overflow-x: auto; }
         .grupo-label {
-            font-size: 0.75rem;
-            color: #8b949e;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin-bottom: 10px;
-            background: #21262d;
-            padding: 6px 12px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            font-size: 0.75rem; color: #8b949e; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.04em;
+            margin-bottom: 10px; background: #21262d;
+            padding: 6px 12px; border-radius: 6px;
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
         }
         table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        th {
-            text-align: left;
-            padding: 6px 10px;
-            color: #8b949e;
-            font-weight: 600;
-            border-bottom: 1px solid #30363d;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-        }
+        th { text-align: left; padding: 6px 10px; color: #8b949e; font-weight: 600; border-bottom: 1px solid #30363d; font-size: 0.7rem; text-transform: uppercase; }
         td { padding: 6px 10px; border-bottom: 0.5px solid #30363d; color: #e6edf3; }
         tr:last-child td { border-bottom: none; }
-        tr:hover td { background: rgba(255, 255, 255, 0.02); }
+        tr:hover td { background: rgba(255,255,255,0.02); }
         
-        /* Estilos de puntajes */
-        .puntos-auto {
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 3px 10px;
-            border-radius: 12px;
-            white-space: nowrap;
-        }
-        .puntos-6 { background: rgba(153, 60, 29, 0.2); color: #f07050; font-weight: 700; }
-        .puntos-3 { background: rgba(59, 109, 17, 0.2); color: #7dc542; font-weight: 700; }
-        .puntos-2 { background: rgba(250, 199, 117, 0.2); color: #FAC775; font-weight: 700; }
-        .puntos-1 { background: rgba(24, 95, 165, 0.2); color: #5b9dd9; font-weight: 700; }
+        .puntos-auto { font-size: 0.8rem; font-weight: 600; padding: 3px 10px; border-radius: 12px; white-space: nowrap; }
+        .puntos-6 { background: rgba(153,60,29,0.2); color: #f07050; font-weight: 700; }
+        .puntos-3 { background: rgba(59,109,17,0.2); color: #7dc542; font-weight: 700; }
+        .puntos-2 { background: rgba(250,199,117,0.2); color: #FAC775; font-weight: 700; }
+        .puntos-1 { background: rgba(24,95,165,0.2); color: #5b9dd9; font-weight: 700; }
         .puntos-0 { color: #8b949e; }
-
-        /* Ranking */
-        .ranking-card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 12px 18px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .rank-num {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-        .r1 { background: #FAC775; color: #633806; }
-        .r2 { background: #D3D1C7; color: #444441; }
-        .r3 { background: #F5C4B3; color: #993C1D; }
-        .rn { background: #21262d; color: #8b949e; }
-        .points-total { font-size: 1.4rem; font-weight: 700; }
-        .points-label { font-size: 0.65rem; color: #8b949e; }
 
         /* Matrix */
         .matrix-wrap { overflow-x: auto; max-height: 70vh; overflow-y: auto; }
@@ -203,148 +117,87 @@
         .matrix-table th { background: #21262d; font-weight: 600; color: #e6edf3; position: sticky; top: 0; z-index: 2; }
         .matrix-table td:first-child, .matrix-table th:first-child { text-align: left; position: sticky; left: 0; background: #161b22; z-index: 3; font-weight: 600; }
         .matrix-table th:first-child { background: #21262d; z-index: 4; }
-        .matrix-table tr:hover td { background: rgba(255, 255, 255, 0.03); }
+        .matrix-table tr:hover td { background: rgba(255,255,255,0.03); }
         .matrix-table .total-col { font-weight: 700; background: #21262d; font-size: 0.9rem; }
         .matrix-table .total-row { font-weight: 700; background: #21262d; }
-
-        /* Celdas editables en la matriz */
-        .matrix-editable {
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-        .matrix-editable:hover {
-            background: rgba(24, 95, 165, 0.3) !important;
-            outline: 2px solid #185FA5;
-            outline-offset: -2px;
-        }
-        .matrix-editable input {
-            width: 40px;
-            background: #0d1117;
-            border: 1px solid #185FA5;
-            color: #e6edf3;
-            text-align: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 2px;
-            border-radius: 4px;
-        }
+        .matrix-editable { cursor: pointer; transition: all 0.2s; }
+        .matrix-editable:hover { background: rgba(24,95,165,0.3) !important; outline: 2px solid #185FA5; outline-offset: -2px; }
+        .matrix-editable input { width: 40px; background: #0d1117; border: 1px solid #185FA5; color: #e6edf3; text-align: center; font-size: 0.75rem; font-weight: 600; padding: 2px; border-radius: 4px; }
+        .matrix-puntos-6 { background: rgba(153,60,29,0.3); color: #f07050; font-weight: 700; }
+        .matrix-puntos-3 { background: rgba(59,109,17,0.3); color: #7dc542; font-weight: 700; }
+        .matrix-puntos-2 { background: rgba(250,199,117,0.3); color: #FAC775; font-weight: 700; }
+        .matrix-puntos-1 { background: rgba(24,95,165,0.3); color: #5b9dd9; font-weight: 700; }
 
         /* Bracket */
         .acciones-bar {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-            padding: 10px 16px;
-            background: #161b22;
-            border-radius: 10px;
-            border: 1px solid #30363d;
+            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+            margin-bottom: 16px; padding: 10px 16px;
+            background: #161b22; border-radius: 10px; border: 1px solid #30363d;
         }
         .bracket-wrap { overflow-x: auto; padding-bottom: 20px; }
         .bracket-grid {
             display: grid;
             grid-template-columns: 220px 200px 200px 200px 240px 200px 200px 200px 220px;
-            gap: 8px;
-            min-width: 1850px;
-            align-items: start;
-            padding: 10px 0;
+            gap: 8px; min-width: 1850px; align-items: start; padding: 10px 0;
         }
         .bracket-col { display: flex; flex-direction: column; height: 100%; }
         .bracket-col-header {
-            text-align: center;
-            font-weight: 700;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #8b949e;
-            padding: 6px;
-            background: #21262d;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            border: 1px solid #30363d;
+            text-align: center; font-weight: 700; font-size: 0.6rem;
+            text-transform: uppercase; letter-spacing: 0.05em; color: #8b949e;
+            padding: 6px; background: #21262d; border-radius: 6px;
+            margin-bottom: 8px; border: 1px solid #30363d;
         }
         .bracket-half { display: flex; flex-direction: column; justify-content: space-around; flex: 1; gap: 6px; }
         .match-box {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            margin: 2px 4px;
-            font-size: 0.7rem;
-            position: relative;
-            transition: all 0.15s;
+            background: #161b22; border: 1px solid #30363d; border-radius: 6px;
+            margin: 2px 4px; font-size: 0.7rem; position: relative; transition: all 0.15s;
         }
-        .match-box:hover { border-color: #185FA5; box-shadow: 0 0 12px rgba(24, 95, 165, 0.15); }
-        .match-box.filled { border-color: #3B6D11; box-shadow: 0 0 8px rgba(59, 109, 17, 0.2); }
+        .match-box:hover { border-color: #185FA5; box-shadow: 0 0 12px rgba(24,95,165,0.15); }
+        .match-box.filled { border-color: #3B6D11; box-shadow: 0 0 8px rgba(59,109,17,0.2); }
         .match-code {
-            position: absolute;
-            top: -8px;
-            left: 6px;
-            background: #0d1117;
-            color: #8b949e;
-            font-size: 0.5rem;
-            padding: 0 5px;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            z-index: 2;
+            position: absolute; top: -8px; left: 6px; background: #0d1117;
+            color: #8b949e; font-size: 0.5rem; padding: 0 5px;
+            border: 1px solid #30363d; border-radius: 6px; z-index: 2;
         }
         .match-date {
-            position: absolute;
-            top: -8px;
-            right: 6px;
-            background: #0d1117;
-            color: #FAC775;
-            font-size: 0.5rem;
-            padding: 0 5px;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            z-index: 2;
-            white-space: nowrap;
+            position: absolute; top: -8px; right: 6px; background: #0d1117;
+            color: #FAC775; font-size: 0.5rem; padding: 0 5px;
+            border: 1px solid #30363d; border-radius: 6px; z-index: 2; white-space: nowrap;
         }
         .flag-slot {
-            padding: 6px 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border-bottom: 1px solid #30363d;
-            min-height: 40px;
-            cursor: default;
-            transition: all 0.15s;
-            position: relative;
+            padding: 6px 8px; display: flex; align-items: center; gap: 6px;
+            border-bottom: 1px solid #30363d; min-height: 40px;
         }
         .flag-slot:last-child { border-bottom: none; }
-        .flag-slot .team-flag {
-            font-size: 1.4rem;
-            flex-shrink: 0;
-        }
-        .flag-slot .team-name { flex: 1; font-weight: 500; font-size: 0.7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .final-box { margin: 0 2px; border: 2px solid #FAC775; box-shadow: 0 0 15px rgba(250, 199, 117, 0.15); }
+        .team-flag { font-size: 1.4rem; flex-shrink: 0; }
+        .team-name { flex: 1; font-weight: 500; font-size: 0.7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .final-box { margin: 0 2px; border: 2px solid #FAC775; box-shadow: 0 0 15px rgba(250,199,117,0.15); }
         .center-final-col { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; height: 100%; padding: 0 4px; }
-        .copa-icon { font-size: 2.2rem; margin: 4px 0; filter: drop-shadow(0 0 15px rgba(250, 199, 117, 0.4)); }
-
-        .legend-bracket { font-size: 0.75rem; color: #8b949e; background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 8px 14px; margin-bottom: 14px; }
+        .copa-icon { font-size: 2.2rem; margin: 4px 0; filter: drop-shadow(0 0 15px rgba(250,199,117,0.4)); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+        .fecha-final-txt { font-size: 0.6rem; color: #8b949e; text-align: center; }
+        .tercer-box { margin-top: 10px; border: 1px solid #D3D1C7; border-radius: 6px; padding: 4px; }
+        .tercer-label { font-size: 0.55rem; text-align: center; color: #8b949e; margin-bottom: 4px; text-transform: uppercase; }
 
         .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #3B6D11;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 999;
+            position: fixed; bottom: 20px; right: 20px;
+            background: #3B6D11; color: #fff; padding: 10px 20px;
+            border-radius: 8px; font-size: 0.8rem; font-weight: 600; z-index: 999;
             animation: toastIn 0.3s ease, toastOut 0.3s ease 1.7s forwards;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
-        @keyframes toastIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes toastOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(20px); } }
+        @keyframes toastIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes toastOut { from{opacity:1;transform:translateY(0)} to{opacity:0;transform:translateY(20px)} }
+
+        .leyenda-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+        .leyenda-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px; text-align: center; }
+        .leyenda-points { font-size: 2rem; font-weight: 700; margin-bottom: 4px; }
+        .leyenda-desc { font-size: 0.75rem; color: #8b949e; }
 
         @media (max-width: 900px) {
             .bracket-grid { min-width: 1650px; }
             .grupo-grid { grid-template-columns: 1fr; }
+            .ranking-grid { grid-template-columns: 1fr; }
             .top-nav { gap: 10px; }
             .nav-tabs { width: 100%; }
             .sync-badge { margin-left: 0; }
@@ -353,43 +206,68 @@
 </head>
 <body>
 
-    <div id="toast" style="display:none;position:fixed;bottom:20px;right:20px;background:#3B6D11;color:#fff;padding:10px 20px;border-radius:8px;font-size:0.8rem;font-weight:600;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.4);"></div>
+    <div id="toast" style="display:none;"></div>
 
     <div class="top-nav">
         <div class="nav-brand">🏆 Mundial 2026 <span>México · USA · Canadá</span></div>
         <div class="nav-tabs">
-            <button class="nav-tab active" data-page="polla">📋 Grupos</button>
-            <button class="nav-tab" data-page="matrix">🔢 Matrix (EDITABLE)</button>
+            <button class="nav-tab active" data-page="top">🏅 TOP</button>
+            <button class="nav-tab" data-page="grupos">📋 Grupos</button>
+            <button class="nav-tab" data-page="matrix">🔢 Matrix</button>
             <button class="nav-tab" data-page="bracket">🏟 Bracket</button>
         </div>
         <div class="sync-badge" id="syncBadge">⚡ Actualizado</div>
     </div>
 
-    <!-- PÁGINA 1: POLLA DE GRUPOS -->
-    <div class="page active" id="page-polla">
+    <!-- PÁGINA TOP / RANKING -->
+    <div class="page active" id="page-top">
         <div class="page-header">
             <div>
-                <h1>Polla del Mundial 2026 — Fase de Grupos</h1>
-                <p>Puntajes automáticos según clasificados reales</p>
+                <h1>🏅 Ranking General — Mundial 2026</h1>
+                <p>Puntajes totales de la fase de grupos</p>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES_INICIALES</button>
+                <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES</button>
                 <button class="btn btn-success" onclick="descargarExcel()">💾 Descargar Excel</button>
             </div>
         </div>
-        <div id="polla-grupos"></div>
+        <div class="card">
+            <h3 style="margin-bottom:12px;">🏆 Clasificación General</h3>
+            <div class="ranking-grid" id="ranking-grid"></div>
+        </div>
+        <div class="leyenda-grid">
+            <div class="leyenda-card"><div class="leyenda-points" style="color:#f07050">6 pts</div><div class="leyenda-desc">1° y 2° exactos en posición correcta</div></div>
+            <div class="leyenda-card"><div class="leyenda-points" style="color:#7dc542">3 pts</div><div class="leyenda-desc">Un equipo exacto en su posición</div></div>
+            <div class="leyenda-card"><div class="leyenda-points" style="color:#FAC775">2 pts</div><div class="leyenda-desc">Cruzados perfectos (1°↔2°)</div></div>
+            <div class="leyenda-card"><div class="leyenda-points" style="color:#5b9dd9">1 pt</div><div class="leyenda-desc">Un equipo cruzado</div></div>
+        </div>
     </div>
 
-    <!-- PÁGINA 2: MATRIX EDITABLE -->
+    <!-- PÁGINA GRUPOS -->
+    <div class="page" id="page-grupos">
+        <div class="page-header">
+            <div>
+                <h1>📋 Pronósticos por Grupo</h1>
+                <p>Comparativa de pronósticos vs clasificados reales</p>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES</button>
+                <button class="btn btn-success" onclick="descargarExcel()">💾 Descargar Excel</button>
+            </div>
+        </div>
+        <div id="grupos-container"></div>
+    </div>
+
+    <!-- PÁGINA MATRIX -->
     <div class="page" id="page-matrix">
         <div class="page-header">
             <div>
-                <h1>🔢 Matrix de Puntajes — ¡EDITABLE!</h1>
-                <p>Haz clic en cualquier celda para cambiar el puntaje. Los grupos y bracket se actualizarán automáticamente.</p>
+                <h1>🔢 Matrix de Puntajes — EDITABLE</h1>
+                <p>Haz clic en cualquier celda para cambiar el puntaje. Presiona "Aplicar cambios" para actualizar todo.</p>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button class="btn btn-warning" onclick="aplicarCambiosMatrix()">✅ Aplicar cambios al bracket</button>
-                <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES_INICIALES</button>
+                <button class="btn btn-warning" onclick="aplicarCambiosMatrix()">✅ Aplicar cambios</button>
+                <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES</button>
             </div>
         </div>
         <div class="card">
@@ -397,21 +275,20 @@
         </div>
     </div>
 
-    <!-- PÁGINA 3: BRACKET -->
+    <!-- PÁGINA BRACKET -->
     <div class="page" id="page-bracket">
         <div class="page-header">
             <div>
                 <h1>🏟 Bracket FIFA 2026</h1>
                 <p>Se actualiza automáticamente con los cambios de la matriz</p>
             </div>
-            <button class="btn btn-copiar" onclick="generarCodigoPuntajes()">📋 Copiar PUNTAJES_INICIALES</button>
         </div>
         <div class="bracket-wrap" id="bracket-container"></div>
     </div>
 
     <script>
         // ============================================================
-        // DATOS COMPLETOS DEL MUNDIAL
+        // DATOS
         // ============================================================
         const PERSONAS = ['Duvan', 'Camila', 'Camilo', 'Mateo', 'Miguel', 'Doc Camilo', 'Katherine', 'Sandra', 'Estefania', 'Diana', 'Sofia'];
 
@@ -430,38 +307,26 @@
             L: { nombre: 'Grupo L', equipos: [{ sigla: 'ENG', nombre: 'Inglaterra', bandera: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' }, { sigla: 'GHA', nombre: 'Ghana', bandera: '🇬🇭' }, { sigla: 'CRO', nombre: 'Croacia', bandera: '🇭🇷' }, { sigla: 'PAN', nombre: 'Panamá', bandera: '🇵🇦' }] }
         };
 
-        // PRONÓSTICOS DE CADA PERSONA
         const PRONOSTICOS = {
-            Duvan: { A: ['MEX', 'ZAF'], B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['TUR', 'PAR'], E: ['GER', 'CIV'], F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['NOR', 'FRA'], J: ['ARG', 'ALG'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            Camila: { A: ['MEX', 'KOR'], B: ['CAN', 'SUI'], C: ['BRA', 'MAR'], D: ['PAR', 'USA'], E: ['GER', 'CIV'], F: ['NED', 'JPN'], G: ['BEL', 'NZL'], H: ['URU', 'ESP'], I: ['FRA', 'SEN'], J: ['ARG', 'AUT'], K: ['POR', 'COL'], L: ['ENG', 'GHA'] },
-            Camilo: { A: ['MEX', 'KOR'], B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['USA', 'TUR'], E: ['ECU', 'GER'], F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['FRA', 'SEN'], J: ['ARG', 'ALG'], K: ['COL', 'POR'], L: ['ENG', 'CRO'] },
-            Mateo: { A: ['MEX', 'KOR'], B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['USA', 'PAR'], E: ['GER', 'CIV'], F: ['JPN', 'NED'], G: ['BEL', 'NZL'], H: ['ESP', 'URU'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'], K: ['POR', 'COL'], L: ['ENG', 'PAN'] },
-            Miguel: { A: ['MEX', 'KOR'], B: ['SUI', 'QAT'], C: ['BRA', 'MAR'], D: ['PAR', 'USA'], E: ['GER', 'CIV'], F: ['JPN', 'SWE'], G: ['EGY', 'BEL'], H: ['ESP', 'URU'], I: ['FRA', 'SEN'], J: ['ARG', 'JOR'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            'Doc Camilo': { A: ['MEX', 'KOR'], B: ['CAN', 'QAT'], C: ['BRA', 'SCO'], D: ['USA', 'AUS'], E: ['GER', 'CIV'], F: ['NED', 'SWE'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['FRA', 'SEN'], J: ['ARG', 'JOR'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            Katherine: { A: ['MEX', 'KOR'], B: ['CAN', 'QAT'], C: ['BRA', 'MAR'], D: ['PAR', 'USA'], E: ['GER', 'ECU'], F: ['JPN', 'NED'], G: ['BEL', 'EGY'], H: ['URU', 'ESP'], I: ['FRA', 'NOR'], J: ['ARG', 'JOR'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            Sandra: { A: ['MEX', 'ZAF'], B: ['CAN', 'SUI'], C: ['BRA', 'SCO'], D: ['USA', 'AUS'], E: ['GER', 'CIV'], F: ['SWE', 'NED'], G: ['BEL', 'NZL'], H: ['ESP', 'URU'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            Estefania: { A: ['MEX', 'KOR'], B: ['CAN', 'SUI'], C: ['BRA', 'SCO'], D: ['USA', 'AUS'], E: ['GER', 'ECU'], F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'], K: ['COL', 'POR'], L: ['ENG', 'PAN'] },
-            Diana: { A: ['MEX', 'KOR'], B: ['SUI', 'CAN'], C: ['MAR', 'BRA'], D: ['PAR', 'TUR'], E: ['GER', 'CIV'], F: ['JPN', 'TUN'], G: ['BEL', 'NZL'], H: ['URU', 'ESP'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'], K: ['POR', 'COL'], L: ['ENG', 'PAN'] },
-            Sofia: { A: ['KOR', 'MEX'], B: ['QAT', 'CAN'], C: ['MAR', 'BRA'], D: ['USA', 'AUS'], E: ['GER', 'CIV'], F: ['NED', 'SWE'], G: ['IRN', 'EGY'], H: ['KSA', 'ESP'], I: ['FRA', 'IRQ'], J: ['ARG', 'AUT'], K: ['COL', 'POR'], L: ['ENG', 'CRO'] }
+            Duvan: {A:['MEX','ZAF'],B:['SUI','CAN'],C:['BRA','MAR'],D:['TUR','PAR'],E:['GER','CIV'],F:['NED','JPN'],G:['BEL','EGY'],H:['ESP','URU'],I:['NOR','FRA'],J:['ARG','ALG'],K:['POR','COL'],L:['ENG','CRO']},
+            Camila: {A:['MEX','KOR'],B:['CAN','SUI'],C:['BRA','MAR'],D:['PAR','USA'],E:['GER','CIV'],F:['NED','JPN'],G:['BEL','NZL'],H:['URU','ESP'],I:['FRA','SEN'],J:['ARG','AUT'],K:['POR','COL'],L:['ENG','GHA']},
+            Camilo: {A:['MEX','KOR'],B:['SUI','CAN'],C:['BRA','MAR'],D:['USA','TUR'],E:['ECU','GER'],F:['NED','JPN'],G:['BEL','EGY'],H:['ESP','URU'],I:['FRA','SEN'],J:['ARG','ALG'],K:['COL','POR'],L:['ENG','CRO']},
+            Mateo: {A:['MEX','KOR'],B:['SUI','CAN'],C:['BRA','MAR'],D:['USA','PAR'],E:['GER','CIV'],F:['JPN','NED'],G:['BEL','NZL'],H:['ESP','URU'],I:['FRA','NOR'],J:['ARG','AUT'],K:['POR','COL'],L:['ENG','PAN']},
+            Miguel: {A:['MEX','KOR'],B:['SUI','QAT'],C:['BRA','MAR'],D:['PAR','USA'],E:['GER','CIV'],F:['JPN','SWE'],G:['EGY','BEL'],H:['ESP','URU'],I:['FRA','SEN'],J:['ARG','JOR'],K:['POR','COL'],L:['ENG','CRO']},
+            'Doc Camilo': {A:['MEX','KOR'],B:['CAN','QAT'],C:['BRA','SCO'],D:['USA','AUS'],E:['GER','CIV'],F:['NED','SWE'],G:['BEL','EGY'],H:['ESP','URU'],I:['FRA','SEN'],J:['ARG','JOR'],K:['POR','COL'],L:['ENG','CRO']},
+            Katherine: {A:['MEX','KOR'],B:['CAN','QAT'],C:['BRA','MAR'],D:['PAR','USA'],E:['GER','ECU'],F:['JPN','NED'],G:['BEL','EGY'],H:['URU','ESP'],I:['FRA','NOR'],J:['ARG','JOR'],K:['POR','COL'],L:['ENG','CRO']},
+            Sandra: {A:['MEX','ZAF'],B:['CAN','SUI'],C:['BRA','SCO'],D:['USA','AUS'],E:['GER','CIV'],F:['SWE','NED'],G:['BEL','NZL'],H:['ESP','URU'],I:['FRA','NOR'],J:['ARG','AUT'],K:['POR','COL'],L:['ENG','CRO']},
+            Estefania: {A:['MEX','KOR'],B:['CAN','SUI'],C:['BRA','SCO'],D:['USA','AUS'],E:['GER','ECU'],F:['NED','JPN'],G:['BEL','EGY'],H:['ESP','URU'],I:['FRA','NOR'],J:['ARG','AUT'],K:['COL','POR'],L:['ENG','PAN']},
+            Diana: {A:['MEX','KOR'],B:['SUI','CAN'],C:['MAR','BRA'],D:['PAR','TUR'],E:['GER','CIV'],F:['JPN','TUN'],G:['BEL','NZL'],H:['URU','ESP'],I:['FRA','NOR'],J:['ARG','AUT'],K:['POR','COL'],L:['ENG','PAN']},
+            Sofia: {A:['KOR','MEX'],B:['QAT','CAN'],C:['MAR','BRA'],D:['USA','AUS'],E:['GER','CIV'],F:['NED','SWE'],G:['IRN','EGY'],H:['KSA','ESP'],I:['FRA','IRQ'],J:['ARG','AUT'],K:['COL','POR'],L:['ENG','CRO']}
         };
 
-        // CLASIFICADOS REALES (lo que realmente pasó en los grupos)
         const CLASIFICADOS_REALES = {
-            A: ['KOR', 'MEX'],
-            B: ['SUI', 'CAN'],
-            C: ['SCO', 'MAR'],
-            D: ['USA', 'AUS'],
-            E: ['GER', 'CIV'],
-            F: ['SWE', 'JPN'],
-            G: ['NZL', 'IRN'],
-            H: ['URU', 'KSA'],
-            I: ['NOR', 'FRA'],
-            J: ['ARG', 'AUT'],
-            K: ['COL', 'COD'],
-            L: ['ENG', 'GHA']
+            A: ['KOR', 'MEX'], B: ['SUI', 'CAN'], C: ['SCO', 'MAR'], D: ['USA', 'AUS'],
+            E: ['GER', 'CIV'], F: ['SWE', 'JPN'], G: ['NZL', 'IRN'], H: ['URU', 'KSA'],
+            I: ['NOR', 'FRA'], J: ['ARG', 'AUT'], K: ['COL', 'COD'], L: ['ENG', 'GHA']
         };
 
-        // BRACKET R32
         const BRACKET_R32 = [
             { id: 'M73', fecha: '28 jun', slot1: { tag: '2A', grupo: 'A', pos: 2 }, slot2: { tag: '2B', grupo: 'B', pos: 2 } },
             { id: 'M74', fecha: '29 jun', slot1: { tag: '1E', grupo: 'E', pos: 1 }, slot2: { tag: '3°', grupo: 'T1', pos: 0 } },
@@ -481,349 +346,254 @@
             { id: 'M88', fecha: '3 jul', slot1: { tag: '2D', grupo: 'D', pos: 2 }, slot2: { tag: '2G', grupo: 'G', pos: 2 } }
         ];
 
-        // ============================================================
-        // ESTADO GLOBAL
-        // ============================================================
-        let puntajesMatrix = {}; // { persona: { grupo: puntos } }
-        let clasificadosActuales = {}; // { grupo: [sigla1, sigla2] }
+        let puntajesMatrix = {};
+        let clasificadosActuales = {};
 
         function initEstado() {
-            // Inicializar clasificados
             clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_REALES));
-            
-            // Calcular puntajes iniciales basados en pronósticos vs clasificados reales
             PERSONAS.forEach(persona => {
                 puntajesMatrix[persona] = {};
                 Object.keys(GRUPOS).forEach(grupo => {
                     puntajesMatrix[persona][grupo] = calcularPuntajeGrupo(persona, grupo);
                 });
             });
+            cargarEstado();
         }
 
         function calcularPuntajeGrupo(persona, grupo) {
-            const pronostico = PRONOSTICOS[persona]?.[grupo] || [];
-            const clasificados = clasificadosActuales[grupo] || [];
-            
-            if (pronostico.length < 2 || clasificados.length < 2) return 0;
-            
-            const [p1, p2] = pronostico;
-            const [c1, c2] = clasificados;
-            
-            if (p1 === c1 && p2 === c2) return 6; // Perfecto
-            if (p1 === c1 || p2 === c2) return 3; // Uno exacto en su posición
-            if (p1 === c2 && p2 === c1) return 2; // Cruzados perfectos
-            if (p1 === c2 || p2 === c1) return 1; // Uno cruzado
+            const pron = PRONOSTICOS[persona]?.[grupo] || [];
+            const clas = clasificadosActuales[grupo] || [];
+            if (pron.length < 2 || clas.length < 2) return 0;
+            const [p1, p2] = pron;
+            const [c1, c2] = clas;
+            if (p1 === c1 && p2 === c2) return 6;
+            if (p1 === c1 || p2 === c2) return 3;
+            if (p1 === c2 && p2 === c1) return 2;
+            if (p1 === c2 || p2 === c1) return 1;
             return 0;
         }
 
-        function getEquipoPorSigla(sigla) {
-            for (let grupo of Object.values(GRUPOS)) {
-                const eq = grupo.equipos.find(e => e.sigla === sigla);
+        function getEquipoCompleto(sigla) {
+            for (let g of Object.values(GRUPOS)) {
+                const eq = g.equipos.find(e => e.sigla === sigla);
                 if (eq) return eq;
             }
-            return null;
+            return { sigla, nombre: sigla || '—', bandera: '⬜' };
         }
 
-        function getEquipoCompleto(sigla) {
-            const eq = getEquipoPorSigla(sigla);
-            return eq || { sigla, nombre: sigla, bandera: '🏴' };
+        function calcTotal(persona) {
+            return Object.values(puntajesMatrix[persona] || {}).reduce((a, b) => a + b, 0);
         }
 
         // ============================================================
-        // RENDERIZAR GRUPOS
+        // RENDER TOP / RANKING
         // ============================================================
-        function renderPollaGrupos() {
-            const container = document.getElementById('polla-grupos');
+        function renderRanking() {
+            const container = document.getElementById('ranking-grid');
             if (!container) return;
-            
+            const sorted = [...PERSONAS].sort((a, b) => calcTotal(b) - calcTotal(a));
+            container.innerHTML = sorted.map((p, i) => {
+                const total = calcTotal(p);
+                const rc = i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : 'rn';
+                const med = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
+                const detalles = Object.entries(puntajesMatrix[p] || {})
+                    .filter(([, v]) => v > 0)
+                    .sort(([, a], [, b]) => b - a)
+                    .map(([g, v]) => `<span style="display:inline-block;background:rgba(24,95,165,.15);color:#5b9dd9;padding:2px 6px;border-radius:10px;font-size:.65rem;margin:2px">G${g}:${v}pt</span>`)
+                    .join('') || '<span style="color:#8b949e;font-size:.7rem;">Sin puntos aún</span>';
+                return `
+                <div class="ranking-card">
+                    <div class="rank-num ${rc}">${i + 1}</div>
+                    <div style="flex:1">
+                        <div style="font-weight:600;font-size:1rem;">${p} ${med}</div>
+                        <div class="rank-details">${detalles}</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="points-total">${total}</div>
+                        <div class="points-label">pts totales</div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        // ============================================================
+        // RENDER GRUPOS
+        // ============================================================
+        function renderGrupos() {
+            const container = document.getElementById('grupos-container');
+            if (!container) return;
             let html = '<div class="grupo-grid">';
-            
             Object.entries(GRUPOS).forEach(([gid, gdata]) => {
                 const clas = clasificadosActuales[gid] || [];
                 const eq1 = getEquipoCompleto(clas[0]);
                 const eq2 = getEquipoCompleto(clas[1]);
-                
                 html += '<div class="grupo-card">';
                 html += '<div class="grupo-label">';
                 html += gdata.nombre;
                 html += ' | <span style="color:#7dc542;font-size:.7rem;">✅ 1° ' + eq1.bandera + ' ' + eq1.nombre;
                 html += ' | 2° ' + eq2.bandera + ' ' + eq2.nombre + '</span>';
-                html += '</div>';
-                
-                html += '<table><thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead><tbody>';
-                
+                html += '</div><table><thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead><tbody>';
                 PERSONAS.forEach(persona => {
                     const pron = PRONOSTICOS[persona]?.[gid] || [];
-                    const eqP1 = getEquipoCompleto(pron[0]);
-                    const eqP2 = getEquipoCompleto(pron[1]);
+                    const ep1 = getEquipoCompleto(pron[0]);
+                    const ep2 = getEquipoCompleto(pron[1]);
                     const pts = puntajesMatrix[persona]?.[gid] || 0;
-                    const ptsClass = pts === 6 ? 'puntos-6' : pts === 3 ? 'puntos-3' : pts === 2 ? 'puntos-2' : pts === 1 ? 'puntos-1' : 'puntos-0';
-                    
-                    html += '<tr>';
-                    html += '<td>' + persona + '</td>';
-                    html += '<td>' + eqP1.bandera + ' ' + eqP1.nombre + '</td>';
-                    html += '<td>' + eqP2.bandera + ' ' + eqP2.nombre + '</td>';
-                    html += '<td><span class="puntos-auto ' + ptsClass + '">' + pts + ' pts</span></td>';
-                    html += '</tr>';
+                    const pc = pts === 6 ? 'puntos-6' : pts === 3 ? 'puntos-3' : pts === 2 ? 'puntos-2' : pts === 1 ? 'puntos-1' : 'puntos-0';
+                    html += '<tr><td>' + persona + '</td><td>' + ep1.bandera + ' ' + ep1.nombre + '</td><td>' + ep2.bandera + ' ' + ep2.nombre + '</td><td><span class="puntos-auto ' + pc + '">' + pts + ' pts</span></td></tr>';
                 });
-                
                 html += '</tbody></table></div>';
             });
-            
             html += '</div>';
             container.innerHTML = html;
         }
 
         // ============================================================
-        // MATRIX EDITABLE
+        // RENDER MATRIX
         // ============================================================
         function renderMatrix() {
             const container = document.getElementById('matrix-container');
             if (!container) return;
-            
             let html = '<table class="matrix-table"><thead><tr><th>Persona</th>';
-            Object.keys(GRUPOS).forEach(g => {
-                html += '<th>' + GRUPOS[g].nombre.replace('Grupo ', 'G') + '</th>';
-            });
+            Object.keys(GRUPOS).forEach(g => html += '<th>' + GRUPOS[g].nombre.replace('Grupo ', 'G') + '</th>');
             html += '<th class="total-col">Total</th></tr></thead><tbody>';
-            
             PERSONAS.forEach(persona => {
                 html += '<tr><td><strong>' + persona + '</strong></td>';
                 let total = 0;
-                
                 Object.keys(GRUPOS).forEach(grupo => {
                     const pts = puntajesMatrix[persona]?.[grupo] || 0;
                     total += pts;
-                    const ptsClass = pts === 6 ? 'puntos-6' : pts === 3 ? 'puntos-3' : pts === 2 ? 'puntos-2' : pts === 1 ? 'puntos-1' : '';
-                    
-                    html += '<td class="matrix-editable ' + ptsClass + '" ';
-                    html += 'onclick="editarCeldaMatrix(event, \'' + persona + '\', \'' + grupo + '\')" ';
-                    html += 'data-persona="' + persona + '" data-grupo="' + grupo + '" ';
-                    html += 'data-valor="' + pts + '">';
-                    html += '<span class="valor-mostrado">' + pts + '</span>';
-                    html += '</td>';
+                    const cls = pts === 6 ? 'matrix-puntos-6' : pts === 3 ? 'matrix-puntos-3' : pts === 2 ? 'matrix-puntos-2' : pts === 1 ? 'matrix-puntos-1' : '';
+                    html += '<td class="matrix-editable ' + cls + '" onclick="editarCelda(event,\'' + persona + '\',\'' + grupo + '\')" data-persona="' + persona + '" data-grupo="' + grupo + '" data-valor="' + pts + '"><span class="valor-mostrado">' + pts + '</span></td>';
                 });
-                
                 html += '<td class="total-col">' + total + '</td></tr>';
             });
-            
-            // Fila de totales por grupo
             html += '<tr class="total-row"><td><strong>Total Grupo</strong></td>';
             let granTotal = 0;
             Object.keys(GRUPOS).forEach(grupo => {
-                let totalGrupo = 0;
-                PERSONAS.forEach(persona => {
-                    totalGrupo += puntajesMatrix[persona]?.[grupo] || 0;
-                });
-                granTotal += totalGrupo;
-                html += '<td>' + totalGrupo + '</td>';
+                let tg = 0;
+                PERSONAS.forEach(p => tg += puntajesMatrix[p]?.[grupo] || 0);
+                granTotal += tg;
+                html += '<td>' + tg + '</td>';
             });
-            html += '<td class="total-col">' + granTotal + '</td></tr>';
-            
-            html += '</tbody></table>';
-            html += '<div style="margin-top:12px;color:#8b949e;font-size:0.75rem;">';
-            html += '💡 <b>Instrucciones:</b> Haz clic en cualquier celda de puntaje para editarla. ';
-            html += 'Los cambios se reflejarán en los grupos y el bracket cuando presiones "Aplicar cambios".';
-            html += '</div>';
-            
+            html += '<td class="total-col">' + granTotal + '</td></tr></tbody></table>';
+            html += '<div style="margin-top:12px;color:#8b949e;font-size:0.75rem;">💡 <b>Instrucciones:</b> Haz clic en cualquier celda para editarla. Presiona <b>"Aplicar cambios"</b> para actualizar grupos y bracket.</div>';
             container.innerHTML = html;
         }
 
-        function editarCeldaMatrix(event, persona, grupo) {
+        function editarCelda(event, persona, grupo) {
             const td = event.currentTarget;
             const valorActual = parseInt(td.dataset.valor);
-            
-            // Crear input
             const input = document.createElement('input');
-            input.type = 'number';
-            input.min = '0';
-            input.max = '6';
-            input.value = valorActual;
-            input.style.width = '40px';
-            
-            // Reemplazar el span con el input
+            input.type = 'number'; input.min = '0'; input.max = '6'; input.value = valorActual;
             const span = td.querySelector('.valor-mostrado');
             td.replaceChild(input, span);
-            input.focus();
-            input.select();
-            
-            // Manejar eventos
-            input.addEventListener('blur', function() {
-                finalizarEdicion(td, persona, grupo, input.value);
-            });
-            
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    finalizarEdicion(td, persona, grupo, input.value);
-                }
-            });
-            
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    cancelarEdicion(td, valorActual);
-                }
-            });
+            input.focus(); input.select();
+            input.addEventListener('blur', () => finalizarEdicion(td, persona, grupo, input.value));
+            input.addEventListener('keypress', e => { if (e.key === 'Enter') finalizarEdicion(td, persona, grupo, input.value); });
+            input.addEventListener('keydown', e => { if (e.key === 'Escape') cancelarEdicion(td, valorActual); });
         }
 
         function finalizarEdicion(td, persona, grupo, nuevoValor) {
             let valor = parseInt(nuevoValor);
-            
-            // Validar
             if (isNaN(valor) || valor < 0) valor = 0;
             if (valor > 6) valor = 6;
-            
-            // Actualizar dato
             puntajesMatrix[persona][grupo] = valor;
             td.dataset.valor = valor;
-            
-            // Actualizar visual
             const span = document.createElement('span');
-            span.className = 'valor-mostrado';
-            span.textContent = valor;
-            
-            // Actualizar clase
+            span.className = 'valor-mostrado'; span.textContent = valor;
             td.className = 'matrix-editable';
-            if (valor === 6) td.classList.add('puntos-6');
-            else if (valor === 3) td.classList.add('puntos-3');
-            else if (valor === 2) td.classList.add('puntos-2');
-            else if (valor === 1) td.classList.add('puntos-1');
-            
-            // Reemplazar input con span
+            if (valor === 6) td.classList.add('matrix-puntos-6');
+            else if (valor === 3) td.classList.add('matrix-puntos-3');
+            else if (valor === 2) td.classList.add('matrix-puntos-2');
+            else if (valor === 1) td.classList.add('matrix-puntos-1');
             const input = td.querySelector('input');
             if (input) td.replaceChild(span, input);
-            
-            // Actualizar totales
             actualizarTotalesMatrix();
-            
-            showToast('✅ Puntaje de ' + persona + ' en Grupo ' + grupo + ' actualizado a ' + valor);
         }
 
         function cancelarEdicion(td, valorOriginal) {
             const span = document.createElement('span');
-            span.className = 'valor-mostrado';
-            span.textContent = valorOriginal;
-            
+            span.className = 'valor-mostrado'; span.textContent = valorOriginal;
             const input = td.querySelector('input');
             if (input) td.replaceChild(span, input);
         }
 
         function actualizarTotalesMatrix() {
             const rows = document.querySelectorAll('.matrix-table tbody tr');
-            
-            // Actualizar totales por persona
             rows.forEach(row => {
                 const celdas = row.querySelectorAll('td.matrix-editable');
                 let total = 0;
-                celdas.forEach(celda => {
-                    total += parseInt(celda.dataset.valor) || 0;
-                });
-                const totalCell = row.querySelector('.total-col');
-                if (totalCell) totalCell.textContent = total;
+                celdas.forEach(c => total += parseInt(c.dataset.valor) || 0);
+                const tc = row.querySelector('.total-col');
+                if (tc) tc.textContent = total;
             });
-            
-            // Actualizar totales por grupo (última fila)
             const lastRow = rows[rows.length - 1];
-            if (lastRow && lastRow.classList.contains('total-row')) {
+            if (lastRow?.classList.contains('total-row')) {
                 const grupos = Object.keys(GRUPOS);
-                let granTotal = 0;
-                
+                let gt = 0;
                 for (let i = 0; i < grupos.length; i++) {
-                    let totalGrupo = 0;
+                    let tg = 0;
                     for (let j = 0; j < rows.length - 1; j++) {
-                        const celda = rows[j].querySelectorAll('td.matrix-editable')[i];
-                        if (celda) totalGrupo += parseInt(celda.dataset.valor) || 0;
+                        const c = rows[j].querySelectorAll('td.matrix-editable')[i];
+                        if (c) tg += parseInt(c.dataset.valor) || 0;
                     }
-                    granTotal += totalGrupo;
-                    lastRow.querySelectorAll('td')[i + 1].textContent = totalGrupo;
+                    gt += tg;
+                    lastRow.querySelectorAll('td')[i + 1].textContent = tg;
                 }
-                
-                const totalCell = lastRow.querySelector('.total-col');
-                if (totalCell) totalCell.textContent = granTotal;
+                const tc = lastRow.querySelector('.total-col');
+                if (tc) tc.textContent = gt;
             }
         }
 
         // ============================================================
-        // APLICAR CAMBIOS DE LA MATRIZ A GRUPOS Y BRACKET
+        // APLICAR CAMBIOS DE MATRIX
         // ============================================================
         function aplicarCambiosMatrix() {
-            // Esta función toma los puntajes de la matriz y determina
-            // cuáles deberían ser los clasificados para cada grupo
-            
-            let cambiosRealizados = false;
-            
+            let cambios = false;
             Object.keys(GRUPOS).forEach(grupo => {
-                // Para cada grupo, encontramos qué combinación de clasificados
-                // maximiza los puntajes totales (o se ajusta mejor a la matriz)
-                const mejorCombinacion = encontrarMejorCombinacion(grupo);
-                
-                if (mejorCombinacion) {
-                    const [nuevo1, nuevo2] = mejorCombinacion;
-                    const actual1 = clasificadosActuales[grupo]?.[0];
-                    const actual2 = clasificadosActuales[grupo]?.[1];
-                    
-                    if (nuevo1 !== actual1 || nuevo2 !== actual2) {
-                        clasificadosActuales[grupo] = [nuevo1, nuevo2];
-                        cambiosRealizados = true;
-                        
-                        // Recalcular puntajes para este grupo
-                        PERSONAS.forEach(persona => {
-                            puntajesMatrix[persona][grupo] = calcularPuntajeGrupo(persona, grupo);
-                        });
-                        
-                        console.log('✅ Grupo ' + grupo + ' actualizado: 1° ' + nuevo1 + ', 2° ' + nuevo2);
+                const mejor = encontrarMejorCombinacion(grupo);
+                if (mejor) {
+                    const [n1, n2] = mejor;
+                    const [a1, a2] = clasificadosActuales[grupo] || ['', ''];
+                    if (n1 !== a1 || n2 !== a2) {
+                        clasificadosActuales[grupo] = [n1, n2];
+                        cambios = true;
+                        PERSONAS.forEach(p => puntajesMatrix[p][grupo] = calcularPuntajeGrupo(p, grupo));
                     }
                 }
             });
-            
-            if (cambiosRealizados) {
-                renderPollaGrupos();
-                renderMatrix();
-                renderBracket();
-                guardarEstado();
+            if (cambios) {
+                refrescarTodo();
                 showToast('✅ Cambios aplicados. Grupos y bracket actualizados.');
             } else {
-                showToast('ℹ️ No se detectaron cambios necesarios en los clasificados.');
+                showToast('ℹ️ No se detectaron cambios necesarios.');
             }
         }
 
         function encontrarMejorCombinacion(grupo) {
-            // Busca la combinación de clasificados que mejor se ajuste a los puntajes actuales
             const equipos = GRUPOS[grupo].equipos;
-            let mejorCombinacion = null;
-            let mejorDiferencia = Infinity;
-            
-            // Probar todas las combinaciones posibles de 2 equipos
+            let mejor = null, mejorDif = Infinity;
             for (let i = 0; i < equipos.length; i++) {
                 for (let j = 0; j < equipos.length; j++) {
                     if (i === j) continue;
-                    
-                    const clasTentativos = [equipos[i].sigla, equipos[j].sigla];
-                    
-                    // Calcular qué puntajes resultarían
-                    let diferencia = 0;
-                    PERSONAS.forEach(persona => {
-                        const puntajeActual = puntajesMatrix[persona]?.[grupo] || 0;
-                        const puntajeTeorico = calcularPuntajeTeorico(persona, grupo, clasTentativos);
-                        diferencia += Math.abs(puntajeActual - puntajeTeorico);
+                    const tentativo = [equipos[i].sigla, equipos[j].sigla];
+                    let dif = 0;
+                    PERSONAS.forEach(p => {
+                        const pa = puntajesMatrix[p]?.[grupo] || 0;
+                        const pt = calcularPuntajeTeorico(p, grupo, tentativo);
+                        dif += Math.abs(pa - pt);
                     });
-                    
-                    if (diferencia < mejorDiferencia) {
-                        mejorDiferencia = diferencia;
-                        mejorCombinacion = clasTentativos;
-                    }
+                    if (dif < mejorDif) { mejorDif = dif; mejor = tentativo; }
                 }
             }
-            
-            return mejorCombinacion;
+            return mejor;
         }
 
-        function calcularPuntajeTeorico(persona, grupo, clasTentativos) {
-            const pronostico = PRONOSTICOS[persona]?.[grupo] || [];
-            if (pronostico.length < 2 || clasTentativos.length < 2) return 0;
-            
-            const [p1, p2] = pronostico;
-            const [c1, c2] = clasTentativos;
-            
+        function calcularPuntajeTeorico(persona, grupo, clasTentativo) {
+            const pron = PRONOSTICOS[persona]?.[grupo] || [];
+            if (pron.length < 2 || clasTentativo.length < 2) return 0;
+            const [p1, p2] = pron;
+            const [c1, c2] = clasTentativo;
             if (p1 === c1 && p2 === c2) return 6;
             if (p1 === c1 || p2 === c2) return 3;
             if (p1 === c2 && p2 === c1) return 2;
@@ -832,121 +602,76 @@
         }
 
         // ============================================================
-        // BRACKET
+        // RENDER BRACKET
         // ============================================================
         function renderBracket() {
             const container = document.getElementById('bracket-container');
             if (!container) return;
-            
             let html = '<div class="bracket-wrap"><div class="bracket-grid">';
-            
-            // Columna izquierda - R32 (mitad superior)
+            // R32 izquierda
             html += '<div class="bracket-col"><div class="bracket-col-header">R32</div><div class="bracket-half">';
-            for (let i = 0; i < 8; i++) {
-                html += crearMatchBox(BRACKET_R32[i]);
-            }
+            for (let i = 0; i < 8; i++) html += crearMatchBox(BRACKET_R32[i]);
             html += '</div></div>';
-            
             // R16 izquierda
             html += '<div class="bracket-col"><div class="bracket-col-header">R16</div><div class="bracket-half">';
-            for (let i = 0; i < 4; i++) {
-                html += crearMatchBoxVacio('M' + (89 + i), ['4 jul', '4 jul', '5 jul', '5 jul'][i]);
-            }
+            for (let i = 0; i < 4; i++) html += crearMatchBoxVacio('M' + (89 + i), ['4 jul', '4 jul', '5 jul', '5 jul'][i]);
             html += '</div></div>';
-            
             // Cuartos izquierda
             html += '<div class="bracket-col"><div class="bracket-col-header">Cuartos</div><div class="bracket-half">';
-            html += crearMatchBoxVacio('M97', '9 jul');
-            html += crearMatchBoxVacio('M98', '10 jul');
+            html += crearMatchBoxVacio('M97', '9 jul') + crearMatchBoxVacio('M98', '10 jul');
             html += '</div></div>';
-            
-            // Semifinal izquierda
+            // Semis izquierda
             html += '<div class="bracket-col"><div class="bracket-col-header">Semis</div><div class="bracket-half">';
             html += crearMatchBoxVacio('M101', '14 jul');
             html += '</div></div>';
-            
-            // Centro - Final
-            html += '<div class="bracket-col center-final-col">';
-            html += '<div class="bracket-col-header">Final</div>';
-            html += '<div class="copa-icon">🏆</div>';
+            // Centro
+            html += '<div class="bracket-col center-final-col"><div class="bracket-col-header">Final</div><div class="copa-icon">🏆</div><div class="fecha-final-txt">19 jul · NY/NJ</div>';
             html += crearMatchBoxVacio('M103', '19 jul');
-            html += '<div style="margin-top:20px;font-size:0.7rem;color:#8b949e;">🥉 3er puesto</div>';
-            html += crearMatchBoxVacio('M3P', '18 jul');
-            html += '</div>';
-            
-            // Semifinal derecha
+            html += '<div class="tercer-box"><div class="tercer-label">🥉 3er puesto · 18 jul</div>';
+            html += crearMatchBoxVacio('M3P', '18 jul') + '</div></div>';
+            // Semis derecha
             html += '<div class="bracket-col"><div class="bracket-col-header">Semis</div><div class="bracket-half">';
             html += crearMatchBoxVacio('M102', '15 jul');
             html += '</div></div>';
-            
             // Cuartos derecha
             html += '<div class="bracket-col"><div class="bracket-col-header">Cuartos</div><div class="bracket-half">';
-            html += crearMatchBoxVacio('M99', '11 jul');
-            html += crearMatchBoxVacio('M100', '11 jul');
+            html += crearMatchBoxVacio('M99', '11 jul') + crearMatchBoxVacio('M100', '11 jul');
             html += '</div></div>';
-            
             // R16 derecha
             html += '<div class="bracket-col"><div class="bracket-col-header">R16</div><div class="bracket-half">';
-            for (let i = 4; i < 8; i++) {
-                html += crearMatchBoxVacio('M' + (89 + i), ['6 jul', '6 jul', '7 jul', '7 jul'][i - 4]);
-            }
+            for (let i = 4; i < 8; i++) html += crearMatchBoxVacio('M' + (89 + i), ['6 jul', '6 jul', '7 jul', '7 jul'][i - 4]);
             html += '</div></div>';
-            
             // R32 derecha
             html += '<div class="bracket-col"><div class="bracket-col-header">R32</div><div class="bracket-half">';
-            for (let i = 8; i < 16; i++) {
-                html += crearMatchBox(BRACKET_R32[i]);
-            }
+            for (let i = 8; i < 16; i++) html += crearMatchBox(BRACKET_R32[i]);
             html += '</div></div>';
-            
             html += '</div></div>';
-            
             container.innerHTML = html;
         }
 
         function crearMatchBox(match) {
-            let html = '<div class="match-box filled">';
-            html += '<span class="match-code">' + match.id + '</span>';
-            html += '<span class="match-date">' + match.fecha + '</span>';
-            
-            // Slot 1
             const eq1 = obtenerEquipoSlot(match.slot1);
-            html += '<div class="flag-slot">';
-            html += '<span class="team-flag">' + eq1.bandera + '</span>';
-            html += '<span class="team-name">' + eq1.nombre + '</span>';
-            html += '</div>';
-            
-            // Slot 2
             const eq2 = obtenerEquipoSlot(match.slot2);
-            html += '<div class="flag-slot">';
-            html += '<span class="team-flag">' + eq2.bandera + '</span>';
-            html += '<span class="team-name">' + eq2.nombre + '</span>';
-            html += '</div>';
-            
-            html += '</div>';
-            return html;
+            return `<div class="match-box filled">
+                <span class="match-code">${match.id}</span><span class="match-date">${match.fecha}</span>
+                <div class="flag-slot"><span class="team-flag">${eq1.bandera}</span><span class="team-name">${eq1.nombre}</span></div>
+                <div class="flag-slot"><span class="team-flag">${eq2.bandera}</span><span class="team-name">${eq2.nombre}</span></div>
+            </div>`;
         }
 
         function crearMatchBoxVacio(id, fecha) {
-            let html = '<div class="match-box">';
-            html += '<span class="match-code">' + id + '</span>';
-            html += '<span class="match-date">' + fecha + '</span>';
-            html += '<div class="flag-slot"><span class="team-name" style="color:#8b949e;">—</span></div>';
-            html += '<div class="flag-slot"><span class="team-name" style="color:#8b949e;">—</span></div>';
-            html += '</div>';
-            return html;
+            return `<div class="match-box">
+                <span class="match-code">${id}</span><span class="match-date">${fecha}</span>
+                <div class="flag-slot"><span class="team-name" style="color:#8b949e;">—</span></div>
+                <div class="flag-slot"><span class="team-name" style="color:#8b949e;">—</span></div>
+            </div>`;
         }
 
         function obtenerEquipoSlot(slot) {
-            if (!slot) return { bandera: '⬜', nombre: '—' };
-            
-            if (slot.grupo && slot.pos) {
-                const clas = clasificadosActuales[slot.grupo] || [];
-                const sigla = slot.pos === 1 ? clas[0] : clas[1];
-                if (sigla) return getEquipoCompleto(sigla);
-            }
-            
-            return { bandera: '⬜', nombre: '—' };
+            if (!slot?.grupo || !slot?.pos) return { bandera: '⬜', nombre: '—' };
+            const clas = clasificadosActuales[slot.grupo] || [];
+            const sigla = slot.pos === 1 ? clas[0] : clas[1];
+            return sigla ? getEquipoCompleto(sigla) : { bandera: '⬜', nombre: '—' };
         }
 
         // ============================================================
@@ -954,64 +679,49 @@
         // ============================================================
         function showToast(msg) {
             const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.style.display = 'block';
-            toast.style.animation = 'none';
-            toast.offsetHeight;
+            toast.textContent = msg; toast.style.display = 'block';
+            toast.style.animation = 'none'; toast.offsetHeight;
             toast.style.animation = 'toastIn 0.3s ease, toastOut 0.3s ease 1.7s forwards';
-            setTimeout(() => { toast.style.display = 'none'; }, 2100);
+            setTimeout(() => toast.style.display = 'none', 2100);
         }
 
         function guardarEstado() {
-            localStorage.setItem('mundial2026_matriz', JSON.stringify({
-                puntajesMatrix,
-                clasificadosActuales
-            }));
+            localStorage.setItem('mundial2026_v2', JSON.stringify({ puntajesMatrix, clasificadosActuales }));
             document.getElementById('syncBadge').textContent = '⚡ Actualizado';
-            setTimeout(() => { document.getElementById('syncBadge').textContent = '⚡ Datos sincronizados'; }, 1500);
+            setTimeout(() => document.getElementById('syncBadge').textContent = '⚡ Datos sincronizados', 1500);
         }
 
         function cargarEstado() {
-            const saved = localStorage.getItem('mundial2026_matriz');
+            const saved = localStorage.getItem('mundial2026_v2');
             if (saved) {
                 try {
-                    const data = JSON.parse(saved);
-                    puntajesMatrix = data.puntajesMatrix || puntajesMatrix;
-                    clasificadosActuales = data.clasificadosActuales || clasificadosActuales;
-                } catch (e) {
-                    console.error('Error cargando estado:', e);
-                }
+                    const d = JSON.parse(saved);
+                    if (d.puntajesMatrix) puntajesMatrix = d.puntajesMatrix;
+                    if (d.clasificadosActuales) clasificadosActuales = d.clasificadosActuales;
+                } catch (e) {}
             }
+        }
+
+        function refrescarTodo() {
+            renderRanking();
+            renderGrupos();
+            renderMatrix();
+            renderBracket();
+            guardarEstado();
         }
 
         function generarCodigoPuntajes() {
             let codigo = 'const PUNTAJES_INICIALES = {\n';
-            
-            PERSONAS.forEach((persona, idx) => {
-                codigo += "  '" + persona + "': {";
+            PERSONAS.forEach((p, i) => {
+                codigo += "  '" + p + "': {";
                 const partes = [];
-                Object.keys(GRUPOS).forEach(grupo => {
-                    const pts = puntajesMatrix[persona]?.[grupo] || 0;
-                    partes.push(grupo + ': ' + pts);
-                });
-                codigo += partes.join(', ');
-                codigo += '}';
-                if (idx < PERSONAS.length - 1) codigo += ',';
+                Object.keys(GRUPOS).forEach(g => partes.push(g + ': ' + (puntajesMatrix[p]?.[g] || 0)));
+                codigo += partes.join(', ') + '}';
+                if (i < PERSONAS.length - 1) codigo += ',';
                 codigo += '\n';
             });
-            
             codigo += '};';
-            
-            // Copiar al portapapeles
-            navigator.clipboard.writeText(codigo).then(() => {
-                showToast('✅ Código PUNTAJES_INICIALES copiado al portapapeles');
-            }).catch(() => {
-                console.log('📋 CÓDIGO PARA COPIAR:');
-                console.log(codigo);
-                showToast('📋 Revisa la consola (F12) para ver el código');
-            });
-            
-            console.log('📋 CÓDIGO PUNTAJES_INICIALES:');
+            navigator.clipboard.writeText(codigo).then(() => showToast('✅ Código copiado')).catch(() => { console.log(codigo); showToast('📋 Código en consola (F12)'); });
             console.log(codigo);
         }
 
@@ -1019,70 +729,44 @@
             try {
                 const wb = XLSX.utils.book_new();
                 const data = [['Persona', ...Object.keys(GRUPOS).map(g => GRUPOS[g].nombre), 'TOTAL']];
-                
-                PERSONAS.forEach(persona => {
-                    const fila = [persona];
-                    let total = 0;
-                    Object.keys(GRUPOS).forEach(grupo => {
-                        const pts = puntajesMatrix[persona]?.[grupo] || 0;
-                        fila.push(pts);
-                        total += pts;
-                    });
-                    fila.push(total);
-                    data.push(fila);
+                PERSONAS.forEach(p => {
+                    const f = [p]; let t = 0;
+                    Object.keys(GRUPOS).forEach(g => { const v = puntajesMatrix[p]?.[g] || 0; f.push(v); t += v; });
+                    f.push(t); data.push(f);
                 });
-                
-                XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), 'Puntajes Grupos');
+                XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), 'Puntajes');
                 XLSX.writeFile(wb, 'Polla_Mundial2026.xlsx');
-                showToast('💾 Excel descargado exitosamente');
-            } catch (e) {
-                alert('Error al exportar: ' + e.message);
-            }
+                showToast('💾 Excel descargado');
+            } catch (e) { alert('Error: ' + e.message); }
         }
 
         // ============================================================
         // NAVEGACIÓN
         // ============================================================
-        function switchPage(pageName) {
+        function switchPage(name) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + pageName).classList.add('active');
-            
-            document.querySelectorAll('.nav-tab').forEach(t => {
-                t.classList.toggle('active', t.dataset.page === pageName);
-            });
-            
-            // Renderizar la página activa
-            if (pageName === 'polla') renderPollaGrupos();
-            if (pageName === 'matrix') renderMatrix();
-            if (pageName === 'bracket') renderBracket();
+            document.getElementById('page-' + name).classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.page === name));
+            if (name === 'top') renderRanking();
+            if (name === 'grupos') renderGrupos();
+            if (name === 'matrix') renderMatrix();
+            if (name === 'bracket') renderBracket();
         }
 
         document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                switchPage(this.dataset.page);
-            });
+            tab.addEventListener('click', () => switchPage(tab.dataset.page));
         });
 
         // ============================================================
-        // INICIALIZACIÓN
+        // INICIO
         // ============================================================
-        function inicializar() {
-            initEstado();
-            cargarEstado();
-            renderPollaGrupos();
-            renderMatrix();
-            renderBracket();
-            
-            console.log('✅ Mundial 2026 - Sistema inicializado');
-            console.log('💡 MATRIX EDITABLE: Haz clic en cualquier celda para cambiar puntajes');
-            console.log('💡 Los cambios en la matriz determinan los clasificados de los grupos');
-            console.log('💡 El bracket se actualiza automáticamente');
-            console.log('💡 Grupo A correcto: ' + (clasificadosActuales['A']?.[0] || '?') + ' y ' + (clasificadosActuales['A']?.[1] || '?'));
-            console.log('💡 Grupo B correcto: ' + (clasificadosActuales['B']?.[0] || '?') + ' y ' + (clasificadosActuales['B']?.[1] || '?'));
-        }
-
-        // Arrancar
-        inicializar();
+        initEstado();
+        renderRanking();
+        renderGrupos();
+        renderMatrix();
+        renderBracket();
+        switchPage('top');
+        console.log('✅ Mundial 2026 - Completo con TOP, Grupos, Matrix y Bracket');
     </script>
 </body>
 </html>
