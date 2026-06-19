@@ -595,7 +595,7 @@
 
     <script>
         // ============================================================
-        // PUNTAJES INICIALES ACTUALIZADOS (CORREGIDOS)
+        // PUNTAJES INICIALES ACTUALIZADOS
         // ============================================================
         const PUNTAJES_INICIALES={
             'Duvan':{A:1,B:2,C:3,D:0,E:6,F:3,G:0,H:1,I:6,J:3,K:1,L:3},
@@ -610,6 +610,7 @@
             'Diana':{A:2,B:2,C:1,D:0,E:6,F:1,G:1,H:3,I:2,J:6,K:1,L:3},
             'Sofia':{A:6,B:1,C:1,D:6,E:6,F:1,G:1,H:1,I:1,J:6,K:3,L:3}
         };
+
         // ============================================================
         // DATOS COMPLETOS
         // ============================================================
@@ -788,7 +789,7 @@
                         nombre: 'Inglaterra' }, { sigla: 'CRO', nombre: 'Croacia' }] } }
         };
 
-        // CLASIFICADOS INICIALES - Estos son los REALES que determinan los puntajes
+        // CLASIFICADOS INICIALES - CORREGIDO: Grupo B con Suiza 1° y Canadá 2°
         const CLASIFICADOS_INICIALES = {
             A: [{ sigla: 'KOR', nombre: 'Corea del Sur', bandera: '🇰🇷' }, { sigla: 'MEX', nombre: 'México', bandera: '🇲🇽' }],
             B: [{ sigla: 'SUI', nombre: 'Suiza', bandera: '🇨🇭' }, { sigla: 'CAN', nombre: 'Canadá', bandera: '🇨🇦' }],
@@ -860,9 +861,35 @@
             gruposState = {};
             Object.keys(CLASIFICADOS_INICIALES).forEach(gid => {
                 const real = CLASIFICADOS_INICIALES[gid] || [];
+                // CORREGIDO: Asegurar que los equipos en gruposState coincidan con el orden de clasificación
+                const equiposOrdenados = GRUPOS[gid].equipos.map(e => ({ ...e }));
+                
+                // Reordenar equipos para que los clasificados estén en posiciones 0 y 1
+                const clas1 = real[0];
+                const clas2 = real[1];
+                if (clas1 && clas2) {
+                    // Encontrar los índices de los clasificados en el array original
+                    const idx1 = equiposOrdenados.findIndex(e => e.sigla === clas1.sigla);
+                    const idx2 = equiposOrdenados.findIndex(e => e.sigla === clas2.sigla);
+                    
+                    // Intercambiar para que queden en orden correcto
+                    if (idx1 !== -1 && idx2 !== -1 && (idx1 > 0 || idx2 > 1)) {
+                        // Mover clasificado 1 a posición 0
+                        const temp1 = equiposOrdenados[0];
+                        equiposOrdenados[0] = equiposOrdenados[idx1];
+                        equiposOrdenados[idx1] = temp1;
+                        
+                        // Mover clasificado 2 a posición 1 (ajustar índice después del primer swap)
+                        const newIdx2 = equiposOrdenados.findIndex(e => e.sigla === clas2.sigla);
+                        const temp2 = equiposOrdenados[1];
+                        equiposOrdenados[1] = equiposOrdenados[newIdx2];
+                        equiposOrdenados[newIdx2] = temp2;
+                    }
+                }
+                
                 gruposState[gid] = {
                     clasificados: real.length ? [...real] : [null, null],
-                    equipos: GRUPOS[gid].equipos.map(e => ({ ...e }))
+                    equipos: equiposOrdenados
                 };
             });
 
@@ -876,7 +903,6 @@
                 }
             });
 
-            // Cargar puntajes iniciales
             puntajes = JSON.parse(JSON.stringify(PUNTAJES_INICIALES));
 
             const saved = localStorage.getItem('mundial2026_completo');
@@ -899,7 +925,6 @@
                 } catch (e) {}
             }
 
-            // IMPORTANTE: Recalcular SIEMPRE desde el estado real de gruposState
             autoLlenarR32Silencioso();
             calcularTodosPuntajes();
             calcularPuntajesEliminatoria();
@@ -923,6 +948,13 @@
                     }
                 });
             });
+            
+            // DEBUG: Verificar que el Grupo B se actualizó
+            console.log('✅ R32 actualizado - M73 (2A vs 2B):', 
+                bracketMatches['M73']?.slot1?.nombre, 'vs', 
+                bracketMatches['M73']?.slot2?.nombre);
+            console.log('✅ R32 actualizado - M85 (1B):', 
+                bracketMatches['M85']?.slot1?.nombre);
         }
 
         function guardarEstado() {
@@ -960,6 +992,12 @@
                     puntajes[p][g] = calcularPuntos(g, p);
                 });
             });
+            
+            // DEBUG: Verificar puntajes del Grupo B
+            console.log('✅ Puntajes Grupo B recalculados:');
+            PERSONAS.forEach(p => {
+                console.log('  ' + p + ': ' + puntajes[p]?.['B'] + ' pts');
+            });
         }
 
         function calcTotal(p) {
@@ -983,7 +1021,7 @@
         }
 
         // ============================================================
-        // ACTUALIZACIÓN GLOBAL (CORREGIDO)
+        // ACTUALIZACIÓN GLOBAL
         // ============================================================
         function actualizarTodoDesdeGrupos(gidCambiado) {
             autoLlenarR32Silencioso();
@@ -992,6 +1030,10 @@
             guardarEstado();
             refrescarVistasActivas(gidCambiado);
             generarCodigoPuntajes();
+            
+            if (gidCambiado) {
+                console.log('🔄 Grupo ' + gidCambiado + ' actualizado - Estado guardado');
+            }
         }
 
         function refrescarVistasActivas(gidCambiado) {
@@ -1076,7 +1118,6 @@
             
             console.log('📋 CÓDIGO PUNTAJES_INICIALES ACTUALIZADO:');
             console.log(codigo);
-            console.log('📝 Copia este código y reemplaza PUNTAJES_INICIALES en tu archivo index.html en GitHub');
             
             return codigo;
         }
@@ -1134,7 +1175,7 @@
         }
 
         // ============================================================
-        // NAVEGACIÓN PRINCIPAL (CORREGIDO)
+        // NAVEGACIÓN PRINCIPAL
         // ============================================================
         function switchPage(pageName) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1142,7 +1183,6 @@
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelector(`.nav-tab[data-page="${pageName}"]`).classList.add('active');
 
-            // Recalcular SIEMPRE desde gruposState antes de pintar cualquier página
             autoLlenarR32Silencioso();
             calcularTodosPuntajes();
             calcularPuntajesEliminatoria();
@@ -1272,7 +1312,7 @@
         }
 
         // ============================================================
-        // VISTA GRUPOS BRACKET (EDITABLE CON DRAG & DROP)
+        // VISTA GRUPOS BRACKET
         // ============================================================
         function renderVistaGruposBracket() {
             const container = document.getElementById('vista-grupos-bracket');
@@ -1333,7 +1373,6 @@
             });
             container.appendChild(div);
 
-            // Configurar drag & drop para equipos
             document.querySelectorAll('.equipo-drag').forEach(el => {
                 el.addEventListener('dragstart', function(e) {
                     dragData = { tipo: 'grupo', grupo: this.dataset.grupo, pos: parseInt(this.dataset.pos), sigla: this.dataset.sigla };
@@ -1348,7 +1387,6 @@
                 });
             });
 
-            // Configurar drop zones en filas
             document.querySelectorAll('.pos-row').forEach(row => {
                 row.addEventListener('dragover', function(e) {
                     e.preventDefault();
@@ -1379,7 +1417,6 @@
                     equipos[posOrigen] = equipos[posDestino];
                     equipos[posDestino] = temp;
 
-                    // ACTUALIZAR CLASIFICADOS basados en las nuevas posiciones
                     gruposState[grupoOrigen].clasificados = [
                         { ...equipos[0] },
                         { ...equipos[1] }
@@ -1756,10 +1793,10 @@
         cambiarVistaBracket('grupos');
         showPollaView('grupos');
 
-        console.log('✅ Mundial 2026 - Plataforma completa inicializada con puntajes actualizados');
-        console.log('💡 Sofia ahora tiene 6pts en Grupo A (Corea 1°, México 2° = pronóstico correcto)');
-        console.log('💡 Todos los puntajes reflejan los clasificados reales actualizados');
-        console.log('💡 El bracket se actualiza automáticamente al cambiar clasificados');
+        console.log('✅ Mundial 2026 - Plataforma completa inicializada');
+        console.log('💡 CORREGIDO: Grupo B ahora muestra Suiza 1° y Canadá 2° correctamente');
+        console.log('💡 Los puntajes del Grupo B se recalculan automáticamente');
+        console.log('💡 El bracket R32 se actualiza con los clasificados correctos');
     </script>
 </body>
 </html>
