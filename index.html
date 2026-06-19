@@ -618,8 +618,8 @@
         ];
 
         const GRUPOS = {
-            A: { nombre: 'Grupo A', equipos: [{ sigla: 'MEX', nombre: 'México', bandera: '�🇽' }, { sigla: 'KOR',
-                    nombre: 'Corea del Sur', bandera: '�🇷' }, { sigla: 'CZE', nombre: 'Chequia', bandera: '🇨🇿' },
+            A: { nombre: 'Grupo A', equipos: [{ sigla: 'MEX', nombre: 'México', bandera: '🇲🇽' }, { sigla: 'KOR',
+                    nombre: 'Corea del Sur', bandera: '🇰🇷' }, { sigla: 'CZE', nombre: 'Chequia', bandera: '🇨🇿' },
                 { sigla: 'ZAF', nombre: 'Sudáfrica', bandera: '🇿🇦' }], personas: { Camila: [{ sigla: 'MEX',
                         nombre: 'México' }, { sigla: 'KOR', nombre: 'Corea del Sur' }], Duvan: [{ sigla: 'MEX',
                         nombre: 'México' }, { sigla: 'ZAF', nombre: 'Sudáfrica' }], Camilo: [{ sigla: 'MEX',
@@ -898,9 +898,7 @@
                 } catch (e) {}
             }
 
-            // Recalcular SIEMPRE desde el estado real de gruposState, nunca confiar
-            // ciegamente en el snapshot de "puntajes" guardado (puede haber quedado
-            // desfasado si se guardó en un momento intermedio).
+            // IMPORTANTE: Recalcular SIEMPRE desde el estado real de gruposState
             autoLlenarR32Silencioso();
             calcularTodosPuntajes();
             calcularPuntajesEliminatoria();
@@ -917,6 +915,8 @@
                             const eq = def.pos === 1 ? g.clasificados[0] : g.clasificados[1];
                             if (eq) {
                                 bracketMatches[m.id]['slot' + num] = { ...eq };
+                            } else {
+                                bracketMatches[m.id]['slot' + num] = null;
                             }
                         }
                     }
@@ -979,6 +979,51 @@
             if (pts === 2) return 'matrix-puntos-2';
             if (pts === 1) return 'matrix-puntos-1';
             return '';
+        }
+
+        // ============================================================
+        // ACTUALIZACIÓN GLOBAL (CORREGIDO)
+        // ============================================================
+        function actualizarTodoDesdeGrupos(gidCambiado) {
+            autoLlenarR32Silencioso();
+            calcularTodosPuntajes();
+            calcularPuntajesEliminatoria();
+            guardarEstado();
+            refrescarVistasActivas(gidCambiado);
+            generarCodigoPuntajes();
+        }
+
+        function refrescarVistasActivas(gidCambiado) {
+            const pagePolla = document.getElementById('page-polla');
+            const pageMatrix = document.getElementById('page-matrix');
+            const pageBracket = document.getElementById('page-bracket');
+            const pageElim = document.getElementById('page-eliminatoria');
+
+            if (pagePolla.classList.contains('active')) {
+                renderPollaGrupos();
+                const rankingVisible = document.getElementById('polla-ranking').style.display !== 'none';
+                if (rankingVisible) renderPollaRanking();
+            }
+            if (pageMatrix.classList.contains('active')) {
+                calcularTodosPuntajes(); // Recalcular antes de mostrar
+                renderMatrix();
+            }
+            if (pageBracket.classList.contains('active')) {
+                renderVistaGruposBracket();
+                const bracketVisible = document.getElementById('vista-bracket-elim').style.display !== 'none';
+                if (bracketVisible) {
+                    autoLlenarR32Silencioso(); // Asegurar que el bracket esté actualizado
+                    renderBracket();
+                }
+            }
+            if (pageElim.classList.contains('active')) {
+                renderApuestaEliminatoria();
+                renderPuntajesEliminatoria();
+            }
+            
+            if (gidCambiado) {
+                showToast('✅ ' + GRUPOS[gidCambiado].nombre + ' actualizado. ¡Puntajes recalculados!');
+            }
         }
 
         // ============================================================
@@ -1088,45 +1133,7 @@
         }
 
         // ============================================================
-        // ACTUALIZACIÓN GLOBAL
-        // ============================================================
-        function actualizarTodoDesdeGrupos(gidCambiado) {
-            autoLlenarR32Silencioso();
-            calcularTodosPuntajes();
-            calcularPuntajesEliminatoria();
-            guardarEstado();
-            refrescarVistasActivas(gidCambiado);
-            generarCodigoPuntajes();
-        }
-
-        function refrescarVistasActivas(gidCambiado) {
-            const pagePolla = document.getElementById('page-polla');
-            const pageMatrix = document.getElementById('page-matrix');
-            const pageBracket = document.getElementById('page-bracket');
-            const pageElim = document.getElementById('page-eliminatoria');
-
-            if (pagePolla.classList.contains('active')) {
-                renderPollaGrupos();
-                const rankingVisible = document.getElementById('polla-ranking').style.display !== 'none';
-                if (rankingVisible) renderPollaRanking();
-            }
-            if (pageMatrix.classList.contains('active')) {
-                renderMatrix();
-            }
-            if (pageBracket.classList.contains('active')) {
-                renderVistaGruposBracket();
-                const bracketVisible = document.getElementById('vista-bracket-elim').style.display !== 'none';
-                if (bracketVisible) renderBracket();
-            }
-            if (pageElim.classList.contains('active')) {
-                renderApuestaEliminatoria();
-                renderPuntajesEliminatoria();
-            }
-            showToast('✅ ' + GRUPOS[gidCambiado].nombre + ' actualizado. ¡Puntajes recalculados!');
-        }
-
-        // ============================================================
-        // NAVEGACIÓN PRINCIPAL
+        // NAVEGACIÓN PRINCIPAL (CORREGIDO)
         // ============================================================
         function switchPage(pageName) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1134,18 +1141,16 @@
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelector(`.nav-tab[data-page="${pageName}"]`).classList.add('active');
 
-            // FIX: recalcular SIEMPRE desde gruposState antes de pintar cualquier
-            // página, sin importar de dónde vengas. Antes, Matrix solo se
-            // refrescaba si pasabas primero por Bracket y arrastrabas algo ahí;
-            // si entrabas directo a Matrix, podía mostrar puntajes viejos
-            // (ej. Corea por encima de México aunque ya hubieras cambiado el
-            // clasificado).
+            // Recalcular SIEMPRE desde gruposState antes de pintar cualquier página
             autoLlenarR32Silencioso();
             calcularTodosPuntajes();
             calcularPuntajesEliminatoria();
 
             if (pageName === 'polla') showPollaView('grupos');
-            if (pageName === 'matrix') renderMatrix();
+            if (pageName === 'matrix') {
+                calcularTodosPuntajes(); // Asegurar puntajes actualizados
+                renderMatrix();
+            }
             if (pageName === 'bracket') {
                 renderVistaGruposBracket();
                 cambiarVistaBracket('grupos');
@@ -1231,13 +1236,7 @@
         // MATRIX
         // ============================================================
         function renderMatrix() {
-            // FIX: recalcular puntajes desde gruposState justo antes de pintar,
-            // para que la Matrix nunca pueda quedar desfasada de los clasificados
-            // reales (ej. si los clasificados cambiaron en otra pestaña/sesión
-            // y solo se cargó el localStorage, sin pasar por un drag&drop).
-            autoLlenarR32Silencioso();
-            calcularTodosPuntajes();
-
+            calcularTodosPuntajes(); // Asegurar puntajes actualizados antes de pintar
             const container = document.getElementById('matrix-container');
             if (!container) return;
             let html = '<table class="matrix-table"><thead><tr><th>Persona</th>';
@@ -1272,7 +1271,7 @@
         }
 
         // ============================================================
-        // VISTA GRUPOS BRACKET (EDITABLE CON DRAG & DROP)
+        // VISTA GRUPOS BRACKET (EDITABLE CON DRAG & DROP - CORREGIDO)
         // ============================================================
         function renderVistaGruposBracket() {
             const container = document.getElementById('vista-grupos-bracket');
@@ -1333,6 +1332,7 @@
             });
             container.appendChild(div);
 
+            // Configurar drag & drop para equipos
             document.querySelectorAll('.equipo-drag').forEach(el => {
                 el.addEventListener('dragstart', function(e) {
                     dragData = { tipo: 'grupo', grupo: this.dataset.grupo, pos: parseInt(this.dataset.pos), sigla: this.dataset.sigla };
@@ -1347,6 +1347,7 @@
                 });
             });
 
+            // Configurar drop zones en filas
             document.querySelectorAll('.pos-row').forEach(row => {
                 row.addEventListener('dragover', function(e) {
                     e.preventDefault();
@@ -1372,19 +1373,23 @@
                         return;
                     }
 
+                    // Intercambiar equipos en el array
                     const equipos = gruposState[grupoOrigen].equipos;
                     const temp = equipos[posOrigen];
                     equipos[posOrigen] = equipos[posDestino];
                     equipos[posDestino] = temp;
 
-                    gruposState[grupoOrigen].clasificados = [{ ...equipos[0] }, { ...equipos[1] }];
+                    // ACTUALIZAR CLASIFICADOS basados en las nuevas posiciones
+                    gruposState[grupoOrigen].clasificados = [
+                        { ...equipos[0] },  // 1er lugar
+                        { ...equipos[1] }   // 2do lugar
+                    ];
 
                     dragData = null;
                     actualizarTodoDesdeGrupos(grupoOrigen);
                 });
-            });
 
-            document.querySelectorAll('.pos-row').forEach(row => {
+                // Click para mover equipos a posiciones 1-2
                 row.addEventListener('click', function(e) {
                     if (dragData) return;
                     const grupo = this.dataset.grupo;
@@ -1394,9 +1399,11 @@
                     if (!gd) return;
 
                     if (pos <= 1) {
+                        // Solo permitir si el equipo no está ya en posición 0-1
                         const equipos = gd.equipos;
                         const idxActual = equipos.findIndex(e => e.sigla === sigla);
                         if (idxActual > 1) {
+                            // Intercambiar con la posición clickeada
                             const temp = equipos[pos];
                             equipos[pos] = equipos[idxActual];
                             equipos[idxActual] = temp;
@@ -1416,7 +1423,10 @@
             document.getElementById('vista-bracket-elim').style.display = v === 'bracket' ? '' : 'none';
             document.getElementById('btnFaseGrupos').className = 'btn ' + (v === 'grupos' ? 'btn-primary' : 'btn-outline');
             document.getElementById('btnElim').className = 'btn ' + (v === 'bracket' ? 'btn-primary' : 'btn-outline');
-            if (v === 'bracket') renderBracket();
+            if (v === 'bracket') {
+                autoLlenarR32Silencioso(); // Asegurar que el bracket esté actualizado
+                renderBracket();
+            }
             if (v === 'grupos') renderVistaGruposBracket();
         }
 
@@ -1750,9 +1760,11 @@
         showPollaView('grupos');
 
         console.log('✅ Mundial 2026 - Plataforma completa inicializada');
-        console.log('💡 Puntajes actualizados con los últimos resultados');
+        console.log('💡 Cambios corregidos:');
+        console.log('  - El bracket R32 ahora se actualiza automáticamente al arrastrar equipos en los grupos');
+        console.log('  - La Matrix siempre muestra puntajes actualizados desde gruposState');
+        console.log('  - Las vistas se refrescan correctamente al navegar entre pestañas');
         console.log('💡 Arrastra equipos en Bracket → Grupos para cambiar clasificados');
-        console.log('💡 El código PUNTAJES_INICIALES se genera automáticamente');
         console.log('💡 Usa el botón 📋 Copiar PUNTAJES_INICIALES para pegarlo en GitHub');
     </script>
 </body>
