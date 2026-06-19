@@ -891,6 +891,7 @@
                     if (d.gruposState) {
                         Object.keys(gruposState).forEach(g => {
                             if (d.gruposState[g]?.clasificados) gruposState[g].clasificados = d.gruposState[g].clasificados;
+                            if (d.gruposState[g]?.equipos) gruposState[g].equipos = d.gruposState[g].equipos;
                         });
                     }
                     if (d.puntajes) puntajes = d.puntajes;
@@ -898,7 +899,11 @@
                 } catch (e) {}
             }
 
+            // Recalcular SIEMPRE desde el estado real de gruposState, nunca confiar
+            // ciegamente en el snapshot de "puntajes" guardado (puede haber quedado
+            // desfasado si se guardó en un momento intermedio).
             autoLlenarR32Silencioso();
+            calcularTodosPuntajes();
             calcularPuntajesEliminatoria();
             guardarEstado();
         }
@@ -1130,6 +1135,16 @@
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelector(`.nav-tab[data-page="${pageName}"]`).classList.add('active');
 
+            // FIX: recalcular SIEMPRE desde gruposState antes de pintar cualquier
+            // página, sin importar de dónde vengas. Antes, Matrix solo se
+            // refrescaba si pasabas primero por Bracket y arrastrabas algo ahí;
+            // si entrabas directo a Matrix, podía mostrar puntajes viejos
+            // (ej. Corea por encima de México aunque ya hubieras cambiado el
+            // clasificado).
+            autoLlenarR32Silencioso();
+            calcularTodosPuntajes();
+            calcularPuntajesEliminatoria();
+
             if (pageName === 'polla') showPollaView('grupos');
             if (pageName === 'matrix') renderMatrix();
             if (pageName === 'bracket') {
@@ -1217,6 +1232,13 @@
         // MATRIX
         // ============================================================
         function renderMatrix() {
+            // FIX: recalcular puntajes desde gruposState justo antes de pintar,
+            // para que la Matrix nunca pueda quedar desfasada de los clasificados
+            // reales (ej. si los clasificados cambiaron en otra pestaña/sesión
+            // y solo se cargó el localStorage, sin pasar por un drag&drop).
+            autoLlenarR32Silencioso();
+            calcularTodosPuntajes();
+
             const container = document.getElementById('matrix-container');
             if (!container) return;
             let html = '<table class="matrix-table"><thead><tr><th>Persona</th>';
