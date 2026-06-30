@@ -62,7 +62,6 @@
         .btn-danger:hover { background: #7a2e16; }
         .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
 
-        /* ===== RANKING ===== */
         .ranking-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 12px; margin-bottom: 20px;
@@ -87,7 +86,6 @@
         .points-label { font-size: 0.65rem; color: #8b949e; }
         .rank-details { font-size: 0.7rem; color: #8b949e; margin-top: 4px; }
 
-        /* ===== GRUPOS ===== */
         .grupo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 14px; }
         .grupo-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; overflow-x: auto; }
         .grupo-label {
@@ -140,7 +138,6 @@
         .puntos-1  { background: rgba(24,95,165,0.2); color: #5b9dd9; font-weight: 700; }
         .puntos-0  { color: #8b949e; }
 
-        /* ===== MATRIX ===== */
         .matrix-wrap { overflow-x: auto; max-height: 70vh; overflow-y: auto; }
         .matrix-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; min-width: 900px; }
         .matrix-table th, .matrix-table td { padding: 7px 9px; text-align: center; border: 0.5px solid #30363d; white-space: nowrap; }
@@ -159,7 +156,6 @@
         .mp2  { background: rgba(250,199,117,0.2); color: #FAC775; font-weight: 700; }
         .mp1  { background: rgba(24,95,165,0.2); color: #5b9dd9; font-weight: 700; }
 
-        /* ===== BRACKET ===== */
         .bracket-wrap { overflow-x: auto; padding-bottom: 20px; }
         .bracket-grid {
             display: grid;
@@ -203,7 +199,6 @@
         .tercer-box { margin-top: 10px; border: 1px solid #D3D1C7; border-radius: 6px; padding: 4px; }
         .tercer-label { font-size: 0.55rem; text-align: center; color: #8b949e; margin-bottom: 4px; text-transform: uppercase; }
 
-        /* ===== ELIMINATORIAS ===== */
         .elim-section { margin-bottom: 28px; }
         .elim-section-title {
             font-size: 0.9rem; font-weight: 700; color: #FAC775;
@@ -262,13 +257,11 @@
         .pron-elim-score { color: #8b949e; font-size: 0.7rem; margin: 0 4px; }
         .pron-elim-pts { font-weight: 700; font-size: 0.75rem; padding: 1px 7px; border-radius: 8px; }
 
-        /* ===== LEYENDA ===== */
         .leyenda-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
         .leyenda-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; text-align: center; }
         .leyenda-points { font-size: 1.8rem; font-weight: 700; margin-bottom: 4px; }
         .leyenda-desc { font-size: 0.68rem; color: #8b949e; }
 
-        /* ===== CAMPEÓN ===== */
         .campeon-selector {
             display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
             padding: 16px; background: #0d1117; border-radius: 10px;
@@ -293,7 +286,6 @@
         .ranking-campeon .campeon-tag { font-weight: 700; color: #FAC775; font-size: 0.9rem; }
         .ranking-campeon .campeon-equipo { font-size: 1.4rem; font-weight: 700; }
 
-        /* ===== CAMPEÓN MATRIX ===== */
         #campeon-resumen table tr:hover td {
             background: rgba(255,255,255,0.03) !important;
         }
@@ -301,7 +293,6 @@
             transition: background 0.2s;
         }
 
-        /* ===== TOAST ===== */
         .toast {
             position: fixed; bottom: 20px; right: 20px;
             background: #3B6D11; color: #fff; padding: 10px 20px;
@@ -513,9 +504,6 @@ const CLASIFICADOS_DEFAULT = {
     I:['FRA','NOR'],J:['ARG','AUT'],K:['COL','POR'],L:['ENG','CRO']
 };
 
-// ============================================================
-// PARTIDOS ELIMINATORIA — definición completa (R32)
-// ============================================================
 const PARTIDOS_R32 = [
     {id:'R32-01', ronda:'R32', fecha:'28 jun', local:'ZAF', visit:'CAN'},
     {id:'R32-02', ronda:'R32', fecha:'29 jun', local:'NED', visit:'MAR'},
@@ -571,47 +559,55 @@ const RONDAS_ELIM = [
     {ronda:'3er Puesto', ids: ['3P']}
 ];
 
+// ============================================================
+// PRONÓSTICOS DE CAMPEÓN - DEFINITIVOS
+// ============================================================
+const pronosticosCampeonDefault = {
+    'Duvan': 'ENG',       // 🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra
+    'Camila': 'FRA',      // 🇫🇷 Francia
+    'Camilo': 'COL',      // 🇨🇴 Colombia
+    'Mateo': 'COL',       // 🇨🇴 Colombia
+    'Miguel': 'GER',      // 🇩🇪 Alemania
+    'Doc Camilo': 'ESP',  // 🇪🇸 España
+    'Katherine': 'ENG',   // 🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra
+    'Sandra': 'BRA',      // 🇧🇷 Brasil
+    'Estefania': 'ARG',   // 🇦🇷 Argentina
+    'Diana': 'FRA',       // 🇫🇷 Francia
+    'Sofia': 'FRA'        // 🇫🇷 Francia
+};
+
 let clasificadosActuales = {};
 let resultadosElim = {};
-let pronosticosCampeon = {
-    'Duvan': 'ING',
-    'Camila': 'FRA',
-    'Camilo': 'COL',
-    'Mateo': 'FRA',
-    'Miguel': 'GER',
-    'Doc Camilo':null,
-    'Katherine': null,
-    'Sandra': null,
-    'Estefania': null,
-    'Diana': 'FRA',
-    'Sofia': 'FRA'
-};
+let pronosticosCampeon = {...pronosticosCampeonDefault};
 let puntajesGrupos = {};
 let puntajesElim = {};
 
 function initEstado() {
-    const saved = localStorage.getItem('mundial2026_v5');
+    // ⚡ FORZAR VERSIÓN NUEVA para ignorar localStorage antiguo
+    const saved = localStorage.getItem('mundial2026_vFINAL');
     if (saved) {
         try {
             const d = JSON.parse(saved);
             clasificadosActuales = d.clasificadosActuales || JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
             resultadosElim = {...JSON.parse(JSON.stringify(RESULTADOS_DEFAULT)), ...(d.resultadosElim || {})};
-            pronosticosCampeon = d.pronosticosCampeon || {};
+            pronosticosCampeon = (d.pronosticosCampeon && Object.keys(d.pronosticosCampeon).length > 0) 
+                ? d.pronosticosCampeon 
+                : {...pronosticosCampeonDefault};
         } catch(e) {
             clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
             resultadosElim = JSON.parse(JSON.stringify(RESULTADOS_DEFAULT));
-            pronosticosCampeon = {};
+            pronosticosCampeon = {...pronosticosCampeonDefault};
         }
     } else {
         clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
         resultadosElim = JSON.parse(JSON.stringify(RESULTADOS_DEFAULT));
-        pronosticosCampeon = {};
+        pronosticosCampeon = {...pronosticosCampeonDefault};
     }
     recalcularTodo();
 }
 
 function guardarEstado() {
-    localStorage.setItem('mundial2026_v5', JSON.stringify({clasificadosActuales, resultadosElim, pronosticosCampeon}));
+    localStorage.setItem('mundial2026_vFINAL', JSON.stringify({clasificadosActuales, resultadosElim, pronosticosCampeon}));
     document.getElementById('syncBadge').textContent = '⚡ Guardado';
     setTimeout(() => document.getElementById('syncBadge').textContent = '⚡ Actualizado', 1500);
 }
@@ -869,7 +865,6 @@ function renderCampeonEnRanking() {
         PERSONAS.forEach(p => {
             const sigla = pronosticosCampeon[p];
             if (sigla) {
-                const eq = getEquipo(sigla);
                 contador[sigla] = (contador[sigla] || 0) + 1;
             }
         });
@@ -879,7 +874,6 @@ function renderCampeonEnRanking() {
         } else {
             html += entries.map(([sigla, count]) => {
                 const eq = getEquipo(sigla);
-                const nombres = PERSONAS.filter(p => pronosticosCampeon[p] === sigla).join(', ');
                 return `<span class="campeon-equipo" style="margin-right:12px;">${eq.bandera} ${eq.nombre} (${count})</span>`;
             }).join('');
         }
@@ -1406,7 +1400,7 @@ renderGrupos();
 renderMatrix();
 renderBracket();
 renderCampeon();
-console.log('✅ Mundial 2026 v7 — Matriz de campeón mejorada');
+console.log('✅ Mundial 2026 — ¡Pronósticos de campeón cargados!');
 </script>
 </body>
 </html>
