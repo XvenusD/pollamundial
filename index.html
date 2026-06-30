@@ -248,6 +248,7 @@
         }
         .badge-pendiente { background: rgba(139,148,158,0.15); color: #8b949e; }
         .badge-jugado { background: rgba(59,109,17,0.25); color: #7dc542; }
+        .badge-penales { background: rgba(250,199,117,0.2); color: #FAC775; }
         .pronosticos-elim { padding: 10px 14px; }
         .pronosticos-elim-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 4px;
@@ -532,17 +533,42 @@ const PARTIDOS_R32 = [
 // PRONÓSTICOS ELIMINATORIA R32 — formato: {local: X, visit: Y}
 // ============================================================
 const PRONOSTICOS_R32 = {
-    Duvan:      {'R32-01':{l:1,v:4},'R32-02':{l:3,v:1},'R32-03':{l:2,v:0},'R32-04':{l:1,v:2},'R32-05':{l:2,v:1},'R32-06':{l:1,v:0},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:1},'R32-10':{l:1,v:0},'R32-11':{l:2,v:1},'R32-12':{l:3,v:0},'R32-13':{l:2,v:0},'R32-14':{l:2,v:1},'R32-15':{l:1,v:0},'R32-16':{l:3,v:0}},
-    Camila:     {'R32-01':{l:2,v:0},'R32-02':{l:2,v:1},'R32-03':{l:2,v:1},'R32-04':{l:2,v:1},'R32-05':{l:2,v:0},'R32-06':{l:2,v:0},'R32-07':{l:2,v:1},'R32-08':{l:1,v:2},'R32-09':{l:3,v:1},'R32-10':{l:1,v:2},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:1,v:0},'R32-14':{l:2,v:1},'R32-15':{l:2,v:0},'R32-16':{l:3,v:0}},
-    Camilo:     {'R32-01':{l:1,v:3},'R32-02':{l:2,v:0},'R32-03':{l:3,v:1},'R32-04':{l:0,v:2},'R32-05':{l:1,v:0},'R32-06':{l:3,v:1},'R32-07':{l:1,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:0},'R32-10':{l:0,v:2},'R32-11':{l:1,v:2},'R32-12':{l:3,v:1},'R32-13':{l:2,v:0},'R32-14':{l:2,v:0},'R32-15':{l:1,v:1},'R32-16':{l:2,v:0}},
-    Mateo:      {'R32-01':{l:1,v:2},'R32-02':{l:2,v:1},'R32-03':{l:2,v:0},'R32-04':{l:1,v:2},'R32-05':{l:2,v:1},'R32-06':{l:2,v:0},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:1},'R32-10':{l:1,v:1},'R32-11':{l:1,v:1},'R32-12':{l:2,v:1},'R32-13':{l:2,v:0},'R32-14':{l:2,v:0},'R32-15':{l:1,v:0},'R32-16':{l:4,v:0}},
-    Miguel:     {'R32-01':{l:1,v:3},'R32-02':{l:2,v:1},'R32-03':{l:2,v:1},'R32-04':{l:2,v:1},'R32-05':{l:1,v:0},'R32-06':{l:2,v:1},'R32-07':{l:2,v:1},'R32-08':{l:2,v:0},'R32-09':{l:3,v:0},'R32-10':{l:0,v:2},'R32-11':{l:2,v:1},'R32-12':{l:3,v:0},'R32-13':{l:1,v:1},'R32-14':{l:3,v:0},'R32-15':{l:1,v:2},'R32-16':{l:3,v:0}},
-    'Doc Camilo':{'R32-01':{l:0,v:0},'R32-02':{l:2,v:0},'R32-03':{l:2,v:1},'R32-04':{l:1,v:2},'R32-05':{l:2,v:1},'R32-06':{l:3,v:0},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:0},'R32-10':{l:1,v:2},'R32-11':{l:2,v:0},'R32-12':{l:3,v:0},'R32-13':{l:2,v:1},'R32-14':{l:2,v:0},'R32-15':{l:0,v:2},'R32-16':{l:3,v:1}},
-    Katherine:  {'R32-01':{l:0,v:0},'R32-02':{l:1,v:2},'R32-03':{l:2,v:0},'R32-04':{l:2,v:1},'R32-05':{l:2,v:0},'R32-06':{l:2,v:0},'R32-07':{l:2,v:1},'R32-08':{l:1,v:1},'R32-09':{l:3,v:1},'R32-10':{l:1,v:1},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:1,v:0},'R32-14':{l:2,v:1},'R32-15':{l:1,v:2},'R32-16':{l:3,v:0}},
+    Duvan:      {'R32-01':{l:1,v:4},'R32-02':{l:3,v:2},'R32-03':{l:3,v:1},'R32-04':{l:1,v:2},'R32-05':{l:2,v:1},'R32-06':{l:1,v:0},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:1},'R32-10':{l:1,v:0},'R32-11':{l:2,v:1},'R32-12':{l:3,v:0},'R32-13':{l:2,v:0},'R32-14':{l:2,v:1},'R32-15':{l:1,v:0},'R32-16':{l:3,v:0}},
+    Camila:     {'R32-01':{l:2,v:0},'R32-02':{l:1,v:1},'R32-03':{l:2,v:0},'R32-04':{l:2,v:1},'R32-05':{l:2,v:0},'R32-06':{l:2,v:0},'R32-07':{l:2,v:1},'R32-08':{l:1,v:2},'R32-09':{l:2,v:1},'R32-10':{l:1,v:2},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:1,v:0},'R32-14':{l:2,v:1},'R32-15':{l:2,v:0},'R32-16':{l:3,v:0}},
+    Camilo:     {'R32-01':{l:1,v:3},'R32-02':{l:2,v:1},'R32-03':{l:5,v:0},'R32-04':{l:0,v:2},'R32-05':{l:1,v:0},'R32-06':{l:3,v:1},'R32-07':{l:1,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:1},'R32-10':{l:0,v:2},'R32-11':{l:1,v:2},'R32-12':{l:3,v:1},'R32-13':{l:2,v:0},'R32-14':{l:2,v:0},'R32-15':{l:1,v:1},'R32-16':{l:2,v:0}},
+    Mateo:      {'R32-01':{l:1,v:2},'R32-02':{l:2,v:1},'R32-03':{l:3,v:1},'R32-04':{l:1,v:2},'R32-05':{l:2,v:1},'R32-06':{l:2,v:0},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:1,v:2},'R32-10':{l:1,v:1},'R32-11':{l:1,v:1},'R32-12':{l:2,v:1},'R32-13':{l:2,v:0},'R32-14':{l:2,v:0},'R32-15':{l:1,v:0},'R32-16':{l:4,v:0}},
+    Miguel:     {'R32-01':{l:1,v:3},'R32-02':{l:2,v:1},'R32-03':{l:2,v:0},'R32-04':{l:2,v:1},'R32-05':{l:1,v:0},'R32-06':{l:2,v:1},'R32-07':{l:2,v:1},'R32-08':{l:2,v:0},'R32-09':{l:2,v:1},'R32-10':{l:0,v:2},'R32-11':{l:2,v:1},'R32-12':{l:3,v:0},'R32-13':{l:1,v:1},'R32-14':{l:3,v:0},'R32-15':{l:1,v:2},'R32-16':{l:3,v:0}},
+    'Doc Camilo':{'R32-01':{l:0,v:0},'R32-02':{l:1,v:1},'R32-03':{l:1,v:1},'R32-04':{l:1,v:2},'R32-05':{l:2,v:1},'R32-06':{l:3,v:0},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:1},'R32-10':{l:1,v:2},'R32-11':{l:2,v:0},'R32-12':{l:3,v:0},'R32-13':{l:2,v:1},'R32-14':{l:2,v:0},'R32-15':{l:0,v:2},'R32-16':{l:3,v:1}},
+    Katherine:  {'R32-01':{l:0,v:0},'R32-02':{l:2,v:1},'R32-03':{l:3,v:0},'R32-04':{l:2,v:1},'R32-05':{l:2,v:0},'R32-06':{l:2,v:0},'R32-07':{l:2,v:1},'R32-08':{l:1,v:1},'R32-09':{l:0,v:1},'R32-10':{l:1,v:1},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:1,v:0},'R32-14':{l:2,v:1},'R32-15':{l:1,v:2},'R32-16':{l:3,v:0}},
     Sandra:     {'R32-01':{l:0,v:0},'R32-02':{l:2,v:1},'R32-03':{l:2,v:1},'R32-04':{l:1,v:2},'R32-05':{l:1,v:0},'R32-06':{l:2,v:1},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:1},'R32-10':{l:1,v:2},'R32-11':{l:2,v:0},'R32-12':{l:2,v:0},'R32-13':{l:2,v:0},'R32-14':{l:2,v:0},'R32-15':{l:1,v:2},'R32-16':{l:3,v:0}},
-    Estefania:  {'R32-01':{l:1,v:2},'R32-02':{l:2,v:1},'R32-03':{l:1,v:1},'R32-04':{l:2,v:1},'R32-05':{l:2,v:0},'R32-06':{l:2,v:0},'R32-07':{l:1,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:1},'R32-10':{l:1,v:0},'R32-11':{l:2,v:1},'R32-12':{l:2,v:1},'R32-13':{l:2,v:0},'R32-14':{l:2,v:1},'R32-15':{l:1,v:0},'R32-16':{l:3,v:0}},
-    Diana:      {'R32-01':{l:0,v:0},'R32-02':{l:2,v:1},'R32-03':{l:2,v:0},'R32-04':{l:2,v:1},'R32-05':{l:2,v:1},'R32-06':{l:2,v:0},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:0},'R32-10':{l:1,v:2},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:2,v:0},'R32-14':{l:2,v:0},'R32-15':{l:1,v:1},'R32-16':{l:3,v:0}},
-    Sofia:      {'R32-01':{l:1,v:2},'R32-02':{l:2,v:1},'R32-03':{l:2,v:1},'R32-04':{l:1,v:2},'R32-05':{l:2,v:1},'R32-06':{l:3,v:0},'R32-07':{l:1,v:0},'R32-08':{l:2,v:0},'R32-09':{l:2,v:0},'R32-10':{l:1,v:2},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:1,v:0},'R32-14':{l:2,v:0},'R32-15':{l:0,v:2},'R32-16':{l:4,v:0}}
+    Estefania:  {'R32-01':{l:1,v:2},'R32-02':{l:2,v:1},'R32-03':{l:2,v:1},'R32-04':{l:2,v:1},'R32-05':{l:2,v:0},'R32-06':{l:2,v:0},'R32-07':{l:1,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:1},'R32-10':{l:1,v:0},'R32-11':{l:2,v:1},'R32-12':{l:2,v:1},'R32-13':{l:2,v:0},'R32-14':{l:2,v:1},'R32-15':{l:1,v:0},'R32-16':{l:3,v:0}},
+    Diana:      {'R32-01':{l:0,v:2},'R32-02':{l:2,v:0},'R32-03':{l:3,v:1},'R32-04':{l:2,v:1},'R32-05':{l:2,v:1},'R32-06':{l:2,v:0},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:1,v:1},'R32-10':{l:1,v:2},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:2,v:0},'R32-14':{l:2,v:0},'R32-15':{l:1,v:1},'R32-16':{l:3,v:0}},
+    Sofia:      {'R32-01':{l:1,v:2},'R32-02':{l:3,v:2},'R32-03':{l:4,v:0},'R32-04':{l:1,v:2},'R32-05':{l:2,v:1},'R32-06':{l:3,v:0},'R32-07':{l:1,v:0},'R32-08':{l:2,v:0},'R32-09':{l:2,v:0},'R32-10':{l:1,v:2},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:1,v:0},'R32-14':{l:2,v:0},'R32-15':{l:0,v:2},'R32-16':{l:4,v:0}}
+};
+
+// ============================================================
+// RESULTADOS REALES POR DEFECTO (se pueden seguir editando
+// desde la pestaña Eliminatorias; esto solo precarga lo ya jugado)
+// ============================================================
+const RESULTADOS_DEFAULT = {
+    'R32-01': {l:0, v:1}, // Sudáfrica 0 - Canadá 1
+    'R32-02': {l:1, v:1}, // Países Bajos 1 - Marruecos 1 (gana Marruecos por penales)
+    'R32-03': {l:1, v:1}, // Alemania 1 - Paraguay 1 (gana Paraguay por penales)
+    'R32-09': {l:2, v:1}  // Brasil 2 - Japón 1
+};
+
+// ============================================================
+// GANADORES POR PENALES — EDITAR MANUALMENTE AQUÍ
+// Cuando un partido eliminatorio termina empatado en el marcador
+// y se define por penales, agrega aquí el id del partido y quién
+// ganó: 'L' = gana el equipo local, 'V' = gana el equipo visitante.
+// Esto NO afecta los puntos (que se calculan según el marcador en
+// tiempo reglamentario), solo decide quién avanza en el Bracket/Matrix.
+// ============================================================
+const GANADORES_PENALES = {
+    'R32-02': 'V', // Marruecos gana a Países Bajos por penales
+    'R32-03': 'V'  // Paraguay gana a Alemania por penales
+    // Agrega más así: 'R16-03': 'L',
 };
 
 // ============================================================
@@ -574,16 +600,16 @@ function initEstado() {
         try {
             const d = JSON.parse(saved);
             clasificadosActuales = d.clasificadosActuales || JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
-            resultadosElim = d.resultadosElim || {};
+            resultadosElim = {...JSON.parse(JSON.stringify(RESULTADOS_DEFAULT)), ...(d.resultadosElim || {})};
             pronosticosCampeon = d.pronosticosCampeon || {};
         } catch(e) {
             clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
-            resultadosElim = {};
+            resultadosElim = JSON.parse(JSON.stringify(RESULTADOS_DEFAULT));
             pronosticosCampeon = {};
         }
     } else {
         clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
-        resultadosElim = {};
+        resultadosElim = JSON.parse(JSON.stringify(RESULTADOS_DEFAULT));
         pronosticosCampeon = {};
     }
     recalcularTodo();
@@ -607,15 +633,13 @@ function getGanador(id) {
     if (!res || res.l === null || res.v === null) return null;
     if (res.l > res.v) return 'L';
     if (res.v > res.l) return 'V';
-    return 'E';
+    return GANADORES_PENALES[id] || null;
 }
 
 function getPerdedor(id) {
-    const res = resultadosElim[id];
-    if (!res || res.l === null || res.v === null) return null;
-    if (res.l > res.v) return 'V';
-    if (res.v > res.l) return 'L';
-    return 'E';
+    const g = getGanador(id);
+    if (!g) return null;
+    return g === 'L' ? 'V' : 'L';
 }
 
 function obtenerGanadorEquipo(match) {
@@ -623,7 +647,11 @@ function obtenerGanadorEquipo(match) {
     if (!res || res.l === null || res.v === null) return null;
     if (res.l > res.v) return match.local;
     if (res.v > res.l) return match.visit;
-    return null; // empate no se considera ganador para bracket
+    // Empate en tiempo reglamentario: revisar definición manual por penales
+    const pen = GANADORES_PENALES[match.id];
+    if (pen === 'L') return match.local;
+    if (pen === 'V') return match.visit;
+    return null; // empate sin definición de penales todavía
 }
 
 function obtenerEquipoPorSlot(slot) {
@@ -1050,9 +1078,21 @@ function renderElim() {
             const resL = res?.l ?? '';
             const resV = res?.v ?? '';
             const isPlaceholder = !m.local || !m.visit;
+            const esEmpate = jugado && res.l === res.v;
+            const penal = GANADORES_PENALES[m.id];
             const cardClass = isPlaceholder ? 'elim-card' : (jugado ? 'elim-card jugado' : 'elim-card');
-            const badgeClass = isPlaceholder ? 'badge-pendiente' : (jugado ? 'badge-jugado' : 'badge-pendiente');
-            const badgeText = isPlaceholder ? '⏳ Pendiente' : (jugado ? '✅ Jugado' : '⏳ Pendiente');
+            let badgeClass = isPlaceholder ? 'badge-pendiente' : (jugado ? 'badge-jugado' : 'badge-pendiente');
+            let badgeText = isPlaceholder ? '⏳ Pendiente' : (jugado ? '✅ Jugado' : '⏳ Pendiente');
+            if (esEmpate) {
+                if (penal === 'L' || penal === 'V') {
+                    const ganadorEq = getEquipo(penal==='L'?m.local:m.visit);
+                    badgeClass = 'badge-penales';
+                    badgeText = `🥅 Pasa ${ganadorEq.nombre} (penales)`;
+                } else {
+                    badgeClass = 'badge-penales';
+                    badgeText = '🥅 Empate — falta definir penales';
+                }
+            }
 
             html += `<div class="${cardClass}">
             <div class="elim-card-header">
@@ -1456,7 +1496,7 @@ renderGrupos();
 renderMatrix();
 renderBracket();
 renderCampeon();
-console.log('✅ Mundial 2026 v5 — Grupos + Eliminatorias completas + Campeón cargados');
+console.log('✅ Mundial 2026 v6 — Resultados R32 + penales manuales cargados');
 </script>
 </body>
 </html>
