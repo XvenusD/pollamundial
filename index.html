@@ -293,6 +293,14 @@
         .ranking-campeon .campeon-tag { font-weight: 700; color: #FAC775; font-size: 0.9rem; }
         .ranking-campeon .campeon-equipo { font-size: 1.4rem; font-weight: 700; }
 
+        /* ===== CAMPEÓN MATRIX ===== */
+        #campeon-resumen table tr:hover td {
+            background: rgba(255,255,255,0.03) !important;
+        }
+        #campeon-resumen td {
+            transition: background 0.2s;
+        }
+
         /* ===== TOAST ===== */
         .toast {
             position: fixed; bottom: 20px; right: 20px;
@@ -432,7 +440,7 @@
         <div id="campeon-container"></div>
     </div>
     <div class="card">
-        <h3 style="margin-bottom:12px;">📊 Resumen de Pronósticos</h3>
+        <h3 style="margin-bottom:12px;">📊 Matriz de Pronósticos de Campeón</h3>
         <div id="campeon-resumen"></div>
     </div>
 </div>
@@ -509,7 +517,6 @@ const CLASIFICADOS_DEFAULT = {
 // PARTIDOS ELIMINATORIA — definición completa (R32)
 // ============================================================
 const PARTIDOS_R32 = [
-    // Lado izquierdo (arriba en bracket)
     {id:'R32-01', ronda:'R32', fecha:'28 jun', local:'ZAF', visit:'CAN'},
     {id:'R32-02', ronda:'R32', fecha:'29 jun', local:'NED', visit:'MAR'},
     {id:'R32-03', ronda:'R32', fecha:'29 jun', local:'GER', visit:'PAR'},
@@ -518,7 +525,6 @@ const PARTIDOS_R32 = [
     {id:'R32-06', ronda:'R32', fecha:'1 jul',  local:'USA', visit:'BIH'},
     {id:'R32-07', ronda:'R32', fecha:'2 jul',  local:'ESP', visit:'AUT'},
     {id:'R32-08', ronda:'R32', fecha:'2 jul',  local:'POR', visit:'CRO'},
-    // Lado derecho (abajo en bracket)
     {id:'R32-09', ronda:'R32', fecha:'29 jun', local:'BRA', visit:'JPN'},
     {id:'R32-10', ronda:'R32', fecha:'30 jun', local:'CIV', visit:'NOR'},
     {id:'R32-11', ronda:'R32', fecha:'30 jun', local:'MEX', visit:'ECU'},
@@ -529,9 +535,6 @@ const PARTIDOS_R32 = [
     {id:'R32-16', ronda:'R32', fecha:'3 jul',  local:'ARG', visit:'CPV'}
 ];
 
-// ============================================================
-// PRONÓSTICOS ELIMINATORIA R32 — formato: {local: X, visit: Y}
-// ============================================================
 const PRONOSTICOS_R32 = {
     Duvan:      {'R32-01':{l:1,v:4},'R32-02':{l:3,v:2},'R32-03':{l:3,v:1},'R32-04':{l:3,v:1},'R32-05':{l:2,v:1},'R32-06':{l:1,v:0},'R32-07':{l:2,v:0},'R32-08':{l:2,v:1},'R32-09':{l:2,v:1},'R32-10':{l:1,v:3},'R32-11':{l:2,v:1},'R32-12':{l:3,v:0},'R32-13':{l:2,v:0},'R32-14':{l:2,v:1},'R32-15':{l:1,v:0},'R32-16':{l:3,v:0}},
     Camila:     {'R32-01':{l:2,v:0},'R32-02':{l:1,v:1},'R32-03':{l:2,v:0},'R32-04':{l:3,v:1},'R32-05':{l:2,v:0},'R32-06':{l:2,v:0},'R32-07':{l:2,v:1},'R32-08':{l:1,v:2},'R32-09':{l:2,v:1},'R32-10':{l:1,v:2},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:1,v:0},'R32-14':{l:2,v:1},'R32-15':{l:2,v:0},'R32-16':{l:3,v:0}},
@@ -546,36 +549,18 @@ const PRONOSTICOS_R32 = {
     Sofia:      {'R32-01':{l:1,v:2},'R32-02':{l:3,v:2},'R32-03':{l:4,v:0},'R32-04':{l:2,v:2},'R32-05':{l:2,v:1},'R32-06':{l:3,v:0},'R32-07':{l:1,v:0},'R32-08':{l:2,v:0},'R32-09':{l:2,v:0},'R32-10':{l:1,v:3},'R32-11':{l:2,v:1},'R32-12':{l:2,v:0},'R32-13':{l:1,v:0},'R32-14':{l:2,v:0},'R32-15':{l:0,v:2},'R32-16':{l:4,v:0}}
 };
 
-// ============================================================
-// RESULTADOS REALES POR DEFECTO (se pueden seguir editando
-// desde la pestaña Eliminatorias; esto solo precarga lo ya jugado)
-// ============================================================
 const RESULTADOS_DEFAULT = {
-    'R32-01': {l:0, v:1}, // Sudáfrica 0 - Canadá 1
-    'R32-02': {l:1, v:1}, // Países Bajos 1 - Marruecos 1 (gana Marruecos por penales)
-    'R32-03': {l:1, v:1}, // Alemania 1 - Paraguay 1 (gana Paraguay por penales)
-    'R32-09': {l:2, v:1}  // Brasil 2 - Japón 1
+    'R32-01': {l:0, v:1},
+    'R32-02': {l:1, v:1},
+    'R32-03': {l:1, v:1},
+    'R32-09': {l:2, v:1}
 };
 
-// ============================================================
-// GANADORES POR PENALES — EDITAR MANUALMENTE AQUÍ
-// Cuando un partido eliminatorio termina empatado en el marcador
-// y se define por penales, agrega aquí el id del partido y quién
-// ganó: 'L' = gana el equipo local, 'V' = gana el equipo visitante.
-// Esto NO afecta los puntos (que se calculan según el marcador en
-// tiempo reglamentario), solo decide quién avanza en el Bracket/Matrix.
-// ============================================================
 const GANADORES_PENALES = {
-    'R32-02': 'V', // Marruecos gana a Países Bajos por penales
-    'R32-03': 'V'  // Paraguay gana a Alemania por penales
-    // Agrega más así: 'R16-03': 'L',
+    'R32-02': 'V',
+    'R32-03': 'V'
 };
 
-// ============================================================
-// DEFINICIÓN DE RONDAS POSTERIORES (para generar el bracket)
-// ============================================================
-// Se generan dinámicamente según los resultados de R32
-// Pero necesitamos la estructura de IDs y fechas
 const RONDAS_ELIM = [
     {ronda:'R32', ids: PARTIDOS_R32.map(p => p.id)},
     {ronda:'R16', ids: ['R16-01','R16-02','R16-03','R16-04','R16-05','R16-06','R16-07','R16-08']},
@@ -585,14 +570,11 @@ const RONDAS_ELIM = [
     {ronda:'3er Puesto', ids: ['3P']}
 ];
 
-// ============================================================
-// ESTADO
-// ============================================================
 let clasificadosActuales = {};
-let resultadosElim = {};   // {id: {l: X, v: Y}}
-let pronosticosCampeon = {}; // {persona: 'sigla'}
+let resultadosElim = {};
+let pronosticosCampeon = {};
 let puntajesGrupos = {};
-let puntajesElim = {}; // {persona: {id: puntos}}
+let puntajesElim = {};
 
 function initEstado() {
     const saved = localStorage.getItem('mundial2026_v5');
@@ -621,9 +603,6 @@ function guardarEstado() {
     setTimeout(() => document.getElementById('syncBadge').textContent = '⚡ Actualizado', 1500);
 }
 
-// ============================================================
-// FUNCIONES AUXILIARES
-// ============================================================
 function getEquipo(s) {
     return EQUIPOS_DATA[s] || {nombre: s||'—', bandera:'⬜'};
 }
@@ -636,42 +615,18 @@ function getGanador(id) {
     return GANADORES_PENALES[id] || null;
 }
 
-function getPerdedor(id) {
-    const g = getGanador(id);
-    if (!g) return null;
-    return g === 'L' ? 'V' : 'L';
-}
-
 function obtenerGanadorEquipo(match) {
     const res = resultadosElim[match.id];
     if (!res || res.l === null || res.v === null) return null;
     if (res.l > res.v) return match.local;
     if (res.v > res.l) return match.visit;
-    // Empate en tiempo reglamentario: revisar definición manual por penales
     const pen = GANADORES_PENALES[match.id];
     if (pen === 'L') return match.local;
     if (pen === 'V') return match.visit;
-    return null; // empate sin definición de penales todavía
-}
-
-function obtenerEquipoPorSlot(slot) {
-    // slot: {grupo: 'A', pos: 1} o {id: 'R32-01', lado: 'L'/'V'}
-    if (slot.grupo) {
-        const clas = clasificadosActuales[slot.grupo];
-        if (!clas || !clas[slot.pos-1]) return null;
-        return clas[slot.pos-1];
-    }
-    if (slot.id) {
-        // Para rondas posteriores, buscar el ganador de ese partido
-        const match = obtenerMatchPorId(slot.id);
-        if (!match) return null;
-        return obtenerGanadorEquipo(match);
-    }
     return null;
 }
 
 function obtenerMatchPorId(id) {
-    // Busca en todas las rondas (R32, R16, QF, SF, Final)
     const todosLosPartidos = [
         ...PARTIDOS_R32,
         ...partidosR16,
@@ -683,10 +638,6 @@ function obtenerMatchPorId(id) {
     return todosLosPartidos.find(p => p.id === id) || null;
 }
 
-// ============================================================
-// GENERACIÓN DINÁMICA DE PARTIDOS POSTERIORES
-// ============================================================
-// Estos arrays se llenan según los resultados de R32
 let partidosR16 = [];
 let partidosQF = [];
 let partidosSF = [];
@@ -694,7 +645,6 @@ let partidosFinal = [];
 let partidos3P = [];
 
 function generarCrucesEliminatorios() {
-    // R16: ganadores de R32 se enfrentan según cruces fijos
     const crucesR16 = [
         {id:'R16-01', fecha:'4 jul', lId:'R32-01', rId:'R32-02'},
         {id:'R16-02', fecha:'4 jul', lId:'R32-03', rId:'R32-04'},
@@ -712,17 +662,12 @@ function generarCrucesEliminatorios() {
         const ganadorL = matchL ? obtenerGanadorEquipo(matchL) : null;
         const ganadorR = matchR ? obtenerGanadorEquipo(matchR) : null;
         return {
-            id: c.id,
-            ronda: 'R16',
-            fecha: c.fecha,
-            local: ganadorL,
-            visit: ganadorR,
-            localId: c.lId,
-            visitId: c.rId
+            id: c.id, ronda: 'R16', fecha: c.fecha,
+            local: ganadorL, visit: ganadorR,
+            localId: c.lId, visitId: c.rId
         };
     });
 
-    // QF: ganadores de R16
     const crucesQF = [
         {id:'QF-01', fecha:'9 jul', lId:'R16-01', rId:'R16-02'},
         {id:'QF-02', fecha:'10 jul', lId:'R16-03', rId:'R16-04'},
@@ -735,17 +680,12 @@ function generarCrucesEliminatorios() {
         const ganadorL = matchL ? obtenerGanadorEquipo(matchL) : null;
         const ganadorR = matchR ? obtenerGanadorEquipo(matchR) : null;
         return {
-            id: c.id,
-            ronda: 'QF',
-            fecha: c.fecha,
-            local: ganadorL,
-            visit: ganadorR,
-            localId: c.lId,
-            visitId: c.rId
+            id: c.id, ronda: 'QF', fecha: c.fecha,
+            local: ganadorL, visit: ganadorR,
+            localId: c.lId, visitId: c.rId
         };
     });
 
-    // SF: ganadores de QF
     const crucesSF = [
         {id:'SF-01', fecha:'14 jul', lId:'QF-01', rId:'QF-02'},
         {id:'SF-02', fecha:'15 jul', lId:'QF-03', rId:'QF-04'}
@@ -756,48 +696,31 @@ function generarCrucesEliminatorios() {
         const ganadorL = matchL ? obtenerGanadorEquipo(matchL) : null;
         const ganadorR = matchR ? obtenerGanadorEquipo(matchR) : null;
         return {
-            id: c.id,
-            ronda: 'SF',
-            fecha: c.fecha,
-            local: ganadorL,
-            visit: ganadorR,
-            localId: c.lId,
-            visitId: c.rId
+            id: c.id, ronda: 'SF', fecha: c.fecha,
+            local: ganadorL, visit: ganadorR,
+            localId: c.lId, visitId: c.rId
         };
     });
 
-    // Final: ganadores de SF
     const match1 = partidosSF.find(p => p.id === 'SF-01');
     const match2 = partidosSF.find(p => p.id === 'SF-02');
     const ganador1 = match1 ? obtenerGanadorEquipo(match1) : null;
     const ganador2 = match2 ? obtenerGanadorEquipo(match2) : null;
     partidosFinal = [{
-        id: 'FINAL',
-        ronda: 'Final',
-        fecha: '19 jul',
-        local: ganador1,
-        visit: ganador2,
-        localId: 'SF-01',
-        visitId: 'SF-02'
+        id: 'FINAL', ronda: 'Final', fecha: '19 jul',
+        local: ganador1, visit: ganador2,
+        localId: 'SF-01', visitId: 'SF-02'
     }];
 
-    // 3er Puesto: perdedores de SF
     const perdedor1 = match1 ? (obtenerGanadorEquipo(match1) === match1?.local ? match1?.visit : match1?.local) : null;
     const perdedor2 = match2 ? (obtenerGanadorEquipo(match2) === match2?.local ? match2?.visit : match2?.local) : null;
     partidos3P = [{
-        id: '3P',
-        ronda: '3er Puesto',
-        fecha: '18 jul',
-        local: perdedor1,
-        visit: perdedor2,
-        localId: 'SF-01',
-        visitId: 'SF-02'
+        id: '3P', ronda: '3er Puesto', fecha: '18 jul',
+        local: perdedor1, visit: perdedor2,
+        localId: 'SF-01', visitId: 'SF-02'
     }];
 }
 
-// ============================================================
-// CÁLCULO DE PUNTAJES
-// ============================================================
 function calcPuntajeGrupo(persona, grupo) {
     const pron = PRONOSTICOS_GRUPOS[persona]?.[grupo] || [];
     const clas = clasificadosActuales[grupo] || [];
@@ -812,26 +735,14 @@ function calcPuntajeGrupo(persona, grupo) {
 
 function calcPuntajeElim(persona, partido) {
     const res = resultadosElim[partido.id];
-    if (!res || res.l === null || res.v === null) return null; // sin resultado
+    if (!res || res.l === null || res.v === null) return null;
 
-    // Buscar pronóstico: primero en R32, luego en rondas posteriores (se asume que pronosticó al ganador)
     let pron = PRONOSTICOS_R32[persona]?.[partido.id];
     if (!pron) {
-        // Para rondas posteriores, el pronóstico es el equipo que la persona predijo que pasaría
-        // Esto se simplifica: asumimos que su pronóstico para esa ronda es el ganador que ellos predijeron en R32
-        // Pero para ser justos, necesitamos rastrear su predicción de ganador para cada partido.
-        // Como esto es complejo, usamos una aproximación: si la persona acertó al ganador en R32, le damos crédito.
-        // Para rondas posteriores, el pronóstico se deduce de su pronóstico en R32.
-        // En esta versión, para simplificar, usamos el pronóstico de R32 para los equipos que pasaron.
-        // Si el partido es R16 o posterior, el pronóstico es el equipo que la persona predijo que pasaría en la ronda anterior.
-        // Esto es una simplificación: para un cálculo perfecto, se necesitaría que cada persona pronostique cada ronda.
-        // Como solución práctica, asumimos que si la persona acertó al ganador en R32, su pronóstico para rondas posteriores es ese equipo.
-        // Esto puede generar puntos extra si el equipo sigue ganando.
         const rondaAnterior = getRondaAnterior(partido.id);
         if (rondaAnterior) {
             const pronAnterior = PRONOSTICOS_R32[persona]?.[rondaAnterior];
             if (pronAnterior) {
-                // Determinar qué equipo pronosticó que pasaría
                 const matchAnterior = obtenerMatchPorId(rondaAnterior);
                 if (matchAnterior) {
                     const ganadorPron = pronAnterior.l > pronAnterior.v ? matchAnterior.local : (pronAnterior.v > pronAnterior.l ? matchAnterior.visit : null);
@@ -847,20 +758,17 @@ function calcPuntajeElim(persona, partido) {
     const rl = parseInt(res.l), rv = parseInt(res.v);
     const pl = parseInt(pron.l), pv = parseInt(pron.v);
 
-    // Marcador exacto
     if (pl === rl && pv === rv) return 10;
 
     const ganadorReal = rl > rv ? 'L' : rv > rl ? 'V' : 'E';
     const ganadorPron = pl > pv ? 'L' : pv > pl ? 'V' : 'E';
 
-    // Ganador correcto
     if (ganadorReal !== 'E' && ganadorPron === ganadorReal) {
         if ((rl - rv) === (pl - pv)) return 7;
         return 5;
     }
     if (ganadorReal === 'E' && ganadorPron === 'E') return 5;
 
-    // Al menos un gol correcto
     if ((rl > 0 && pl === rl) || (rv > 0 && pv === rv)) return 3;
 
     return 0;
@@ -878,10 +786,8 @@ function getRondaAnterior(id) {
 }
 
 function recalcularTodo() {
-    // Generar cruces dinámicos
     generarCrucesEliminatorios();
 
-    // Grupos
     PERSONAS.forEach(p => {
         puntajesGrupos[p] = {};
         Object.keys(GRUPOS).forEach(g => {
@@ -889,7 +795,6 @@ function recalcularTodo() {
         });
     });
 
-    // Eliminatorias - todos los partidos
     const todosLosPartidos = [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...partidos3P];
     PERSONAS.forEach(p => {
         puntajesElim[p] = {};
@@ -909,9 +814,6 @@ function calcTotal(p) {
     return calcTotalGrupos(p) + calcTotalElim(p);
 }
 
-// ============================================================
-// RENDER RANKING
-// ============================================================
 function renderRanking() {
     const c = document.getElementById('ranking-grid');
     if (!c) return;
@@ -939,7 +841,6 @@ function renderRanking() {
         </div>`;
     }).join('');
 
-    // Mostrar campeón en ranking
     renderCampeonEnRanking();
 }
 
@@ -951,7 +852,6 @@ function renderCampeonEnRanking() {
     if (Object.keys(pronosticosCampeon).length === 0) {
         html += `<span style="color:#8b949e;">(Sin pronósticos aún)</span>`;
     } else {
-        // Mostrar quién pronosticó a quién
         const contador = {};
         PERSONAS.forEach(p => {
             const sigla = pronosticosCampeon[p];
@@ -975,9 +875,6 @@ function renderCampeonEnRanking() {
     c.innerHTML = html;
 }
 
-// ============================================================
-// RENDER GRUPOS
-// ============================================================
 function renderGrupos() {
     const c = document.getElementById('grupos-container');
     if (!c) return;
@@ -1044,14 +941,10 @@ function resetearClasificados() {
     }
 }
 
-// ============================================================
-// RENDER ELIMINATORIAS
-// ============================================================
 function renderElim() {
     const c = document.getElementById('elim-container');
     if (!c) return;
     const todosLosPartidos = [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...partidos3P];
-    // Agrupar por ronda
     const grupos = {};
     todosLosPartidos.forEach(m => {
         if (!grupos[m.ronda]) grupos[m.ronda] = [];
@@ -1142,7 +1035,6 @@ function renderElim() {
                     if (pron) {
                         pronText = `${pron.l}–${pron.v}`;
                     } else {
-                        // Para rondas posteriores, mostrar el equipo que pronosticó que pasaría
                         const rondaAnt = getRondaAnterior(m.id);
                         if (rondaAnt) {
                             const pronAnt = PRONOSTICOS_R32[p]?.[rondaAnt];
@@ -1196,15 +1088,11 @@ function actualizarResultado(id) {
     guardarEstado();
 }
 
-// ============================================================
-// RENDER MATRIX
-// ============================================================
 function renderMatrix() {
     const c = document.getElementById('matrix-container');
     if (!c) return;
     const gruposKeys = Object.keys(GRUPOS);
     const todosLosPartidos = [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...partidos3P];
-    const elimIds = todosLosPartidos.map(p => p.id);
 
     let html = '<table class="matrix-table"><thead>';
     html += '<tr><th>Persona</th>';
@@ -1239,7 +1127,6 @@ function renderMatrix() {
         html += `<td class="total-col">${tot}</td></tr>`;
     });
 
-    // Fila totales
     html += '<tr class="total-row"><td><strong>Total</strong></td>';
     gruposKeys.forEach(g => {
         let t=0; PERSONAS.forEach(p => t+=puntajesGrupos[p]?.[g]||0);
@@ -1258,9 +1145,6 @@ function renderMatrix() {
     c.innerHTML = html;
 }
 
-// ============================================================
-// RENDER BRACKET
-// ============================================================
 function renderBracket() {
     const c = document.getElementById('bracket-container');
     if (!c) return;
@@ -1278,71 +1162,51 @@ function renderBracket() {
         </div>`;
     };
 
-    const mkVacio = (id,f) => `<div class="match-box"><span class="match-code">${id}</span><span class="match-date">${f}</span><div class="flag-slot"><span class="team-name" style="color:#8b949e">—</span></div><div class="flag-slot"><span class="team-name" style="color:#8b949e">—</span></div></div>`;
-
-    // Construir bracket con los partidos generados
     const r32Izq = PARTIDOS_R32.slice(0, 8);
     const r32Der = PARTIDOS_R32.slice(8, 16);
-
-    // R16
     const r16Izq = partidosR16.slice(0, 4);
     const r16Der = partidosR16.slice(4, 8);
-
-    // QF
     const qfIzq = partidosQF.slice(0, 2);
     const qfDer = partidosQF.slice(2, 4);
-
-    // SF
     const sfIzq = partidosSF.slice(0, 1);
     const sfDer = partidosSF.slice(1, 2);
-
-    // Final y 3P
     const final = partidosFinal[0] || {id:'FINAL', fecha:'19 jul', local:null, visit:null};
     const tercer = partidos3P[0] || {id:'3P', fecha:'18 jul', local:null, visit:null};
 
     let h = '<div class="bracket-grid">';
-    // Columna R32 (izquierda)
     h += '<div class="bracket-col"><div class="bracket-col-header">R32</div><div class="bracket-half">';
     r32Izq.forEach(m => h+=mkBox(m));
     h += '</div></div>';
 
-    // R16 izquierda
     h += '<div class="bracket-col"><div class="bracket-col-header">R16</div><div class="bracket-half">';
     r16Izq.forEach(m => h+=mkBox(m));
     h += '</div></div>';
 
-    // QF izquierda
     h += '<div class="bracket-col"><div class="bracket-col-header">Cuartos</div><div class="bracket-half">';
     qfIzq.forEach(m => h+=mkBox(m));
     h += '</div></div>';
 
-    // SF izquierda
     h += '<div class="bracket-col"><div class="bracket-col-header">Semis</div><div class="bracket-half">';
     sfIzq.forEach(m => h+=mkBox(m));
     h += '</div></div>';
 
-    // Columna central: Final
     h += '<div class="bracket-col center-final-col"><div class="bracket-col-header">Final</div>';
     h += '<div class="copa-icon">🏆</div><div class="fecha-final-txt">19 jul · NY/NJ</div>';
     h += mkBox(final);
     h += '<div class="tercer-box"><div class="tercer-label">🥉 3er puesto · 18 jul</div>'+mkBox(tercer)+'</div></div>';
 
-    // SF derecha
     h += '<div class="bracket-col"><div class="bracket-col-header">Semis</div><div class="bracket-half">';
     sfDer.forEach(m => h+=mkBox(m));
     h += '</div></div>';
 
-    // QF derecha
     h += '<div class="bracket-col"><div class="bracket-col-header">Cuartos</div><div class="bracket-half">';
     qfDer.forEach(m => h+=mkBox(m));
     h += '</div></div>';
 
-    // R16 derecha
     h += '<div class="bracket-col"><div class="bracket-col-header">R16</div><div class="bracket-half">';
     r16Der.forEach(m => h+=mkBox(m));
     h += '</div></div>';
 
-    // R32 derecha
     h += '<div class="bracket-col"><div class="bracket-col-header">R32</div><div class="bracket-half">';
     r32Der.forEach(m => h+=mkBox(m));
     h += '</div></div>';
@@ -1351,14 +1215,10 @@ function renderBracket() {
     c.innerHTML = h;
 }
 
-// ============================================================
-// RENDER CAMPEÓN
-// ============================================================
 function renderCampeon() {
     const c = document.getElementById('campeon-container');
     if (!c) return;
 
-    // Obtener todos los equipos únicos
     const todosEquipos = new Set();
     Object.values(GRUPOS).forEach(g => g.equipos.forEach(e => todosEquipos.add(e)));
     const equiposList = Array.from(todosEquipos).sort();
@@ -1366,16 +1226,22 @@ function renderCampeon() {
     let html = '';
     PERSONAS.forEach(p => {
         const actual = pronosticosCampeon[p] || '';
+        const eqActual = actual ? getEquipo(actual) : null;
         html += `<div class="campeon-selector">
-            <span style="font-weight:600;min-width:120px;">${p}</span>
-            <select onchange="cambiarCampeon('${p}', this.value)">
-                <option value="">— Seleccionar —</option>`;
+            <span style="font-weight:600;min-width:120px;color:#e6edf3;">${p}</span>
+            <select onchange="cambiarCampeon('${p}', this.value)" style="flex:1;min-width:200px;">
+                <option value="">— Seleccionar campeón —</option>`;
         equiposList.forEach(sigla => {
             const eq = getEquipo(sigla);
             html += `<option value="${sigla}" ${sigla===actual?'selected':''}>${eq.bandera} ${eq.nombre}</option>`;
         });
-        html += `</select>
-        </div>`;
+        html += `</select>`;
+        if (eqActual) {
+            html += `<span class="campeon-badge">${eqActual.bandera} ${eqActual.nombre}</span>`;
+        } else {
+            html += `<span style="color:#8b949e;font-size:0.8rem;">Sin selección</span>`;
+        }
+        html += `</div>`;
     });
     c.innerHTML = html;
     renderResumenCampeon();
@@ -1396,29 +1262,69 @@ function cambiarCampeon(persona, sigla) {
 function renderResumenCampeon() {
     const c = document.getElementById('campeon-resumen');
     if (!c) return;
+
+    const todosEquipos = new Set();
+    Object.values(GRUPOS).forEach(g => g.equipos.forEach(e => todosEquipos.add(e)));
+    const equiposList = Array.from(todosEquipos).sort();
+
+    if (Object.keys(pronosticosCampeon).length === 0) {
+        c.innerHTML = '<p style="color:#8b949e;">Aún no hay pronósticos de campeón.</p>';
+        return;
+    }
+
     const contador = {};
     PERSONAS.forEach(p => {
         const sigla = pronosticosCampeon[p];
         if (sigla) contador[sigla] = (contador[sigla] || 0) + 1;
     });
-    if (Object.keys(contador).length === 0) {
-        c.innerHTML = '<p style="color:#8b949e;">Aún no hay pronósticos de campeón.</p>';
-        return;
-    }
-    let html = '<table><thead><tr><th>Equipo</th><th>Votos</th><th>Personas</th></tr></thead><tbody>';
-    const sorted = Object.entries(contador).sort((a,b) => b[1]-a[1]);
-    sorted.forEach(([sigla, count]) => {
+
+    let html = '<div style="overflow-x:auto;max-width:100%;">';
+    html += '<table style="min-width:800px;font-size:0.7rem;">';
+    
+    html += '<thead><tr><th style="position:sticky;left:0;background:#21262d;z-index:5;min-width:110px;">Persona</th>';
+    equiposList.forEach(sigla => {
         const eq = getEquipo(sigla);
-        const nombres = PERSONAS.filter(p => pronosticosCampeon[p] === sigla).join(', ');
-        html += `<tr><td>${eq.bandera} ${eq.nombre}</td><td style="text-align:center;font-weight:700;">${count}</td><td>${nombres}</td></tr>`;
+        html += `<th style="text-align:center;vertical-align:bottom;padding:4px 6px;font-size:0.6rem;" title="${eq.nombre}">
+            <div style="font-size:1.2rem;">${eq.bandera}</div>
+            <div style="writing-mode:vertical-lr;text-orientation:mixed;font-size:0.55rem;margin-top:2px;">${sigla}</div>
+        </th>`;
     });
-    html += '</tbody></table>';
+    html += '<th style="background:#0c1a2e;color:#FAC775;text-align:center;">✅</th>';
+    html += '</tr></thead><tbody>';
+
+    PERSONAS.forEach(p => {
+        const seleccion = pronosticosCampeon[p] || '';
+        html += `<tr>`;
+        html += `<td style="position:sticky;left:0;background:#161b22;z-index:3;font-weight:600;">${p}</td>`;
+        
+        equiposList.forEach(sigla => {
+            if (sigla === seleccion) {
+                const eq = getEquipo(sigla);
+                html += `<td style="text-align:center;background:rgba(250,199,117,0.15);">
+                    <span style="font-size:1.1rem;">${eq.bandera}</span>
+                </td>`;
+            } else {
+                html += `<td style="text-align:center;color:#30363d;">—</td>`;
+            }
+        });
+        
+        html += `<td style="text-align:center;font-weight:700;color:#FAC775;background:rgba(250,199,117,0.05);">${seleccion ? '✓' : '—'}</td>`;
+        html += `</tr>`;
+    });
+
+    html += '<tr style="background:#21262d;font-weight:700;">';
+    html += '<td style="position:sticky;left:0;background:#21262d;z-index:3;">🗳️ Votos</td>';
+    equiposList.forEach(sigla => {
+        const count = contador[sigla] || 0;
+        html += `<td style="text-align:center;color:${count > 0 ? '#FAC775' : '#8b949e'};font-size:0.8rem;">${count || '—'}</td>`;
+    });
+    html += '<td style="text-align:center;color:#FAC775;"></td>';
+    html += '</tr>';
+
+    html += '</tbody></table></div>';
     c.innerHTML = html;
 }
 
-// ============================================================
-// UTILIDADES
-// ============================================================
 function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg; t.style.display = 'block';
@@ -1434,7 +1340,6 @@ function refrescarTodo() {
 function descargarExcel() {
     try {
         const wb = XLSX.utils.book_new();
-        // Hoja grupos
         const dg = [['Persona',...Object.keys(GRUPOS).map(g=>GRUPOS[g].nombre),'Total Grupos']];
         PERSONAS.forEach(p => {
             const f=[p]; let t=0;
@@ -1443,7 +1348,6 @@ function descargarExcel() {
         });
         XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dg), 'Grupos');
 
-        // Hoja eliminatorias
         const todosLosPartidos = [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...partidos3P];
         const de = [['Persona',...todosLosPartidos.map(m=>`${m.id}`),'Total Elim','GRAN TOTAL']];
         PERSONAS.forEach(p => {
@@ -1453,7 +1357,6 @@ function descargarExcel() {
         });
         XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(de), 'Eliminatorias');
 
-        // Hoja campeón
         const dc = [['Persona','Campeón']];
         PERSONAS.forEach(p => {
             const sigla = pronosticosCampeon[p] || '—';
@@ -1467,9 +1370,6 @@ function descargarExcel() {
     } catch(e) { alert('Error: '+e.message); }
 }
 
-// ============================================================
-// NAVEGACIÓN
-// ============================================================
 function switchPage(name) {
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     const el = document.getElementById('page-'+name);
@@ -1487,16 +1387,13 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
     tab.addEventListener('click', ()=>switchPage(tab.dataset.page));
 });
 
-// ============================================================
-// INICIO
-// ============================================================
 initEstado();
 renderRanking();
 renderGrupos();
 renderMatrix();
 renderBracket();
 renderCampeon();
-console.log('✅ Mundial 2026 v6 — Resultados R32 + penales manuales cargados');
+console.log('✅ Mundial 2026 v7 — Matriz de campeón mejorada');
 </script>
 </body>
 </html>
