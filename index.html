@@ -1225,12 +1225,14 @@
             const ganadorPron = pl > pv ? 'L' : pv > pl ? 'V' : 'E';
             if (ganadorReal !== 'E' && ganadorPron === ganadorReal) puntos += 5;
             else if (ganadorReal === 'E' && ganadorPron === 'E') puntos += 5;
-            // 2. DIFERENCIA DE GOL (+2)
-            if ((rl - rv) === (pl - pv)) puntos += 2;
-            // 3. ACIERTO DE GOLES POR EQUIPO (+2)
+            // 2. DIFERENCIA O ANOTAN (+2) - si acierta al menos una
+            const aciertaDif = (rl - rv) === (pl - pv);
             const realIzqAnota = rl > 0, realDerAnota = rv > 0;
             const pronIzqAnota = pl > 0, pronDerAnota = pv > 0;
-            if (realIzqAnota === pronIzqAnota && realDerAnota === pronDerAnota) puntos += 2;
+            const aciertaAnotan = (realIzqAnota === pronIzqAnota && realDerAnota === pronDerAnota);
+            if (aciertaDif || aciertaAnotan) puntos += 2;
+            // 3. MARCADOR EXACTO (+3)
+            if (pl === rl && pv === rv) puntos += 3;
             return puntos;
         }
 
