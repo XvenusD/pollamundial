@@ -146,15 +146,6 @@
         .btn-success:hover {
             background: #2b4f0c;
         }
-        .btn-copiar {
-            background: #FAC775;
-            color: #633806;
-            border-color: #FAC775;
-            font-weight: 700;
-        }
-        .btn-copiar:hover {
-            background: #e0b05a;
-        }
         .btn-danger {
             background: #993C1D;
             color: #fff;
@@ -170,7 +161,6 @@
             padding: 16px;
             margin-bottom: 16px;
         }
-
         .ranking-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -240,7 +230,6 @@
             color: #8b949e;
             margin-top: 4px;
         }
-
         .grupo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -347,7 +336,6 @@
             border-color: #D3D1C7;
             font-weight: 700;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -373,7 +361,6 @@
         tr:hover td {
             background: rgba(255, 255, 255, 0.02);
         }
-
         .puntos-auto {
             font-size: 0.8rem;
             font-weight: 600;
@@ -386,6 +373,11 @@
             color: #ff6b35;
             font-weight: 700;
         }
+        .puntos-8 {
+            background: rgba(240, 112, 80, 0.2);
+            color: #f07050;
+            font-weight: 700;
+        }
         .puntos-7 {
             background: rgba(240, 112, 80, 0.2);
             color: #f07050;
@@ -396,10 +388,19 @@
             color: #7dc542;
             font-weight: 700;
         }
+        .puntos-3 {
+            background: rgba(250, 199, 117, 0.2);
+            color: #FAC775;
+            font-weight: 700;
+        }
+        .puntos-2 {
+            background: rgba(250, 199, 117, 0.2);
+            color: #FAC775;
+            font-weight: 700;
+        }
         .puntos-0 {
             color: #8b949e;
         }
-
         .matrix-wrap {
             overflow-x: auto;
             max-height: 70vh;
@@ -455,6 +456,10 @@
             background: rgba(255, 107, 53, 0.3);
             color: #ff6b35;
         }
+        .mp8 {
+            background: rgba(240, 112, 80, 0.2);
+            color: #f07050;
+        }
         .mp7 {
             background: rgba(240, 112, 80, 0.2);
             color: #f07050;
@@ -463,10 +468,17 @@
             background: rgba(59, 109, 17, 0.25);
             color: #7dc542;
         }
+        .mp3 {
+            background: rgba(250, 199, 117, 0.25);
+            color: #FAC775;
+        }
+        .mp2 {
+            background: rgba(250, 199, 117, 0.2);
+            color: #FAC775;
+        }
         .mp0 {
             color: #8b949e;
         }
-
         .bracket-wrap {
             overflow-x: auto;
             padding-bottom: 20px;
@@ -602,7 +614,6 @@
             margin-bottom: 4px;
             text-transform: uppercase;
         }
-
         .elim-section {
             margin-bottom: 28px;
         }
@@ -772,7 +783,6 @@
             padding: 1px 7px;
             border-radius: 8px;
         }
-
         .leyenda-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -795,7 +805,6 @@
             font-size: 0.68rem;
             color: #8b949e;
         }
-
         .campeon-selector {
             display: flex;
             flex-wrap: wrap;
@@ -936,7 +945,7 @@
                 <div class="leyenda-grid" style="margin-bottom:0;">
                     <div class="leyenda-card"><div class="leyenda-points" style="color:#7dc542">+5</div><div class="leyenda-desc">Acertar GANADOR</div></div>
                     <div class="leyenda-card"><div class="leyenda-points" style="color:#FAC775">+2</div><div class="leyenda-desc">Acertar DIFERENCIA</div></div>
-                    <div class="leyenda-card"><div class="leyenda-points" style="color:#ff6b35">+3</div><div class="leyenda-desc">MARCADOR EXACTO</div></div>
+                    <div class="leyenda-card"><div class="leyenda-points" style="color:#FAC775">+3</div><div class="leyenda-desc">Acertar qué equipos ANOTAN</div></div>
                     <div class="leyenda-card"><div class="leyenda-points" style="color:#ff6b35">=10</div><div class="leyenda-desc">MÁXIMO</div></div>
                 </div>
             </div>
@@ -949,7 +958,7 @@
     </div>
 
     <div class="page" id="page-elim">
-        <div class="page-header"><div><h1>⚽ Eliminatorias — R32 a Final</h1><p>Ganador(+5) + Diferencia(+2) + Exacto(+3) = Máx 10 pts</p></div></div>
+        <div class="page-header"><div><h1>⚽ Eliminatorias — R32 a Final</h1><p>Ganador(+5) + Diferencia(+2) + Anotan(+3) = Máx 10 pts</p></div></div>
         <div id="elim-container"></div>
     </div>
 
@@ -1133,8 +1142,8 @@
             partidosFinal = [],
             partidos3P = [];
 
-        function initEstado() { const s = localStorage.getItem('mundial2026_vOK');
-            if (s) { try { const d = JSON.parse(s);
+        function initEstado() { const s = localStorage.getItem('mundial2026_vFINAL3'); if (s) { try { const d = JSON
+                        .parse(s);
                     clasificadosActuales = d.clasificadosActuales || JSON.parse(JSON.stringify(
                     CLASIFICADOS_DEFAULT));
                     resultadosElim = { ...JSON.parse(JSON.stringify(RESULTADOS_DEFAULT)), ...(d.resultadosElim || {}) };
@@ -1148,7 +1157,7 @@
                 pronosticosCampeon = { ...pronosticosCampeonDefault } }
             recalcularTodo() }
 
-        function guardarEstado() { localStorage.setItem('mundial2026_vOK', JSON.stringify({ clasificadosActuales,
+        function guardarEstado() { localStorage.setItem('mundial2026_vFINAL3', JSON.stringify({ clasificadosActuales,
                 resultadosElim, pronosticosCampeon }));
             document.getElementById('syncBadge').textContent = '⚡ Guardado';
             setTimeout(() => document.getElementById('syncBadge').textContent = '⚡ Actualizado', 1500) }
@@ -1204,7 +1213,7 @@
                 [c1, c2] = clas; if (p1 === c1 && p2 === c2) return 6; if (p1 === c1 || p2 === c2) return 3; if (p1 ===
                 c2 && p2 === c1) return 2; if (p1 === c2 || p2 === c1) return 1; return 0 }
 
-        // ============ REGLAS FINALES: Ganador(+5) + Diferencia(+2) + Exacto(+3) = 10 ============
+        // ============ REGLAS FINALES: Ganador(+5) + Diferencia(+2) + GolesEq(+3) = 10 ============
         function calcPuntajeElim(persona, partido) { const res = resultadosElim[partido.id]; if (!res || res.l ===
                 null || res.v === null) return null;
             let pron = PRONOSTICOS_R32[persona]?.[partido.id]; if (!pron || pron.l === null || pron.v === null) { const
@@ -1221,10 +1230,19 @@
                 pl = parseInt(pron.l),
                 pv = parseInt(pron.v);
             let puntos = 0;
+            // 1. GANADOR (+5)
             const ganadorReal = rl > rv ? 'L' : rv > rl ? 'V' : 'E',
                 ganadorPron = pl > pv ? 'L' : pv > pl ? 'V' : 'E'; if (ganadorReal !== 'E' && ganadorPron ===
-                ganadorReal) { puntos += 5 } else if (ganadorReal === 'E' && ganadorPron === 'E') { puntos += 5 } if (
-                (rl - rv) === (pl - pv)) { puntos += 2 } if (pl === rl && pv === rv) { puntos += 3 } return puntos }
+                ganadorReal) { puntos += 5 } else if (ganadorReal === 'E' && ganadorPron === 'E') { puntos += 5 }
+            // 2. DIFERENCIA (+2)
+            if ((rl - rv) === (pl - pv)) { puntos += 2 }
+            // 3. ACIERTO DE GOLES POR EQUIPO (+3)
+            const realIzqAnota = rl > 0,
+                realDerAnota = rv > 0,
+                pronIzqAnota = pl > 0,
+                pronDerAnota = pv > 0; if (realIzqAnota === pronIzqAnota && realDerAnota === pronDerAnota) { puntos +=
+                3 }
+            return puntos }
 
         function getRondaAnterior(id) { const m = { 'R16-01': 'R32-01', 'R16-02': 'R32-03', 'R16-03': 'R32-05',
                 'R16-04': 'R32-07', 'R16-05': 'R32-09', 'R16-06': 'R32-11', 'R16-07': 'R32-13', 'R16-08': 'R32-15',
@@ -1416,8 +1434,8 @@
                 todos.forEach(m => { const v = puntajesElim[p]?.[m.id],
                         res = resultadosElim[m.id],
                         jugado = res && res.l !== null && res.v !== null && m.local && m.visit; if (!jugado) { h +=
-                            `<td style="color:#30363d;">—</td>`; return } const cl = v === 10 ? 'mp10' : v === 7 ?
-                        'mp7' : v === 5 ? 'mp5' : 'mp0';
+                            `<td style="color:#30363d;">—</td>`; return } const cl = v === 10 ? 'mp10' : v === 8 ?
+                        'mp8' : v === 7 ? 'mp7' : v === 5 ? 'mp5' : v === 3 ? 'mp3' : v === 2 ? 'mp2' : 'mp0';
                     h += `<td class="${cl}">${v}</td>` });
                 h +=
                     `<td style="font-weight:700;background:#0c1a2e;color:#5b9dd9;">${te}</td><td class="total-col">${tot}</td></tr>` });
@@ -1577,7 +1595,7 @@
         renderMatrix();
         renderBracket();
         renderCampeon();
-        console.log('✅ Mundial 2026 — REGLAS: Ganador(+5) + Diferencia(+2) + Exacto(+3) = Máx 10pts');
+        console.log('✅ REGLAS FINALES: Ganador(+5) + Diferencia(+2) + GolesEq(+3) = Máx 10pts');
     </script>
 </body>
 </html>
