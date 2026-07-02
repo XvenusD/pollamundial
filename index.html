@@ -1196,30 +1196,43 @@
                 c2 && p2 === c1) return 2; if (p1 === c2 || p2 === c1) return 1; return 0 }
 
         // REGLAS FINALES: Ganador(+5) + Diferencia(+2) + Anotan(+2) = Máx 7
-        function calcPuntajeElim(persona, partido) { const res = resultadosElim[partido.id]; if (!res || res.l ===
-                null || res.v === null) return null;
-            let pron = PRONOSTICOS_R32[persona]?.[partido.id]; if (!pron || pron.l === null || pron.v === null) { const
-                    rondaAnterior = getRondaAnterior(partido.id); if (rondaAnterior) { const pronAnterior =
-                        PRONOSTICOS_R32[persona]?.[rondaAnterior]; if (pronAnterior && pronAnterior.l !== null &&
-                        pronAnterior.v !== null) { const matchAnterior = obtenerMatchPorId(rondaAnterior); if (
-                        matchAnterior) { const ganadorPron = pronAnterior.l > pronAnterior.v ? matchAnterior.local : (
-                            pronAnterior.v > pronAnterior.l ? matchAnterior.visit : null); if (ganadorPron === partido
-                            .local) pron = { l: 1, v: 0 }; else if (ganadorPron === partido.visit) pron = { l: 0,
-                            v: 1 }; else pron = { l: 0, v: 0 } } } } if (!pron || pron.l === null || pron.v ===
-                    null) return 0 }
-            const rl = parseInt(res.l),
-                rv = parseInt(res.v),
-                pl = parseInt(pron.l),
-                pv = parseInt(pron.v);
+                // REGLAS FINALES: Ganador(+5) + Diferencia(+2) + Anotan(+2) = Máx 7
+        function calcPuntajeElim(persona, partido) {
+            const res = resultadosElim[partido.id];
+            if (!res || res.l === null || res.v === null) return null;
+            let pron = PRONOSTICOS_R32[persona]?.[partido.id];
+            if (!pron || pron.l === null || pron.v === null) {
+                const rondaAnterior = getRondaAnterior(partido.id);
+                if (rondaAnterior) {
+                    const pronAnterior = PRONOSTICOS_R32[persona]?.[rondaAnterior];
+                    if (pronAnterior && pronAnterior.l !== null && pronAnterior.v !== null) {
+                        const matchAnterior = obtenerMatchPorId(rondaAnterior);
+                        if (matchAnterior) {
+                            const ganadorPron = pronAnterior.l > pronAnterior.v ? matchAnterior.local : (pronAnterior.v > pronAnterior.l ? matchAnterior.visit : null);
+                            if (ganadorPron === partido.local) pron = { l: 1, v: 0 };
+                            else if (ganadorPron === partido.visit) pron = { l: 0, v: 1 };
+                            else pron = { l: 0, v: 0 };
+                        }
+                    }
+                }
+                if (!pron || pron.l === null || pron.v === null) return 0;
+            }
+            const rl = parseInt(res.l), rv = parseInt(res.v);
+            const pl = parseInt(pron.l), pv = parseInt(pron.v);
             let puntos = 0;
-            const ganadorReal = rl > rv ? 'L' : rv > rl ? 'V' : 'E',
-                ganadorPron = pl > pv ? 'L' : pv > pl ? 'V' : 'E'; if (ganadorReal !== 'E' && ganadorPron ===
-                ganadorReal) puntos += 5; else if (ganadorReal === 'E' && ganadorPron === 'E') puntos += 5; if ((rl -
-                    rv) === (pl - pv)) puntos += 2; const realIzqAnota = rl > 0,
-                realDerAnota = rv > 0,
-                pronIzqAnota = pl > 0,
-                pronDerAnota = pv > 0; if (realIzqAnota === pronIzqAnota && realDerAnota === pronDerAnota) puntos +=
-            2; return puntos }
+            // 1. GANADOR (+5)
+            const ganadorReal = rl > rv ? 'L' : rv > rl ? 'V' : 'E';
+            const ganadorPron = pl > pv ? 'L' : pv > pl ? 'V' : 'E';
+            if (ganadorReal !== 'E' && ganadorPron === ganadorReal) puntos += 5;
+            else if (ganadorReal === 'E' && ganadorPron === 'E') puntos += 5;
+            // 2. DIFERENCIA DE GOL (+2)
+            if ((rl - rv) === (pl - pv)) puntos += 2;
+            // 3. ACIERTO DE GOLES POR EQUIPO (+2)
+            const realIzqAnota = rl > 0, realDerAnota = rv > 0;
+            const pronIzqAnota = pl > 0, pronDerAnota = pv > 0;
+            if (realIzqAnota === pronIzqAnota && realDerAnota === pronDerAnota) puntos += 2;
+            return puntos;
+        }
 
         function getRondaAnterior(id) { const m = { 'R16-01': 'R32-01', 'R16-02': 'R32-03', 'R16-03': 'R32-05',
                 'R16-04': 'R32-07', 'R16-05': 'R32-09', 'R16-06': 'R32-11', 'R16-07': 'R32-13', 'R16-08': 'R32-15',
