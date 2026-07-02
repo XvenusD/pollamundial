@@ -129,10 +129,13 @@
         tr:hover td { background: rgba(255,255,255,0.02); }
 
         .puntos-auto { font-size: 0.8rem; font-weight: 600; padding: 3px 10px; border-radius: 12px; white-space: nowrap; }
-        .puntos-10 { background: rgba(153,60,29,0.2); color: #ff6b35; font-weight: 700; }
-        .puntos-7  { background: rgba(153,60,29,0.15); color: #f07050; font-weight: 700; }
+        .puntos-10 { background: rgba(255,107,53,0.3); color: #ff6b35; font-weight: 700; }
+        .puntos-9  { background: rgba(255,107,53,0.25); color: #ff6b35; font-weight: 700; }
+        .puntos-8  { background: rgba(240,112,80,0.25); color: #f07050; font-weight: 700; }
+        .puntos-7  { background: rgba(240,112,80,0.2); color: #f07050; font-weight: 700; }
         .puntos-6  { background: rgba(153,60,29,0.2); color: #f07050; font-weight: 700; }
-        .puntos-5  { background: rgba(59,109,17,0.2); color: #7dc542; font-weight: 700; }
+        .puntos-5  { background: rgba(59,109,17,0.25); color: #7dc542; font-weight: 700; }
+        .puntos-4  { background: rgba(59,109,17,0.2); color: #7dc542; font-weight: 700; }
         .puntos-3  { background: rgba(250,199,117,0.2); color: #FAC775; font-weight: 700; }
         .puntos-2  { background: rgba(250,199,117,0.2); color: #FAC775; font-weight: 700; }
         .puntos-1  { background: rgba(24,95,165,0.2); color: #5b9dd9; font-weight: 700; }
@@ -148,11 +151,14 @@
         .matrix-table .total-col { font-weight: 700; background: #21262d !important; font-size: 0.9rem; }
         .matrix-table .total-row td { font-weight: 700; background: #21262d !important; }
         .matrix-table .section-header th { background: #0c1a2e; color: #5b9dd9; font-size: 0.65rem; }
-        .mp10 { background: rgba(255,107,53,0.25); color: #ff6b35; font-weight: 700; }
+        .mp10 { background: rgba(255,107,53,0.3); color: #ff6b35; font-weight: 700; }
+        .mp9  { background: rgba(255,107,53,0.25); color: #ff6b35; font-weight: 700; }
+        .mp8  { background: rgba(240,112,80,0.25); color: #f07050; font-weight: 700; }
         .mp7  { background: rgba(240,112,80,0.2); color: #f07050; font-weight: 700; }
-        .mp5  { background: rgba(59,109,17,0.25); color: #7dc542; font-weight: 700; }
-        .mp3  { background: rgba(250,199,117,0.25); color: #FAC775; font-weight: 700; }
         .mp6  { background: rgba(153,60,29,0.25); color: #f07050; font-weight: 700; }
+        .mp5  { background: rgba(59,109,17,0.25); color: #7dc542; font-weight: 700; }
+        .mp4  { background: rgba(59,109,17,0.2); color: #7dc542; font-weight: 700; }
+        .mp3  { background: rgba(250,199,117,0.25); color: #FAC775; font-weight: 700; }
         .mp2  { background: rgba(250,199,117,0.2); color: #FAC775; font-weight: 700; }
         .mp1  { background: rgba(24,95,165,0.2); color: #5b9dd9; font-weight: 700; }
 
@@ -286,6 +292,13 @@
         .ranking-campeon .campeon-tag { font-weight: 700; color: #FAC775; font-size: 0.9rem; }
         .ranking-campeon .campeon-equipo { font-size: 1.4rem; font-weight: 700; }
 
+        #campeon-resumen table tr:hover td {
+            background: rgba(255,255,255,0.03) !important;
+        }
+        #campeon-resumen td {
+            transition: background 0.2s;
+        }
+
         .toast {
             position: fixed; bottom: 20px; right: 20px;
             background: #3B6D11; color: #fff; padding: 10px 20px;
@@ -350,12 +363,13 @@
             </div>
         </div>
         <div class="card">
-            <div style="font-weight:700;margin-bottom:10px;color:#FAC775;">⚽ Sistema de puntos — Eliminatorias</div>
+            <div style="font-weight:700;margin-bottom:10px;color:#FAC775;">⚽ Sistema de puntos — Eliminatorias (ACUMULATIVO)</div>
             <div class="leyenda-grid" style="margin-bottom:0;">
-                <div class="leyenda-card"><div class="leyenda-points" style="color:#ff6b35">10 pts</div><div class="leyenda-desc">Marcador exacto</div></div>
-                <div class="leyenda-card"><div class="leyenda-points" style="color:#f07050">7 pts</div><div class="leyenda-desc">Ganador + diferencia</div></div>
-                <div class="leyenda-card"><div class="leyenda-points" style="color:#7dc542">5 pts</div><div class="leyenda-desc">Solo el ganador</div></div>
-                <div class="leyenda-card"><div class="leyenda-points" style="color:#FAC775">3 pts</div><div class="leyenda-desc">Al menos un gol</div></div>
+                <div class="leyenda-card"><div class="leyenda-points" style="color:#FAC775">+2</div><div class="leyenda-desc">Ganador del partido</div></div>
+                <div class="leyenda-card"><div class="leyenda-points" style="color:#FAC775">+2</div><div class="leyenda-desc">Diferencia de gol</div></div>
+                <div class="leyenda-card"><div class="leyenda-points" style="color:#FAC775">+3</div><div class="leyenda-desc">Acierto goles (equipos)</div></div>
+                <div class="leyenda-card"><div class="leyenda-points" style="color:#ff6b35">+3</div><div class="leyenda-desc">Marcador exacto</div></div>
+                <div class="leyenda-card"><div class="leyenda-points" style="color:#ff6b35">=10</div><div class="leyenda-desc">Máximo total</div></div>
             </div>
         </div>
     </div>
@@ -380,7 +394,7 @@
     <div class="page-header">
         <div>
             <h1>⚽ Eliminatorias — R32 a Final</h1>
-            <p>Ingresa el marcador real · Los puntos se calculan automáticamente · 10/7/5/3/0</p>
+            <p>Puntos acumulativos: Ganador(+2) + Diferencia(+2) + Goles(+3) + Exacto(+3) = Máx 10</p>
         </div>
     </div>
     <div id="elim-container"></div>
@@ -583,7 +597,8 @@ let puntajesGrupos = {};
 let puntajesElim = {};
 
 function initEstado() {
-    const saved = localStorage.getItem('mundial2026_vFINAL');
+    // ⚡ Usamos nueva clave para no mezclar con datos viejos
+    const saved = localStorage.getItem('mundial2026_vNUEVO');
     if (saved) {
         try {
             const d = JSON.parse(saved);
@@ -606,7 +621,7 @@ function initEstado() {
 }
 
 function guardarEstado() {
-    localStorage.setItem('mundial2026_vFINAL', JSON.stringify({clasificadosActuales, resultadosElim, pronosticosCampeon}));
+    localStorage.setItem('mundial2026_vNUEVO', JSON.stringify({clasificadosActuales, resultadosElim, pronosticosCampeon}));
     document.getElementById('syncBadge').textContent = '⚡ Guardado';
     setTimeout(() => document.getElementById('syncBadge').textContent = '⚡ Actualizado', 1500);
 }
@@ -741,6 +756,9 @@ function calcPuntajeGrupo(persona, grupo) {
     return 0;
 }
 
+// ============================================================
+// ⚡ NUEVO SISTEMA DE PUNTUACIÓN ACUMULATIVA PARA ELIMINATORIAS
+// ============================================================
 function calcPuntajeElim(persona, partido) {
     const res = resultadosElim[partido.id];
     if (!res || res.l === null || res.v === null) return null;
@@ -763,23 +781,44 @@ function calcPuntajeElim(persona, partido) {
         if (!pron || pron.l === null || pron.v === null) return 0;
     }
 
-    const rl = parseInt(res.l), rv = parseInt(res.v);
-    const pl = parseInt(pron.l), pv = parseInt(pron.v);
+    const rl = parseInt(res.l);
+    const rv = parseInt(res.v);
+    const pl = parseInt(pron.l);
+    const pv = parseInt(pron.v);
+    
+    let puntos = 0;
 
-    if (pl === rl && pv === rv) return 10;
-
+    // 1. GANADOR (+2 puntos)
     const ganadorReal = rl > rv ? 'L' : rv > rl ? 'V' : 'E';
     const ganadorPron = pl > pv ? 'L' : pv > pl ? 'V' : 'E';
-
     if (ganadorReal !== 'E' && ganadorPron === ganadorReal) {
-        if ((rl - rv) === (pl - pv)) return 7;
-        return 5;
+        puntos += 2;
     }
-    if (ganadorReal === 'E' && ganadorPron === 'E') return 5;
 
-    if ((rl > 0 && pl === rl) || (rv > 0 && pv === rv)) return 3;
+    // 2. DIFERENCIA DE GOL (+2 puntos)
+    const difReal = rl - rv;
+    const difPron = pl - pv;
+    if (difReal === difPron) {
+        puntos += 2;
+    }
 
-    return 0;
+    // 3. ACIERTO DE GOLES POR EQUIPO (+3 puntos)
+    // Verificar si acertó qué equipos anotaron (izquierda, derecha, ambos, ninguno)
+    const realIzqAnota = rl > 0;
+    const realDerAnota = rv > 0;
+    const pronIzqAnota = pl > 0;
+    const pronDerAnota = pv > 0;
+    
+    if (realIzqAnota === pronIzqAnota && realDerAnota === pronDerAnota) {
+        puntos += 3;
+    }
+
+    // 4. MARCADOR EXACTO (+3 puntos)
+    if (pl === rl && pv === rv) {
+        puntos += 3;
+    }
+
+    return puntos;
 }
 
 function getRondaAnterior(id) {
@@ -1126,7 +1165,7 @@ function renderMatrix() {
             const res = resultadosElim[m.id];
             const jugado = res && res.l!==null && res.v!==null && m.local && m.visit;
             if (!jugado) { html += `<td style="color:#30363d;">—</td>`; return; }
-            const cl = v===10?'mp10':v===7?'mp7':v===5?'mp5':v===3?'mp3':'';
+            const cl = v===10?'mp10':v===9?'mp9':v===8?'mp8':v===7?'mp7':v===6?'mp6':v===5?'mp5':v===4?'mp4':v===3?'mp3':v===2?'mp2':v===1?'mp1':'';
             html += `<td class="${cl}">${v}</td>`;
         });
         html += `<td style="font-weight:700;background:#0c1a2e;color:#5b9dd9;">${te}</td>`;
@@ -1399,7 +1438,7 @@ renderGrupos();
 renderMatrix();
 renderBracket();
 renderCampeon();
-console.log('✅ Mundial 2026 — ¡Todo actualizado!');
+console.log('✅ Mundial 2026 — Nuevo sistema acumulativo ACTIVO: Ganador(+2) + Diferencia(+2) + GolesEq(+3) + Exacto(+3) = Máx 10pts');
 </script>
 </body>
 </html>
