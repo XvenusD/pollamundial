@@ -916,16 +916,10 @@
         <div class="sync-badge" id="syncBadge">⚡ Actualizado</div>
     </div>
 
-    <!-- ==================== PÁGINA TOP ==================== -->
     <div class="page active" id="page-top">
         <div class="page-header">
-            <div>
-                <h1>🏅 Ranking General — Mundial 2026</h1>
-                <p>Puntajes totales: Fase de Grupos + Eliminatorias</p>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <button class="btn btn-success" onclick="descargarExcel()">💾 Excel</button>
-            </div>
+            <div><h1>🏅 Ranking General — Mundial 2026</h1><p>Puntajes totales: Fase de Grupos + Eliminatorias</p></div>
+            <button class="btn btn-success" onclick="descargarExcel()">💾 Excel</button>
         </div>
         <div class="card">
             <h3 style="margin-bottom:12px;">🏆 Clasificación General</h3>
@@ -954,807 +948,484 @@
         </div>
     </div>
 
-    <!-- ==================== PÁGINA GRUPOS ==================== -->
     <div class="page" id="page-grupos">
-        <div class="page-header">
-            <div>
-                <h1>📋 Grupos — Selecciona 1° y 2°</h1>
-                <p>Clic normal = 1° lugar · Ctrl+Clic o clic derecho = 2° lugar</p>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <button class="btn btn-danger" onclick="resetearClasificados()">🔄 Resetear</button>
-            </div>
-        </div>
+        <div class="page-header"><div><h1>📋 Grupos — Selecciona 1° y 2°</h1><p>Clic normal = 1° · Ctrl+Clic = 2°</p></div><button class="btn btn-danger" onclick="resetearClasificados()">🔄 Resetear</button></div>
         <div id="grupos-container"></div>
     </div>
 
-    <!-- ==================== PÁGINA ELIMINATORIAS ==================== -->
     <div class="page" id="page-elim">
-        <div class="page-header">
-            <div>
-                <h1>⚽ Eliminatorias — R32 a Final</h1>
-                <p>Ganador(+5) + Diferencia(+2) + Anotan(+2) = Máx 7 pts</p>
-            </div>
-        </div>
+        <div class="page-header"><div><h1>⚽ Eliminatorias — R32 a Final</h1><p>Ganador(+5) + Diferencia(+2) + Anotan(+2) = Máx 7 pts</p></div></div>
         <div id="elim-container"></div>
     </div>
 
-    <!-- ==================== PÁGINA MATRIX ==================== -->
     <div class="page" id="page-matrix">
-        <div class="page-header">
-            <div>
-                <h1>🔢 Matrix de Puntajes</h1>
-                <p>Grupos + Eliminatorias (R32, R16, QF, SF, Final) por persona</p>
-            </div>
-            <button class="btn btn-success" onclick="descargarExcel()">💾 Excel</button>
-        </div>
-        <div class="card">
-            <div class="matrix-wrap" id="matrix-container"></div>
-        </div>
+        <div class="page-header"><div><h1>🔢 Matrix de Puntajes</h1></div><button class="btn btn-success" onclick="descargarExcel()">💾 Excel</button></div>
+        <div class="card"><div class="matrix-wrap" id="matrix-container"></div></div>
     </div>
 
-    <!-- ==================== PÁGINA BRACKET ==================== -->
     <div class="page" id="page-bracket">
-        <div class="page-header">
-            <div>
-                <h1>🏟 Bracket FIFA 2026</h1>
-                <p>Se actualiza según los resultados reales de eliminatorias</p>
-            </div>
-        </div>
+        <div class="page-header"><div><h1>🏟 Bracket FIFA 2026</h1></div></div>
         <div class="bracket-wrap" id="bracket-container"></div>
     </div>
 
-    <!-- ==================== PÁGINA CAMPEÓN ==================== -->
     <div class="page" id="page-campeon">
-        <div class="page-header">
-            <div>
-                <h1>🏆 Pronóstico de Campeón</h1>
-                <p>Cada participante selecciona quién cree que ganará el Mundial 2026</p>
-            </div>
-        </div>
-        <div class="card">
-            <h3 style="margin-bottom:12px;">👑 Selecciona tu Campeón</h3>
-            <div id="campeon-container"></div>
-        </div>
-        <div class="card">
-            <h3 style="margin-bottom:12px;">📊 Matriz de Pronósticos de Campeón</h3>
-            <div id="campeon-resumen"></div>
-        </div>
+        <div class="page-header"><div><h1>🏆 Pronóstico de Campeón</h1></div></div>
+        <div class="card"><h3 style="margin-bottom:12px;">👑 Selecciona tu Campeón</h3><div id="campeon-container"></div></div>
+        <div class="card"><h3 style="margin-bottom:12px;">📊 Matriz de Pronósticos</h3><div id="campeon-resumen"></div></div>
     </div>
 
     <script>
-        // ============================================================
-        // DATOS BASE
-        // ============================================================
         const PERSONAS = ['Duvan', 'Camila', 'Camilo', 'Mateo', 'Miguel', 'Doc Camilo', 'Katherine', 'Sandra',
-            'Estefania', 'Diana', 'Sofia'
-        ];
-
-        const GRUPOS = {
-            A: { nombre: 'Grupo A', equipos: ['MEX', 'KOR', 'CZE', 'ZAF'] },
-            B: { nombre: 'Grupo B', equipos: ['SUI', 'CAN', 'QAT', 'BIH'] },
-            C: { nombre: 'Grupo C', equipos: ['SCO', 'MAR', 'BRA', 'HTI'] },
-            D: { nombre: 'Grupo D', equipos: ['USA', 'AUS', 'TUR', 'PAR'] },
-            E: { nombre: 'Grupo E', equipos: ['GER', 'CIV', 'ECU', 'CUW'] },
-            F: { nombre: 'Grupo F', equipos: ['SWE', 'JPN', 'NED', 'TUN'] },
-            G: { nombre: 'Grupo G', equipos: ['NZL', 'IRN', 'BEL', 'EGY'] },
-            H: { nombre: 'Grupo H', equipos: ['URU', 'KSA', 'ESP', 'CPV'] },
-            I: { nombre: 'Grupo I', equipos: ['NOR', 'FRA', 'SEN', 'IRQ'] },
-            J: { nombre: 'Grupo J', equipos: ['ARG', 'AUT', 'JOR', 'ALG'] },
-            K: { nombre: 'Grupo K', equipos: ['COL', 'COD', 'POR', 'UZB'] },
-            L: { nombre: 'Grupo L', equipos: ['ENG', 'GHA', 'CRO', 'PAN'] }
-        };
-
-        const EQUIPOS_DATA = {
-            'MEX': { nombre: 'México', bandera: '🇲🇽' },
-            'KOR': { nombre: 'Corea del Sur', bandera: '🇰🇷' },
-            'CZE': { nombre: 'Chequia', bandera: '🇨🇿' },
-            'ZAF': { nombre: 'Sudáfrica', bandera: '🇿🇦' },
-            'SUI': { nombre: 'Suiza', bandera: '🇨🇭' },
-            'CAN': { nombre: 'Canadá', bandera: '🇨🇦' },
-            'QAT': { nombre: 'Qatar', bandera: '🇶🇦' },
-            'BIH': { nombre: 'Bosnia', bandera: '🇧🇦' },
-            'SCO': { nombre: 'Escocia', bandera: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
-            'MAR': { nombre: 'Marruecos', bandera: '🇲🇦' },
-            'BRA': { nombre: 'Brasil', bandera: '🇧🇷' },
-            'HTI': { nombre: 'Haití', bandera: '🇭🇹' },
-            'USA': { nombre: 'EE.UU.', bandera: '🇺🇸' },
-            'AUS': { nombre: 'Australia', bandera: '🇦🇺' },
-            'TUR': { nombre: 'Turquía', bandera: '🇹🇷' },
-            'PAR': { nombre: 'Paraguay', bandera: '🇵🇾' },
-            'GER': { nombre: 'Alemania', bandera: '🇩🇪' },
-            'CIV': { nombre: 'C. de Marfil', bandera: '🇨🇮' },
-            'ECU': { nombre: 'Ecuador', bandera: '🇪🇨' },
-            'CUW': { nombre: 'Curazao', bandera: '🇨🇼' },
-            'SWE': { nombre: 'Suecia', bandera: '🇸🇪' },
-            'JPN': { nombre: 'Japón', bandera: '🇯🇵' },
-            'NED': { nombre: 'P. Bajos', bandera: '🇳🇱' },
-            'TUN': { nombre: 'Túnez', bandera: '🇹🇳' },
-            'NZL': { nombre: 'N. Zelanda', bandera: '🇳🇿' },
-            'IRN': { nombre: 'Irán', bandera: '🇮🇷' },
-            'BEL': { nombre: 'Bélgica', bandera: '🇧🇪' },
-            'EGY': { nombre: 'Egipto', bandera: '🇪🇬' },
-            'URU': { nombre: 'Uruguay', bandera: '🇺🇾' },
-            'KSA': { nombre: 'Arabia Saudí', bandera: '🇸🇦' },
-            'ESP': { nombre: 'España', bandera: '🇪🇸' },
-            'CPV': { nombre: 'Cabo Verde', bandera: '🇨🇻' },
-            'NOR': { nombre: 'Noruega', bandera: '🇳🇴' },
-            'FRA': { nombre: 'Francia', bandera: '🇫🇷' },
-            'SEN': { nombre: 'Senegal', bandera: '🇸🇳' },
-            'IRQ': { nombre: 'Irak', bandera: '🇮🇶' },
-            'ARG': { nombre: 'Argentina', bandera: '🇦🇷' },
-            'AUT': { nombre: 'Austria', bandera: '🇦🇹' },
-            'JOR': { nombre: 'Jordania', bandera: '🇯🇴' },
-            'ALG': { nombre: 'Argelia', bandera: '🇩🇿' },
-            'COL': { nombre: 'Colombia', bandera: '🇨🇴' },
-            'COD': { nombre: 'RD Congo', bandera: '🇨🇩' },
-            'POR': { nombre: 'Portugal', bandera: '🇵🇹' },
-            'UZB': { nombre: 'Uzbekistán', bandera: '🇺🇿' },
-            'ENG': { nombre: 'Inglaterra', bandera: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-            'GHA': { nombre: 'Ghana', bandera: '🇬🇭' },
-            'CRO': { nombre: 'Croacia', bandera: '🇭🇷' },
-            'PAN': { nombre: 'Panamá', bandera: '🇵🇦' }
-        };
-
-        const PRONOSTICOS_GRUPOS = {
-            Duvan: { A: ['MEX', 'ZAF'], B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['TUR', 'PAR'], E: ['GER', 'CIV'],
-                F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['NOR', 'FRA'], J: ['ARG', 'ALG'],
-                K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            Camila: { A: ['MEX', 'KOR'], B: ['CAN', 'SUI'], C: ['BRA', 'MAR'], D: ['PAR', 'USA'], E: ['GER', 'CIV'],
-                F: ['NED', 'JPN'], G: ['BEL', 'NZL'], H: ['URU', 'ESP'], I: ['FRA', 'SEN'], J: ['ARG', 'AUT'],
-                K: ['POR', 'COL'], L: ['ENG', 'GHA'] },
-            Camilo: { A: ['MEX', 'KOR'], B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['USA', 'TUR'], E: ['ECU', 'GER'],
-                F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['FRA', 'SEN'], J: ['ARG', 'ALG'],
-                K: ['COL', 'POR'], L: ['ENG', 'CRO'] },
-            Mateo: { A: ['MEX', 'KOR'], B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['USA', 'PAR'], E: ['GER', 'CIV'],
-                F: ['JPN', 'NED'], G: ['BEL', 'NZL'], H: ['ESP', 'URU'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'],
-                K: ['POR', 'COL'], L: ['ENG', 'PAN'] },
-            Miguel: { A: ['MEX', 'KOR'], B: ['SUI', 'QAT'], C: ['BRA', 'MAR'], D: ['PAR', 'USA'], E: ['GER', 'CIV'],
-                F: ['JPN', 'SWE'], G: ['EGY', 'BEL'], H: ['ESP', 'URU'], I: ['FRA', 'SEN'], J: ['ARG', 'JOR'],
-                K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            'Doc Camilo': { A: ['MEX', 'KOR'], B: ['CAN', 'QAT'], C: ['BRA', 'SCO'], D: ['USA', 'AUS'],
-                E: ['GER', 'CIV'], F: ['NED', 'SWE'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['FRA', 'SEN'],
-                J: ['ARG', 'JOR'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            Katherine: { A: ['MEX', 'KOR'], B: ['CAN', 'QAT'], C: ['BRA', 'MAR'], D: ['PAR', 'USA'],
-                E: ['GER', 'ECU'], F: ['JPN', 'NED'], G: ['BEL', 'EGY'], H: ['URU', 'ESP'], I: ['FRA', 'NOR'],
-                J: ['ARG', 'JOR'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            Sandra: { A: ['MEX', 'ZAF'], B: ['CAN', 'SUI'], C: ['BRA', 'SCO'], D: ['USA', 'AUS'], E: ['GER', 'CIV'],
-                F: ['SWE', 'NED'], G: ['BEL', 'NZL'], H: ['ESP', 'URU'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'],
-                K: ['POR', 'COL'], L: ['ENG', 'CRO'] },
-            Estefania: { A: ['MEX', 'KOR'], B: ['CAN', 'SUI'], C: ['BRA', 'SCO'], D: ['USA', 'AUS'],
-                E: ['GER', 'ECU'], F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['FRA', 'NOR'],
-                J: ['ARG', 'AUT'], K: ['COL', 'POR'], L: ['ENG', 'PAN'] },
-            Diana: { A: ['MEX', 'KOR'], B: ['SUI', 'CAN'], C: ['MAR', 'BRA'], D: ['PAR', 'TUR'], E: ['GER', 'CIV'],
-                F: ['JPN', 'TUN'], G: ['BEL', 'NZL'], H: ['URU', 'ESP'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'],
-                K: ['POR', 'COL'], L: ['ENG', 'PAN'] },
-            Sofia: { A: ['KOR', 'MEX'], B: ['QAT', 'CAN'], C: ['MAR', 'BRA'], D: ['USA', 'AUS'], E: ['GER', 'CIV'],
-                F: ['NED', 'SWE'], G: ['IRN', 'EGY'], H: ['KSA', 'ESP'], I: ['FRA', 'IRQ'], J: ['ARG', 'AUT'],
-                K: ['COL', 'POR'], L: ['ENG', 'CRO'] }
-        };
-
-        const CLASIFICADOS_DEFAULT = {
-            A: ['MEX', 'ZAF'],
-            B: ['SUI', 'CAN'],
-            C: ['BRA', 'MAR'],
-            D: ['USA', 'AUS'],
-            E: ['GER', 'CIV'],
-            F: ['NED', 'JPN'],
-            G: ['BEL', 'EGY'],
-            H: ['ESP', 'CPV'],
-            I: ['FRA', 'NOR'],
-            J: ['ARG', 'AUT'],
-            K: ['COL', 'POR'],
-            L: ['ENG', 'CRO']
-        };
-
-        const PARTIDOS_R32 = [
-            { id: 'R32-01', ronda: 'R32', fecha: '28 jun', local: 'ZAF', visit: 'CAN' },
-            { id: 'R32-02', ronda: 'R32', fecha: '29 jun', local: 'NED', visit: 'MAR' },
-            { id: 'R32-03', ronda: 'R32', fecha: '29 jun', local: 'GER', visit: 'PAR' },
-            { id: 'R32-04', ronda: 'R32', fecha: '30 jun', local: 'FRA', visit: 'SWE' },
-            { id: 'R32-05', ronda: 'R32', fecha: '1 jul', local: 'BEL', visit: 'SEN' },
-            { id: 'R32-06', ronda: 'R32', fecha: '1 jul', local: 'USA', visit: 'BIH' },
-            { id: 'R32-07', ronda: 'R32', fecha: '2 jul', local: 'ESP', visit: 'AUT' },
-            { id: 'R32-08', ronda: 'R32', fecha: '2 jul', local: 'POR', visit: 'CRO' },
-            { id: 'R32-09', ronda: 'R32', fecha: '29 jun', local: 'BRA', visit: 'JPN' },
-            { id: 'R32-10', ronda: 'R32', fecha: '30 jun', local: 'CIV', visit: 'NOR' },
-            { id: 'R32-11', ronda: 'R32', fecha: '30 jun', local: 'MEX', visit: 'ECU' },
-            { id: 'R32-12', ronda: 'R32', fecha: '1 jul', local: 'ENG', visit: 'COD' },
-            { id: 'R32-13', ronda: 'R32', fecha: '2 jul', local: 'SUI', visit: 'ALG' },
-            { id: 'R32-14', ronda: 'R32', fecha: '3 jul', local: 'COL', visit: 'GHA' },
-            { id: 'R32-15', ronda: 'R32', fecha: '3 jul', local: 'AUS', visit: 'EGY' },
-            { id: 'R32-16', ronda: 'R32', fecha: '3 jul', local: 'ARG', visit: 'CPV' }
-        ];
-
-        const PRONOSTICOS_R32 = {
-            Duvan: { 'R32-01': { l: 1, v: 4 }, 'R32-02': { l: 3, v: 2 }, 'R32-03': { l: 3, v: 1 },
-                'R32-04': { l: 3, v: 1 }, 'R32-05': { l: 1, v: 1 }, 'R32-06': { l: 2, v: 1 },
-                'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 2, v: 1 },
-                'R32-10': { l: 1, v: 3 }, 'R32-11': { l: 2, v: 2 }, 'R32-12': { l: 2, v: 0 },
-                'R32-13': { l: 1, v: 0 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 0 },
-            'R32-16': { l: 3, v: 0 } },
-            Camila: { 'R32-01': { l: 2, v: 0 }, 'R32-02': { l: 1, v: 1 }, 'R32-03': { l: 2, v: 0 },
-                'R32-04': { l: 3, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 },
-                'R32-07': { l: 2, v: 0 }, 'R32-08': { l: 1, v: 1 }, 'R32-09': { l: 2, v: 1 },
-                'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 0 },
-                'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 2, v: 0 },
-            'R32-16': { l: 3, v: 0 } },
-            Camilo: { 'R32-01': { l: 1, v: 3 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 5, v: 0 },
-                'R32-04': { l: 3, v: 1 }, 'R32-05': { l: 1, v: 2 }, 'R32-06': { l: 4, v: 1 },
-                'R32-07': { l: 1, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 2, v: 1 },
-                'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 3, v: 0 },
-                'R32-13': { l: 3, v: 1 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 1 },
-            'R32-16': { l: 2, v: 0 } },
-            Mateo: { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 3, v: 1 },
-                'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 },
-                'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 1, v: 2 },
-                'R32-10': { l: 1, v: 3 }, 'R32-11': { l: 1, v: 2 }, 'R32-12': { l: 2, v: 1 },
-                'R32-13': { l: 1, v: 1 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 0 },
-            'R32-16': { l: 4, v: 0 } },
-            Miguel: { 'R32-01': { l: 1, v: 3 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 0 },
-                'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 },
-                'R32-07': { l: 2, v: 0 }, 'R32-08': { l: 1, v: 1 }, 'R32-09': { l: 2, v: 1 },
-                'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 0 },
-                'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 3, v: 0 }, 'R32-15': { l: 1, v: 2 },
-            'R32-16': { l: 3, v: 0 } },
-            'Doc Camilo': { 'R32-01': { l: 0, v: 0 }, 'R32-02': { l: 1, v: 1 }, 'R32-03': { l: 1, v: 1 },
-                'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 1, v: 0 }, 'R32-06': { l: 2, v: 0 },
-                'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 0 }, 'R32-09': { l: 2, v: 1 },
-                'R32-10': { l: 0, v: 1 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 0 },
-                'R32-13': { l: 2, v: 0 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 0, v: 2 },
-            'R32-16': { l: 3, v: 1 } },
-            Katherine: { 'R32-01': { l: 0, v: 0 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 3, v: 0 },
-                'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 0 },
+            'Estefania', 'Diana', 'Sofia'];
+        const GRUPOS = { A: { nombre: 'Grupo A', equipos: ['MEX', 'KOR', 'CZE', 'ZAF'] }, B: { nombre: 'Grupo B',
+                equipos: ['SUI', 'CAN', 'QAT', 'BIH'] }, C: { nombre: 'Grupo C', equipos: ['SCO', 'MAR', 'BRA',
+                    'HTI'] }, D: { nombre: 'Grupo D', equipos: ['USA', 'AUS', 'TUR', 'PAR'] }, E: { nombre: 'Grupo E',
+                equipos: ['GER', 'CIV', 'ECU', 'CUW'] }, F: { nombre: 'Grupo F', equipos: ['SWE', 'JPN', 'NED',
+                    'TUN'] }, G: { nombre: 'Grupo G', equipos: ['NZL', 'IRN', 'BEL', 'EGY'] }, H: { nombre: 'Grupo H',
+                equipos: ['URU', 'KSA', 'ESP', 'CPV'] }, I: { nombre: 'Grupo I', equipos: ['NOR', 'FRA', 'SEN',
+                    'IRQ'] }, J: { nombre: 'Grupo J', equipos: ['ARG', 'AUT', 'JOR', 'ALG'] }, K: { nombre: 'Grupo K',
+                equipos: ['COL', 'COD', 'POR', 'UZB'] }, L: { nombre: 'Grupo L', equipos: ['ENG', 'GHA', 'CRO',
+                    'PAN'] } };
+        const EQUIPOS_DATA = { 'MEX': { nombre: 'México', bandera: '🇲🇽' }, 'KOR': { nombre: 'Corea del Sur',
+                bandera: '🇰🇷' }, 'CZE': { nombre: 'Chequia', bandera: '🇨🇿' }, 'ZAF': { nombre: 'Sudáfrica',
+                bandera: '🇿🇦' }, 'SUI': { nombre: 'Suiza', bandera: '🇨🇭' }, 'CAN': { nombre: 'Canadá',
+                bandera: '🇨🇦' }, 'QAT': { nombre: 'Qatar', bandera: '🇶🇦' }, 'BIH': { nombre: 'Bosnia',
+                bandera: '🇧🇦' }, 'SCO': { nombre: 'Escocia', bandera: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }, 'MAR': { nombre: 'Marruecos',
+                bandera: '🇲🇦' }, 'BRA': { nombre: 'Brasil', bandera: '🇧🇷' }, 'HTI': { nombre: 'Haití',
+            bandera: '🇭🇹' }, 'USA': { nombre: 'EE.UU.', bandera: '🇺🇸' }, 'AUS': { nombre: 'Australia',
+                bandera: '🇦🇺' }, 'TUR': { nombre: 'Turquía', bandera: '🇹🇷' }, 'PAR': { nombre: 'Paraguay',
+                bandera: '🇵🇾' }, 'GER': { nombre: 'Alemania', bandera: '🇩🇪' }, 'CIV': { nombre: 'C. de Marfil',
+                bandera: '🇨🇮' }, 'ECU': { nombre: 'Ecuador', bandera: '🇪🇨' }, 'CUW': { nombre: 'Curazao',
+                bandera: '🇨🇼' }, 'SWE': { nombre: 'Suecia', bandera: '🇸🇪' }, 'JPN': { nombre: 'Japón',
+                bandera: '🇯🇵' }, 'NED': { nombre: 'P. Bajos', bandera: '🇳🇱' }, 'TUN': { nombre: 'Túnez',
+                bandera: '🇹🇳' }, 'NZL': { nombre: 'N. Zelanda', bandera: '🇳🇿' }, 'IRN': { nombre: 'Irán',
+                bandera: '🇮🇷' }, 'BEL': { nombre: 'Bélgica', bandera: '🇧🇪' }, 'EGY': { nombre: 'Egipto',
+                bandera: '🇪🇬' }, 'URU': { nombre: 'Uruguay', bandera: '🇺🇾' }, 'KSA': { nombre: 'Arabia Saudí',
+                bandera: '🇸🇦' }, 'ESP': { nombre: 'España', bandera: '🇪🇸' }, 'CPV': { nombre: 'Cabo Verde',
+                bandera: '🇨🇻' }, 'NOR': { nombre: 'Noruega', bandera: '🇳🇴' }, 'FRA': { nombre: 'Francia',
+                bandera: '🇫🇷' }, 'SEN': { nombre: 'Senegal', bandera: '🇸🇳' }, 'IRQ': { nombre: 'Irak',
+                bandera: '🇮🇶' }, 'ARG': { nombre: 'Argentina', bandera: '🇦🇷' }, 'AUT': { nombre: 'Austria',
+                bandera: '🇦🇹' }, 'JOR': { nombre: 'Jordania', bandera: '🇯🇴' }, 'ALG': { nombre: 'Argelia',
+                bandera: '🇩🇿' }, 'COL': { nombre: 'Colombia', bandera: '🇨🇴' }, 'COD': { nombre: 'RD Congo',
+                bandera: '🇨🇩' }, 'POR': { nombre: 'Portugal', bandera: '🇵🇹' }, 'UZB': { nombre: 'Uzbekistán',
+                bandera: '🇺🇿' }, 'ENG': { nombre: 'Inglaterra', bandera: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' }, 'GHA': { nombre: 'Ghana',
+            bandera: '🇬🇭' }, 'CRO': { nombre: 'Croacia', bandera: '🇭🇷' }, 'PAN': { nombre: 'Panamá',
+            bandera: '🇵🇦' } };
+        const PRONOSTICOS_GRUPOS = { Duvan: { A: ['MEX', 'ZAF'], B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['TUR',
+                    'PAR'], E: ['GER', 'CIV'], F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['NOR',
+                    'FRA'], J: ['ARG', 'ALG'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] }, Camila: { A: ['MEX', 'KOR'],
+                B: ['CAN', 'SUI'], C: ['BRA', 'MAR'], D: ['PAR', 'USA'], E: ['GER', 'CIV'], F: ['NED', 'JPN'],
+                G: ['BEL', 'NZL'], H: ['URU', 'ESP'], I: ['FRA', 'SEN'], J: ['ARG', 'AUT'], K: ['POR', 'COL'],
+                L: ['ENG', 'GHA'] }, Camilo: { A: ['MEX', 'KOR'], B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['USA',
+                    'TUR'], E: ['ECU', 'GER'], F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['FRA',
+                    'SEN'], J: ['ARG', 'ALG'], K: ['COL', 'POR'], L: ['ENG', 'CRO'] }, Mateo: { A: ['MEX', 'KOR'],
+                B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['USA', 'PAR'], E: ['GER', 'CIV'], F: ['JPN', 'NED'],
+                G: ['BEL', 'NZL'], H: ['ESP', 'URU'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'], K: ['POR', 'COL'],
+                L: ['ENG', 'PAN'] }, Miguel: { A: ['MEX', 'KOR'], B: ['SUI', 'QAT'], C: ['BRA', 'MAR'], D: ['PAR',
+                    'USA'], E: ['GER', 'CIV'], F: ['JPN', 'SWE'], G: ['EGY', 'BEL'], H: ['ESP', 'URU'], I: ['FRA',
+                    'SEN'], J: ['ARG', 'JOR'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] }, 'Doc Camilo': { A: ['MEX',
+                    'KOR'], B: ['CAN', 'QAT'], C: ['BRA', 'SCO'], D: ['USA', 'AUS'], E: ['GER', 'CIV'], F: ['NED',
+                    'SWE'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'], I: ['FRA', 'SEN'], J: ['ARG', 'JOR'], K: ['POR',
+                    'COL'], L: ['ENG', 'CRO'] }, Katherine: { A: ['MEX', 'KOR'], B: ['CAN', 'QAT'], C: ['BRA', 'MAR'],
+                D: ['PAR', 'USA'], E: ['GER', 'ECU'], F: ['JPN', 'NED'], G: ['BEL', 'EGY'], H: ['URU', 'ESP'],
+                I: ['FRA', 'NOR'], J: ['ARG', 'JOR'], K: ['POR', 'COL'], L: ['ENG', 'CRO'] }, Sandra: { A: ['MEX',
+                    'ZAF'], B: ['CAN', 'SUI'], C: ['BRA', 'SCO'], D: ['USA', 'AUS'], E: ['GER', 'CIV'], F: ['SWE',
+                    'NED'], G: ['BEL', 'NZL'], H: ['ESP', 'URU'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'], K: ['POR',
+                    'COL'], L: ['ENG', 'CRO'] }, Estefania: { A: ['MEX', 'KOR'], B: ['CAN', 'SUI'], C: ['BRA', 'SCO'],
+                D: ['USA', 'AUS'], E: ['GER', 'ECU'], F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'URU'],
+                I: ['FRA', 'NOR'], J: ['ARG', 'AUT'], K: ['COL', 'POR'], L: ['ENG', 'PAN'] }, Diana: { A: ['MEX',
+                    'KOR'], B: ['SUI', 'CAN'], C: ['MAR', 'BRA'], D: ['PAR', 'TUR'], E: ['GER', 'CIV'], F: ['JPN',
+                    'TUN'], G: ['BEL', 'NZL'], H: ['URU', 'ESP'], I: ['FRA', 'NOR'], J: ['ARG', 'AUT'], K: ['POR',
+                    'COL'], L: ['ENG', 'PAN'] }, Sofia: { A: ['KOR', 'MEX'], B: ['QAT', 'CAN'], C: ['MAR', 'BRA'],
+                D: ['USA', 'AUS'], E: ['GER', 'CIV'], F: ['NED', 'SWE'], G: ['IRN', 'EGY'], H: ['KSA', 'ESP'],
+                I: ['FRA', 'IRQ'], J: ['ARG', 'AUT'], K: ['COL', 'POR'], L: ['ENG', 'CRO'] } };
+        const CLASIFICADOS_DEFAULT = { A: ['MEX', 'ZAF'], B: ['SUI', 'CAN'], C: ['BRA', 'MAR'], D: ['USA', 'AUS'],
+            E: ['GER', 'CIV'], F: ['NED', 'JPN'], G: ['BEL', 'EGY'], H: ['ESP', 'CPV'], I: ['FRA', 'NOR'],
+            J: ['ARG', 'AUT'], K: ['COL', 'POR'], L: ['ENG', 'CRO'] };
+        const PARTIDOS_R32 = [{ id: 'R32-01', ronda: 'R32', fecha: '28 jun', local: 'ZAF', visit: 'CAN' }, { id: 'R32-02',
+                ronda: 'R32', fecha: '29 jun', local: 'NED', visit: 'MAR' }, { id: 'R32-03', ronda: 'R32',
+                fecha: '29 jun', local: 'GER', visit: 'PAR' }, { id: 'R32-04', ronda: 'R32', fecha: '30 jun',
+                local: 'FRA', visit: 'SWE' }, { id: 'R32-05', ronda: 'R32', fecha: '1 jul', local: 'BEL',
+            visit: 'SEN' }, { id: 'R32-06', ronda: 'R32', fecha: '1 jul', local: 'USA', visit: 'BIH' },
+            { id: 'R32-07', ronda: 'R32', fecha: '2 jul', local: 'ESP', visit: 'AUT' }, { id: 'R32-08',
+                ronda: 'R32', fecha: '2 jul', local: 'POR', visit: 'CRO' }, { id: 'R32-09', ronda: 'R32',
+                fecha: '29 jun', local: 'BRA', visit: 'JPN' }, { id: 'R32-10', ronda: 'R32', fecha: '30 jun',
+                local: 'CIV', visit: 'NOR' }, { id: 'R32-11', ronda: 'R32', fecha: '30 jun', local: 'MEX',
+            visit: 'ECU' }, { id: 'R32-12', ronda: 'R32', fecha: '1 jul', local: 'ENG', visit: 'COD' },
+            { id: 'R32-13', ronda: 'R32', fecha: '2 jul', local: 'SUI', visit: 'ALG' }, { id: 'R32-14',
+                ronda: 'R32', fecha: '3 jul', local: 'COL', visit: 'GHA' }, { id: 'R32-15', ronda: 'R32',
+                fecha: '3 jul', local: 'AUS', visit: 'EGY' }, { id: 'R32-16', ronda: 'R32', fecha: '3 jul',
+                local: 'ARG', visit: 'CPV' }];
+        const PRONOSTICOS_R32 = { Duvan: { 'R32-01': { l: 1, v: 4 }, 'R32-02': { l: 3, v: 2 }, 'R32-03': { l: 3,
+                    v: 1 }, 'R32-04': { l: 3, v: 1 }, 'R32-05': { l: 1, v: 1 }, 'R32-06': { l: 2, v: 1 },
+                'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1,
+                    v: 3 }, 'R32-11': { l: 2, v: 2 }, 'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 1, v: 0 },
+                'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 0 }, 'R32-16': { l: 3, v: 0 } }, Camila: { 'R32-01': {
+                    l: 2, v: 0 }, 'R32-02': { l: 1, v: 1 }, 'R32-03': { l: 2, v: 0 }, 'R32-04': { l: 3, v: 1 },
+                'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 }, 'R32-07': { l: 2, v: 0 }, 'R32-08': { l: 1,
+                    v: 1 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 },
+                'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 2,
+                    v: 0 }, 'R32-16': { l: 3, v: 0 } }, Camilo: { 'R32-01': { l: 1, v: 3 }, 'R32-02': { l: 2,
+                    v: 1 }, 'R32-03': { l: 5, v: 0 }, 'R32-04': { l: 3, v: 1 }, 'R32-05': { l: 1, v: 2 },
+                'R32-06': { l: 4, v: 1 }, 'R32-07': { l: 1, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 2,
+                    v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 3, v: 0 },
+                'R32-13': { l: 3, v: 1 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 1 }, 'R32-16': { l: 2,
+                    v: 0 } }, Mateo: { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 3,
+                    v: 1 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 },
+                'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 1, v: 2 }, 'R32-10': { l: 1,
+                    v: 3 }, 'R32-11': { l: 1, v: 2 }, 'R32-12': { l: 2, v: 1 }, 'R32-13': { l: 1, v: 1 },
+                'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 0 }, 'R32-16': { l: 4, v: 0 } }, Miguel: { 'R32-01': {
+                    l: 1, v: 3 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 0 }, 'R32-04': { l: 2, v: 1 },
+                'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 }, 'R32-07': { l: 2, v: 0 }, 'R32-08': { l: 1,
+                    v: 1 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 },
+                'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 3, v: 0 }, 'R32-15': { l: 1,
+                    v: 2 }, 'R32-16': { l: 3, v: 0 } }, 'Doc Camilo': { 'R32-01': { l: 0, v: 0 }, 'R32-02': { l: 1,
+                    v: 1 }, 'R32-03': { l: 1, v: 1 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 1, v: 0 },
+                'R32-06': { l: 2, v: 0 }, 'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 0 }, 'R32-09': { l: 2,
+                    v: 1 }, 'R32-10': { l: 0, v: 1 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 0 },
+                'R32-13': { l: 2, v: 0 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 0, v: 2 }, 'R32-16': { l: 3,
+                    v: 1 } }, Katherine: { 'R32-01': { l: 0, v: 0 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 3,
+                    v: 0 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 0 },
                 'R32-07': { l: null, v: null }, 'R32-08': { l: null, v: null }, 'R32-09': { l: 0, v: 1 },
-                'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 1, v: 1 },
-                'R32-13': { l: null, v: null }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 2 },
-            'R32-16': { l: 3, v: 0 } },
-            Sandra: { 'R32-01': { l: 0, v: 0 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 1 },
-                'R32-04': { l: 3, v: 2 }, 'R32-05': { l: 1, v: 0 }, 'R32-06': { l: 2, v: 1 },
-                'R32-07': { l: null, v: null }, 'R32-08': { l: null, v: null }, 'R32-09': { l: 2, v: 1 },
-                'R32-10': { l: 2, v: 2 }, 'R32-11': { l: 2, v: 1 }, 'R32-12': { l: 2, v: 0 },
-                'R32-13': { l: null, v: null }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 2 },
-            'R32-16': { l: 3, v: 0 } },
-            Estefania: { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 1 },
-                'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 1, v: 1 }, 'R32-06': { l: 3, v: 1 },
-                'R32-07': { l: null, v: null }, 'R32-08': { l: null, v: null }, 'R32-09': { l: 2, v: 1 },
-                'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 2 }, 'R32-12': { l: 2, v: 1 },
-                'R32-13': { l: null, v: null }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 0 },
-            'R32-16': { l: 3, v: 0 } },
-            Diana: { 'R32-01': { l: 0, v: 2 }, 'R32-02': { l: 2, v: 0 }, 'R32-03': { l: 3, v: 1 },
-                'R32-04': { l: 3, v: 0 }, 'R32-05': { l: 1, v: 2 }, 'R32-06': { l: 2, v: 0 },
-                'R32-07': { l: 4, v: 0 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 1, v: 1 },
-                'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 0, v: 2 }, 'R32-12': { l: 1, v: 0 },
-                'R32-13': { l: 2, v: 0 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 1 },
-            'R32-16': { l: 3, v: 0 } },
-            Sofia: { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 3, v: 2 }, 'R32-03': { l: 4, v: 0 },
-                'R32-04': { l: 2, v: 2 }, 'R32-05': { l: 1, v: 1 }, 'R32-06': { l: 2, v: 0 },
-                'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 2 }, 'R32-09': { l: 2, v: 0 },
-                'R32-10': { l: 1, v: 3 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 1 },
-                'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 0, v: 2 },
-            'R32-16': { l: 4, v: 0 } }
-        };
-
-        // RESULTADOS OFICIALES
-        const RESULTADOS_DEFAULT = {
-            'R32-01': { l: 0, v: 1 },
-            'R32-02': { l: 1, v: 1 },
-            'R32-03': { l: 1, v: 1 },
-            'R32-04': { l: 3, v: 0 },
-            'R32-05': { l: 3, v: 2 },
-            'R32-06': { l: 2, v: 0 },
-            'R32-09': { l: 2, v: 1 },
-            'R32-10': { l: 1, v: 2 },
-            'R32-11': { l: 2, v: 0 },
-            'R32-12': { l: 2, v: 1 }
-        };
-
-        const GANADORES_PENALES = {
-            'R32-02': 'V',
-            'R32-03': 'V'
-        };
-
-        const pronosticosCampeonDefault = {
-            'Duvan': 'ENG',
-            'Camila': 'FRA',
-            'Camilo': 'COL',
-            'Mateo': 'FRA',
-            'Miguel': 'GER',
-            'Doc Camilo': 'FRA',
-            'Katherine': null,
-            'Sandra': 'FRA',
-            'Estefania': null,
-            'Diana': 'FRA',
-            'Sofia': 'FRA'
-        };
-
-        let clasificadosActuales = {};
-        let resultadosElim = {};
-        let pronosticosCampeon = { ...pronosticosCampeonDefault };
-        let puntajesGrupos = {};
-        let puntajesElim = {};
+                'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 1, v: 1 }, 'R32-13': { l: null,
+                    v: null }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 3, v: 0 } },
+            Sandra: { 'R32-01': { l: 0, v: 0 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 1 }, 'R32-04': { l: 3,
+                    v: 2 }, 'R32-05': { l: 1, v: 0 }, 'R32-06': { l: 2, v: 1 }, 'R32-07': { l: null, v: null },
+                'R32-08': { l: null, v: null }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 2, v: 2 }, 'R32-11': { l: 2,
+                    v: 1 }, 'R32-12': { l: 2, v: 0 }, 'R32-13': { l: null, v: null }, 'R32-14': { l: 2, v: 0 },
+                'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 3, v: 0 } }, Estefania: { 'R32-01': { l: 1, v: 2 },
+                'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 1 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 1,
+                    v: 1 }, 'R32-06': { l: 3, v: 1 }, 'R32-07': { l: null, v: null }, 'R32-08': { l: null,
+                v: null }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 2 },
+                'R32-12': { l: 2, v: 1 }, 'R32-13': { l: null, v: null }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1,
+                    v: 0 }, 'R32-16': { l: 3, v: 0 } }, Diana: { 'R32-01': { l: 0, v: 2 }, 'R32-02': { l: 2,
+                    v: 0 }, 'R32-03': { l: 3, v: 1 }, 'R32-04': { l: 3, v: 0 }, 'R32-05': { l: 1, v: 2 },
+                'R32-06': { l: 2, v: 0 }, 'R32-07': { l: 4, v: 0 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 1,
+                    v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 0, v: 2 }, 'R32-12': { l: 1, v: 0 },
+                'R32-13': { l: 2, v: 0 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 1 }, 'R32-16': { l: 3,
+                    v: 0 } }, Sofia: { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 3, v: 2 }, 'R32-03': { l: 4,
+                    v: 0 }, 'R32-04': { l: 2, v: 2 }, 'R32-05': { l: 1, v: 1 }, 'R32-06': { l: 2, v: 0 },
+                'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 2 }, 'R32-09': { l: 2, v: 0 }, 'R32-10': { l: 1,
+                    v: 3 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 1 }, 'R32-13': { l: 2, v: 1 },
+                'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 0, v: 2 }, 'R32-16': { l: 4, v: 0 } } };
+        const RESULTADOS_DEFAULT = { 'R32-01': { l: 0, v: 1 }, 'R32-02': { l: 1, v: 1 }, 'R32-03': { l: 1, v: 1 },
+            'R32-04': { l: 3, v: 0 }, 'R32-05': { l: 3, v: 2 }, 'R32-06': { l: 2, v: 0 }, 'R32-09': { l: 2, v: 1 },
+            'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 2, v: 0 }, 'R32-12': { l: 2, v: 1 } };
+        const GANADORES_PENALES = { 'R32-02': 'V', 'R32-03': 'V' };
+        const pronosticosCampeonDefault = { 'Duvan': 'ENG', 'Camila': 'FRA', 'Camilo': 'COL', 'Mateo': 'FRA',
+            'Miguel': 'GER', 'Doc Camilo': 'FRA', 'Katherine': null, 'Sandra': 'FRA', 'Estefania': null,
+            'Diana': 'FRA', 'Sofia': 'FRA' };
+        let clasificadosActuales = {},
+            resultadosElim = {},
+            pronosticosCampeon = { ...pronosticosCampeonDefault },
+            puntajesGrupos = {},
+            puntajesElim = {};
         let partidosR16 = [],
             partidosQF = [],
             partidosSF = [],
             partidosFinal = [],
             partidos3P = [];
 
-        function initEstado() {
-            const saved = localStorage.getItem('mundial2026_v777');
-            if (saved) {
-                try {
-                    const d = JSON.parse(saved);
+        function initEstado() { const s = localStorage.getItem('mundial2026_vFINAL7'); if (s) { try { const d = JSON
+                        .parse(s);
                     clasificadosActuales = d.clasificadosActuales || JSON.parse(JSON.stringify(
                     CLASIFICADOS_DEFAULT));
                     resultadosElim = { ...JSON.parse(JSON.stringify(RESULTADOS_DEFAULT)), ...(d.resultadosElim || {}) };
-                    pronosticosCampeon = (d.pronosticosCampeon && Object.keys(d.pronosticosCampeon).length > 0) ?
-                        d.pronosticosCampeon : { ...pronosticosCampeonDefault };
-                } catch (e) {
-                    clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
+                    pronosticosCampeon = (d.pronosticosCampeon && Object.keys(d.pronosticosCampeon).length > 0) ? d
+                        .pronosticosCampeon : { ...pronosticosCampeonDefault } } catch (e) { clasificadosActuales = JSON
+                        .parse(JSON.stringify(CLASIFICADOS_DEFAULT));
                     resultadosElim = JSON.parse(JSON.stringify(RESULTADOS_DEFAULT));
-                    pronosticosCampeon = { ...pronosticosCampeonDefault };
-                }
-            } else {
-                clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
+                    pronosticosCampeon = { ...pronosticosCampeonDefault } } } else { clasificadosActuales = JSON.parse(
+                    JSON.stringify(CLASIFICADOS_DEFAULT));
                 resultadosElim = JSON.parse(JSON.stringify(RESULTADOS_DEFAULT));
-                pronosticosCampeon = { ...pronosticosCampeonDefault };
-            }
-            recalcularTodo();
-        }
+                pronosticosCampeon = { ...pronosticosCampeonDefault } }
+            recalcularTodo() }
 
-        function guardarEstado() {
-            localStorage.setItem('mundial2026_v777', JSON.stringify({ clasificadosActuales, resultadosElim,
-                pronosticosCampeon }));
+        function guardarEstado() { localStorage.setItem('mundial2026_vFINAL7', JSON.stringify({ clasificadosActuales,
+                resultadosElim, pronosticosCampeon }));
             document.getElementById('syncBadge').textContent = '⚡ Guardado';
-            setTimeout(() => document.getElementById('syncBadge').textContent = '⚡ Actualizado', 1500);
-        }
+            setTimeout(() => document.getElementById('syncBadge').textContent = '⚡ Actualizado', 1500) }
 
-        function getEquipo(s) { return EQUIPOS_DATA[s] || { nombre: s || '—', bandera: '⬜' }; }
+        function getEquipo(s) { return EQUIPOS_DATA[s] || { nombre: s || '—', bandera: '⬜' } }
 
-        function obtenerGanadorEquipo(m) {
-            const r = resultadosElim[m.id];
-            if (!r || r.l === null || r.v === null) return null;
-            if (r.l > r.v) return m.local;
-            if (r.v > r.l) return m.visit;
-            const p = GANADORES_PENALES[m.id];
-            if (p === 'L') return m.local;
-            if (p === 'V') return m.visit;
-            return null;
-        }
+        function obtenerGanadorEquipo(m) { const r = resultadosElim[m.id]; if (!r || r.l === null || r.v === null)
+                return null; if (r.l > r.v) return m.local; if (r.v > r.l) return m.visit; const p =
+            GANADORES_PENALES[m.id]; if (p === 'L') return m.local; if (p === 'V') return m.visit; return null }
 
-        function obtenerMatchPorId(id) {
-            return [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...partidos3P]
-                .find(p => p.id === id) || null;
-        }
+        function obtenerMatchPorId(id) { return [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...
+                partidosFinal, ...partidos3P].find(p => p.id === id) || null }
 
-        function generarCrucesEliminatorios() {
-            const cR16 = [
-                { id: 'R16-01', fecha: '4 jul', lId: 'R32-01', rId: 'R32-02' },
-                { id: 'R16-02', fecha: '4 jul', lId: 'R32-03', rId: 'R32-04' },
-                { id: 'R16-03', fecha: '5 jul', lId: 'R32-05', rId: 'R32-06' },
-                { id: 'R16-04', fecha: '5 jul', lId: 'R32-07', rId: 'R32-08' },
-                { id: 'R16-05', fecha: '6 jul', lId: 'R32-09', rId: 'R32-10' },
-                { id: 'R16-06', fecha: '6 jul', lId: 'R32-11', rId: 'R32-12' },
-                { id: 'R16-07', fecha: '7 jul', lId: 'R32-13', rId: 'R32-14' },
-                { id: 'R16-08', fecha: '7 jul', lId: 'R32-15', rId: 'R32-16' }
-            ];
-            partidosR16 = cR16.map(c => {
-                const mL = PARTIDOS_R32.find(p => p.id === c.lId);
-                const mR = PARTIDOS_R32.find(p => p.id === c.rId);
-                return {
-                    id: c.id, ronda: 'R16', fecha: c.fecha,
-                    local: mL ? obtenerGanadorEquipo(mL) : null,
-                    visit: mR ? obtenerGanadorEquipo(mR) : null,
-                    localId: c.lId, visitId: c.rId
-                };
-            });
-            const cQF = [
-                { id: 'QF-01', fecha: '9 jul', lId: 'R16-01', rId: 'R16-02' },
-                { id: 'QF-02', fecha: '10 jul', lId: 'R16-03', rId: 'R16-04' },
-                { id: 'QF-03', fecha: '11 jul', lId: 'R16-05', rId: 'R16-06' },
-                { id: 'QF-04', fecha: '11 jul', lId: 'R16-07', rId: 'R16-08' }
-            ];
-            partidosQF = cQF.map(c => {
-                const mL = partidosR16.find(p => p.id === c.lId);
-                const mR = partidosR16.find(p => p.id === c.rId);
-                return {
-                    id: c.id, ronda: 'QF', fecha: c.fecha,
-                    local: mL ? obtenerGanadorEquipo(mL) : null,
-                    visit: mR ? obtenerGanadorEquipo(mR) : null,
-                    localId: c.lId, visitId: c.rId
-                };
-            });
-            const cSF = [
-                { id: 'SF-01', fecha: '14 jul', lId: 'QF-01', rId: 'QF-02' },
-                { id: 'SF-02', fecha: '15 jul', lId: 'QF-03', rId: 'QF-04' }
-            ];
-            partidosSF = cSF.map(c => {
-                const mL = partidosQF.find(p => p.id === c.lId);
-                const mR = partidosQF.find(p => p.id === c.rId);
-                return {
-                    id: c.id, ronda: 'SF', fecha: c.fecha,
-                    local: mL ? obtenerGanadorEquipo(mL) : null,
-                    visit: mR ? obtenerGanadorEquipo(mR) : null,
-                    localId: c.lId, visitId: c.rId
-                };
-            });
-            const m1 = partidosSF.find(p => p.id === 'SF-01');
-            const m2 = partidosSF.find(p => p.id === 'SF-02');
-            const g1 = m1 ? obtenerGanadorEquipo(m1) : null;
-            const g2 = m2 ? obtenerGanadorEquipo(m2) : null;
+        function generarCrucesEliminatorios() { const cR16 = [{ id: 'R16-01', fecha: '4 jul', lId: 'R32-01',
+                    rId: 'R32-02' }, { id: 'R16-02', fecha: '4 jul', lId: 'R32-03', rId: 'R32-04' }, { id: 'R16-03',
+                    fecha: '5 jul', lId: 'R32-05', rId: 'R32-06' }, { id: 'R16-04', fecha: '5 jul', lId: 'R32-07',
+                    rId: 'R32-08' }, { id: 'R16-05', fecha: '6 jul', lId: 'R32-09', rId: 'R32-10' }, { id: 'R16-06',
+                    fecha: '6 jul', lId: 'R32-11', rId: 'R32-12' }, { id: 'R16-07', fecha: '7 jul', lId: 'R32-13',
+                    rId: 'R32-14' }, { id: 'R16-08', fecha: '7 jul', lId: 'R32-15', rId: 'R32-16' }];
+            partidosR16 = cR16.map(c => { const mL = PARTIDOS_R32.find(p => p.id === c.lId),
+                    mR = PARTIDOS_R32.find(p => p.id === c.rId); return { id: c.id, ronda: 'R16', fecha: c.fecha,
+                        local: mL ? obtenerGanadorEquipo(mL) : null, visit: mR ? obtenerGanadorEquipo(mR) : null,
+                        localId: c.lId, visitId: c.rId } });
+            const cQF = [{ id: 'QF-01', fecha: '9 jul', lId: 'R16-01', rId: 'R16-02' }, { id: 'QF-02', fecha: '10 jul',
+                    lId: 'R16-03', rId: 'R16-04' }, { id: 'QF-03', fecha: '11 jul', lId: 'R16-05', rId: 'R16-06' },
+                { id: 'QF-04', fecha: '11 jul', lId: 'R16-07', rId: 'R16-08' }];
+            partidosQF = cQF.map(c => { const mL = partidosR16.find(p => p.id === c.lId),
+                    mR = partidosR16.find(p => p.id === c.rId); return { id: c.id, ronda: 'QF', fecha: c.fecha,
+                        local: mL ? obtenerGanadorEquipo(mL) : null, visit: mR ? obtenerGanadorEquipo(mR) : null,
+                        localId: c.lId, visitId: c.rId } });
+            const cSF = [{ id: 'SF-01', fecha: '14 jul', lId: 'QF-01', rId: 'QF-02' }, { id: 'SF-02', fecha: '15 jul',
+                    lId: 'QF-03', rId: 'QF-04' }];
+            partidosSF = cSF.map(c => { const mL = partidosQF.find(p => p.id === c.lId),
+                    mR = partidosQF.find(p => p.id === c.rId); return { id: c.id, ronda: 'SF', fecha: c.fecha,
+                        local: mL ? obtenerGanadorEquipo(mL) : null, visit: mR ? obtenerGanadorEquipo(mR) : null,
+                        localId: c.lId, visitId: c.rId } });
+            const m1 = partidosSF.find(p => p.id === 'SF-01'),
+                m2 = partidosSF.find(p => p.id === 'SF-02'),
+                g1 = m1 ? obtenerGanadorEquipo(m1) : null,
+                g2 = m2 ? obtenerGanadorEquipo(m2) : null;
             partidosFinal = [{ id: 'FINAL', ronda: 'Final', fecha: '19 jul', local: g1, visit: g2, localId: 'SF-01',
                 visitId: 'SF-02' }];
-            const p1 = m1 ? (obtenerGanadorEquipo(m1) === m1?.local ? m1?.visit : m1?.local) : null;
-            const p2 = m2 ? (obtenerGanadorEquipo(m2) === m2?.local ? m2?.visit : m2?.local) : null;
+            const p1 = m1 ? (obtenerGanadorEquipo(m1) === m1?.local ? m1?.visit : m1?.local) : null,
+                p2 = m2 ? (obtenerGanadorEquipo(m2) === m2?.local ? m2?.visit : m2?.local) : null;
             partidos3P = [{ id: '3P', ronda: '3er Puesto', fecha: '18 jul', local: p1, visit: p2, localId: 'SF-01',
-                visitId: 'SF-02' }];
-        }
+                visitId: 'SF-02' }] }
 
-        function calcPuntajeGrupo(persona, grupo) {
-            const pron = PRONOSTICOS_GRUPOS[persona]?.[grupo] || [];
-            const clas = clasificadosActuales[grupo] || [];
-            if (pron.length < 2 || clas.length < 2) return 0;
-            const [p1, p2] = pron, [c1, c2] = clas;
-            if (p1 === c1 && p2 === c2) return 6;
-            if (p1 === c1 || p2 === c2) return 3;
-            if (p1 === c2 && p2 === c1) return 2;
-            if (p1 === c2 || p2 === c1) return 1;
-            return 0;
-        }
+        function calcPuntajeGrupo(persona, grupo) { const pron = PRONOSTICOS_GRUPOS[persona]?.[grupo] || [],
+                clas = clasificadosActuales[grupo] || []; if (pron.length < 2 || clas.length < 2) return 0; const [p1,
+                    p2] = pron,
+                [c1, c2] = clas; if (p1 === c1 && p2 === c2) return 6; if (p1 === c1 || p2 === c2) return 3; if (p1 ===
+                c2 && p2 === c1) return 2; if (p1 === c2 || p2 === c1) return 1; return 0 }
 
-        // ============ REGLAS FINALES: Ganador(+5) + Diferencia(+2) + Anotan(+2) = Máx 7 ============
-        function calcPuntajeElim(persona, partido) {
-            const res = resultadosElim[partido.id];
-            if (!res || res.l === null || res.v === null) return null;
-
-            let pron = PRONOSTICOS_R32[persona]?.[partido.id];
-            if (!pron || pron.l === null || pron.v === null) {
-                const rondaAnterior = getRondaAnterior(partido.id);
-                if (rondaAnterior) {
-                    const pronAnterior = PRONOSTICOS_R32[persona]?.[rondaAnterior];
-                    if (pronAnterior && pronAnterior.l !== null && pronAnterior.v !== null) {
-                        const matchAnterior = obtenerMatchPorId(rondaAnterior);
-                        if (matchAnterior) {
-                            const ganadorPron = pronAnterior.l > pronAnterior.v ? matchAnterior.local :
-                                (pronAnterior.v > pronAnterior.l ? matchAnterior.visit : null);
-                            if (ganadorPron === partido.local) pron = { l: 1, v: 0 };
-                            else if (ganadorPron === partido.visit) pron = { l: 0, v: 1 };
-                            else pron = { l: 0, v: 0 };
-                        }
-                    }
-                }
-                if (!pron || pron.l === null || pron.v === null) return 0;
-            }
-
-            const rl = parseInt(res.l), rv = parseInt(res.v);
-            const pl = parseInt(pron.l), pv = parseInt(pron.v);
+        // REGLAS FINALES: Ganador(+5) + Diferencia(+2) + Anotan(+2) = Máx 7
+        function calcPuntajeElim(persona, partido) { const res = resultadosElim[partido.id]; if (!res || res.l ===
+                null || res.v === null) return null;
+            let pron = PRONOSTICOS_R32[persona]?.[partido.id]; if (!pron || pron.l === null || pron.v === null) { const
+                    rondaAnterior = getRondaAnterior(partido.id); if (rondaAnterior) { const pronAnterior =
+                        PRONOSTICOS_R32[persona]?.[rondaAnterior]; if (pronAnterior && pronAnterior.l !== null &&
+                        pronAnterior.v !== null) { const matchAnterior = obtenerMatchPorId(rondaAnterior); if (
+                        matchAnterior) { const ganadorPron = pronAnterior.l > pronAnterior.v ? matchAnterior.local : (
+                            pronAnterior.v > pronAnterior.l ? matchAnterior.visit : null); if (ganadorPron === partido
+                            .local) pron = { l: 1, v: 0 }; else if (ganadorPron === partido.visit) pron = { l: 0,
+                            v: 1 }; else pron = { l: 0, v: 0 } } } } if (!pron || pron.l === null || pron.v ===
+                    null) return 0 }
+            const rl = parseInt(res.l),
+                rv = parseInt(res.v),
+                pl = parseInt(pron.l),
+                pv = parseInt(pron.v);
             let puntos = 0;
+            const ganadorReal = rl > rv ? 'L' : rv > rl ? 'V' : 'E',
+                ganadorPron = pl > pv ? 'L' : pv > pl ? 'V' : 'E'; if (ganadorReal !== 'E' && ganadorPron ===
+                ganadorReal) puntos += 5; else if (ganadorReal === 'E' && ganadorPron === 'E') puntos += 5; if ((rl -
+                    rv) === (pl - pv)) puntos += 2; const realIzqAnota = rl > 0,
+                realDerAnota = rv > 0,
+                pronIzqAnota = pl > 0,
+                pronDerAnota = pv > 0; if (realIzqAnota === pronIzqAnota && realDerAnota === pronDerAnota) puntos +=
+            2; return puntos }
 
-            // 1. GANADOR (+5)
-            const ganadorReal = rl > rv ? 'L' : rv > rl ? 'V' : 'E';
-            const ganadorPron = pl > pv ? 'L' : pv > pl ? 'V' : 'E';
-            if (ganadorReal !== 'E' && ganadorPron === ganadorReal) puntos += 5;
-            else if (ganadorReal === 'E' && ganadorPron === 'E') puntos += 5;
+        function getRondaAnterior(id) { const m = { 'R16-01': 'R32-01', 'R16-02': 'R32-03', 'R16-03': 'R32-05',
+                'R16-04': 'R32-07', 'R16-05': 'R32-09', 'R16-06': 'R32-11', 'R16-07': 'R32-13', 'R16-08': 'R32-15',
+                'QF-01': 'R16-01', 'QF-02': 'R16-03', 'QF-03': 'R16-05', 'QF-04': 'R16-07', 'SF-01': 'QF-01',
+                'SF-02': 'QF-03', 'FINAL': 'SF-01', '3P': 'SF-01' }; return m[id] || null }
 
-            // 2. DIFERENCIA (+2)
-            if ((rl - rv) === (pl - pv)) puntos += 2;
-
-            // 3. ACIERTO DE GOLES POR EQUIPO (+2)
-            const realIzqAnota = rl > 0, realDerAnota = rv > 0;
-            const pronIzqAnota = pl > 0, pronDerAnota = pv > 0;
-            if (realIzqAnota === pronIzqAnota && realDerAnota === pronDerAnota) puntos += 2;
-
-            return puntos;
-        }
-
-        function getRondaAnterior(id) {
-            const m = {
-                'R16-01': 'R32-01', 'R16-02': 'R32-03', 'R16-03': 'R32-05', 'R16-04': 'R32-07',
-                'R16-05': 'R32-09', 'R16-06': 'R32-11', 'R16-07': 'R32-13', 'R16-08': 'R32-15',
-                'QF-01': 'R16-01', 'QF-02': 'R16-03', 'QF-03': 'R16-05', 'QF-04': 'R16-07',
-                'SF-01': 'QF-01', 'SF-02': 'QF-03', 'FINAL': 'SF-01', '3P': 'SF-01'
-            };
-            return m[id] || null;
-        }
-
-        function recalcularTodo() {
-            generarCrucesEliminatorios();
-            PERSONAS.forEach(p => {
-                puntajesGrupos[p] = {};
-                Object.keys(GRUPOS).forEach(g => { puntajesGrupos[p][g] = calcPuntajeGrupo(p, g); });
-            });
+        function recalcularTodo() { generarCrucesEliminatorios();
+            PERSONAS.forEach(p => { puntajesGrupos[p] = {};
+                Object.keys(GRUPOS).forEach(g => { puntajesGrupos[p][g] = calcPuntajeGrupo(p, g) }) });
             const todos = [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...
-                partidos3P
-            ];
-            PERSONAS.forEach(p => {
-                puntajesElim[p] = {};
-                todos.forEach(m => { puntajesElim[p][m.id] = calcPuntajeElim(p, m); });
-            });
-        }
+                partidos3P];
+            PERSONAS.forEach(p => { puntajesElim[p] = {};
+                todos.forEach(m => { puntajesElim[p][m.id] = calcPuntajeElim(p, m) }) }) }
 
-        function calcTotalGrupos(p) { return Object.values(puntajesGrupos[p] || {}).reduce((a, b) => a + b, 0); }
+        function calcTotalGrupos(p) { return Object.values(puntajesGrupos[p] || {}).reduce((a, b) => a + b, 0) }
 
-        function calcTotalElim(p) { return Object.values(puntajesElim[p] || {}).reduce((a, b) => a + (b || 0), 0); }
+        function calcTotalElim(p) { return Object.values(puntajesElim[p] || {}).reduce((a, b) => a + (b || 0), 0) }
 
-        function calcTotal(p) { return calcTotalGrupos(p) + calcTotalElim(p); }
+        function calcTotal(p) { return calcTotalGrupos(p) + calcTotalElim(p) }
 
-        function renderRanking() {
-            const c = document.getElementById('ranking-grid');
-            if (!c) return;
-            const sorted = [...PERSONAS].sort((a, b) => calcTotal(b) - calcTotal(a));
-            c.innerHTML = sorted.map((p, i) => {
-                const total = calcTotal(p), tg = calcTotalGrupos(p), te = calcTotalElim(p);
-                const rc = i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : 'rn';
-                const med = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
-                const lc = i === 0 ? ' leader' : '';
-                return `<div class="ranking-card${lc}">
-                    <div class="rank-num ${rc}">${i+1}</div>
-                    <div style="flex:1">
-                        <div style="font-weight:700;font-size:1rem;">${p} ${med}</div>
-                        <div class="rank-details" style="display:flex;gap:8px;margin-top:4px;">
-                            <span style="background:rgba(59,109,17,.2);color:#7dc542;padding:2px 8px;border-radius:10px;font-size:.68rem;">📋 Grupos: ${tg}pt</span>
-                            <span style="background:rgba(24,95,165,.2);color:#5b9dd9;padding:2px 8px;border-radius:10px;font-size:.68rem;">⚽ Elim: ${te}pt</span>
-                        </div>
-                    </div>
-                    <div style="text-align:right">
-                        <div class="points-total">${total}</div>
-                        <div class="points-label">pts totales</div>
-                    </div>
-                </div>`;
-            }).join('');
-            renderCampeonEnRanking();
-        }
+        function renderRanking() { const c = document.getElementById('ranking-grid'); if (!c) return; const sorted = [
+                ...PERSONAS].sort((a, b) => calcTotal(b) - calcTotal(a));
+            c.innerHTML = sorted.map((p, i) => { const total = calcTotal(p),
+                    tg = calcTotalGrupos(p),
+                    te = calcTotalElim(p),
+                    rc = i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : 'rn',
+                    med = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '',
+                    lc = i === 0 ? ' leader' : ''; return `<div class="ranking-card${lc}"><div class="rank-num ${rc}">${i+1}</div><div style="flex:1"><div style="font-weight:700;font-size:1rem;">${p} ${med}</div><div class="rank-details" style="display:flex;gap:8px;margin-top:4px;"><span style="background:rgba(59,109,17,.2);color:#7dc542;padding:2px 8px;border-radius:10px;font-size:.68rem;">📋 Grupos: ${tg}pt</span><span style="background:rgba(24,95,165,.2);color:#5b9dd9;padding:2px 8px;border-radius:10px;font-size:.68rem;">⚽ Elim: ${te}pt</span></div></div><div style="text-align:right"><div class="points-total">${total}</div><div class="points-label">pts totales</div></div></div>` }).join('');
+            renderCampeonEnRanking() }
 
-        function renderCampeonEnRanking() {
-            const c = document.getElementById('ranking-campeon-container');
-            if (!c) return;
-            let h = `<div class="ranking-campeon"><span class="campeon-tag">🏆 Campeón pronosticado:</span>`;
-            if (Object.keys(pronosticosCampeon).length === 0) {
-                h += `<span style="color:#8b949e;">(Sin pronósticos aún)</span>`;
-            } else {
-                const cont = {};
-                PERSONAS.forEach(p => { const s = pronosticosCampeon[p]; if (s) cont[s] = (cont[s] || 0) + 1; });
-                const e = Object.entries(cont);
-                if (e.length === 0) h += `<span style="color:#8b949e;">(Sin pronósticos aún)</span>`;
-                else h += e.map(([s, co]) => {
-                    const eq = getEquipo(s);
-                    return `<span class="campeon-equipo" style="margin-right:12px;">${eq.bandera} ${eq.nombre} (${co})</span>`;
-                }).join('');
-            }
+        function renderCampeonEnRanking() { const c = document.getElementById('ranking-campeon-container'); if (!c)
+            return;
+            let h = `<div class="ranking-campeon"><span class="campeon-tag">🏆 Campeón pronosticado:</span>`; if (Object
+                .keys(pronosticosCampeon).length === 0) h +=
+                `<span style="color:#8b949e;">(Sin pronósticos aún)</span>`; else { const cont = {};
+                PERSONAS.forEach(p => { const s = pronosticosCampeon[p]; if (s) cont[s] = (cont[s] || 0) + 1 });
+                const e = Object.entries(cont); if (e.length === 0) h +=
+                    `<span style="color:#8b949e;">(Sin pronósticos aún)</span>`; else h += e.map(([s, co]) => { const eq =
+                        getEquipo(s); return `<span class="campeon-equipo" style="margin-right:12px;">${eq.bandera} ${eq.nombre} (${co})</span>` }).join('') }
             h += '</div>';
-            c.innerHTML = h;
-        }
+            c.innerHTML = h }
 
-        function renderGrupos() {
-            const c = document.getElementById('grupos-container');
-            if (!c) return;
+        function renderGrupos() { const c = document.getElementById('grupos-container'); if (!c) return;
             let h = '<div class="grupo-grid">';
-            Object.entries(GRUPOS).forEach(([gid, gd]) => {
-                const clas = clasificadosActuales[gid] || [null, null];
-                const eq1 = getEquipo(clas[0]), eq2 = getEquipo(clas[1]);
-                h += `<div class="grupo-card"><div class="grupo-label">${gd.nombre}</div>
-                <div class="clasificados-row">
-                    <div class="clasificado-slot puesto-1"><span class="puesto-badge">1°</span><div style="font-size:1.2rem">${eq1.bandera}</div><div style="font-weight:600">${eq1.nombre}</div></div>
-                    <div style="font-size:1.5rem;color:#FAC775;">→</div>
-                    <div class="clasificado-slot puesto-2"><span class="puesto-badge">2°</span><div style="font-size:1.2rem">${eq2.bandera}</div><div style="font-weight:600">${eq2.nombre}</div></div>
-                </div>
-                <div class="equipo-selector">`;
-                gd.equipos.forEach(s => {
-                    const eq = getEquipo(s);
-                    let ec = clas[0] === s ? ' selected-p1' : clas[1] === s ? ' selected-p2' : '';
-                    const badge = clas[0] === s ? ' <b>1°</b>' : clas[1] === s ? ' <b>2°</b>' : '';
-                    h += `<button class="equipo-option${ec}" onclick="ciclarClasificado(event,'${gid}','${s}')">${eq.bandera} ${eq.nombre}${badge}</button>`;
-                });
+            Object.entries(GRUPOS).forEach(([gid, gd]) => { const clas = clasificadosActuales[gid] || [null, null],
+                    eq1 = getEquipo(clas[0]),
+                    eq2 = getEquipo(clas[1]);
+                h +=
+                    `<div class="grupo-card"><div class="grupo-label">${gd.nombre}</div><div class="clasificados-row"><div class="clasificado-slot puesto-1"><span class="puesto-badge">1°</span><div style="font-size:1.2rem">${eq1.bandera}</div><div style="font-weight:600">${eq1.nombre}</div></div><div style="font-size:1.5rem;color:#FAC775;">→</div><div class="clasificado-slot puesto-2"><span class="puesto-badge">2°</span><div style="font-size:1.2rem">${eq2.bandera}</div><div style="font-weight:600">${eq2.nombre}</div></div></div><div class="equipo-selector">`;
+                gd.equipos.forEach(s => { const eq = getEquipo(s); let ec = clas[0] === s ? ' selected-p1' : clas[
+                        1] === s ? ' selected-p2' : ''; const badge = clas[0] === s ? ' <b>1°</b>' : clas[1] ===
+                        s ? ' <b>2°</b>' : '';
+                    h +=
+                        `<button class="equipo-option${ec}" onclick="ciclarClasificado(event,'${gid}','${s}')">${eq.bandera} ${eq.nombre}${badge}</button>` });
                 h += `</div><table style="margin-top:8px;"><thead><tr><th>Persona</th><th>1°</th><th>2°</th><th>Pts</th></tr></thead><tbody>`;
-                PERSONAS.forEach(p => {
-                    const pron = PRONOSTICOS_GRUPOS[p]?.[gid] || [];
-                    const ep1 = getEquipo(pron[0]), ep2 = getEquipo(pron[1]);
-                    const pts = puntajesGrupos[p]?.[gid] || 0;
-                    const pc = `puntos-${pts}`;
-                    h += `<tr><td>${p}</td><td>${ep1.bandera} ${ep1.nombre}</td><td>${ep2.bandera} ${ep2.nombre}</td><td><span class="puntos-auto ${pc}">${pts} pts</span></td></tr>`;
-                });
-                h += `</tbody></table></div>`;
-            });
+                PERSONAS.forEach(p => { const pron = PRONOSTICOS_GRUPOS[p]?.[gid] || [],
+                        ep1 = getEquipo(pron[0]),
+                        ep2 = getEquipo(pron[1]),
+                        pts = puntajesGrupos[p]?.[gid] || 0,
+                        pc = `puntos-${pts}`;
+                    h +=
+                        `<tr><td>${p}</td><td>${ep1.bandera} ${ep1.nombre}</td><td>${ep2.bandera} ${ep2.nombre}</td><td><span class="puntos-auto ${pc}">${pts} pts</span></td></tr>` });
+                h += `</tbody></table></div>` });
             h += '</div>';
-            c.innerHTML = h;
-        }
+            c.innerHTML = h }
 
-        function ciclarClasificado(event, grupo, sigla) {
-            event.preventDefault();
-            const clas = clasificadosActuales[grupo] || [null, null];
-            const esP1 = !(event.button === 2 || event.ctrlKey);
-            const posActual = esP1 ? 0 : 1;
-            const otraPos = esP1 ? 1 : 0;
-            if (clasificadosActuales[grupo][posActual] === sigla) clasificadosActuales[grupo][posActual] = null;
-            else if (clasificadosActuales[grupo][otraPos] === sigla) {
-                const temp = clasificadosActuales[grupo][0];
+        function ciclarClasificado(event, grupo, sigla) { event.preventDefault(); const clas =
+                clasificadosActuales[grupo] || [null, null],
+                esP1 = !(event.button === 2 || event.ctrlKey),
+                posActual = esP1 ? 0 : 1,
+                otraPos = esP1 ? 1 : 0; if (clasificadosActuales[grupo][posActual] === sigla) clasificadosActuales[
+                    grupo][posActual] = null; else if (clasificadosActuales[grupo][otraPos] === sigla) { const temp =
+                    clasificadosActuales[grupo][0];
                 clasificadosActuales[grupo][0] = clasificadosActuales[grupo][1];
-                clasificadosActuales[grupo][1] = temp;
-            } else clasificadosActuales[grupo][posActual] = sigla;
-            recalcularTodo(); refrescarTodo(); guardarEstado();
-            showToast(`🔄 ${getEquipo(sigla).nombre} → ${esP1?'1°':'2°'} ${GRUPOS[grupo].nombre}`);
-        }
-        document.addEventListener('contextmenu', e => { if (e.target.closest('.equipo-option')) e.preventDefault(); });
+                clasificadosActuales[grupo][1] = temp } else clasificadosActuales[grupo][posActual] = sigla;
+            recalcularTodo();
+            refrescarTodo();
+            guardarEstado();
+            showToast(`🔄 ${getEquipo(sigla).nombre} → ${esP1?'1°':'2°'} ${GRUPOS[grupo].nombre}`) }
+        document.addEventListener('contextmenu', e => { if (e.target.closest('.equipo-option')) e.preventDefault() });
 
-        function resetearClasificados() {
-            if (confirm('¿Restablecer clasificados?')) {
-                clasificadosActuales = JSON.parse(JSON.stringify(CLASIFICADOS_DEFAULT));
-                recalcularTodo(); refrescarTodo(); guardarEstado();
-                showToast('🔄 Clasificados restablecidos');
-            }
-        }
+        function resetearClasificados() { if (confirm('¿Restablecer clasificados?')) { clasificadosActuales = JSON.parse(
+                JSON.stringify(CLASIFICADOS_DEFAULT));
+                recalcularTodo();
+                refrescarTodo();
+                guardarEstado();
+                showToast('🔄 Clasificados restablecidos') } }
 
-        function renderElim() {
-            const c = document.getElementById('elim-container');
-            if (!c) return;
-            const todos = [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...partidos3P];
-            const grupos = {};
-            todos.forEach(m => { if (!grupos[m.ronda]) grupos[m.ronda] = []; grupos[m.ronda].push(m); });
+        function renderElim() { const c = document.getElementById('elim-container'); if (!c) return; const todos = [
+                ...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...partidos3P],
+                grupos = {};
+            todos.forEach(m => { if (!grupos[m.ronda]) grupos[m.ronda] = [];
+                grupos[m.ronda].push(m) });
             const orden = ['R32', 'R16', 'QF', 'SF', 'Final', '3er Puesto'];
             let h = '';
-            orden.forEach(ronda => {
-                const partidos = grupos[ronda] || [];
-                if (partidos.length === 0) return;
-                const titulo = ronda === 'R32' ? '⚽ R32 — Eliminatoria de 32' :
-                    ronda === 'R16' ? '🏆 R16 — Octavos de Final' :
-                    ronda === 'QF' ? '🏆 QF — Cuartos de Final' :
-                    ronda === 'SF' ? '🏆 SF — Semifinales' :
-                    ronda === 'Final' ? '🏆 FINAL — ¡El Campeón!' : '🥉 3er Puesto';
-                h += `<div class="elim-section"><div class="elim-section-title">${titulo}</div><div class="elim-grid">`;
-                partidos.forEach(m => {
-                    const eqL = getEquipo(m.local), eqV = getEquipo(m.visit);
-                    const res = resultadosElim[m.id];
-                    const jugado = res && res.l !== null && res.v !== null;
-                    const resL = res?.l ?? '', resV = res?.v ?? '';
-                    const isPlaceholder = !m.local || !m.visit;
-                    const esEmpate = jugado && res.l === res.v;
-                    const penal = GANADORES_PENALES[m.id];
-                    const cardClass = isPlaceholder ? 'elim-card' : (jugado ? 'elim-card jugado' : 'elim-card');
-                    let badgeClass = isPlaceholder ? 'badge-pendiente' : (jugado ? 'badge-jugado' : 'badge-pendiente');
-                    let badgeText = isPlaceholder ? '⏳ Pendiente' : (jugado ? '✅ Jugado' : '⏳ Pendiente');
-                    if (esEmpate) {
-                        if (penal === 'L' || penal === 'V') {
-                            const ganadorEq = getEquipo(penal === 'L' ? m.local : m.visit);
+            orden.forEach(ronda => { const partidos = grupos[ronda] || []; if (partidos.length === 0) return; const
+                    titulo = ronda === 'R32' ? '⚽ R32 — Eliminatoria de 32' : ronda === 'R16' ?
+                    '🏆 R16 — Octavos de Final' : ronda === 'QF' ? '🏆 QF — Cuartos de Final' : ronda === 'SF' ?
+                    '🏆 SF — Semifinales' : ronda === 'Final' ? '🏆 FINAL — ¡El Campeón!' : '🥉 3er Puesto';
+                h +=
+                    `<div class="elim-section"><div class="elim-section-title">${titulo}</div><div class="elim-grid">`;
+                partidos.forEach(m => { const eqL = getEquipo(m.local),
+                        eqV = getEquipo(m.visit),
+                        res = resultadosElim[m.id],
+                        jugado = res && res.l !== null && res.v !== null,
+                        resL = res?.l ?? '',
+                        resV = res?.v ?? '',
+                        isPlaceholder = !m.local || !m.visit,
+                        esEmpate = jugado && res.l === res.v,
+                        penal = GANADORES_PENALES[m.id],
+                        cardClass = isPlaceholder ? 'elim-card' : (jugado ? 'elim-card jugado' : 'elim-card'); let
+                        badgeClass = isPlaceholder ? 'badge-pendiente' : (jugado ? 'badge-jugado' : 'badge-pendiente'),
+                        badgeText = isPlaceholder ? '⏳ Pendiente' : (jugado ? '✅ Jugado' : '⏳ Pendiente'); if (
+                        esEmpate) { if (penal === 'L' || penal === 'V') { const ganadorEq = getEquipo(penal ===
+                                'L' ? m.local : m.visit);
                             badgeClass = 'badge-penales';
-                            badgeText = `🥅 Pasa ${ganadorEq.nombre} (penales)`;
-                        } else { badgeClass = 'badge-penales';
-                            badgeText = '🥅 Empate — falta definir penales'; }
-                    }
-                    h += `<div class="${cardClass}">
-                        <div class="elim-card-header">
-                            <span class="elim-match-id">${m.id}</span>
-                            <span class="elim-match-date">📅 ${m.fecha}</span>
-                            <span class="elim-match-round">${m.ronda}</span>
-                        </div>
-                        <div class="elim-teams">
-                            <div class="elim-team">
-                                <span class="elim-team-flag">${isPlaceholder?'❓':eqL.bandera}</span>
-                                <span class="elim-team-name">${isPlaceholder?'—':eqL.nombre}</span>
-                            </div>
-                            <span class="elim-vs">vs</span>
-                            <div class="elim-team" style="justify-content:flex-end;text-align:right;">
-                                <span class="elim-team-name">${isPlaceholder?'—':eqV.nombre}</span>
-                                <span class="elim-team-flag">${isPlaceholder?'❓':eqV.bandera}</span>
-                            </div>
-                        </div>
-                        <div class="resultado-section">
-                            <div class="resultado-label">⚽ Resultado real</div>
-                            <div class="resultado-inputs">`;
-                    if (isPlaceholder) {
-                        h += `<span style="color:#8b949e;font-size:.75rem;">(Esperando cruces previos)</span>`;
-                    } else {
-                        h += `<span style="font-size:.75rem;color:#8b949e;">${eqL.nombre}</span>
-                            <input type="number" min="0" max="20" class="score-input" id="rl-${m.id}" value="${resL}" placeholder="0" onchange="actualizarResultado('${m.id}')">
-                            <span class="score-sep">–</span>
-                            <input type="number" min="0" max="20" class="score-input" id="rv-${m.id}" value="${resV}" placeholder="0" onchange="actualizarResultado('${m.id}')">
-                            <span style="font-size:.75rem;color:#8b949e;">${eqV.nombre}</span>
-                            <span class="resultado-badge ${badgeClass}">${badgeText}</span>`;
-                    }
-                    h += `</div></div>
-                        <div class="pronosticos-elim">
-                            <div style="font-size:.65rem;color:#8b949e;margin-bottom:6px;text-transform:uppercase;font-weight:600;">📊 Pronósticos</div>
-                            <div class="pronosticos-elim-grid">`;
-                    PERSONAS.forEach(p => {
-                        let pronText = '—', ptsText = '—', ptsClass = 'puntos-0';
-                        if (!isPlaceholder) {
-                            const pron = PRONOSTICOS_R32[p]?.[m.id];
-                            if (pron && pron.l !== null && pron.v !== null) pronText = `${pron.l}–${pron.v}`;
-                            else {
-                                const rondaAnt = getRondaAnterior(m.id);
-                                if (rondaAnt) {
-                                    const pronAnt = PRONOSTICOS_R32[p]?.[rondaAnt];
-                                    if (pronAnt && pronAnt.l !== null && pronAnt.v !== null) {
-                                        const matchAnt = obtenerMatchPorId(rondaAnt);
-                                        if (matchAnt) {
-                                            const ganadorPron = pronAnt.l > pronAnt.v ? matchAnt.local : (pronAnt.v > pronAnt.l ? matchAnt.visit : null);
-                                            if (ganadorPron === m.local) pronText = '1–0';
-                                            else if (ganadorPron === m.visit) pronText = '0–1';
-                                            else pronText = '0–0';
-                                        }
-                                    }
-                                }
-                            }
-                            const pts = puntajesElim[p]?.[m.id];
-                            if (jugado && pts !== null && pts !== undefined) {
-                                ptsText = pts + 'pt';
-                                ptsClass = `puntos-${pts}`;
-                            } else if (jugado) ptsText = '0pt';
-                        }
-                        h += `<div class="pron-elim-row">
-                            <span class="pron-elim-name">${p}</span>
-                            <span class="pron-elim-score">${pronText}</span>
-                            <span class="pron-elim-pts puntos-auto ${ptsClass}">${ptsText}</span>
-                        </div>`;
-                    });
-                    h += `</div></div></div>`;
-                });
-                h += '</div></div>';
-            });
-            c.innerHTML = h;
-        }
+                            badgeText = `🥅 Pasa ${ganadorEq.nombre} (penales)` } else { badgeClass =
+                                'badge-penales';
+                            badgeText = '🥅 Empate — falta definir penales' } }
+                    h +=
+                        `<div class="${cardClass}"><div class="elim-card-header"><span class="elim-match-id">${m.id}</span><span class="elim-match-date">📅 ${m.fecha}</span><span class="elim-match-round">${m.ronda}</span></div><div class="elim-teams"><div class="elim-team"><span class="elim-team-flag">${isPlaceholder?'❓':eqL.bandera}</span><span class="elim-team-name">${isPlaceholder?'—':eqL.nombre}</span></div><span class="elim-vs">vs</span><div class="elim-team" style="justify-content:flex-end;text-align:right;"><span class="elim-team-name">${isPlaceholder?'—':eqV.nombre}</span><span class="elim-team-flag">${isPlaceholder?'❓':eqV.bandera}</span></div></div><div class="resultado-section"><div class="resultado-label">⚽ Resultado real</div><div class="resultado-inputs">`;
+                    if (isPlaceholder) h +=
+                        `<span style="color:#8b949e;font-size:.75rem;">(Esperando cruces previos)</span>`; else h +=
+                        `<span style="font-size:.75rem;color:#8b949e;">${eqL.nombre}</span><input type="number" min="0" max="20" class="score-input" id="rl-${m.id}" value="${resL}" placeholder="0" onchange="actualizarResultado('${m.id}')"><span class="score-sep">–</span><input type="number" min="0" max="20" class="score-input" id="rv-${m.id}" value="${resV}" placeholder="0" onchange="actualizarResultado('${m.id}')"><span style="font-size:.75rem;color:#8b949e;">${eqV.nombre}</span><span class="resultado-badge ${badgeClass}">${badgeText}</span>`;
+                    h +=
+                        `</div></div><div class="pronosticos-elim"><div style="font-size:.65rem;color:#8b949e;margin-bottom:6px;text-transform:uppercase;font-weight:600;">📊 Pronósticos</div><div class="pronosticos-elim-grid">`;
+                    PERSONAS.forEach(p => { let pronText = '—',
+                            ptsText = '—',
+                            ptsClass = 'puntos-0'; if (!isPlaceholder) { const pron = PRONOSTICOS_R32[p]
+                                ?.[m.id]; if (pron && pron.l !== null && pron.v !== null) pronText =
+                                    `${pron.l}–${pron.v}`; else { const rondaAnt = getRondaAnterior(m
+                                    .id); if (rondaAnt) { const pronAnt = PRONOSTICOS_R32[p]?.[
+                                        rondaAnt]; if (pronAnt && pronAnt.l !== null && pronAnt.v !==
+                                        null) { const matchAnt = obtenerMatchPorId(rondaAnt); if (
+                                            matchAnt) { const ganadorPron = pronAnt.l > pronAnt.v ?
+                                                matchAnt.local : (pronAnt.v > pronAnt.l ? matchAnt
+                                                    .visit : null); if (ganadorPron === m.local)
+                                                pronText = '1–0'; else if (ganadorPron === m.visit)
+                                                pronText = '0–1'; else pronText = '0–0' } } } } const
+                                pts = puntajesElim[p]?.[m.id]; if (jugado && pts !== null && pts !==
+                                undefined) { ptsText = pts + 'pt';
+                                ptsClass = `puntos-${pts}` } else if (jugado) ptsText = '0pt' }
+                        h +=
+                            `<div class="pron-elim-row"><span class="pron-elim-name">${p}</span><span class="pron-elim-score">${pronText}</span><span class="pron-elim-pts puntos-auto ${ptsClass}">${ptsText}</span></div>` });
+                    h += `</div></div></div>` });
+                h += '</div></div>' });
+            c.innerHTML = h }
 
-        function actualizarResultado(id) {
-            const inL = document.getElementById(`rl-${id}`), inV = document.getElementById(`rv-${id}`);
-            if (!inL || !inV) return;
-            const vl = inL.value.trim(), vv = inV.value.trim();
-            if (vl === '' && vv === '') delete resultadosElim[id];
-            else resultadosElim[id] = { l: vl === '' ? null : parseInt(vl), v: vv === '' ? null : parseInt(vv) };
-            recalcularTodo(); renderRanking(); renderMatrix(); renderElim(); renderBracket(); guardarEstado();
-        }
+        function actualizarResultado(id) { const inL = document.getElementById(`rl-${id}`),
+                inV = document.getElementById(`rv-${id}`); if (!inL || !inV) return; const vl = inL.value.trim(),
+                vv = inV.value.trim(); if (vl === '' && vv === '') delete resultadosElim[id]; else resultadosElim[
+                id] = { l: vl === '' ? null : parseInt(vl), v: vv === '' ? null : parseInt(vv) };
+            recalcularTodo();
+            renderRanking();
+            renderMatrix();
+            renderElim();
+            renderBracket();
+            guardarEstado() }
 
-        function renderMatrix() {
-            const c = document.getElementById('matrix-container');
-            if (!c) return;
-            const gK = Object.keys(GRUPOS);
-            const todos = [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...partidos3P];
-            let h = '<table class="matrix-table"><thead><tr><th>Persona</th>';
+        function renderMatrix() { const c = document.getElementById('matrix-container'); if (!c) return; const gK =
+                Object.keys(GRUPOS),
+                todos = [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...
+                    partidos3P]; let h = '<table class="matrix-table"><thead><tr><th>Persona</th>';
             gK.forEach(g => h += `<th title="${GRUPOS[g].nombre}">${g}</th>`);
             h += '<th style="background:#0c1a2e;color:#7dc542;">∑G</th>';
-            todos.forEach(m => {
-                const eqL = getEquipo(m.local), eqV = getEquipo(m.visit);
-                const label = m.local && m.visit ? `${eqL.bandera}v${eqV.bandera}` : '❓vs❓';
-                h += `<th title="${m.id}">${label}</th>`;
-            });
+            todos.forEach(m => { const eqL = getEquipo(m.local),
+                    eqV = getEquipo(m.visit),
+                    label = m.local && m.visit ? `${eqL.bandera}v${eqV.bandera}` : '❓vs❓';
+                h += `<th title="${m.id}">${label}</th>` });
             h += '<th style="background:#0c1a2e;color:#5b9dd9;">∑E</th><th class="total-col">TOTAL</th></tr></thead><tbody>';
-            PERSONAS.forEach(p => {
-                const tg = calcTotalGrupos(p), te = calcTotalElim(p), tot = tg + te;
+            PERSONAS.forEach(p => { const tg = calcTotalGrupos(p),
+                    te = calcTotalElim(p),
+                    tot = tg + te;
                 h += `<tr><td><strong>${p}</strong></td>`;
-                gK.forEach(g => {
-                    const v = puntajesGrupos[p]?.[g] || 0;
-                    const cl = v === 6 ? 'mp6' : v === 3 ? 'mp3' : v === 2 ? 'mp2' : v === 1 ? 'mp1' : '';
-                    h += `<td class="${cl}">${v}</td>`;
-                });
+                gK.forEach(g => { const v = puntajesGrupos[p]?.[g] || 0,
+                        cl = v === 6 ? 'mp6' : v === 3 ? 'mp3' : v === 2 ? 'mp2' : v === 1 ? 'mp1' : '';
+                    h += `<td class="${cl}">${v}</td>` });
                 h += `<td style="font-weight:700;background:#0c1a2e;color:#7dc542;">${tg}</td>`;
-                todos.forEach(m => {
-                    const v = puntajesElim[p]?.[m.id];
-                    const res = resultadosElim[m.id];
-                    const jugado = res && res.l !== null && res.v !== null && m.local && m.visit;
-                    if (!jugado) { h += `<td style="color:#30363d;">—</td>`; return; }
-                    const cl = v === 7 ? 'mp7' : v === 5 ? 'mp5' : v === 4 ? 'mp4' : v === 2 ? 'mp2' : 'mp0';
-                    h += `<td class="${cl}">${v}</td>`;
-                });
-                h += `<td style="font-weight:700;background:#0c1a2e;color:#5b9dd9;">${te}</td><td class="total-col">${tot}</td></tr>`;
-            });
+                todos.forEach(m => { const v = puntajesElim[p]?.[m.id],
+                        res = resultadosElim[m.id],
+                        jugado = res && res.l !== null && res.v !== null && m.local && m.visit; if (!jugado) { h +=
+                            `<td style="color:#30363d;">—</td>`; return } const cl = v === 7 ? 'mp7' : v === 5 ?
+                        'mp5' : v === 4 ? 'mp4' : v === 2 ? 'mp2' : 'mp0';
+                    h += `<td class="${cl}">${v}</td>` });
+                h +=
+                    `<td style="font-weight:700;background:#0c1a2e;color:#5b9dd9;">${te}</td><td class="total-col">${tot}</td></tr>` });
             h += '</tbody></table>';
-            c.innerHTML = h;
-        }
+            c.innerHTML = h }
 
-        function renderBracket() {
-            const c = document.getElementById('bracket-container');
-            if (!c) return;
-            const mkBox = (m) => {
-                const eq1 = m.local ? getEquipo(m.local) : null, eq2 = m.visit ? getEquipo(m.visit) : null;
-                const f1 = eq1 ? `${eq1.bandera} ${eq1.nombre}` : '—', f2 = eq2 ? `${eq2.bandera} ${eq2.nombre}` : '—';
-                const filled = (eq1 || eq2) ? ' filled' : '';
-                return `<div class="match-box${filled}"><span class="match-code">${m.id}</span><span class="match-date">${m.fecha}</span><div class="flag-slot"><span class="team-name">${f1}</span></div><div class="flag-slot"><span class="team-name">${f2}</span></div></div>`;
-            };
-            const r32Izq = PARTIDOS_R32.slice(0, 8), r32Der = PARTIDOS_R32.slice(8, 16);
-            const r16Izq = partidosR16.slice(0, 4), r16Der = partidosR16.slice(4, 8);
-            const qfIzq = partidosQF.slice(0, 2), qfDer = partidosQF.slice(2, 4);
-            const sfIzq = partidosSF.slice(0, 1), sfDer = partidosSF.slice(1, 2);
-            const final = partidosFinal[0] || { id: 'FINAL', fecha: '19 jul', local: null, visit: null };
-            const tercer = partidos3P[0] || { id: '3P', fecha: '18 jul', local: null, visit: null };
-            let h = '<div class="bracket-grid">';
+        function renderBracket() { const c = document.getElementById('bracket-container'); if (!c) return; const
+            mkBox = (m) => { const eq1 = m.local ? getEquipo(m.local) : null,
+                    eq2 = m.visit ? getEquipo(m.visit) : null,
+                    f1 = eq1 ? `${eq1.bandera} ${eq1.nombre}` : '—',
+                    f2 = eq2 ? `${eq2.bandera} ${eq2.nombre}` : '—',
+                    filled = (eq1 || eq2) ? ' filled' : ''; return `<div class="match-box${filled}"><span class="match-code">${m.id}</span><span class="match-date">${m.fecha}</span><div class="flag-slot"><span class="team-name">${f1}</span></div><div class="flag-slot"><span class="team-name">${f2}</span></div></div>` },
+                r32Izq = PARTIDOS_R32.slice(0, 8),
+                r32Der = PARTIDOS_R32.slice(8, 16),
+                r16Izq = partidosR16.slice(0, 4),
+                r16Der = partidosR16.slice(4, 8),
+                qfIzq = partidosQF.slice(0, 2),
+                qfDer = partidosQF.slice(2, 4),
+                sfIzq = partidosSF.slice(0, 1),
+                sfDer = partidosSF.slice(1, 2),
+                final = partidosFinal[0] || { id: 'FINAL', fecha: '19 jul', local: null, visit: null },
+                tercer = partidos3P[0] || { id: '3P', fecha: '18 jul', local: null, visit: null }; let h =
+                '<div class="bracket-grid">';
             h += '<div class="bracket-col"><div class="bracket-col-header">R32</div><div class="bracket-half">';
             r32Izq.forEach(m => h += mkBox(m));
             h += '</div></div><div class="bracket-col"><div class="bracket-col-header">R16</div><div class="bracket-half">';
@@ -1764,7 +1435,8 @@
             h += '</div></div><div class="bracket-col"><div class="bracket-col-header">Semis</div><div class="bracket-half">';
             sfIzq.forEach(m => h += mkBox(m));
             h += '</div></div><div class="bracket-col center-final-col"><div class="bracket-col-header">Final</div><div class="copa-icon">🏆</div><div class="fecha-final-txt">19 jul · NY/NJ</div>' +
-                mkBox(final) + '<div class="tercer-box"><div class="tercer-label">🥉 3er puesto · 18 jul</div>' + mkBox(tercer) +
+                mkBox(final) +
+                '<div class="tercer-box"><div class="tercer-label">🥉 3er puesto · 18 jul</div>' + mkBox(tercer) +
                 '</div></div><div class="bracket-col"><div class="bracket-col-header">Semis</div><div class="bracket-half">';
             sfDer.forEach(m => h += mkBox(m));
             h += '</div></div><div class="bracket-col"><div class="bracket-col-header">Cuartos</div><div class="bracket-half">';
@@ -1774,138 +1446,110 @@
             h += '</div></div><div class="bracket-col"><div class="bracket-col-header">R32</div><div class="bracket-half">';
             r32Der.forEach(m => h += mkBox(m));
             h += '</div></div></div>';
-            c.innerHTML = h;
-        }
+            c.innerHTML = h }
 
-        function renderCampeon() {
-            const c = document.getElementById('campeon-container');
-            if (!c) return;
-            const todosEq = new Set();
-            Object.values(GRUPOS).forEach(g => g.equipos.forEach(e => todosEq.add(e)));
-            const eqList = Array.from(todosEq).sort();
-            let h = '';
-            PERSONAS.forEach(p => {
-                const actual = pronosticosCampeon[p] || '', eqActual = actual ? getEquipo(actual) : null;
-                h += `<div class="campeon-selector">
-                    <span style="font-weight:600;min-width:120px;color:#e6edf3;">${p}</span>
-                    <select onchange="cambiarCampeon('${p}', this.value)" style="flex:1;min-width:200px;">
-                        <option value="">— Seleccionar campeón —</option>`;
+        function renderCampeon() { const c = document.getElementById('campeon-container'); if (!c) return; const
+            todosEq = new Set();
+            Object.values(GRUPOS).forEach(g => g.equipos.forEach(e => todosEq.add(e))); const eqList = Array.from(
+                todosEq).sort(); let h = '';
+            PERSONAS.forEach(p => { const actual = pronosticosCampeon[p] || '',
+                    eqActual = actual ? getEquipo(actual) : null;
+                h +=
+                    `<div class="campeon-selector"><span style="font-weight:600;min-width:120px;color:#e6edf3;">${p}</span><select onchange="cambiarCampeon('${p}', this.value)" style="flex:1;min-width:200px;"><option value="">— Seleccionar campeón —</option>`;
                 eqList.forEach(s => { const eq = getEquipo(s);
-                    h += `<option value="${s}" ${s===actual?'selected':''}>${eq.bandera} ${eq.nombre}</option>`; });
-                h += `</select>`;
-                if (eqActual) h += `<span class="campeon-badge">${eqActual.bandera} ${eqActual.nombre}</span>`;
-                else h += `<span style="color:#8b949e;font-size:0.8rem;">Sin selección</span>`;
-                h += `</div>`;
-            });
+                    h += `<option value="${s}" ${s===actual?'selected':''}>${eq.bandera} ${eq.nombre}</option>` });
+                h += `</select>`; if (eqActual) h +=
+                    `<span class="campeon-badge">${eqActual.bandera} ${eqActual.nombre}</span>`; else h +=
+                    `<span style="color:#8b949e;font-size:0.8rem;">Sin selección</span>`;
+                h += `</div>` });
             c.innerHTML = h;
+            renderResumenCampeon() }
+
+        function cambiarCampeon(persona, sigla) { if (sigla) pronosticosCampeon[persona] = sigla; else delete
+                pronosticosCampeon[persona];
+            guardarEstado();
             renderResumenCampeon();
-        }
+            renderCampeonEnRanking();
+            showToast(`🏆 ${persona} pronosticó a ${getEquipo(sigla).nombre}`) }
 
-        function cambiarCampeon(persona, sigla) {
-            if (sigla) pronosticosCampeon[persona] = sigla;
-            else delete pronosticosCampeon[persona];
-            guardarEstado(); renderResumenCampeon(); renderCampeonEnRanking();
-            showToast(`🏆 ${persona} pronosticó a ${getEquipo(sigla).nombre}`);
-        }
-
-        function renderResumenCampeon() {
-            const c = document.getElementById('campeon-resumen');
-            if (!c) return;
-            const todosEq = new Set();
-            Object.values(GRUPOS).forEach(g => g.equipos.forEach(e => todosEq.add(e)));
-            const eqList = Array.from(todosEq).sort();
-            if (Object.keys(pronosticosCampeon).length === 0) {
-                c.innerHTML = '<p style="color:#8b949e;">Aún no hay pronósticos de campeón.</p>';
-                return;
-            }
-            const cont = {};
-            PERSONAS.forEach(p => { const s = pronosticosCampeon[p]; if (s) cont[s] = (cont[s] || 0) + 1; });
-            let h = '<div style="overflow-x:auto;max-width:100%;"><table style="min-width:800px;font-size:0.7rem;"><thead><tr><th style="position:sticky;left:0;background:#21262d;z-index:5;min-width:110px;">Persona</th>';
+        function renderResumenCampeon() { const c = document.getElementById('campeon-resumen'); if (!c) return; const
+            todosEq = new Set();
+            Object.values(GRUPOS).forEach(g => g.equipos.forEach(e => todosEq.add(e))); const eqList = Array.from(
+                todosEq).sort(); if (Object.keys(pronosticosCampeon).length === 0) { c.innerHTML =
+                '<p style="color:#8b949e;">Aún no hay pronósticos de campeón.</p>'; return } const cont = {};
+            PERSONAS.forEach(p => { const s = pronosticosCampeon[p]; if (s) cont[s] = (cont[s] || 0) + 1 }); let h =
+                '<div style="overflow-x:auto;max-width:100%;"><table style="min-width:800px;font-size:0.7rem;"><thead><tr><th style="position:sticky;left:0;background:#21262d;z-index:5;min-width:110px;">Persona</th>';
             eqList.forEach(s => { const eq = getEquipo(s);
-                h += `<th style="text-align:center;vertical-align:bottom;padding:4px 6px;font-size:0.6rem;" title="${eq.nombre}"><div style="font-size:1.2rem;">${eq.bandera}</div><div style="writing-mode:vertical-lr;text-orientation:mixed;font-size:0.55rem;margin-top:2px;">${s}</div></th>`; });
+                h +=
+                    `<th style="text-align:center;vertical-align:bottom;padding:4px 6px;font-size:0.6rem;" title="${eq.nombre}"><div style="font-size:1.2rem;">${eq.bandera}</div><div style="writing-mode:vertical-lr;text-orientation:mixed;font-size:0.55rem;margin-top:2px;">${s}</div></th>` });
             h += '<th style="background:#0c1a2e;color:#FAC775;text-align:center;">✅</th></tr></thead><tbody>';
-            PERSONAS.forEach(p => {
-                const sel = pronosticosCampeon[p] || '';
-                h += `<tr><td style="position:sticky;left:0;background:#161b22;z-index:3;font-weight:600;">${p}</td>`;
-                eqList.forEach(s => {
-                    if (s === sel) { const eq = getEquipo(s);
-                        h += `<td style="text-align:center;background:rgba(250,199,117,0.15);"><span style="font-size:1.1rem;">${eq.bandera}</span></td>`; } else h +=
-                        `<td style="text-align:center;color:#30363d;">—</td>`;
-                });
-                h += `<td style="text-align:center;font-weight:700;color:#FAC775;background:rgba(250,199,117,0.05);">${sel?'✓':'—'}</td></tr>`;
-            });
-            h += '<tr style="background:#21262d;font-weight:700;"><td style="position:sticky;left:0;background:#21262d;z-index:3;">🗳️ Votos</td>';
+            PERSONAS.forEach(p => { const sel = pronosticosCampeon[p] || '';
+                h +=
+                    `<tr><td style="position:sticky;left:0;background:#161b22;z-index:3;font-weight:600;">${p}</td>`;
+                eqList.forEach(s => { if (s === sel) { const eq = getEquipo(s);
+                        h +=
+                            `<td style="text-align:center;background:rgba(250,199,117,0.15);"><span style="font-size:1.1rem;">${eq.bandera}</span></td>` } else h +=
+                        `<td style="text-align:center;color:#30363d;">—</td>` });
+                h +=
+                    `<td style="text-align:center;font-weight:700;color:#FAC775;background:rgba(250,199,117,0.05);">${sel?'✓':'—'}</td></tr>` });
+            h +=
+                '<tr style="background:#21262d;font-weight:700;"><td style="position:sticky;left:0;background:#21262d;z-index:3;">🗳️ Votos</td>';
             eqList.forEach(s => { const co = cont[s] || 0;
-                h += `<td style="text-align:center;color:${co>0?'#FAC775':'#8b949e'};font-size:0.8rem;">${co||'—'}</td>`; });
+                h +=
+                    `<td style="text-align:center;color:${co>0?'#FAC775':'#8b949e'};font-size:0.8rem;">${co||'—'}</td>` });
             h += '<td style="text-align:center;color:#FAC775;"></td></tr></tbody></table></div>';
-            c.innerHTML = h;
-        }
+            c.innerHTML = h }
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
+        function showToast(msg) { const t = document.getElementById('toast');
             t.textContent = msg;
             t.style.display = 'block';
             t.style.animation = 'none';
             t.offsetHeight;
             t.style.animation = 'toastIn 0.3s ease, toastOut 0.3s ease 1.7s forwards';
-            setTimeout(() => t.style.display = 'none', 2100);
-        }
+            setTimeout(() => t.style.display = 'none', 2100) }
 
         function refrescarTodo() { renderRanking();
             renderGrupos();
             renderElim();
             renderMatrix();
             renderBracket();
-            renderCampeon(); }
+            renderCampeon() }
 
-        function descargarExcel() {
-            try {
-                const wb = XLSX.utils.book_new();
-                const dg = [['Persona', ...Object.keys(GRUPOS).map(g => GRUPOS[g].nombre), 'Total Grupos']];
+        function descargarExcel() { try { const wb = XLSX.utils.book_new(),
+                    dg = [['Persona', ...Object.keys(GRUPOS).map(g => GRUPOS[g].nombre), 'Total Grupos']];
                 PERSONAS.forEach(p => { const f = [p]; let t = 0;
                     Object.keys(GRUPOS).forEach(g => { const v = puntajesGrupos[p]?.[g] || 0;
                         f.push(v);
-                        t += v; });
+                        t += v });
                     f.push(t);
-                    dg.push(f); });
-                XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dg), 'Grupos');
-                const todos = [...PARTIDOS_R32, ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...
-                    partidos3P
-                ];
-                const de = [['Persona', ...todos.map(m => `${m.id}`), 'Total Elim', 'GRAN TOTAL']];
+                    dg.push(f) });
+                XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dg), 'Grupos'); const todos = [...PARTIDOS_R32,
+                    ...partidosR16, ...partidosQF, ...partidosSF, ...partidosFinal, ...partidos3P],
+                    de = [['Persona', ...todos.map(m => `${m.id}`), 'Total Elim', 'GRAN TOTAL']];
                 PERSONAS.forEach(p => { const f = [p]; let te = 0;
                     todos.forEach(m => { const v = puntajesElim[p]?.[m.id] || 0;
                         f.push(v);
-                        te += v; });
+                        te += v });
                     f.push(te);
                     f.push(calcTotalGrupos(p) + te);
-                    de.push(f); });
-                XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(de), 'Eliminatorias');
-                const dc = [['Persona', 'Campeón']];
+                    de.push(f) });
+                XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(de), 'Eliminatorias'); const dc = [
+                    ['Persona', 'Campeón']];
                 PERSONAS.forEach(p => { const s = pronosticosCampeon[p] || '—',
                         eq = getEquipo(s);
-                    dc.push([p, `${eq.bandera} ${eq.nombre}`]); });
+                    dc.push([p, `${eq.bandera} ${eq.nombre}`]) });
                 XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(dc), 'Campeon');
                 XLSX.writeFile(wb, 'Polla_Mundial2026.xlsx');
-                showToast('💾 Excel descargado');
-            } catch (e) { alert('Error: ' + e.message); }
-        }
+                showToast('💾 Excel descargado') } catch (e) { alert('Error: ' + e.message) } }
 
-        function switchPage(name) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            const el = document.getElementById('page-' + name);
-            if (el) el.classList.add('active');
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.page === name));
-            if (name === 'top') renderRanking();
-            if (name === 'grupos') renderGrupos();
-            if (name === 'elim') renderElim();
-            if (name === 'matrix') renderMatrix();
-            if (name === 'bracket') renderBracket();
-            if (name === 'campeon') renderCampeon();
-        }
+        function switchPage(name) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const el = document.getElementById('page-' + name); if (el) el.classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.page ===
+                name)); if (name === 'top') renderRanking(); if (name === 'grupos') renderGrupos(); if (name ===
+                'elim') renderElim(); if (name === 'matrix') renderMatrix(); if (name === 'bracket') renderBracket(); if (
+                name === 'campeon') renderCampeon() }
         document.querySelectorAll('.nav-tab').forEach(tab => { tab.addEventListener('click', () => switchPage(tab
-                .dataset.page)); });
-
+                .dataset.page)) });
         initEstado();
         renderRanking();
         renderGrupos();
