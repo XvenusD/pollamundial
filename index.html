@@ -906,9 +906,283 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ===== PODIO INTRO (pantalla de bienvenida con el top 3) ===== */
+        #podio-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: #0d1117;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 16px;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        #podio-overlay.hiding {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .podio-card {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            background:
+                radial-gradient(ellipse at 50% -10%, rgba(24, 95, 165, .22), transparent 55%),
+                #161b22;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 36px 24px 26px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+        }
+        .podio-card .podio-stars {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, .5), transparent),
+                radial-gradient(1px 1px at 80% 10%, rgba(255, 255, 255, .4), transparent),
+                radial-gradient(1.5px 1.5px at 60% 25%, rgba(255, 255, 255, .5), transparent),
+                radial-gradient(1px 1px at 30% 60%, rgba(255, 255, 255, .3), transparent),
+                radial-gradient(1.5px 1.5px at 90% 45%, rgba(255, 255, 255, .4), transparent),
+                radial-gradient(1px 1px at 45% 80%, rgba(255, 255, 255, .3), transparent);
+            background-repeat: no-repeat;
+            animation: podioTwinkle 3.5s ease-in-out infinite alternate;
+        }
+        @keyframes podioTwinkle {
+            from { opacity: .5; }
+            to { opacity: 1; }
+        }
+        #podio-fx {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .podio-inner {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        .podio-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .7rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: #FAC775;
+            font-weight: 700;
+            background: rgba(250, 199, 117, .08);
+            border: 1px solid rgba(250, 199, 117, .35);
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+        .podio-inner h1 {
+            font-size: clamp(1.4rem, 4vw, 2.1rem);
+            font-weight: 800;
+            letter-spacing: -.02em;
+            background: linear-gradient(180deg, #fff, #FAC775 140%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 40px rgba(250, 199, 117, .25);
+        }
+        .podio-sub {
+            color: #8b949e;
+            font-size: .85rem;
+            margin-top: 6px;
+        }
+        .podio-stage {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 34px;
+            flex-wrap: wrap;
+        }
+        .podio-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 180px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: podioRiseIn .7s cubic-bezier(.2, .8, .2, 1) forwards;
+        }
+        .podio-slot.p2 { animation-delay: .15s; }
+        .podio-slot.p1 { animation-delay: .45s; }
+        .podio-slot.p3 { animation-delay: .15s; }
+        @keyframes podioRiseIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .podio-medal {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+            border: 3px solid rgba(255, 255, 255, .15);
+        }
+        .podio-slot.p1 .podio-medal {
+            background: radial-gradient(circle at 35% 30%, #fff6d8, #FAC775 60%);
+            color: #633806;
+            width: 72px;
+            height: 72px;
+            font-size: 1.7rem;
+            box-shadow: 0 0 50px rgba(250, 199, 117, .55), 0 8px 24px rgba(0, 0, 0, .4);
+        }
+        .podio-slot.p2 .podio-medal {
+            background: radial-gradient(circle at 35% 30%, #fff, #D3D1C7 60%);
+            color: #444441;
+        }
+        .podio-slot.p3 .podio-medal {
+            background: radial-gradient(circle at 35% 30%, #ffe3d4, #F5C4B3 60%);
+            color: #993C1D;
+        }
+        .podio-crown {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 0 10px rgba(250, 199, 117, .6));
+            animation: podioBob 2.2s ease-in-out infinite;
+        }
+        @keyframes podioBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .podio-name {
+            font-weight: 800;
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+        .podio-slot.p1 .podio-name {
+            font-size: 1.15rem;
+            color: #FAC775;
+        }
+        .podio-pts {
+            font-size: .75rem;
+            color: #8b949e;
+            margin-top: 2px;
+        }
+        .podio-pts b {
+            color: #e6edf3;
+            font-size: .9rem;
+        }
+        .podio-breakdown {
+            font-size: .6rem;
+            color: #8b949e;
+            margin-top: 6px;
+            display: flex;
+            gap: 6px;
+        }
+        .podio-breakdown span {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid #30363d;
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+        .podio-riser {
+            margin-top: 14px;
+            width: 100%;
+            border-radius: 10px 10px 0 0;
+            border: 1px solid #30363d;
+            border-bottom: none;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .podio-riser::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .08), transparent 40%);
+        }
+        .podio-rank-big {
+            font-size: 2rem;
+            font-weight: 900;
+            opacity: .5;
+        }
+        .podio-slot.p1 .podio-riser {
+            height: 130px;
+            background: linear-gradient(180deg, #3a2c0f, #211605);
+            box-shadow: 0 -10px 40px rgba(250, 199, 117, .15) inset;
+        }
+        .podio-slot.p2 .podio-riser {
+            height: 92px;
+            background: linear-gradient(180deg, #2b2c2e, #17181a);
+        }
+        .podio-slot.p3 .podio-riser {
+            height: 70px;
+            background: linear-gradient(180deg, #3a231a, #20120c);
+        }
+        .podio-slot.p1 .podio-rank-big { color: #FAC775; }
+        .podio-slot.p2 .podio-rank-big { color: #D3D1C7; }
+        .podio-slot.p3 .podio-rank-big { color: #F5C4B3; }
+        .podio-footer {
+            margin-top: 26px;
+            color: #8b949e;
+            font-size: .76rem;
+        }
+        .podio-footer b { color: #FAC775; }
+        .podio-enter-btn {
+            margin-top: 22px;
+            padding: 10px 26px;
+            border-radius: 24px;
+            border: 1px solid #FAC775;
+            background: rgba(250, 199, 117, .1);
+            color: #FAC775;
+            font-weight: 700;
+            font-size: .85rem;
+            cursor: pointer;
+            transition: all .2s;
+            opacity: 0;
+            animation: podioRiseIn .6s ease forwards;
+            animation-delay: .9s;
+        }
+        .podio-enter-btn:hover {
+            background: #FAC775;
+            color: #633806;
+            box-shadow: 0 0 24px rgba(250, 199, 117, .4);
+        }
+        @media (max-width: 640px) {
+            .podio-stage { flex-wrap: wrap; }
+            .podio-slot { width: 130px; }
+            .podio-slot.p1 { order: -1; width: 160px; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- ===== PANTALLA DE BIENVENIDA: PODIO DE GANADORES ===== -->
+    <div id="podio-overlay">
+        <div class="podio-card" id="podio-card">
+            <div class="podio-stars"></div>
+            <canvas id="podio-fx"></canvas>
+            <div class="podio-inner">
+                <span class="podio-eyebrow">🏆 Mundial 2026 · Resultado de la Polla</span>
+                <h1 id="podio-titulo">¡Tenemos podio!</h1>
+                <div class="podio-sub">Puntaje total = Fase de Grupos + Eliminatorias</div>
+                <div class="podio-stage" id="podio-stage"><!-- se llena por JS --></div>
+                <div class="podio-footer" id="podio-footer"></div>
+                <button class="podio-enter-btn" id="podio-enter-btn" onclick="cerrarPodioIntro()">Entrar a la Polla →</button>
+            </div>
+        </div>
+    </div>
 
     <div id="toast" style="display:none;"></div>
 
@@ -1068,15 +1342,15 @@
         const PRONOSTICOS_R32 = { 
                 Duvan: { 'R32-01': { l: 1, v: 4 }, 'R32-02': { l: 3, v: 2 }, 'R32-03': { l: 3, v: 1 }, 'R32-04': { l: 3, v: 1 }, 'R32-05': { l: 1, v: 1 }, 'R32-06': { l: 2, v: 1 }, 'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 3 }, 'R32-11': { l: 2, v: 2 }, 'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 1, v: 0 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 4, v: 0 }, 'R16-01': { l: 2, v: 3 }, 'R16-02': { l: 1, v: 4 }, 'R16-06': { l: 1, v: 2 }, 'R16-03': { l: 2, v: 2 }, 'R16-04': { l: 2, v: 0 }, 'R16-05': { l: 2, v: 1 }, 'QF-01': { l: 0, v: 1 }, 'QF-02': { l: 1, v: 3 }, 'QF-03': { l: 3, v: 2 }, 'R16-07': { l: 1, v: 2 }, 'R16-08': { l: 1, v: 3 } , 'QF-04': { l: 1, v: 3 } , 'SF-01': { l: 3, v: 2 } , 'FINAL': { l: 3, v: 2 } }, 
                 Camila: { 'R32-01': { l: 2, v: 0 }, 'R32-02': { l: 1, v: 1 }, 'R32-03': { l: 2, v: 0 }, 'R32-04': { l: 3, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 }, 'R32-07': { l: 2, v: 0 }, 'R32-08': { l: 1, v: 1 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 0, v: 1 }, 'R32-16': { l: 2, v: 0 }, 'R16-05': { l: 2, v: 2 }, 'R16-06': { l: 1, v: 2 }, 'R16-03': { l: 1, v: 2 }, 'R16-04': { l: 2, v: 1 }, 'R16-01': { l: 2, v: 2 }, 'R16-02': { l: 1, v: 2 }, 'QF-01': { l: 1, v: 2 }, 'QF-02': { l: 1, v: 3 }, 'QF-03': { l: 2, v: 1 }, 'R16-07': { l: 1, v: 2 }, 'R16-08': { l: 1, v: 2 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 2, v: 1 } , 'SF-02': { l: 1, v: 2 } , '3P': { l: 2, v: 1 } , 'FINAL': { l: 2, v: 1 } },
-                Camilo: { 'R32-01': { l: 1, v: 3 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 5, v: 0 }, 'R32-04': { l: 3, v: 1 }, 'R32-05': { l: 1, v: 2 }, 'R32-06': { l: 4, v: 1 }, 'R32-07': { l: 1, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 3, v: 0 }, 'R32-13': { l: 3, v: 1 }, 'R32-14': { l: 3, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 5, v: 0 }, 'R16-01': { l: 2, v: 1 }, 'R16-02': { l: 0, v: 4 }, 'R16-05': { l: 2, v: 3 }, 'R16-06': { l: 1, v: 3 }, 'R16-03': { l: 1, v: 2 }, 'R16-04': { l: 3, v: 2 }, 'QF-01': { l: 1, v: 2 }, 'QF-02': { l: 1, v: 3 }, 'QF-03': { l: 2, v: 1 }, 'R16-07': { l: 1, v: 3 }, 'R16-08': { l: 1, v: 4 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 2, v: 3 } , 'SF-02': { l: 3, v: 2 } , 'FINAL': { l: 3, v: 2 } }, 
+                Camilo: { 'R32-01': { l: 1, v: 3 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 5, v: 0 }, 'R32-04': { l: 3, v: 1 }, 'R32-05': { l: 1, v: 2 }, 'R32-06': { l: 4, v: 1 }, 'R32-07': { l: 1, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 3, v: 0 }, 'R32-13': { l: 3, v: 1 }, 'R32-14': { l: 3, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 5, v: 0 }, 'R16-01': { l: 2, v: 1 }, 'R16-02': { l: 0, v: 4 }, 'R16-05': { l: 2, v: 3 }, 'R16-06': { l: 1, v: 3 }, 'R16-03': { l: 1, v: 2 }, 'R16-04': { l: 3, v: 2 }, 'QF-01': { l: 1, v: 2 }, 'QF-02': { l: 1, v: 3 }, 'QF-03': { l: 2, v: 1 }, 'R16-07': { l: 1, v: 3 }, 'R16-08': { l: 1, v: 4 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 2, v: 3 } , 'SF-02': { l: 3, v: 2 } , '3P': { l: 1, v: 2 } , 'FINAL': { l: 3, v: 2 } }, 
                 Mateo: { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 3, v: 1 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 }, 'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 1, v: 2 }, 'R32-10': { l: 1, v: 3 }, 'R32-11': { l: 1, v: 2 }, 'R32-12': { l: 1, v: 2 }, 'R32-13': { l: 1, v: 1 }, 'R32-14': { l: 4, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 3, v: 1 }, 'R16-01': { l: 2, v: 1 }, 'R16-02': { l: 1, v: 3 }, 'R16-05': { l: 1, v: 1 }, 'R16-06': { l: 1, v: 2 }, 'R16-03': { l: 1, v: 2 }, 'R16-04': { l: 2, v: 1 }, 'QF-01': { l: 1, v: 2 }, 'QF-02': { l: 1, v: 2 }, 'QF-03': { l: 2, v: 1 }, 'R16-07': { l: 2, v: 1 }, 'R16-08': { l: 1, v: 3 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 2, v: 1 } , 'SF-02': { l: 4, v: 1 } , '3P': { l: 1, v: 2 } , 'FINAL': { l: 3, v: 2 } },
-                Miguel: { 'R32-01': { l: 1, v: 3 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 0 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 }, 'R32-07': { l: 2, v: 0 }, 'R32-08': { l: 1, v: 1 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 2, v: 0 }, 'R16-01': { l: 2, v: 3 }, 'R16-02': { l: 1, v: 4 }, 'R16-05': { l: 2, v: 1 }, 'R16-06': { l: 1, v: 2 }, 'R16-03': { l: 1, v: 2 }, 'R16-04': { l: 2, v: 1 }, 'QF-01': { l: 1, v: 2 }, 'QF-02': { l: 1, v: 3 }, 'QF-03': { l: 2, v: 1 }, 'R16-07': { l: 0, v: 2 }, 'R16-08': { l: 1, v: 2 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 3, v: 2 } , 'SF-02': { l: 2, v: 1 } , 'FINAL': { l: 2, v: 3 } }, 
-                'Doc Camilo': { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 1, v: 1 }, 'R32-03': { l: 1, v: 1 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 1, v: 0 }, 'R32-06': { l: 2, v: 0 }, 'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 0 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 0, v: 1 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 2, v: 0 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 1 }, 'R32-16': { l: 2, v: 0 }, 'R16-01': { l: 2, v: 1 }, 'R16-02': { l: 0, v: 2 }, 'R16-05': { l: 2, v: 1 }, 'R16-06': { l: 1, v: 2 }, 'R16-04': { l: 2, v: 1 }, 'R16-03': { l: 1, v: 2 }, 'QF-01': { l: 1, v: 2 }, 'QF-02': { l: 1, v: 2 }, 'QF-03': { l: 3, v: 1 }, 'R16-07': { l: 0, v: 1 }, 'R16-08': { l: 1, v: 2 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 2, v: 1 } , 'SF-02': { l: 2, v: 1 } , 'FINAL': { l: 1, v: 2 } }, 
+                Miguel: { 'R32-01': { l: 1, v: 3 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 0 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 1 }, 'R32-07': { l: 2, v: 0 }, 'R32-08': { l: 1, v: 1 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 2, v: 0 }, 'R16-01': { l: 2, v: 3 }, 'R16-02': { l: 1, v: 4 }, 'R16-05': { l: 2, v: 1 }, 'R16-06': { l: 1, v: 2 }, 'R16-03': { l: 1, v: 2 }, 'R16-04': { l: 2, v: 1 }, 'QF-01': { l: 1, v: 2 }, 'QF-02': { l: 1, v: 3 }, 'QF-03': { l: 2, v: 1 }, 'R16-07': { l: 0, v: 2 }, 'R16-08': { l: 1, v: 2 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 3, v: 2 } , 'SF-02': { l: 2, v: 1 } , '3P': { l: 2, v: 1 } , 'FINAL': { l: 2, v: 3 } }, 
+                'Doc Camilo': { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 1, v: 1 }, 'R32-03': { l: 1, v: 1 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 1, v: 0 }, 'R32-06': { l: 2, v: 0 }, 'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 0 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 0, v: 1 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 2, v: 0 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 1 }, 'R32-16': { l: 2, v: 0 }, 'R16-01': { l: 2, v: 1 }, 'R16-02': { l: 0, v: 2 }, 'R16-05': { l: 2, v: 1 }, 'R16-06': { l: 1, v: 2 }, 'R16-04': { l: 2, v: 1 }, 'R16-03': { l: 1, v: 2 }, 'QF-01': { l: 1, v: 2 }, 'QF-02': { l: 1, v: 2 }, 'QF-03': { l: 3, v: 1 }, 'R16-07': { l: 0, v: 1 }, 'R16-08': { l: 1, v: 2 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 2, v: 1 } , 'SF-02': { l: 2, v: 1 } , '3P': { l: 1, v: 0 } , 'FINAL': { l: 1, v: 2 } }, 
                 Katherine: { 'R32-01': { l: 0, v: 0 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 3, v: 0 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 2, v: 1 }, 'R32-06': { l: 2, v: 0 }, 'R32-07': { l: 1, v: 1 }, 'R32-08': { l: 1, v: 0 }, 'R32-09': { l: 0, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 1, v: 1 }, 'R32-13': { l: 0, v: 1 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 3, v: 0 }, 'R16-01': { l: 2, v: 1 }, 'R16-02': { l: 1, v: 3 }, 'R16-05': { l: 2, v: 3 }, 'R16-06': { l: 1, v: 2 }, 'R16-04': { l: 1, v: 2 }, 'R16-03': { l: 2, v: 3 }, 'QF-01': { l: 1, v: 3 }, 'QF-02': { l: 0, v: 2 }, 'QF-03': { l: 2, v: 1 }, 'R16-07': { l: 1, v: 2 }, 'R16-08': { l: 0, v: 2 } , 'QF-04': { l: 1, v: 3 } , 'SF-01': { l: 2, v: 2 } , 'SF-02': { l: 1, v: 3 } , 'FINAL': { l: 2, v: 3 } },
                 Sandra: { 'R32-01': { l: 0, v: 0 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 1 }, 'R32-04': { l: 3, v: 2 }, 'R32-05': { l: 1, v: 0 }, 'R32-06': { l: 2, v: 1 }, 'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 1, v: 0 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 2, v: 2 }, 'R32-11': { l: 2, v: 1 }, 'R32-12': { l: 2, v: 0 }, 'R32-13': { l: 2, v: 0 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 2, v: 0 }, 'R16-01': { l: 2, v: 1 }, 'R16-02': { l: 0, v: 2 }, 'R16-05': { l: 2, v: 1 }, 'R16-06': { l: 1, v: 2 }, 'R16-04': { l: 2, v: 1 }, 'R16-03': { l: 1, v: 2 }, 'QF-01': { l: 1, v: 2 }, 'QF-02': { l: 1, v: 3 }, 'QF-03': { l: 2, v: 1 }, 'R16-07': { l: 1, v: 2 }, 'R16-08': { l: 2, v: 1 } , 'QF-04': { l: 2, v: 2 } , 'SF-01': { l: 2, v: 1 } , 'SF-02': { l: 2, v: 1 } , '3P': { l: 2, v: 1 } , 'FINAL': { l: 1, v: 3 } }, 
                 Estefania: { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 2, v: 1 }, 'R32-03': { l: 2, v: 1 }, 'R32-04': { l: 2, v: 1 }, 'R32-05': { l: 1, v: 1 }, 'R32-06': { l: 3, v: 1 }, 'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 1, v: 0 }, 'R32-09': { l: 2, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 1, v: 2 }, 'R32-12': { l: 2, v: 1 }, 'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 2, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 2, v: 0 }, 'R16-01': { l: 2, v: 1 }, 'R16-02': { l: 0, v: 2 }, 'R16-05': { l: 1, v: 2 }, 'R16-06': { l: 1, v: 2 }, 'R16-04': { l: 2, v: 1 }, 'R16-03': { l: 1, v: 3 }, 'QF-01': { l: 2, v: 2 }, 'QF-02': { l: 1, v: 3 }, 'QF-03': { l: 3, v: 1 }, 'R16-07': { l: 1, v: 2 }, 'R16-08': { l: 3, v: 2 } , 'QF-04': { l: 2, v: 3 } , 'SF-01': { l: 3, v: 1 } , 'SF-02': { l: 1, v: 1 } , '3P': { l: 1, v: 0 } , 'FINAL': { l: 1, v: 3 } }, 
                 Diana: { 'R32-01': { l: 0, v: 2 }, 'R32-02': { l: 2, v: 0 }, 'R32-03': { l: 3, v: 1 }, 'R32-04': { l: 3, v: 0 }, 'R32-05': { l: 1, v: 2 }, 'R32-06': { l: 2, v: 0 }, 'R32-07': { l: 4, v: 0 }, 'R32-08': { l: 2, v: 1 }, 'R32-09': { l: 1, v: 1 }, 'R32-10': { l: 1, v: 2 }, 'R32-11': { l: 0, v: 2 }, 'R32-12': { l: 1, v: 0 }, 'R32-13': { l: 2, v: 0 }, 'R32-14': { l: 2, v: 0 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 2, v: 0 }, 'R16-01': { l: 0, v: 2 }, 'R16-02': { l: 0, v: 3 }, 'R16-05': { l: 2, v: 1 }, 'R16-06': { l: 1, v: 2 }, 'R16-03': { l: 2, v: 1 }, 'R16-04': { l: 1, v: 2 }, 'QF-01': { l: 1, v: 3 }, 'QF-02': { l: 1, v: 2 }, 'QF-03': { l: 2, v: 2 }, 'R16-07': { l: 0, v: 2 }, 'R16-08': { l: 0, v: 3 } , 'QF-04': { l: 1, v: 3 } , 'SF-01': { l: 2, v: 1 } , 'SF-02': { l: 1, v: 2 } , '3P': { l: 2, v: 1 } , 'FINAL': { l: 1, v: 2 } }, 
-                Sofia: { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 3, v: 2 }, 'R32-03': { l: 4, v: 0 }, 'R32-04': { l: 2, v: 2 }, 'R32-05': { l: 1, v: 1 }, 'R32-06': { l: 2, v: 0 }, 'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 2 }, 'R32-09': { l: 2, v: 0 }, 'R32-10': { l: 1, v: 3 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 1 }, 'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 3, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 3, v: 1 }, 'R16-01': { l: 2, v: 3 }, 'R16-02': { l: 1, v: 4 }, 'R16-05': { l: 2, v: 3 }, 'R16-06': { l: 1, v: 2 }, 'R16-04': { l: 3, v: 2 }, 'R16-03': { l: 1, v: 2 }, 'QF-01': { l: 1, v: 3 }, 'QF-02': { l: 1, v: 2 }, 'QF-03': { l: 3, v: 2 }, 'R16-07': { l: 1, v: 3 }, 'R16-08': { l: 1, v: 2 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 3, v: 2 } , 'SF-02': { l: 2, v: 1 } , 'FINAL': { l: 2, v: 3 } } 
+                Sofia: { 'R32-01': { l: 1, v: 2 }, 'R32-02': { l: 3, v: 2 }, 'R32-03': { l: 4, v: 0 }, 'R32-04': { l: 2, v: 2 }, 'R32-05': { l: 1, v: 1 }, 'R32-06': { l: 2, v: 0 }, 'R32-07': { l: 2, v: 1 }, 'R32-08': { l: 2, v: 2 }, 'R32-09': { l: 2, v: 0 }, 'R32-10': { l: 1, v: 3 }, 'R32-11': { l: 1, v: 1 }, 'R32-12': { l: 2, v: 1 }, 'R32-13': { l: 2, v: 1 }, 'R32-14': { l: 3, v: 1 }, 'R32-15': { l: 1, v: 2 }, 'R32-16': { l: 3, v: 1 }, 'R16-01': { l: 2, v: 3 }, 'R16-02': { l: 1, v: 4 }, 'R16-05': { l: 2, v: 3 }, 'R16-06': { l: 1, v: 2 }, 'R16-04': { l: 3, v: 2 }, 'R16-03': { l: 1, v: 2 }, 'QF-01': { l: 1, v: 3 }, 'QF-02': { l: 1, v: 2 }, 'QF-03': { l: 3, v: 2 }, 'R16-07': { l: 1, v: 3 }, 'R16-08': { l: 1, v: 2 } , 'QF-04': { l: 1, v: 2 } , 'SF-01': { l: 3, v: 2 } , 'SF-02': { l: 2, v: 1 } , '3P': { l: 1, v: 2 } , 'FINAL': { l: 2, v: 3 } } 
             };
         // RESULTADOS OFICIALES ACTUALIZADOS
         const RESULTADOS_DEFAULT = {
@@ -1198,7 +1472,217 @@
 
         function switchPage(name) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); const el = document.getElementById('page-' + name); if (el) el.classList.add('active'); document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.page === name)); if (name === 'top') renderRanking(); if (name === 'grupos') renderGrupos(); if (name === 'elim') renderElim(); if (name === 'matrix') renderMatrix(); if (name === 'bracket') renderBracket(); if (name === 'campeon') renderCampeon(); }
         document.querySelectorAll('.nav-tab').forEach(tab => { tab.addEventListener('click', () => switchPage(tab.dataset.page)); });
+
+        /* ================== PODIO INTRO (Top 3 al abrir la página) ================== */
+        let podioFxCtx = null, podioFxW = 0, podioFxH = 0, podioFxDPR = 1;
+        let podioConfetti = [], podioSparks = [], podioFlashes = [];
+        let podioAnimId = null, podioFireworkInterval = null, podioConfettiInterval = null, podioAutoCloseTimeout = null;
+        const PODIO_PALETTE = ['#FAC775', '#D3D1C7', '#F5C4B3', '#5b9dd9', '#7dc542', '#f07050', '#ffffff'];
+
+        function renderPodioIntro() {
+            const overlay = document.getElementById('podio-overlay');
+            const stage = document.getElementById('podio-stage');
+            const footer = document.getElementById('podio-footer');
+            if (!overlay || !stage) return;
+
+            const sorted = [...PERSONAS].sort((a, b) => calcTotal(b) - calcTotal(a));
+            const top3 = sorted.slice(0, 3);
+            while (top3.length < 3) top3.push(null);
+            const [primero, segundo, tercero] = top3;
+
+            const mkSlot = (persona, claseP, medalla, rankNum) => {
+                if (!persona) {
+                    return `<div class="podio-slot ${claseP}"><div class="podio-medal">${medalla}</div><div class="podio-name">—</div><div class="podio-pts"><b>0</b> pts</div><div class="podio-riser"><div class="podio-rank-big">${rankNum}</div></div></div>`;
+                }
+                const tot = calcTotal(persona), tg = calcTotalGrupos(persona), te = calcTotalElim(persona);
+                const crown = claseP === 'p1' ? '<div class="podio-crown">👑</div>' : '';
+                return `<div class="podio-slot ${claseP}">${crown}<div class="podio-medal">${medalla}</div><div class="podio-name">${persona}</div><div class="podio-pts"><b>${tot}</b> pts</div><div class="podio-breakdown"><span>📋 ${tg}</span><span>⚽ ${te}</span></div><div class="podio-riser"><div class="podio-rank-big">${rankNum}</div></div></div>`;
+            };
+
+            stage.innerHTML =
+                mkSlot(segundo, 'p2', '🥈', 2) +
+                mkSlot(primero, 'p1', '🥇', 1) +
+                mkSlot(tercero, 'p3', '🥉', 3);
+
+            footer.innerHTML = primero
+                ? `🎉 Felicitaciones a los tres — <b>${primero}</b> va primero en la polla del Mundial 2026`
+                : `Aún no hay pronósticos suficientes para definir el podio.`;
+
+            overlay.classList.remove('hiding');
+            overlay.style.display = 'flex';
+
+            initPodioFx();
+            podioSpawnConfetti(120);
+            podioAnimId && cancelAnimationFrame(podioAnimId);
+            podioLoopFx();
+
+            clearTimeout(podioAutoCloseTimeout);
+            [200, 550, 950].forEach(t => setTimeout(podioRandomFirework, t));
+            clearInterval(podioFireworkInterval);
+            clearInterval(podioConfettiInterval);
+            podioFireworkInterval = setInterval(() => { if (Math.random() < 0.8) podioRandomFirework(); }, 1500);
+            podioConfettiInterval = setInterval(() => podioSpawnConfetti(10), 1000);
+
+            // Cierre automático tras unos segundos, o el usuario puede entrar antes con el botón
+            podioAutoCloseTimeout = setTimeout(cerrarPodioIntro, 7000);
+        }
+
+        function cerrarPodioIntro() {
+            const overlay = document.getElementById('podio-overlay');
+            if (!overlay) return;
+            clearTimeout(podioAutoCloseTimeout);
+            clearInterval(podioFireworkInterval);
+            clearInterval(podioConfettiInterval);
+            overlay.classList.add('hiding');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                if (podioAnimId) cancelAnimationFrame(podioAnimId);
+                podioConfetti = []; podioSparks = []; podioFlashes = [];
+            }, 500);
+        }
+
+        function initPodioFx() {
+            const canvas = document.getElementById('podio-fx');
+            const card = document.getElementById('podio-card');
+            if (!canvas || !card) return;
+            podioFxCtx = canvas.getContext('2d');
+            const resize = () => {
+                podioFxDPR = Math.min(window.devicePixelRatio || 1, 2);
+                const rect = card.getBoundingClientRect();
+                podioFxW = rect.width; podioFxH = rect.height;
+                canvas.width = podioFxW * podioFxDPR; canvas.height = podioFxH * podioFxDPR;
+                canvas.style.width = podioFxW + 'px'; canvas.style.height = podioFxH + 'px';
+                podioFxCtx.setTransform(podioFxDPR, 0, 0, podioFxDPR, 0, 0);
+            };
+            window.addEventListener('resize', resize);
+            resize();
+            card.onclick = (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                const color = PODIO_PALETTE[Math.floor(Math.random() * PODIO_PALETTE.length)];
+                podioLaunchFirework(x, y, color);
+                podioFlashes.push({ x, y, r: 2, maxR: 34, alpha: 1, color });
+            };
+        }
+
+        function podioSpawnConfetti(n) {
+            for (let i = 0; i < n; i++) {
+                podioConfetti.push({
+                    x: Math.random() * podioFxW,
+                    y: -20 - Math.random() * podioFxH * 0.5,
+                    w: 5 + Math.random() * 5,
+                    h: 7 + Math.random() * 8,
+                    color: PODIO_PALETTE[Math.floor(Math.random() * PODIO_PALETTE.length)],
+                    rot: Math.random() * Math.PI * 2,
+                    vRot: (Math.random() - 0.5) * 0.25,
+                    vy: 1.2 + Math.random() * 2,
+                    vx: (Math.random() - 0.5) * 1.4,
+                    sway: Math.random() * Math.PI * 2,
+                    swaySpeed: 0.02 + Math.random() * 0.02,
+                    shape: Math.random() < 0.5 ? 'rect' : 'circle'
+                });
+            }
+        }
+        function podioUpdateConfetti() {
+            for (let i = podioConfetti.length - 1; i >= 0; i--) {
+                const c = podioConfetti[i];
+                c.sway += c.swaySpeed;
+                c.x += c.vx + Math.sin(c.sway) * 0.7;
+                c.y += c.vy;
+                c.rot += c.vRot;
+                if (c.y > podioFxH + 20) podioConfetti.splice(i, 1);
+            }
+            if (podioConfetti.length > 260) podioConfetti = podioConfetti.slice(podioConfetti.length - 260);
+        }
+        function podioDrawConfetti() {
+            for (const c of podioConfetti) {
+                podioFxCtx.save();
+                podioFxCtx.translate(c.x, c.y);
+                podioFxCtx.rotate(c.rot);
+                podioFxCtx.fillStyle = c.color;
+                podioFxCtx.globalAlpha = 0.95;
+                if (c.shape === 'rect') podioFxCtx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+                else { podioFxCtx.beginPath(); podioFxCtx.arc(0, 0, c.w / 2, 0, Math.PI * 2); podioFxCtx.fill(); }
+                podioFxCtx.restore();
+            }
+        }
+        function podioLaunchFirework(x, y, color) {
+            const count = 30 + Math.floor(Math.random() * 16);
+            for (let i = 0; i < count; i++) {
+                const angle = (Math.PI * 2 * i) / count + Math.random() * 0.2;
+                const speed = 1.1 + Math.random() * 2.2;
+                podioSparks.push({ x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, color, life: 0, maxLife: 40 + Math.random() * 18, trail: [] });
+            }
+        }
+        function podioRandomFirework() {
+            if (!podioFxW || !podioFxH) return;
+            const x = podioFxW * 0.18 + Math.random() * podioFxW * 0.64;
+            const y = podioFxH * 0.15 + Math.random() * podioFxH * 0.35;
+            const color = PODIO_PALETTE[Math.floor(Math.random() * PODIO_PALETTE.length)];
+            podioLaunchFirework(x, y, color);
+            podioFlashes.push({ x, y, r: 2, maxR: 34, alpha: 1, color });
+        }
+        function podioUpdateFlashes() {
+            for (let i = podioFlashes.length - 1; i >= 0; i--) {
+                const f = podioFlashes[i];
+                f.r += 3; f.alpha -= 0.06;
+                if (f.alpha <= 0) podioFlashes.splice(i, 1);
+            }
+        }
+        function podioDrawFlashes() {
+            for (const f of podioFlashes) {
+                podioFxCtx.save();
+                podioFxCtx.globalAlpha = Math.max(f.alpha, 0);
+                podioFxCtx.strokeStyle = f.color;
+                podioFxCtx.lineWidth = 2;
+                podioFxCtx.beginPath();
+                podioFxCtx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+                podioFxCtx.stroke();
+                podioFxCtx.restore();
+            }
+        }
+        function podioUpdateSparks() {
+            const gravity = 0.04;
+            for (let i = podioSparks.length - 1; i >= 0; i--) {
+                const s = podioSparks[i];
+                s.trail.push({ x: s.x, y: s.y });
+                if (s.trail.length > 5) s.trail.shift();
+                s.vy += gravity; s.vx *= 0.985; s.vy *= 0.985;
+                s.x += s.vx; s.y += s.vy;
+                s.life++;
+                if (s.life > s.maxLife) podioSparks.splice(i, 1);
+            }
+        }
+        function podioDrawSparks() {
+            for (const s of podioSparks) {
+                const alpha = Math.max(0, 1 - s.life / s.maxLife);
+                podioFxCtx.save();
+                podioFxCtx.globalAlpha = alpha;
+                podioFxCtx.strokeStyle = s.color;
+                podioFxCtx.lineWidth = 1.4;
+                podioFxCtx.beginPath();
+                for (let i = 0; i < s.trail.length; i++) { const p = s.trail[i]; if (i === 0) podioFxCtx.moveTo(p.x, p.y); else podioFxCtx.lineTo(p.x, p.y); }
+                podioFxCtx.lineTo(s.x, s.y);
+                podioFxCtx.stroke();
+                podioFxCtx.fillStyle = s.color;
+                podioFxCtx.beginPath();
+                podioFxCtx.arc(s.x, s.y, 1.5, 0, Math.PI * 2);
+                podioFxCtx.fill();
+                podioFxCtx.restore();
+            }
+        }
+        function podioLoopFx() {
+            if (!podioFxCtx) return;
+            podioFxCtx.clearRect(0, 0, podioFxW, podioFxH);
+            podioUpdateConfetti(); podioDrawConfetti();
+            podioUpdateSparks(); podioDrawSparks();
+            podioUpdateFlashes(); podioDrawFlashes();
+            const overlay = document.getElementById('podio-overlay');
+            if (overlay && overlay.style.display !== 'none') podioAnimId = requestAnimationFrame(podioLoopFx);
+        }
+
         initEstado(); renderRanking(); renderGrupos(); renderMatrix(); renderBracket(); renderCampeon();
+        renderPodioIntro();
         console.log('✅ REGLAS: Ganador(+5) + Diferencia(+2) + Marcador Exacto(+3) / Anotan(+3) = Máx 10pts');
     </script>
 </body>
